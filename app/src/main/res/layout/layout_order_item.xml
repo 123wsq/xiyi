@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_order_item"
+    android:layout_margin="@dimen/default_radius"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/default_margin"
+    android:paddingTop="@dimen/default_margin"
+    android:paddingRight="@dimen/default_margin"
+
+    android:id="@+id/ll_order_layout"
+    >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_height_min"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_marginBottom="@dimen/default_radius"
+        >
+        <View
+            android:layout_width="3dp"
+            android:layout_height="30dp"
+            android:background="#E90523"
+            />
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="待评估"
+            android:layout_marginLeft="@dimen/radius_popup"
+            android:textSize="@dimen/default_text_size"
+            />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/default_backgroud_color"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_height_min"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单编号"
+            android:textSize="@dimen/default_text_size"
+            />
+
+        <TextView
+            android:id="@+id/tv_ordernum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="201712141450"
+            android:textSize="@dimen/default_text_size"
+            android:gravity="right"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_marginTop="@dimen/default_radius"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设备品牌型号"
+            android:textSize="@dimen/default_text_size"
+            />
+
+        <TextView
+            android:id="@+id/tv_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="集成"
+            android:textSize="@dimen/default_text_size"
+            android:gravity="right"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_marginTop="@dimen/default_radius"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="出厂编号"
+            android:textSize="@dimen/default_text_size"
+            />
+
+        <TextView
+            android:id="@+id/tv_outnum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="m5688"
+            android:textSize="@dimen/default_text_size"
+            android:gravity="right"
+            />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_marginTop="@dimen/default_radius"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="报修时间"
+            android:textSize="@dimen/default_text_size"
+            />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2017-12-14 12:09:46"
+            android:textSize="@dimen/default_text_size"
+            android:gravity="right"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/default_backgroud_color"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_height_min"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查看详情"
+            android:textSize="@dimen/default_text_size"
+            android:drawableRight="@drawable/image_right"
+            />
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

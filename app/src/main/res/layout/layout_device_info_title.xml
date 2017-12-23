@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/defalut_title_color"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+
+            >
+            <TextView
+                android:id="@+id/tv_device"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="设备"
+                android:textSize="@dimen/default_text_size"
+                android:textColor="@color/color_white"
+                android:gravity="right|center_vertical"
+                android:paddingRight="@dimen/default_margin"
+                />
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="详情"
+                android:textSize="@dimen/default_text_size"
+                android:textColor="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/default_margin"
+                />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_back"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

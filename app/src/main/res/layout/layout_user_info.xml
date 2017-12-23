@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_backgroud_color"
+    android:orientation="vertical"
+    android:id="@+id/ll_layout"
+    >
+
+    <include layout="@layout/layout_title"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/color_white"
+        android:layout_marginTop="@dimen/default_radius"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="头像"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+        <com.example.wsq.android.view.RoundImageView
+            android:id="@+id/image_header"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/defalut_layout_height"
+            android:layout_marginRight="10dp"
+            imagecontrol:border_outside_color="#FFFFFF"
+            imagecontrol:border_inside_color="#FFFFFF"
+            imagecontrol:border_thickness="2dp"
+            android:src="@drawable/image_header_bg" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="用户名"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=""
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="真是姓名"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            android:textColor="@color/defalut_title_color"
+            android:background="@drawable/shape_edit"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="性别"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+        <TextView
+            android:id="@+id/tv_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="男"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="手机号码"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+        <TextView
+            android:id="@+id/tv_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/color_gray"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="学历"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+        <TextView
+            android:id="@+id/tv_xueli"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="高中及以下"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+
+    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_hope"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/defalut_layout_height"
+            android:background="@color/color_white"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/default_margin"
+            android:paddingRight="@dimen/default_margin"
+            android:visibility="visible"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="期望服务地区"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/default_text_size"
+                />
+            <EditText
+                android:id="@+id/et_hope"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:hint="期望服务地点"
+                android:gravity="center_vertical|right"
+                android:textSize="@dimen/default_text_size"
+                android:background="@drawable/shape_edit"
+                android:singleLine="true"
+
+                />
+
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="公司"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+        <EditText
+            android:id="@+id/et_company"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:hint="您所在公司"
+            android:gravity="center_vertical|right"
+            android:textSize="@dimen/default_text_size"
+            android:background="@drawable/shape_edit"
+            android:singleLine="true"
+
+            />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_bumen"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="部门"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+        <EditText
+            android:id="@+id/et_bumen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/default_text_size"
+            android:background="@drawable/shape_edit"
+            android:gravity="center_vertical|right"
+            android:singleLine="true"
+            />
+
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_jieshao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:layout_marginTop="1dp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/default_margin"
+            android:paddingRight="@dimen/default_margin"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="企业介绍:"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/default_text_size"
+                />
+            <EditText
+                android:id="@+id/et_jieshao"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:hint="企业概况描述"
+                android:textSize="@dimen/default_text_size"
+                android:background="@drawable/shape_edit"
+
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_skill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:layout_marginTop="1dp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/default_margin"
+            android:paddingRight="@dimen/default_margin"
+            android:visibility="visible"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="技能:"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/default_text_size"
+                />
+            <EditText
+                android:id="@+id/et_skill"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:hint="所掌握哪些技能"
+                android:textSize="@dimen/default_text_size"
+                android:background="@drawable/shape_edit"
+
+                />
+
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="邮箱"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            />
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:hint="邮箱 如：12345@qq.com"
+            android:gravity="center_vertical|right"
+            android:textSize="@dimen/default_text_size"
+            android:singleLine="true"
+            android:background="@drawable/shape_edit"
+
+            />
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:text="保存资料"
+        android:textColor="@color/color_white"
+        android:background="@drawable/shape_user_out"
+        android:layout_margin="@dimen/default_margin"
+        />
+
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

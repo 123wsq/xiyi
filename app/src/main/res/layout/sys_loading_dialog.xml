@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	页面名称：sys_loading.xml
+	页面功能：系统自定义加载视图
+	创  建  人： 谢泽鹏
+	创建时间：2014-10-09
+ -->
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="30dp"
+    android:gravity="center" >
+    <!--加载中视图图片 -->
+    <ImageView
+        android:id="@+id/sys_loading_dialog_img"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"/>
+    <!--加载中视图文本 -->
+    <TextView 
+        android:id="@+id/sys_loading_dialog_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:layout_marginTop="15dp"
+        android:textSize="14sp"
+        android:textColor="@color/black2"
+        android:layout_below="@id/sys_loading_dialog_img"
+        android:gravity="center"/>
+    <!--加载失败布局视图-->
+    <RelativeLayout 
+        android:id="@+id/sys_loading_dialog_fail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone">
+        <!--加载失败图片 -->
+    	<ImageView
+       	 	android:id="@+id/sys_loading_dialog_fail_img"
+       	 	android:layout_centerHorizontal="true"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:src="@drawable/sys_loading_dialog_fail"
+        	android:contentDescription="@null"/>
+    	<!--加载失败文本 -->
+    	<TextView 
+        	android:id="@+id/sys_loading_dialog_fail_tv"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/sys_loading_dialog_fail_img"
+        	android:layout_marginTop="15dp"
+        	android:textSize="14sp"
+        	android:textColor="@color/black2"
+        	android:gravity="center"/>
+    </RelativeLayout>
+</RelativeLayout>

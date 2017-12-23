@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/default_backgroud_color"
+    >
+
+
+    <include layout="@layout/layout_title"></include>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defalut_layout_Indicator"
+        android:background="@drawable/shape_text_stroken"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/defalut_layout_height"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/defalut_layout_Indicator"
+            android:paddingRight="@dimen/defalut_layout_Indicator"
+            android:background="@color/color_white"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/et_tel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_edit"
+                android:hint="请输入手机号码"
+                android:singleLine="true"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/defalut_layout_height"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/defalut_layout_Indicator"
+            android:background="@color/color_white"
+            android:layout_marginTop="0.5dp"
+            >
+
+
+            <EditText
+                android:id="@+id/et_validateCode"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_edit"
+                android:hint="验证码"
+                android:singleLine="true"
+                />
+
+            <TextView
+                android:id="@+id/tv_getCode"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="获取验证码"
+                android:textColor="@color/color_white"
+                android:background="@color/color_default_btn"
+                android:gravity="center"
+
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/defalut_layout_Indicator"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/defalut_layout_height"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/defalut_layout_Indicator"
+            android:paddingRight="@dimen/defalut_layout_Indicator"
+            android:background="@color/color_white"
+            >
+
+            <EditText
+                android:id="@+id/et_username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_edit"
+                android:hint="请输入用户名"
+                android:singleLine="true"
+                />
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/defalut_layout_height"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/defalut_layout_Indicator"
+                android:paddingRight="@dimen/defalut_layout_Indicator"
+                android:background="@color/color_white"
+                android:layout_marginTop="0.5dp"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/et_password1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edit"
+                    android:hint="请设置新密码（至少6位）"
+                    android:singleLine="true"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/defalut_layout_height"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/defalut_layout_Indicator"
+                android:paddingRight="@dimen/defalut_layout_Indicator"
+                android:background="@color/color_white"
+                android:layout_marginTop="0.5dp"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/et_password2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edit"
+                    android:hint="请再次确认新密码"
+                    android:singleLine="true"
+                    />
+            </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_ok"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:text="确认"
+        android:textColor="@color/color_white"
+        android:background="@color/color_default_btn"
+        android:textSize="20sp"
+        android:layout_marginLeft="@dimen/defalut_layout_height"
+        android:layout_marginRight="@dimen/defalut_layout_height"
+        android:gravity="center"
+        />
+
+</LinearLayout>

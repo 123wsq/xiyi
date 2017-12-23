@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="searchTag">
+        <item>液压用装置</item>
+        <item>对策维护机关</item>
+        <item>真空零件</item>
+        <item>离合器制动器</item>
+        <item>传动零件</item>
+        <item>输送机</item>
+        <item>梯形丝杠</item>
+        <item>驱动器</item>
+        <item>传感器</item>
+        <item>传感器周边零件</item>
+        <item>流速调节阀</item>
+        <item>树脂材料气动设备</item>
+        <item>热风发生器</item>
+        <item>液压传动装置</item>
+
+    </string-array>
+</resources>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/default_backgroud_color"
+    android:id="@+id/ll_layout"
+    >
+
+    <include layout="@layout/layout_title"></include>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/defalut_layout_height"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:background="@color/color_white"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                >
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/defalut_title_color"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="设备保修"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/default_radius"
+
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/defalut_layout_height"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:background="@color/color_white"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="服务地点:"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+
+                <EditText
+                    android:id="@+id/et_server_loc"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:singleLine="true"
+                    android:background="@drawable/shape_edit"
+                    android:gravity="center_vertical|right"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/defalut_layout_height"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:background="@color/color_white"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="现场联系人:"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+
+                <EditText
+                    android:id="@+id/et_contact"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:singleLine="true"
+                    android:background="@drawable/shape_edit"
+                    android:gravity="center_vertical|right"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/defalut_layout_height"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:background="@color/color_white"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="手机号:"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+
+                <EditText
+                    android:id="@+id/et_contact_tel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:singleLine="true"
+                    android:background="@drawable/shape_edit"
+                    android:gravity="center_vertical|right"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+                android:layout_marginTop="1dp"
+                android:background="@color/color_white"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="服务内容以及处理结果:"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/default_radius"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+
+                <EditText
+                    android:id="@+id/et_results_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="70dp"
+                    android:hint="请再次输入故障简要以及处理说明"
+                    android:background="@drawable/shape_edit"
+                    android:gravity="top"
+                    android:layout_marginTop="@dimen/default_radius"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+                android:layout_marginTop="1dp"
+                android:background="@color/color_white"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="遗留问题:"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/default_radius"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+
+                <EditText
+                    android:id="@+id/et_results_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="70dp"
+                    android:hint="请再次输入故障简要以及处理说明"
+                    android:background="@drawable/shape_edit"
+                    android:gravity="top"
+                    android:layout_marginTop="@dimen/default_radius"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="1dp"
+                android:background="@color/color_white"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="现场照片/视频(最多上传三个)"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    android:layout_marginTop="@dimen/default_radius"
+                    android:layout_marginBottom="@dimen/default_radius"
+                    />
+
+                <GridView
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/default_grid_height"
+                    android:numColumns="3"
+
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_away_back"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/defalut_layout_height"
+                android:gravity="center"
+                android:text="马上反馈"
+                android:textColor="@color/color_white"
+                android:background="@color/defalut_title_color"
+                android:textSize="@dimen/default_text_size"
+                android:layout_margin="@dimen/defalut_layout_height"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

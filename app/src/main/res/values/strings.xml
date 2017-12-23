@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">蜥蜴</string>
+
+    <string name="str_remind">蜥蜴提示：开启指纹用户登录或者提现时使用</string>
+    <string name="str_account_remind">第三方账户提醒</string>
+    <string name="str_update_withdraw_psd">修改提现密码</string>
+    <string name="str_forget_withdraw_psd">忘记提现密码</string>
+    <string name="str_version">版本</string>
+    <string name="str_version_code">版本号</string>
+    <string name="str_clear_canche">清理缓存</string>
+
+
+    <string name="image">图片</string>
+    <string name="confirm">确定</string>
+    <string name="preview">预览</string>
+    <string name="select">选择</string>
+
+    <string name="server_tel">0532-58513266</string>
+    <string name="company_net">http://xiyicontrol.com</string>
+    <string name="company_name">LIZARD OF QINGDAO</string>
+</resources>

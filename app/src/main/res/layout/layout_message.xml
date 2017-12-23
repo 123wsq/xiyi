@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/defalut_title_color"
+        >
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_back"
+            android:layout_margin="@dimen/radius_popup"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="消息列表"
+            android:textSize="@dimen/default_text_size"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/image_gz_press"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="您还没有订单~"
+            android:textSize="@dimen/default_text_title_size"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/defalut_layout_height"
+            android:textColor="@color/default_font_color"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="点击查看有没有新数据."
+            android:textSize="@dimen/default_text_title_size"
+            android:gravity="center"
+            android:textColor="@color/default_font_color"
+            />
+
+        <TextView
+
+            android:id="@+id/tv_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击刷新"
+            android:textSize="@dimen/default_text_title_size"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/default_margin"
+            android:textColor="@color/default_font_color"
+            android:background="@drawable/shape_refresh"
+            android:paddingLeft="@dimen/default_margin"
+            android:paddingRight="@dimen/default_margin"
+            android:paddingTop="@dimen/default_radius"
+            android:paddingBottom="@dimen/default_radius"
+            />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/default_backgroud_color"
+    >
+    <RadioGroup
+        android:id="@+id/rg_type_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/rb_all"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="全部"
+            android:button="@null"
+            android:gravity="center"
+            android:checked="true"
+            android:textColor="@drawable/selector_menu_color"
+            />
+        <RadioButton
+            android:id="@+id/rb_data"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="产品资料"
+            android:gravity="center"
+            android:button="@null"
+            android:textColor="@drawable/selector_menu_color"
+            />
+        <RadioButton
+            android:id="@+id/rb_case"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="经典案例"
+            android:gravity="center"
+            android:button="@null"
+            android:textColor="@drawable/selector_menu_color"
+            />
+        <RadioButton
+            android:id="@+id/rb_other"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="其他"
+            android:gravity="center"
+            android:button="@null"
+            android:textColor="@drawable/selector_menu_color"
+            />
+    </RadioGroup>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

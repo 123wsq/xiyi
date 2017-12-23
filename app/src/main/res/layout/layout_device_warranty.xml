@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_backgroud_color"
+    android:orientation="vertical"
+    android:id="@+id/ll_layout"
+    >
+
+    <include layout="@layout/layout_title"></include>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+        <View
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:background="@color/defalut_title_color"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="设备保修"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_radius"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="(可参加活动的会员:企业工程师 企业管理工程师)"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="公司名字:"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+
+        <TextView
+            android:id="@+id/tv_company"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text=""
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="设备品牌型号:"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+
+        <EditText
+            android:id="@+id/et_model"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text=""
+            android:background="@drawable/shape_edit"
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="出厂编号:"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+
+        <EditText
+            android:id="@+id/et_num"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text=""
+            android:background="@drawable/shape_edit"
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="报修人姓名:"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text=""
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="报修人电话:"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+
+        <TextView
+            android:id="@+id/tv_tel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text=""
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="1dp"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="故障照片/视频(最多上传三个)"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_radius"
+            android:layout_marginTop="@dimen/default_radius"
+            android:layout_marginBottom="@dimen/default_radius"
+            />
+
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_grid_height"
+            android:numColumns="3"
+
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="1dp"
+        android:background="@color/color_white"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="故障描述:"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/default_radius"
+            android:layout_marginLeft="@dimen/default_radius"
+            />
+
+        <EditText
+            android:id="@+id/et_description"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:minHeight="70dp"
+            android:hint="请再次输入故障简要以及处理说明"
+            android:background="@drawable/shape_edit"
+            android:layout_marginLeft="@dimen/default_radius"
+            android:minLines="3"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_repairs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:text="马上报修"
+        android:textColor="@color/color_white"
+        android:background="@drawable/shape_user_out"
+        android:gravity="center"
+        android:textSize="@dimen/default_text_size"
+        android:layout_margin="@dimen/defalut_layout_height"
+        />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

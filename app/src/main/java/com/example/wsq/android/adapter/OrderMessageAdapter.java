@@ -1,0 +1,80 @@
+package com.example.wsq.android.adapter;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.example.wsq.android.R;
+import com.example.wsq.android.constant.ResponseKey;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by wsq on 2017/12/18.
+ */
+
+public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapter.MyViewHolder>{
+
+    Context mContext;
+    List<Map<String, Object>> mData;
+
+    public OrderMessageAdapter(Context context, List<Map<String, Object>> list){
+
+        this.mContext = context;
+        this.mData = list;
+
+
+    }
+
+    @Override
+    public OrderMessageAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        OrderMessageAdapter.MyViewHolder holder = new OrderMessageAdapter.MyViewHolder(LayoutInflater.from(
+                mContext).inflate(R.layout.layout_order_message_item, parent,
+                false));
+        return  holder;
+    }
+
+    @Override
+    public void onBindViewHolder(OrderMessageAdapter.MyViewHolder holder, int position) {
+
+        holder.tv_time.setText(mData.get(position).get(ResponseKey.CREATE_AT).toString()+"");
+        holder.tv_content.setText(mData.get(position).get(ResponseKey.DETAIL).toString()+"");
+
+        if (position == 0 ){
+            holder.view_top.setVisibility(View.INVISIBLE);
+            holder.view_down.setVisibility(View.VISIBLE);
+        }else if(mData.size()-1 == position){
+            holder.view_top.setVisibility(View.VISIBLE);
+            holder.view_down.setVisibility(View.INVISIBLE);
+        }else{
+            holder.view_top.setVisibility(View.VISIBLE);
+            holder.view_down.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder{
+
+        private TextView tv_time, tv_content;
+        private View view_top, view_down;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            tv_time = itemView.findViewById(R.id.tv_time);
+            tv_content = itemView.findViewById(R.id.tv_content);
+            view_down = itemView.findViewById(R.id.view_down);
+            view_top = itemView.findViewById(R.id.view_top);
+        }
+
+    }
+}
