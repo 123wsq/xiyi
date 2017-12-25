@@ -2,25 +2,39 @@ package com.example.wsq.android.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.OrderAdapter;
-import com.example.wsq.android.base.BaseFragment;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.view.LoddingDialog;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 服务工程师页面
@@ -28,30 +42,43 @@ import java.util.Map;
  * Created by wsq on 2017/12/15.
  */
 
-public class ServerFeedbackFragment extends BaseFragment implements View.OnClickListener {
+public class ServerFeedbackFragment extends Fragment {
 
-    private RecyclerView rv_view;
-    private LinearLayout ll_nodata;
-    private TextView tv_refresh;
+    @BindView(R.id.rv_view) RecyclerView rv_view;
+    @BindView(R.id.ll_nodata) LinearLayout ll_nodata;
+    @BindView(R.id.store_house_ptr_frame)
+    SmartRefreshLayout store_house_ptr_frame;
 
+    private LoddingDialog dialog;
     private SharedPreferences shared;
     private OrderTaskService orderTaskService;
     private List<Map<String, Object>> mList;
     private OrderAdapter mAdapter;
-    private int curPage = 0;
+    private int curPage = 1;
+    private int total = 1;
+    private int unitPage = 15;
 
 
     public static ServerFeedbackFragment getInstance(){
 
         return new ServerFeedbackFragment();
     }
-
+    @Nullable
     @Override
-    public int getLayoutById() {
-        return R.layout.layout_order_un;
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
+        View view  = inflater.inflate(R.layout.layout_order_un, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init();
+        initView();
+    }
+
     public void init() {
 
         mList = new ArrayList<>();
@@ -59,14 +86,9 @@ public class ServerFeedbackFragment extends BaseFragment implements View.OnClick
         shared = getActivity().getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
     }
 
-    @Override
     public void initView() {
 
-        rv_view = getActivity().findViewById(R.id.rv_view);
-        ll_nodata = getActivity().findViewById(R.id.ll_nodata);
-        tv_refresh = getActivity().findViewById(R.id.tv_refresh);
-
-        tv_refresh.setOnClickListener(this);
+        dialog = new LoddingDialog(getActivity());
 
         rv_view.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_view.setHasFixedSize(true);
@@ -75,24 +97,58 @@ public class ServerFeedbackFragment extends BaseFragment implements View.OnClick
 
         rv_view.setAdapter(mAdapter);
 
-        getOrderTask();
+        setRefresh();
+        getOrderTask(null, 0);
     }
 
-    @Override
+    public void setRefresh(){
+
+        store_house_ptr_frame.setRefreshHeader(new ClassicsHeader(getActivity())
+                .setProgressResource(R.drawable.refresh_loadding).setDrawableProgressSize(40));
+        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(getActivity())
+        );
+        store_house_ptr_frame.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mList.clear();
+                curPage = 1;
+                refreshlayout.resetNoMoreData();
+                getOrderTask(refreshlayout, 1 );
+            }
+        });
+        store_house_ptr_frame.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                if (curPage == (total % unitPage ==0 ? total/unitPage : total/unitPage +1)){
+
+                    refreshlayout.finishLoadmoreWithNoMoreData();
+                }else {
+                    curPage++;
+                    getOrderTask(refreshlayout, 2);
+                }
+
+            }
+        });
+    }
+
+    @OnClick({R.id.tv_refresh})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_refresh:
-                getOrderTask();
+                curPage = 1;
+                getOrderTask(null, 0);
                 break;
         }
     }
 
 
-    public void getOrderTask(){
+    public void getOrderTask(final RefreshLayout refreshLayout, final  int type){
 
+        dialog.show();
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
-        param.put(ResponseKey.PAGE, (curPage+1)+"");
+        param.put(ResponseKey.PAGE, curPage+"");
 
         param.put(ResponseKey.STATUS, "4");
         param.put(ResponseKey.JUESE, shared.getString(Constant.SHARED.JUESE,""));
@@ -101,6 +157,8 @@ public class ServerFeedbackFragment extends BaseFragment implements View.OnClick
                 @Override
                 public void callBack(Map<String, Object> result)  {
 
+                    total = (int) result.get(ResponseKey.TOTAL);
+                    unitPage = (int) result.get(ResponseKey.PER_PAGE);
                     List< Map<String, Object>> list =  (List< Map<String, Object>>) result.get(ResponseKey.DATA);
 
 
@@ -116,14 +174,31 @@ public class ServerFeedbackFragment extends BaseFragment implements View.OnClick
                         rv_view.setVisibility(View.VISIBLE);
                         ll_nodata.setVisibility(View.GONE);
                     }
+                    if (type == 1){
+                        refreshLayout.finishRefresh();
+                    }else if(type ==2 ){
+                        refreshLayout.finishLoadmore();
+                    }
+                    dialog.dismiss();
                 }
 
                 @Override
                 public void onCallFail(String msg) {
-
+                    if (type == 1){
+                        refreshLayout.finishRefresh();
+                    }else if(type ==2 ){
+                        refreshLayout.finishLoadmore();
+                    }
+                    dialog.dismiss();
                 }
             });
         } catch (Exception e) {
+            if (type == 1){
+                refreshLayout.finishRefresh();
+            }else if(type ==2 ){
+                refreshLayout.finishLoadmore();
+            }
+            dialog.dismiss();
             e.printStackTrace();
         }
     }

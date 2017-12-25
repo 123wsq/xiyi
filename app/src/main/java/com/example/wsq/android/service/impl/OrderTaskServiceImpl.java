@@ -211,4 +211,35 @@ public class OrderTaskServiceImpl implements OrderTaskService {
         OkHttpRequest.sendGet(Urls.SEARCH, params, callBack);
     }
 
+    /**
+     * 获取处理订单个数
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    @Override
+    public void onGetOrderCount(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+
+        //参数验证
+        ValidateParam.validateParam(params, ResponseKey.TOKEN,  ResponseKey.CAT);
+        OkHttpRequest.sendGet(Urls.ORDER_COUNT, params, callBack);
+    }
+
+    /**
+     * 修改订单列表
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    @Override
+    public void onUpdateOrder(Map<String, String> params, List<Map<String, Object>> list, HttpResponseCallBack callBack) throws Exception {
+
+        //验证必填参数
+        ValidateParam.validateParam(params, ResponseKey.XINGHAO, ResponseKey.BIANHAO,
+                ResponseKey.DES, ResponseKey.TOKEN, ResponseKey.IMG_COUNT);
+
+//        OkHttpRequest.sendPost(Urls.TOREPAIR, params, callBack);
+        OkHttpRequest.uploadPostFile(Urls.ORDER_UPDATE, params,list, callBack);
+    }
+
 }

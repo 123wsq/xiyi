@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.AboutWeActivity;
 import com.example.wsq.android.activity.CollectActivity;
@@ -32,12 +33,15 @@ import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.inter.PopupItemListener;
+import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.UserService;
+import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ValidateParam;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.CustomPopup;
+import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.android.view.RoundImageView;
 
 import java.util.ArrayList;
@@ -65,13 +69,23 @@ public class UserFragment extends Fragment {
     @BindView(R.id.ll_device_server) LinearLayout ll_device_server;
     @BindView(R.id.ll_fee) LinearLayout ll_fee;
     @BindView(R.id.roundImage_header) RoundImageView roundImage_header;
+    @BindView(R.id.tv_uncheck) TextView tv_uncheck;
+    @BindView(R.id.tv_hascheck) TextView tv_hascheck;
+    @BindView(R.id.tv_processed) TextView tv_processed;
+    @BindView(R.id.tv_done) TextView tv_done;
+    @BindView(R.id.tv_assigned) TextView tv_assigned;
+    @BindView(R.id.tv_server_processed) TextView tv_server_processed;
+    @BindView(R.id.tv_feedback) TextView tv_feedback;
+    @BindView(R.id.tv_server_done) TextView tv_server_done;
 
     public static final String FLAG_ORDER_KEY = "flag_order";
     private Map<String, Object> orderMap;
     private UserService userService;
+    private OrderTaskService orderTaskService;
 
     private SharedPreferences shared;
     private CustomPopup popup;
+    private LoddingDialog dialog;
 
     private final int httpSec = 1; //获取用户信息
     public static Map<String, Object> mUserData; //用户信息
@@ -103,18 +117,19 @@ public class UserFragment extends Fragment {
 
         mUserData = new HashMap<>();
         userService = new UserServiceImpl();
+        orderTaskService = new OrderTaskServiceImpl();
         orderMap = new HashMap<>();
         shared = getActivity().getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
+        dialog = new LoddingDialog(getActivity());
+        dialog.show();
         getUserInfo();
-
+        getOrderNum();
     }
 
 
 
     public void initView() {
-
-
 
         /**
          * 显示相关角色下面的订单菜单
@@ -145,7 +160,16 @@ public class UserFragment extends Fragment {
                     tv_username.setText(result.get(ResponseKey.USERNAME).toString());
 
                     //设置头像
-                    Glide.with(getActivity()).load(Urls.HOST+result.get(ResponseKey.USER_PIC)).into(roundImage_header);
+//                    Glide.with(getActivity()).load(Urls.HOST+result.get(ResponseKey.USER_PIC)).into(roundImage_header);
+                    RequestOptions options = new RequestOptions();
+                    options.error(R.drawable.image_header_bg);
+                    options.fallback(R.drawable.image_header_bg);
+                    options.placeholder(R.drawable.image_header_bg);
+                    Glide.with(getActivity())
+                            .load(Urls.HOST+result.get(ResponseKey.USER_PIC))
+                            .apply(options)
+                            .into(roundImage_header);
+
                     //判断性别是否为空
                     String strSex = result.get(ResponseKey.SEX).toString();
                     if(!ValidateParam.validateParamIsNull(strSex)){
@@ -301,6 +325,9 @@ public class UserFragment extends Fragment {
      * 获取用户信息
      */
     public void getUserInfo(){
+        if (!dialog.isShowing()){
+            dialog.show();
+        }
         //获取用户信息
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
@@ -323,6 +350,90 @@ public class UserFragment extends Fragment {
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            if (dialog.isShowing()){
+                dialog.dismiss();
+            }
+        }
+
+    }
+
+    public void getOrderNum(){
+        if (!dialog.isShowing()){
+            dialog.show();
+        }
+        Map<String, String> param = new HashMap<>();
+        param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
+        param.put(ResponseKey.CAT, shared.getString(Constant.SHARED.JUESE,"0"));
+
+        try {
+            orderTaskService.onGetOrderCount(param, new HttpResponseCallBack() {
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    if (!shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
+
+                        if (result.get(ResponseKey.UNCHECK).toString().equals("0")){
+                            tv_uncheck.setVisibility(View.GONE);
+                        }else{
+                            tv_uncheck.setText(result.get(ResponseKey.UNCHECK).toString());
+                        }
+
+                        if (result.get(ResponseKey.HASCHECK).toString().equals("0")){
+                            tv_hascheck.setVisibility(View.GONE);
+                        }else{
+                            tv_hascheck.setText(result.get(ResponseKey.HASCHECK).toString());
+                        }
+
+                        if (result.get(ResponseKey.PROCESSED).toString().equals("0")){
+                            tv_processed.setVisibility(View.GONE);
+                        }else{
+                            tv_processed.setText(result.get(ResponseKey.PROCESSED).toString());
+                        }
+                        if (result.get(ResponseKey.DONE).toString().equals("0")){
+                            tv_done.setVisibility(View.GONE);
+                        }else{
+                            tv_done.setText(result.get(ResponseKey.DONE).toString());
+                        }
+                    }else{
+
+                        if (result.get(ResponseKey.ASSIGNED).toString().equals("0")){
+                            tv_assigned.setVisibility(View.GONE);
+                        }else{
+                            tv_assigned.setText(result.get(ResponseKey.ASSIGNED).toString());
+                        }
+
+                        if (result.get(ResponseKey.PROCESSED).toString().equals("0")){
+                            tv_server_processed.setVisibility(View.GONE);
+                        }else{
+                            tv_server_processed.setText(result.get(ResponseKey.PROCESSED).toString());
+                        }
+
+                        if (result.get(ResponseKey.FEEDBACK).toString().equals("0")){
+                            tv_feedback.setVisibility(View.GONE);
+                        }else{
+                            tv_feedback.setText(result.get(ResponseKey.FEEDBACK).toString());
+                        }
+                        if (result.get(ResponseKey.DONE).toString().equals("0")){
+                            tv_server_done.setVisibility(View.GONE);
+                        }else{
+                            tv_server_done.setText(result.get(ResponseKey.DONE).toString());
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            if (dialog.isShowing()){
+                dialog.dismiss();
+            }
         }
     }
 }

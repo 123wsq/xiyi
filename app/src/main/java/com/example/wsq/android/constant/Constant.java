@@ -9,6 +9,7 @@ public class Constant {
     public static final String SECRET  = "sadofjasodfkf45sdf54";
 
     public static final String SHARED_NAME = "XIYI";
+    public static final String SHARED_RECORD = "search_Record";
 
     public static final String[] SEX = {"男", "女"};
     public static final String[] ROLE = {"服务工程师", "企业工程师", "企业管理工程师"};

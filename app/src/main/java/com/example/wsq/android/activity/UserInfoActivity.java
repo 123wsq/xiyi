@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
@@ -102,7 +103,16 @@ public class UserInfoActivity extends Activity{
 
         tv_username.setText(UserFragment.mUserData.get(ResponseKey.USERNAME).toString()+"");
         //设置头像
-        Glide.with(this).load(Urls.HOST+UserFragment.mUserData.get(ResponseKey.USER_PIC)).into(image_header);
+//        Glide.with(this).load(Urls.HOST+UserFragment.mUserData.get(ResponseKey.USER_PIC)).into(image_header);
+        RequestOptions options = new RequestOptions();
+        options.error(R.drawable.image_header_bg);
+        options.fallback(R.drawable.image_header_bg);
+        options.placeholder(R.drawable.image_header_bg);
+        Glide.with(this)
+                .load(Urls.HOST+UserFragment.mUserData.get(ResponseKey.USER_PIC))
+                .apply(options)
+                .into(image_header);
+
         String name = UserFragment.mUserData.get(ResponseKey.NAME).toString();
         tv_name.setText( "****"+name.substring(name.length()-1));
         tv_tel.setText(UserFragment.mUserData.get(ResponseKey.TEL).toString()+" 已验证");

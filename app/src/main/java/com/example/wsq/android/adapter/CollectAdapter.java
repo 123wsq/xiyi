@@ -2,6 +2,7 @@ package com.example.wsq.android.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.CollectActivity;
 import com.example.wsq.android.activity.ProductInfoActivity;
@@ -71,8 +73,16 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.MyViewHo
         holder.tv_product_title.setText(mData.get(position).get(ResponseKey.TITLE).toString()+"");
         int num = mRandom.nextInt(mData.size());
         String url = mData.get(position).get(ResponseKey.THUMB).toString();
-        if (url!=null || url.length()!=0){
-            Glide.with(mContext).load(Urls.HOST+Urls.GET_IMAGES+url).into(holder.iv_product);
+        if (!TextUtils.isEmpty(url)){
+            RequestOptions options = new RequestOptions();
+            options.error(R.drawable.image_no);
+            options.fallback(R.drawable.image_no);
+            options.placeholder(R.drawable.image_no);
+            Glide.with(mContext)
+                    .load(Urls.HOST+Urls.GET_IMAGES+url)
+                    .apply(options)
+                    .into(holder.iv_product);
+//            Glide.with(mContext).load(Urls.HOST+Urls.GET_IMAGES+url).into(holder.iv_product);
         }else{
             holder.iv_product.setImageResource(images[num]);
         }

@@ -57,6 +57,7 @@
         <activity android:name=".activity.OrderMessageInfoActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.SearchActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.DeviceListActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.FaultActivity" android:screenOrientation="portrait"></activity>
 
         <!--图片选择器-->
         <provider
@@ -246,4 +247,5 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+    
 </manifest>

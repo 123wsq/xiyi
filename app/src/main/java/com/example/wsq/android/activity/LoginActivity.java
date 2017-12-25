@@ -160,6 +160,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                                      */
                                     JPushInterface.setAlias(LoginActivity.this, 0,data.get(ResponseKey.ID).toString());
                                     finish();
+
                                 }
 
 
@@ -167,6 +168,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
                             @Override
                             public void onCallFail(String msg) {
+                                dialog.dismiss();
                             }
 
 
@@ -174,8 +176,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                     } catch (Exception e) {
                         e.printStackTrace();
 
+                    }finally {
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                     }
-                    dialog.dismiss();
+
                     break;
 
             }

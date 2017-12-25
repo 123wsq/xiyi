@@ -25,16 +25,22 @@ import com.example.wsq.android.adapter.UploadAdapter;
 import com.example.wsq.android.bean.CameraBean;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
+import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.view.CustomPopup;
+import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.tools.PictureFileUtils;
+import com.orhanobut.logger.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -67,12 +73,13 @@ public class DeviceWarrantyActivity extends Activity{
     private List<CameraBean> mData;
     private CustomPopup popup;
 
-
-
+    private LoddingDialog dialog;
     private SharedPreferences shared;
     private OrderTaskService deviceTaskService;
     private static final int RESULT_VIDEO = 0x00000011;
     public static final int RESULT_IMAGE = 0x00000012;
+    public boolean isUpdate = false;
+    private Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,6 +101,7 @@ public class DeviceWarrantyActivity extends Activity{
         tv_title.setText("设备维修");
 
 
+        dialog = new LoddingDialog(this);
         mData = new ArrayList<>();
         CameraBean bean = new CameraBean();
         bean.setType(1);
@@ -108,8 +116,51 @@ public class DeviceWarrantyActivity extends Activity{
         tv_tel.setText(shared.getString(Constant.SHARED.TEL, ""));
         tv_company.setText(shared.getString(Constant.SHARED.COMPANY,""));
 
+
        initPopup();
 
+       onEdit();
+
+    }
+
+    public void onEdit(){
+
+        intent = getIntent();
+        Logger.d(intent.getStringExtra(ResponseKey.IMGS));
+        isUpdate = intent.getBooleanExtra(OrderInfoActivity.UPDATE, false);
+        if (!isUpdate){
+            tv_title.setText("设备维修");
+            return;
+        }else{
+            tv_title.setText("订单修改");
+        }
+
+        String imags = intent.getStringExtra(ResponseKey.IMGS);
+
+        // 清空所有数据
+        try {
+            JSONArray jsona = new JSONArray(imags);
+            for (int i = 0; i < jsona.length(); i++) {
+                List<LocalMedia> list = new ArrayList<>();
+                LocalMedia media = new LocalMedia();
+                media.setCompressPath(Urls.HOST+Urls.GET_IMAGES+jsona.get(i).toString());
+                media.setCompressed(true);
+
+                list.add(media);
+                if (jsona.get(i).toString().endsWith(".mp4")){
+                    onSetData(3, list);
+                }else{
+                    onSetData(2, list);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        et_model.setText(intent.getStringExtra(ResponseKey.XINGHAO));
+        et_num.setText(intent.getStringExtra(ResponseKey.BIANHAO));
+        et_description.setText(intent.getStringExtra(ResponseKey.DES));
     }
 
 
@@ -190,7 +241,13 @@ public class DeviceWarrantyActivity extends Activity{
                 break;
             case R.id.tv_repairs:
                 //开始报修
-                onSubmitRepairs();
+                if (isUpdate){
+
+                    onUpdateOrder();
+                }else{
+                    onSubmitRepairs();
+                }
+
                 break;
         }
     }
@@ -293,7 +350,6 @@ public class DeviceWarrantyActivity extends Activity{
      */
     public void onSetData(int type, List<LocalMedia> list){
 
-
         if (list.size()==0){
 
         }else if(list.size()+(mData.size()-1)==3){
@@ -307,7 +363,7 @@ public class DeviceWarrantyActivity extends Activity{
                     bean.setFile_path(list.get(i).getPath());
                 }
 
-
+                bean.setChange(false);
                 bean.setType(type);
                 bean.setShow(true);
                 mData.add(bean);
@@ -321,6 +377,7 @@ public class DeviceWarrantyActivity extends Activity{
                 }else{
                     bean.setFile_path(list.get(i).getPath());
                 }
+                bean.setChange(false);
                 bean.setType(type);
                 bean.setShow(true);
                 mData.add(bean);
@@ -339,11 +396,15 @@ public class DeviceWarrantyActivity extends Activity{
      */
     public void onSubmitRepairs(){
 
+
         if (validate()){
+
+            dialog.show();
             final Map<String, String> param = new HashMap<>();
             param.put(ResponseKey.XINGHAO, et_model.getText().toString()+"");
             param.put(ResponseKey.BIANHAO, et_num.getText().toString()+"");
             param.put(ResponseKey.DES, et_description.getText().toString());
+
 
 
             List<Map<String, Object>> listFile = new ArrayList<>();
@@ -363,13 +424,13 @@ public class DeviceWarrantyActivity extends Activity{
             }
 
             param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
-            param.put(ResponseKey.IMG_COUNT, listFile.size()+"");
+            param.put(ResponseKey.IMG_COUNT, (listFile.size())+"");
 
             try {
                 deviceTaskService.onDeviceRepairs(param, listFile,new HttpResponseCallBack() {
                     @Override
                     public void callBack(Map<String, Object> result) {
-                        Toast.makeText(DeviceWarrantyActivity.this, param.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(DeviceWarrantyActivity.this, param.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
                         finish();
                     }
 
@@ -381,10 +442,89 @@ public class DeviceWarrantyActivity extends Activity{
                 });
             } catch (Exception e) {
                 e.printStackTrace();
+            }finally {
+                if(dialog.isShowing()){
+                    dialog.dismiss();
+                }
             }
         }
     }
 
+
+    /**
+     * 修改报修信息
+     */
+    public void onUpdateOrder(){
+
+
+        if (validate()){
+
+            dialog.show();
+            final Map<String, String> param = new HashMap<>();
+            param.put(ResponseKey.XINGHAO, et_model.getText().toString()+"");
+            param.put(ResponseKey.BIANHAO, et_num.getText().toString()+"");
+            param.put(ResponseKey.DES, et_description.getText().toString());
+
+            param.put(ResponseKey.ID, intent.getIntExtra(ResponseKey.ID, 0)+"");
+
+            List<Map<String, Object>> listFile = new ArrayList<>();
+            int numflag = 1;
+            for (int i = 0; i < mData.size(); i++) {
+                if (mData.get(i).getType()!=1) {
+                    try {
+                        File f = new File(mData.get(i).getFile_path());
+                        if (f.exists()){  //如果文件是从本地读取出来 则表示是新增或修改的图片
+                            Logger.d("文件路径    "+f.getAbsolutePath());
+                            Map<String, Object> map = new HashMap<>();
+                            map.put(ResponseKey.IMGS+(i+1),f);
+                            map.put("fileType", mData.get(i).getType() == 2 ?
+                                    OkhttpUtil.FILE_TYPE_IMAGE : OkhttpUtil.FILE_TYPE_VIDEO);
+                            listFile.add(map);
+                        }else{  //为未修改的资源
+
+                            String url = mData.get(i).getFile_path()
+                                    .substring(mData.get(i).getFile_path().lastIndexOf("/")+1);
+                            param.put(ResponseKey.IMGS + numflag, url);
+                            numflag++;
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
+            param.put(ResponseKey.IMG_COUNT, (numflag-1+listFile.size())+"");
+
+            try {
+                deviceTaskService.onUpdateOrder(param, listFile,new HttpResponseCallBack() {
+                    @Override
+                    public void callBack(Map<String, Object> result) {
+//                        Toast.makeText(DeviceWarrantyActivity.this, param.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                    @Override
+                    public void onCallFail(String msg) {
+
+                    }
+
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if(dialog.isShowing()){
+                    dialog.dismiss();
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 文件删除是发送的广播
+     */
     public void onRegister(){
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.ACTION.IMAGE_DELETE);
@@ -409,9 +549,14 @@ public class DeviceWarrantyActivity extends Activity{
     public void onDeleteData(String path){
 
 
-        for (int i = 0; i < mData.size(); i++) {
-            if (mData.get(i).getFile_path().equals(path)){
-                mData.remove(i);
+
+        for (int i = mData.size()-1; i  >= 0 ; i --) {
+            if (mData.get(i).getType() != 1){
+                Logger.d(""+path +"        "+mData.get(i).getFile_path());
+                if (mData.get(i).getFile_path().equals(path)) {
+                    Logger.d("删除路径  "+ path);
+                    mData.remove(i);
+                }
             }
         }
 

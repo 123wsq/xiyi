@@ -17,6 +17,7 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.activity.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.KnowledgeActivity;
 import com.example.wsq.android.activity.NewsActivity;
+import com.example.wsq.android.activity.OrderActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.loader.GlideImageLoader;
@@ -27,7 +28,9 @@ import com.example.wsq.plugin.banner.BannerConfig;
 import com.example.wsq.plugin.banner.Transformer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -122,6 +125,13 @@ public class MainFragment extends Fragment {
                 break;
             case R.id.ll_engineer:
 
+                if (shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
+                    Map<String, Object> mapP = new HashMap<>();
+                    mapP.put(UserFragment.FLAG_ORDER_KEY, 5);
+                    IntentFormat.startActivity(getActivity(), OrderActivity.class, mapP);
+                }else{
+                    Toast.makeText(getActivity(), "您没有权限", Toast.LENGTH_SHORT).show();
+                }
 
                 break;
             case R.id.ll_news:

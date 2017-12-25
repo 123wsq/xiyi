@@ -46,10 +46,8 @@
             android:text="身份证号码"
             android:gravity="center_vertical"
             android:textSize="@dimen/default_text_size"
+            android:drawableRight="@drawable/image_important"
             />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/et_sfz"
@@ -84,9 +82,7 @@
             android:gravity="center_vertical"
             android:textSize="@dimen/default_text_size"
             />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
 
         <TextView
             android:id="@+id/tv_birth"
@@ -118,10 +114,8 @@
             android:text="手机号码"
             android:gravity="center_vertical"
             android:textSize="@dimen/default_text_size"
+            android:drawableRight="@drawable/image_important"
             />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/et_tel"

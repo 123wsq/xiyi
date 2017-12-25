@@ -20,6 +20,13 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.view.LoddingDialog;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.json.JSONArray;
 
@@ -47,12 +54,17 @@ public class CollectActivity extends Activity{
     @BindView(R.id.ll_collect_buttom) LinearLayout ll_collect_buttom;
     @BindView(R.id.cb_all_select)
     CheckBox cb_all_select;
+    @BindView(R.id.store_house_ptr_frame)
+    SmartRefreshLayout store_house_ptr_frame;
 
+    private LoddingDialog dialog;
     private CollectAdapter mAdapter;
     private List<Map<String, Object>> mData;
     private UserService userService;
     private SharedPreferences shared;
-    private int curPage = 0;
+    private int curPage = 1;
+    private int total = 1;
+    private int unitPage = 15;
     private boolean isEditCollect = false;
     public static final String COLLECT = "COLLECT";
 
@@ -69,6 +81,7 @@ public class CollectActivity extends Activity{
 
     public void init(){
 
+        dialog = new LoddingDialog(this);
         userService = new UserServiceImpl();
         mData = new ArrayList<>();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
@@ -78,10 +91,41 @@ public class CollectActivity extends Activity{
 
         mAdapter = new CollectAdapter(this, mData);
         rv_RecyclerView.setAdapter(mAdapter);
-//        mAdapter.setCollect();
-        getCollectData();
+
+        setRefresh();
+        getCollectData(null, 0);
     }
 
+    public void setRefresh(){
+
+        store_house_ptr_frame.setRefreshHeader(new ClassicsHeader(this)
+                .setProgressResource(R.drawable.refresh_loadding).setDrawableProgressSize(40));
+        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(this)
+        );
+        store_house_ptr_frame.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mData.clear();
+                curPage = 1;
+                refreshlayout.resetNoMoreData();
+                getCollectData(refreshlayout, 1 );
+            }
+        });
+        store_house_ptr_frame.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                if (curPage == (total % unitPage ==0 ? total/unitPage : total/unitPage +1)){
+
+                    refreshlayout.finishLoadmoreWithNoMoreData();
+                }else {
+                    curPage++;
+                    getCollectData(refreshlayout, 2);
+                }
+
+            }
+        });
+    }
     @OnCheckedChanged({R.id.cb_all_select})
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
 
@@ -94,8 +138,8 @@ public class CollectActivity extends Activity{
                 finish();
             break;
             case R.id.tv_refresh:
-
-                getCollectData();
+                curPage = 1;
+                getCollectData(null, 0);
                 break;
             case R.id.tv_edit:
                 if (isEditCollect){
@@ -116,6 +160,7 @@ public class CollectActivity extends Activity{
                 mAdapter.onEditCollect(isEditCollect);
                 break;
             case R.id.tv_finish:
+
                 onCancelCollect();
                 isEditCollect = false;
                 tv_edit.setText("编辑");
@@ -130,16 +175,19 @@ public class CollectActivity extends Activity{
     /**
      * 获取收藏列表
      */
-    public void getCollectData(){
+    public void getCollectData(final RefreshLayout refreshLayout, final int type){
+        dialog.show();
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
-        param.put(ResponseKey.PAGE, (curPage+1)+"");
+        param.put(ResponseKey.PAGE, curPage+"");
 
         try {
             userService.getCollectList(param, new HttpResponseCallBack() {
                 @Override
                 public void callBack(Map<String, Object> result) {
 
+                    total = (int) result.get(ResponseKey.TOTAL);
+                    unitPage = (int) result.get(ResponseKey.PER_PAGE);
                     List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
 
                     if (list.size()!= 0){
@@ -153,14 +201,31 @@ public class CollectActivity extends Activity{
                         ll_nodata.setVisibility(View.GONE);
                         rv_RecyclerView.setVisibility(View.VISIBLE);
                     }
+                    if (type == 1){
+                        refreshLayout.finishRefresh();
+                    }else if(type ==2 ){
+                        refreshLayout.finishLoadmore();
+                    }
+                    dialog.dismiss();
                 }
 
                 @Override
                 public void onCallFail(String msg) {
-                    Toast.makeText(CollectActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    if (type == 1){
+                        refreshLayout.finishRefresh();
+                    }else if(type ==2 ){
+                        refreshLayout.finishLoadmore();
+                    }
+                    dialog.dismiss();
                 }
             });
         } catch (Exception e) {
+            if (type == 1){
+                refreshLayout.finishRefresh();
+            }else if(type ==2 ){
+                refreshLayout.finishLoadmore();
+            }
+            dialog.dismiss();
             e.printStackTrace();
         }
 
@@ -171,22 +236,18 @@ public class CollectActivity extends Activity{
      */
     public void onCancelCollect(){
 
+        dialog.show();
         Map<String, String> param = new HashMap<>();
         final List<String> selectData = mAdapter.getSelected();
 
         if (selectData.size()==0){
 
+            dialog.dismiss();
             return ;
         }
         JSONArray jsona = new JSONArray();
         for (int i = 0; i < selectData.size(); i++) {
-//            JSONObject json = new JSONObject();
-//            try {
-//                json.put(ResponseKey.ID, selectData.get(i));
-//                jsona.put(json);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+
             jsona.put(selectData.get(i));
         }
 
@@ -211,14 +272,16 @@ public class CollectActivity extends Activity{
                         }
                         mAdapter.notifyDataSetChanged();
                     }
+                    dialog.dismiss();
                 }
 
                 @Override
                 public void onCallFail(String msg) {
-                    Toast.makeText(CollectActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                 }
             });
         } catch (Exception e) {
+            dialog.dismiss();
             e.printStackTrace();
         }
     }

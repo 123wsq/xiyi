@@ -84,6 +84,7 @@
             android:text="公司名字:"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
+            android:drawableRight="@drawable/image_important"
             />
 
         <TextView
@@ -114,6 +115,7 @@
             android:text="设备品牌型号:"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
+            android:drawableRight="@drawable/image_important"
             />
 
         <EditText
@@ -145,6 +147,7 @@
             android:text="出厂编号:"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
+            android:drawableRight="@drawable/image_important"
             />
 
         <EditText
@@ -175,6 +178,7 @@
             android:text="报修人姓名:"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
+            android:drawableRight="@drawable/image_important"
             />
 
         <TextView
@@ -204,6 +208,7 @@
             android:text="报修人电话:"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
+            android:drawableRight="@drawable/image_important"
             />
 
         <TextView
@@ -235,6 +240,7 @@
             android:layout_marginLeft="@dimen/default_radius"
             android:layout_marginTop="@dimen/default_radius"
             android:layout_marginBottom="@dimen/default_radius"
+            android:drawableRight="@drawable/image_important"
             />
 
         <GridView
@@ -264,6 +270,7 @@
             android:gravity="center_vertical"
             android:layout_marginTop="@dimen/default_radius"
             android:layout_marginLeft="@dimen/default_radius"
+            android:drawableRight="@drawable/image_important"
             />
 
         <EditText

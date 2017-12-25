@@ -142,4 +142,22 @@ public class ResponseKey {
 
     public static final String XIAOXI = "xiaoxi";
 
+    public static final String TOTAL = "total";
+
+    public static final String PER_PAGE= "per_page";
+
+    public static final String  PROCESSED = "processed";
+
+    public static final String  HASCHECK = "hascheck";
+
+    public static final String  UNCHECK = "uncheck";
+
+    public static final String ASSIGNED = "assigned";
+
+    public static final String  FEEDBACK = "feedback";
+
+    public static final String DONE  = "done";
+
+
+
 }

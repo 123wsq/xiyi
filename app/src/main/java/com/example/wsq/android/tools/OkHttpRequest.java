@@ -53,7 +53,7 @@ public class OkHttpRequest {
             public void onResponse(String response) {
 
                 String result = UnicodeUtil.unicodeToString(response);
-                com.orhanobut.logger.Logger.d(result);
+                com.orhanobut.logger.Logger.json(result);
                 try {
 
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
@@ -122,7 +122,7 @@ public class OkHttpRequest {
             public void onResponse(String response) {
 
                 String result = UnicodeUtil.unicodeToString(response);
-                com.orhanobut.logger.Logger.d(result);
+                com.orhanobut.logger.Logger.json(result);
                 try {
 
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
@@ -192,6 +192,7 @@ public class OkHttpRequest {
 
             @Override
             public void onResponse(String response) {
+
                 String result = UnicodeUtil.unicodeToString(response);
 
                 com.orhanobut.logger.Logger.d(result);
@@ -240,7 +241,7 @@ public class OkHttpRequest {
             @Override
             public void onResponse(String response) {
                 String result = UnicodeUtil.unicodeToString(response);
-                com.orhanobut.logger.Logger.d(result);
+                com.orhanobut.logger.Logger.json(result);
                 try {
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
                     callBack.callBack(map);
@@ -248,6 +249,7 @@ public class OkHttpRequest {
                     e.printStackTrace();
                 }
             }
+
 
             @Override
             public void onProgress(float progress, long total) {

@@ -109,4 +109,14 @@ public class Urls {
 
 
     public static final String SEARCH = "/api/search";
+
+    /**
+     * 订单处理的个数
+     */
+    public static final String ORDER_COUNT= "/api/member/order_count";
+
+    /**
+     * 在订单没有分配之前修改订单数据
+     */
+    public static final String ORDER_UPDATE = "/api/member/editRecord";
 }

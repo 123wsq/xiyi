@@ -2,6 +2,7 @@ package com.example.wsq.android.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.tv_product_title.setText(mData.get(position).get(ResponseKey.TITLE).toString()+"");
         int num = mRandom.nextInt(mData.size());
         String url = mData.get(position).get(ResponseKey.THUMB).toString();
-        if (url!=null || url.length()!=0){
+        if (!TextUtils.isEmpty(url)){
             Glide.with(mContext).load(Urls.HOST+Urls.GET_IMAGES+url).into(holder.iv_product);
         }else{
             holder.iv_product.setImageResource(images[num]);

@@ -125,4 +125,22 @@ public interface OrderTaskService {
      */
     void onSearchDeviceList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
 
+
+    /**
+     * 获取处理订单个数
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onGetOrderCount(Map<String, String> params, HttpResponseCallBack callBack)throws  Exception;
+
+
+    /**
+     * 修改订单
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onUpdateOrder(Map<String, String> params, List<Map<String, Object>> list, HttpResponseCallBack callBack)throws  Exception;
+
 }

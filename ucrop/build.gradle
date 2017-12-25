@@ -2,9 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-
-
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 26
@@ -14,7 +11,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -24,9 +20,8 @@ android {
     lintOptions {
         abortOnError false
     }
-
     resourcePrefix 'ucrop_'
-
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {
@@ -37,4 +32,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.github.bumptech.glide:glide:4.0.0'
+    implementation project(':refresh')
 }

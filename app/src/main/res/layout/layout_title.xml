@@ -103,15 +103,27 @@
 
                 />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_message"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/image_msg"
-            android:layout_marginRight="@dimen/default_margin"
             android:layout_marginLeft="@dimen/default_margin"
-            />
+            >
+            <ImageView
+                android:id="@+id/iv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_msg"
+                android:layout_centerInParent="true"
+                />
+            <View
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/default_radius"
+                android:background="@drawable/shape_num"
+                />
+        </RelativeLayout>
+
     </LinearLayout>
     <ImageView
         android:id="@+id/iv_setting"

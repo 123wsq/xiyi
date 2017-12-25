@@ -18,6 +18,12 @@ import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.view.LoddingDialog;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,12 +43,15 @@ public class DeviceListActivity extends Activity{
     @BindView(R.id.rv_RecyclerView) RecyclerView rv_RecyclerView;
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.ll_nodata) LinearLayout ll_nodata;
-    private OrderTaskService orderTaskService;
+    @BindView(R.id.store_house_ptr_frame) SmartRefreshLayout store_house_ptr_frame;
 
+    OrderTaskService orderTaskService;
     private ProductAdapter mAdapter;
     private LoddingDialog dialog;
-    private int curPage = 0;
+    private int curPage = 1;
     private List<Map<String, Object>> mData;
+    private int total =1;
+    private int unitPage = 15;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,8 +78,41 @@ public class DeviceListActivity extends Activity{
         rv_RecyclerView.setAdapter(mAdapter);
 
         dialog = new LoddingDialog(this);
-        dialog.show();
-        onStartSearch();
+
+        setRefresh();
+        onStartSearch(null, 0);
+
+    }
+
+    public void setRefresh(){
+
+        store_house_ptr_frame.setRefreshHeader(new ClassicsHeader(this)
+                .setProgressResource(R.drawable.refresh_loadding).setDrawableProgressSize(40));
+        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(this)
+                );
+        store_house_ptr_frame.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mData.clear();
+                curPage = 1;
+                refreshlayout.resetNoMoreData();
+                onStartSearch(refreshlayout, 1 );
+            }
+        });
+        store_house_ptr_frame.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                if (curPage == (total % unitPage ==0 ? total/unitPage : total/unitPage +1)){
+
+                    refreshlayout.finishLoadmoreWithNoMoreData();
+                }else {
+                    curPage++;
+                    onStartSearch(refreshlayout, 2);
+                }
+
+            }
+        });
     }
 
     @OnClick({R.id.iv_back, R.id.tv_refresh})
@@ -80,14 +122,21 @@ public class DeviceListActivity extends Activity{
             finish();
             break;
             case R.id.tv_refresh:
-                onStartSearch();
+                curPage = 1;
+                onStartSearch(null, 0);
                 break;
         }
     }
 
-    public void onStartSearch(){
+    /**
+     * 加载数据
+     * @param refreshLayout  用于修改加载状态
+     * @param type   判断是加载还是刷新 0表示初始加载   1 表示刷新  2 表示 加载更多
+     */
+    public void onStartSearch(final RefreshLayout refreshLayout, final int type){
+        dialog.show();
         Map<String, String> param = new HashMap<>();
-        param.put(ResponseKey.PAGE, (curPage+1)+"");
+        param.put(ResponseKey.PAGE, curPage+"");
         param.put(ResponseKey.KEYWORDS, getIntent().getStringExtra(ResponseKey.KEYWORDS));
         param.put(ResponseKey.CAT, "1");
 
@@ -96,6 +145,9 @@ public class DeviceListActivity extends Activity{
                 @Override
                 public void callBack(Map<String, Object> result) {
 
+                    total = (int) result.get(ResponseKey.TOTAL);
+
+                    unitPage = (int) result.get(ResponseKey.PER_PAGE);
                     List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
 
 
@@ -110,16 +162,29 @@ public class DeviceListActivity extends Activity{
                         ll_nodata.setVisibility(View.GONE);
                         rv_RecyclerView.setVisibility(View.VISIBLE);
                     }
+                    if (type == 1){
+                        refreshLayout.finishRefresh();
+                    }else if(type ==2 ){
+                        refreshLayout.finishLoadmore();
+                    }
+                    dialog.dismiss();
                 }
 
                 @Override
                 public void onCallFail(String msg) {
-
+                    if (type == 1){
+                        refreshLayout.finishRefresh();
+                    }else if(type ==2 ){
+                        refreshLayout.finishLoadmore();
+                    }
+                    dialog.dismiss();
                 }
             });
         } catch (Exception e) {
+            dialog.dismiss();
             e.printStackTrace();
+
         }
-        dialog.dismiss();
+
     }
 }

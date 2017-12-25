@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.bean.CameraBean;
 import com.example.wsq.android.constant.Constant;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -78,12 +82,25 @@ public class UploadAdapter extends BaseAdapter{
             File file = new File(mData.get(position).getFile_path());
             if (file.exists()){
                 mRetriever.setDataSource(file.getAbsolutePath());
-                Bitmap bitmap=mRetriever.getFrameAtTime();
-                holder.iv_pictrue.setImageBitmap(bitmap);
+            }else{
+
+//                mRetriever.setDataSource(mData.get(position).getFile_path(), new HashMap<String, String>());
+                new MyAsyncTask(mData.get(position).getFile_path(), holder.iv_pictrue).execute();
             }
+//            Bitmap bitmap=mRetriever.getFrameAtTime();
+//            holder.iv_pictrue.setImageBitmap(bitmap);
+//            mRetriever.release();
         }else{
             if (mData.get(position).getFile_path().startsWith("http:")){
-                Glide.with(mContext).load(mData.get(position).getFile_path()).into(holder.iv_pictrue);
+                RequestOptions options = new RequestOptions();
+                options.error(R.drawable.image_no);
+                options.fallback(R.drawable.image_no);
+                options.placeholder(R.drawable.image_no);
+                Glide.with(mContext)
+                        .load(mData.get(position).getFile_path())
+                        .apply(options)
+                        .into(holder.iv_pictrue);
+//                Glide.with(mContext).load(mData.get(position).getFile_path()).into(holder.iv_pictrue);
 
             }else{
                 holder.iv_pictrue.setImageBitmap(getLoacalBitmap(mData.get(position).getFile_path()));
@@ -102,7 +119,7 @@ public class UploadAdapter extends BaseAdapter{
 
                 Intent intent = new Intent();
                 intent.setAction(Constant.ACTION.IMAGE_DELETE);
-                intent.putExtra("filePath",mData.get(position).file_path);
+                intent.putExtra("filePath",mData.get(position).getFile_path());
                 mContext.sendBroadcast(intent);
             }
         });
@@ -130,5 +147,38 @@ public class UploadAdapter extends BaseAdapter{
     class ViewHolder{
         ImageView iv_pictrue;
         ImageView iv_delete;
+    }
+
+    class MyAsyncTask extends AsyncTask<String, String,Bitmap>{
+
+        private ImageView imageView;
+        private String url;
+        MediaMetadataRetriever mRetriever;
+        public MyAsyncTask(String url, ImageView imageView){
+            this.url = url;
+            this.imageView = imageView;
+            mRetriever = new MediaMetadataRetriever();
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+
+            mRetriever.setDataSource(url, new HashMap<String, String>());
+            Bitmap bitmap=mRetriever.getFrameAtTime();
+            return bitmap;
+        }
+
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+
+//            mRetriever.release();
+
+            if (bitmap != null){
+                Logger.d("视频加载完成");
+                imageView.setImageBitmap(bitmap);
+            }
+        }
     }
 }

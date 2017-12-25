@@ -71,7 +71,6 @@ public class FeedbackActivity extends Activity{
 
 
     private OrderTaskService deviceTaskService;
-    private UploadAdapter mAdapter;
     private List<CameraBean> mData;
     private CustomPopup popup;
     private SharedPreferences shared;
@@ -82,6 +81,8 @@ public class FeedbackActivity extends Activity{
     private int id;
     private Intent intent;
     private static final int REQUEST_CODE = 0x00000011;
+
+    private UploadAdapter mAdapter;
 
 
     @Override

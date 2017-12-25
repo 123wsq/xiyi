@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,15 +36,16 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/14.
  */
 
-public class OrderInfoActivity extends Activity implements View.OnClickListener {
+public class OrderInfoActivity extends Activity{
 
-    @BindView(R.id.iv_back) ImageView iv_back;
     @BindView(R.id.tv_title) TextView tv_title;
+    @BindView(R.id.tv_edit) TextView tv_edit;
     @BindView(R.id.tv_ordernum) TextView tv_ordernum;
     @BindView(R.id.tv_companyName) TextView tv_companyName;
     @BindView(R.id.tv_repairs_time)TextView tv_repairs_time;
@@ -78,6 +78,8 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private SharedPreferences shared;
     private CustomDefaultDialog defaultDialog;
 
+    public static final String UPDATE = "isUpdate";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,15 +97,15 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
         mData = new ArrayList<>();
         mResultInfo = new HashMap<>();
-//        CameraBean bean = new CameraBean();
-//        bean.setType(1);
-//        mData.add(bean);
+
         orderTaskService = new OrderTaskServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         id = getIntent().getIntExtra(ResponseKey.ID,0 )+"";
         token = shared.getString(Constant.SHARED.TOKEN, "");
         role = shared.getString(Constant.SHARED.JUESE,"");
         status = getIntent().getStringExtra(ResponseKey.STATUS);
+
+        tv_edit.setVisibility(status.equals("-1") ? View.VISIBLE : View.GONE);
 
     }
 
@@ -114,10 +116,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         rv_gridview.setAdapter(mAdapter);
 
         tv_title.setText("订单详情");
-        iv_back.setOnClickListener(this);
-        tv_affirm.setOnClickListener(this);
-        tv_negation.setOnClickListener(this);
-        tv_transfer.setOnClickListener(this);
+
         getOrderInfo();
 
         //设置服务费用显示情况  1.当角色为企业工程师的时候是不能显示费用
@@ -138,7 +137,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
     }
 
-    @Override
+    @OnClick({R.id.iv_back, R.id.tv_affirm, R.id.tv_negation, R.id.tv_transfer, R.id.tv_edit})
     public void onClick(View v) {
 
         switch (v.getId()){
@@ -186,6 +185,10 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 //                Map<String, Object> map = new HashMap<>();
 //                map.put(ResponseKey.ID, id);
                 IntentFormat.startActivity(this, FeedbackActivity.class, mResultInfo);
+                break;
+            case R.id.tv_edit:
+                mResultInfo.put(UPDATE, true);
+                IntentFormat.startActivity(this, DeviceWarrantyActivity.class, mResultInfo);
                 break;
         }
 
