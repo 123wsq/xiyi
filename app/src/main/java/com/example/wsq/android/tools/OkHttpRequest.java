@@ -122,7 +122,8 @@ public class OkHttpRequest {
             public void onResponse(String response) {
 
                 String result = UnicodeUtil.unicodeToString(response);
-                com.orhanobut.logger.Logger.json(result);
+
+                com.orhanobut.logger.Logger.d(result);
                 try {
 
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
@@ -141,10 +142,11 @@ public class OkHttpRequest {
                             }
                             map.put(ResponseKey.DATA, list);
                         }else{
-                            Log.e(TAG, "未知数据格式");
+                            callBack.onCallFail("未知数据格式");
                         }
 
                     }
+
 
                     if(!map.containsKey(ResponseKey.CODE)){
                         callBack.callBack(map);
@@ -258,5 +260,78 @@ public class OkHttpRequest {
             }
         });
 
+    }
+
+
+    /**
+     * ******************************************************************************************
+     * @param url
+     * @param params
+     * @param callBack
+     */
+    public static void sendHttpGet(String url, Map<String, String> params, final HttpResponseCallBack callBack){
+
+
+        long timeMillis = System.currentTimeMillis();
+        params.put("timestamp", timeMillis+"");
+        String sign = MD5Util.encrypt(Constant.SECRET+timeMillis+Constant.SECRET);
+        params.put("sign", sign);
+
+        String path = Urls.HOST + url;
+        com.orhanobut.logger.Logger.d("url="+path +"\nparam="+params.toString());
+        OkhttpUtil.okHttpGet(path, params, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+                String result = UnicodeUtil.unicodeToString(response);
+
+                com.orhanobut.logger.Logger.d(result);
+                try {
+
+                    Map<String, Object> map = ParamFormat.onJsonToMap(result);
+
+                    if (map.containsKey(ResponseKey.DATA)){
+
+                        if (map.get(ResponseKey.DATA).toString().startsWith("{")) {
+                            map.put(ResponseKey.DATA, ParamFormat.onJsonToMap(map.get(ResponseKey.DATA).toString()));
+
+                        }else if(map.get(ResponseKey.DATA).toString().startsWith("[")){
+                            JSONArray jsona = new JSONArray(map.get(ResponseKey.DATA).toString());
+                            List<Map<String, Object>> list = new ArrayList<>();
+
+                            for (int i = 0 ; i< jsona.length(); i ++){
+                                list.add(ParamFormat.onJsonToMap(jsona.getJSONObject(i).toString()));
+                            }
+                            map.put(ResponseKey.DATA, list);
+                        }else{
+                            callBack.onCallFail("未知数据格式");
+                        }
+
+                    }
+
+
+                    if(!map.containsKey(ResponseKey.CODE)){
+                        callBack.callBack(map);
+                    }else {
+                        if ((int) map.get(ResponseKey.CODE) == 1001) {//成功
+
+                            callBack.callBack(map);
+
+                        } else {
+                            callBack.onCallFail(map.get(ResponseKey.MESSAGE).toString());
+                        }
+                    }
+                } catch (Exception e) {
+                    callBack.onCallFail("数据解析异常");
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 }

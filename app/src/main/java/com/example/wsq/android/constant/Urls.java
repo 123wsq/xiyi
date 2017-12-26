@@ -1,6 +1,6 @@
 package com.example.wsq.android.constant;
 
-/**
+g/**
  * Created by wsq on 2017/12/11.
  */
 
@@ -119,4 +119,59 @@ public class Urls {
      * 在订单没有分配之前修改订单数据
      */
     public static final String ORDER_UPDATE = "/api/member/editRecord";
+
+    /**
+     * 设置提现密码
+     */
+    public static final String SETTING_PAY_PSD = "/api/paypasswd";
+
+    /**
+     * 修改提现密码
+     */
+    public static final String UPDATE_PAY_PSD = "/api/editpaypass";
+
+    /**
+     * 忘记提现密码
+     */
+    public static final String FORGET_PAY_PSD = "/api/findpaypass";
+
+    /**
+     * 添加银行卡的验证码
+     */
+    public static final String  ADD_BANK_VALIDATE= "/api/editbankcard";
+
+
+    /**
+     * 添加时的验证码
+     */
+    public static final String  ADD_BANK= "/api/bankCardCode";
+
+
+    /**
+     * 我的余额
+     */
+    public static final String MY_MONEY = "/api/member/my_balance";
+
+
+    /**
+     * 添加一个提现
+     */
+    public static final String  ADD_CASH = "/api/member/add_cash";
+
+
+    /**
+     * 申请退押金
+     */
+    public static final String ADD_BAIL = "/api/member/add_bail";
+
+    /**
+     * 保证金列表
+     */
+    public static final String BAIL_LIST = "/api/member/bail_list";
+
+
+    /**
+     * 保证金详情
+     */
+    public static final String BAIL_DETAIL = "/api/member/bail_detail";
 }

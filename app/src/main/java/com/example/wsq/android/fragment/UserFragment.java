@@ -21,6 +21,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.AboutWeActivity;
+import com.example.wsq.android.activity.BalanceActivity;
+import com.example.wsq.android.activity.BankActivity;
+import com.example.wsq.android.activity.BillDetailsActivity;
 import com.example.wsq.android.activity.CollectActivity;
 import com.example.wsq.android.activity.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.KnowledgeActivity;
@@ -77,6 +80,9 @@ public class UserFragment extends Fragment {
     @BindView(R.id.tv_server_processed) TextView tv_server_processed;
     @BindView(R.id.tv_feedback) TextView tv_feedback;
     @BindView(R.id.tv_server_done) TextView tv_server_done;
+    @BindView(R.id.tv_pay_num) TextView tv_pay_num;
+    @BindView(R.id.tv_money) TextView tv_money;
+    @BindView(R.id.tv_money_amount) TextView tv_money_amount;
 
     public static final String FLAG_ORDER_KEY = "flag_order";
     private Map<String, Object> orderMap;
@@ -157,7 +163,7 @@ public class UserFragment extends Fragment {
             switch (msg.what){
                 case httpSec:
                     Map<String, Object> result = (Map<String, Object>) msg.obj;
-                    tv_username.setText(result.get(ResponseKey.USERNAME).toString());
+                    tv_username.setText(result.get(ResponseKey.USERNAME)+"");
 
                     //设置头像
 //                    Glide.with(getActivity()).load(Urls.HOST+result.get(ResponseKey.USER_PIC)).into(roundImage_header);
@@ -171,7 +177,7 @@ public class UserFragment extends Fragment {
                             .into(roundImage_header);
 
                     //判断性别是否为空
-                    String strSex = result.get(ResponseKey.SEX).toString();
+                    String strSex = result.get(ResponseKey.SEX)+"";
                     if(!ValidateParam.validateParamIsNull(strSex)){
                         int sex = Integer.parseInt(strSex);
                         tv_sex.setText(Constant.SEX[sex-1]);
@@ -179,12 +185,16 @@ public class UserFragment extends Fragment {
 
 
                     //判断角色是否为空
-                    String strRole = result.get(ResponseKey.JUESE).toString();
+                    String strRole = result.get(ResponseKey.JUESE)+"";
                     if (!ValidateParam.validateParamIsNull(strRole)){
                         int role = Integer.parseInt(strRole);
                         tv_role.setText(Constant.ROLE[role-1]);
                     }
 
+                    //
+                    tv_pay_num.setText(result.get(ResponseKey.CACH_COUNT)+"");
+                    tv_money.setText(result.get(ResponseKey.MONEY)+"");
+                    tv_money_amount.setText(result.get(ResponseKey.MONEY_AMOUNT)+"");
                     break;
             }
         }
@@ -196,7 +206,7 @@ public class UserFragment extends Fragment {
             R.id.ll_order_feedback,R.id.ll_server_finish, R.id.ll_device_assert, R.id.ll_device_report,
             R.id.ll_device_bank_code, R.id.ll_device_server_share, R.id.ll_server_call,
             R.id.ll_password, R.id.ll_about, R.id.ll_fault, R.id.ll_collect,R.id.ll_manager_shared,
-            R.id.ll_manager_upload, R.id.ll_device_knowledge})
+            R.id.ll_manager_upload, R.id.ll_device_knowledge, R.id.ll_balance, R.id.ll_pay_Record})
     public void onClick(View v) {
         switch (v.getId()){
 
@@ -235,6 +245,12 @@ public class UserFragment extends Fragment {
                 orderMap.put(FLAG_ORDER_KEY, 8);
                 IntentFormat.startActivity(getActivity(), OrderActivity.class, orderMap);
                 break;
+            case R.id.ll_balance:  //余额
+                IntentFormat.startActivity(getActivity(), BalanceActivity.class);
+                break;
+            case R.id.ll_pay_Record: //账单
+                IntentFormat.startActivity(getActivity(), BillDetailsActivity.class);
+                break;
             case R.id.ll_device_assert:  //我要报修
                 if (!shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
                     IntentFormat.startActivity(getActivity(), DeviceWarrantyActivity.class);
@@ -268,7 +284,7 @@ public class UserFragment extends Fragment {
                 IntentFormat.startActivity(getActivity(), OrderActivity.class, orderMap);
                 break;
             case R.id.ll_device_bank_code:  //银行卡
-
+                IntentFormat.startActivity(getActivity(), BankActivity.class);
                 break;
             case R.id.ll_device_server_share:  //服务工程师   分享
 

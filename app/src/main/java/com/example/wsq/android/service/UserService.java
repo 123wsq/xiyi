@@ -1,6 +1,9 @@
 package com.example.wsq.android.service;
 
+import android.content.Context;
+
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 
 import java.util.List;
 import java.util.Map;
@@ -113,4 +116,93 @@ public interface UserService {
      * @throws Exception
      */
     void onOrderMessageInfo(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+
+    /**
+     * 修改支付密码验证
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onUpdatePayPasswordValidate(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+
+
+    /**
+     * 忘记支付密码验证
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onForgetPayPasswordValidate(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+
+
+
+    /**
+     * 设置支付密码
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onSettingPayPassword(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+
+
+    /**
+     * 添加银行卡的获取验证码
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onAddBankGetValidateCode(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+
+
+    /**
+     * 添加银行卡
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onAddBank(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+
+
+    /**
+     * 我的余额
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onMyMoney(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+
+
+    /**
+     * 添加一个提现
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onAddCash(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+
+
+    /**
+     * 申请保证金
+     * @param params
+     * @param callBack
+     * @throws Exception
+     */
+    void onApplyCashDeposit(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+
+
+    /**
+     * 获取保证金列表
+     * @param context
+     * @param params
+     * @param callBack
+     */
+    void onApplyCashDepositList(Context context, Map<String, String> params, HttpResponseListener callBack);
+
+    /**
+     * 获取保证金详情
+     * @param context
+     * @param params
+     * @param callBack
+     */
+    void onApplyCashDepositInfo(Context context, Map<String, String> param, HttpResponseListener callBack);
 }

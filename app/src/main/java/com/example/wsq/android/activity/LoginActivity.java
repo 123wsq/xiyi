@@ -153,6 +153,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                                     shared.edit().putString(Constant.SHARED.NAME, data.get(ResponseKey.NAME).toString()).commit();
                                     shared.edit().putString(Constant.SHARED.TEL, data.get(ResponseKey.TEL).toString()).commit();
                                     shared.edit().putString(Constant.SHARED.COMPANY, data.get(ResponseKey.COMPANY).toString()).commit();
+                                    shared.edit().putString(Constant.SHARED.ID, data.get(ResponseKey.ID).toString()).commit();
                                     IntentFormat.startActivity(LoginActivity.this, MainActivity.class);
 
                                     /**

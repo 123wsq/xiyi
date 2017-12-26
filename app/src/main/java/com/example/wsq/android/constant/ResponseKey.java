@@ -126,6 +126,8 @@ public class ResponseKey {
 
     public static final String CREATE_AT = "created_at";
 
+    public static final String CREAT_AT = "creat_time";
+
     public static final String  THUMB = "thumb";
 
     public static final String TITLE = "title";
@@ -158,6 +160,27 @@ public class ResponseKey {
 
     public static final String DONE  = "done";
 
+    public static final String PAY_PASSWORD = "paypasswd";
 
+    public static final String MONEY_AMOUNT = "money_amount";
 
+    public static final String CACH_COUNT = "cach_count";
+
+    public static final String MONEY = "money";
+
+    public static final String BANK_CARD = "bankcard";
+
+    public static final String BANK_NAME = "bankname";
+
+    public static final String  MY_MONEY = "my_moeny";
+
+    public static final String  CASH_MONEY = "cash_money";
+
+    public static final String  DEPOSIT_MOENY= "deposit_moeny";
+
+    public static final String BAIL_STATE = "bail_state";
+
+    public static final String  BAIL_LIST = "bail_list";
+
+    public static final String  BAIL_ID = "bail_id";
 }

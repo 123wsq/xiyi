@@ -246,7 +246,7 @@
         <GridView
             android:id="@+id/gridview"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/default_grid_height"
+            android:layout_height="wrap_content"
             android:numColumns="3"
 
             />

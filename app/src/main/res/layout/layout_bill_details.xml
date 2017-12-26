@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/default_backgroud_color"
+    android:id="@+id/ll_layout"
+    >
+
+    <include layout="@layout/layout_title"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        >
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/default_margin"
+            >
+            <RadioButton
+                android:layout_width="@dimen/defalut_layout_height"
+                android:layout_height="match_parent"
+                android:text="全部"
+                android:button="@null"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="/"
+                android:gravity="center"
+                android:textSize="@dimen/default_text_title_size"
+                />
+            <RadioButton
+                android:layout_width="@dimen/defalut_layout_height"
+                android:layout_height="match_parent"
+                android:text="本月"
+                android:button="@null"
+                android:gravity="center"
+                />
+        </RadioGroup>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/iv_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_calander"
+            android:layout_marginRight="@dimen/default_margin"
+
+            />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_white"
+        android:layout_marginTop="@dimen/default_margin"
+        android:visibility="visible"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_no_Record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/default_margin"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="您当前没有提现记录"
+            android:gravity="center"
+            android:textSize="@dimen/default_text_size"
+            />
+    </LinearLayout>
+
+</LinearLayout>

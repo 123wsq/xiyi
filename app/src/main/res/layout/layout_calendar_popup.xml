@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/shape_popup_gray"
+        android:layout_marginBottom="60dp"
+        >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        android:background="@color/color_white"
+        android:visibility="visible"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/default_margin"
+        android:paddingLeft="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        >
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/default_text_size"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/radius_popup"
+        >
+        <com.example.wsq.android.view.wheelview.widget.views.WheelView
+            android:id="@+id/wv_year"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+        <com.example.wsq.android.view.wheelview.widget.views.WheelView
+            android:id="@+id/wv_month"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <com.example.wsq.android.view.wheelview.widget.views.WheelView
+            android:id="@+id/wv_day"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_popup_gray"
+        android:layout_marginTop="@dimen/default_radius"
+        android:text="取消"
+        android:textSize="@dimen/default_text_title_size"
+        android:textStyle="bold"
+        android:textColor="@color/cancel_popup_color"
+        android:gravity="center"
+        />
+</RelativeLayout>

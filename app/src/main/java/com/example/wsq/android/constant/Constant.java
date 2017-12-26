@@ -19,6 +19,7 @@ public class Constant {
 
     //验证码长度
     public static final int CODE_LENGTH = 6;
+    public static final int PASSWORD_COUNT = 6;
 
     //表示显示的图片多少
     public static final int IMAGE_COUNT = 3;
@@ -49,6 +50,8 @@ public class Constant {
         public static final String LOCATION= "location";
 
         public static final String COMPANY = "company";
+
+        public static final String ID = "uId";
     }
 
 

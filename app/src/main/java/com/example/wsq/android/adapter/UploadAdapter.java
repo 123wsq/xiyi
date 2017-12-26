@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -70,11 +75,20 @@ public class UploadAdapter extends BaseAdapter{
 
             holder.iv_pictrue = convertView.findViewById(R.id.iv_pictrue);
             holder.iv_delete = convertView.findViewById(R.id.iv_delete);
+            holder.ll_layout = convertView.findViewById(R.id.ll_layout);
+
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
 
+        WindowManager wm = (WindowManager) mContext
+                .getSystemService(Context.WINDOW_SERVICE);
+        Logger.d("屏幕大小 w= "+wm.getDefaultDisplay().getWidth()+"   h= "+wm.getDefaultDisplay().getHeight());
+        int width = wm.getDefaultDisplay().getWidth();
+        int itemSize = width / Constant.IMAGE_COUNT -10;
+        holder.iv_pictrue.setLayoutParams(new RelativeLayout.LayoutParams(itemSize, itemSize));
         if (mData.get(position).getType() == 1){
+            holder.iv_pictrue.setVisibility(View.VISIBLE);
             holder.iv_delete.setVisibility(View.GONE);
             holder.iv_pictrue.setImageResource(R.drawable.image_add);
         }else if(mData.get(position).getType() == 3){
@@ -84,13 +98,29 @@ public class UploadAdapter extends BaseAdapter{
                 mRetriever.setDataSource(file.getAbsolutePath());
             }else{
 
+//                holder.iv_pictrue.setVisibility(View.GONE);
+//                holder.vv_VideoView.setVisibility(View.VISIBLE);
+//                Uri uri = Uri.parse(mData.get(position).getFile_path());
+//                holder.vv_VideoView.setMediaController(new MediaController(mContext));
+//                holder.vv_VideoView.setVideoURI(uri);
+//                holder.vv_VideoView.set
+                //videoView.start();
+//                holder.vv_VideoView.requestFocus();
+
+
 //                mRetriever.setDataSource(mData.get(position).getFile_path(), new HashMap<String, String>());
-                new MyAsyncTask(mData.get(position).getFile_path(), holder.iv_pictrue).execute();
+//                new MyAsyncTask(mData.get(position).getFile_path(), holder.iv_pictrue).execute();
+
+
+//                PictureSelector.create(mContext).externalPictureVideo(mData.get(position).getFile_path());
+//                holder.iv_pictrue.setImageBitmap(MediaDecoder.createVideoThumbnail(
+//                        mData.get(position).getFile_path(), 100, 100));
             }
 //            Bitmap bitmap=mRetriever.getFrameAtTime();
 //            holder.iv_pictrue.setImageBitmap(bitmap);
 //            mRetriever.release();
         }else{
+            holder.iv_pictrue.setVisibility(View.VISIBLE);
             if (mData.get(position).getFile_path().startsWith("http:")){
                 RequestOptions options = new RequestOptions();
                 options.error(R.drawable.image_no);
@@ -147,6 +177,7 @@ public class UploadAdapter extends BaseAdapter{
     class ViewHolder{
         ImageView iv_pictrue;
         ImageView iv_delete;
+        RelativeLayout ll_layout;
     }
 
     class MyAsyncTask extends AsyncTask<String, String,Bitmap>{
@@ -162,17 +193,19 @@ public class UploadAdapter extends BaseAdapter{
 
         @Override
         protected Bitmap doInBackground(String... strings) {
+            Logger.d("开始加载视频");
+//            mRetriever.setDataSource(url, new HashMap<String, String>());
+//            Bitmap bitmap=mRetriever.getFrameAtTime();
 
-            mRetriever.setDataSource(url, new HashMap<String, String>());
-            Bitmap bitmap=mRetriever.getFrameAtTime();
-            return bitmap;
+            return  createVideoThumbnail(
+                    url, 100, 100);
         }
 
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-
+                Logger.d("加载完成");
 //            mRetriever.release();
 
             if (bitmap != null){
@@ -180,5 +213,34 @@ public class UploadAdapter extends BaseAdapter{
                 imageView.setImageBitmap(bitmap);
             }
         }
+    }
+
+    private Bitmap createVideoThumbnail(String url, int width, int height) {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        int kind = MediaStore.Video.Thumbnails.MINI_KIND;
+        try {
+            if (Build.VERSION.SDK_INT >= 14) {
+                retriever.setDataSource(url, new HashMap<String, String>());
+            } else {
+                retriever.setDataSource(url);
+            }
+            bitmap = retriever.getFrameAtTime();
+        } catch (IllegalArgumentException ex) {
+            // Assume this is a corrupt video file
+        } catch (RuntimeException ex) {
+            // Assume this is a corrupt video file.
+        } finally {
+            try {
+                retriever.release();
+            } catch (RuntimeException ex) {
+                // Ignore failures while cleaning up.
+            }
+        }
+        if (kind == MediaStore.Images.Thumbnails.MICRO_KIND && bitmap != null) {
+            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
+                    ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+        }
+        return bitmap;
     }
 }

@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/default_grid_height"
+    android:layout_height="wrap_content"
     >
 
+    <RelativeLayout
+        android:id="@+id/ll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
     <ImageView
         android:id="@+id/iv_pictrue"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/image_add"
-        android:padding="@dimen/radius_popup"
+        android:padding="@dimen/default_radius"
         android:layout_centerInParent="true"
         android:scaleType="fitXY"
         />
@@ -23,4 +29,5 @@
         android:padding="@dimen/default_radius"
         android:visibility="visible"
          />
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

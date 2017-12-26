@@ -38,7 +38,7 @@
         <activity android:name=".activity.RegisterActivity3" android:screenOrientation="portrait" android:launchMode="singleInstance"></activity>
         <activity android:name=".activity.ProtocolsActivity"></activity>
         <activity android:name=".activity.ForgetPsdActivity" android:screenOrientation="portrait" android:launchMode="singleInstance"></activity>
-        <activity android:name=".activity.SettingActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.SettingActivity" android:screenOrientation="portrait" android:launchMode="singleTask"></activity>
         <activity android:name=".activity.UserInfoActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.DeviceWarrantyActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.OrderActivity" android:screenOrientation="portrait"></activity>
@@ -58,6 +58,16 @@
         <activity android:name=".activity.SearchActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.DeviceListActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.FaultActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.WithdrawPasswordActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.BankActivity" android:screenOrientation="portrait" android:launchMode="singleTask"></activity>
+        <activity android:name=".activity.AddBankActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.ValidateCodeActivity" android:screenOrientation="portrait" android:launchMode="singleInstance"></activity>
+        <activity android:name=".activity.BalanceActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.BillDetailsActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.WithdrawActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.CashDepositActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.CashDepositListActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.CashDepositInfoActivity" android:screenOrientation="portrait"></activity>
 
         <!--图片选择器-->
         <provider

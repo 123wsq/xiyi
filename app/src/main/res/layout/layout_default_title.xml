@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/defalut_layout_height"
+    android:background="@color/defalut_title_color"
+
+    >
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="我的余额"
+        android:textSize="@dimen/default_text_title_size"
+        android:gravity="center"
+        android:textColor="@color/color_white"
+        />
+    <LinearLayout
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/defalut_layout_height"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_back"
+            />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_Details"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text=""
+        android:textSize="@dimen/default_text_size"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/default_margin"
+        android:textColor="@color/color_white"
+        />
+
+</RelativeLayout>

@@ -3,10 +3,13 @@ package com.example.wsq.android.utils;
 import android.content.Intent;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,7 +27,21 @@ public class ParamFormat {
         while (iterator.hasNext()){
             String key = iterator.next();
             Object value = jsonObject.opt(key);
-            map.put(key, value);
+            if (value instanceof JSONArray){
+                List<Map<String, Object>> list = new ArrayList<>();
+                JSONArray jsona = (JSONArray) value;
+                for (int i = 0; i < jsona.length(); i++){
+
+                   list.add(onJsonToMap(jsona.get(i).toString()));
+                }
+                map.put(key, list);
+//            }else if(value instanceof JSONObject){
+//                map.put(key, onJsonToMap(value.toString()));
+            }else{
+                map.put(key, value);
+            }
+
+
         }
         return map;
     }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_backgroud_color"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/layout_title"></include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="本次操作需要短信验证，请输入"
+        android:layout_marginTop="@dimen/default_margin"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/tv_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收到的短信验证码"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        android:background="@color/color_white"
+        android:layout_marginTop="@dimen/radius_popup"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="验证码"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:textSize="@dimen/default_text_size"
+            />
+        <EditText
+            android:id="@+id/et_validateCode"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_edit"
+            android:paddingLeft="@dimen/radius_popup"
+            android:singleLine="true"
+            android:paddingRight="@dimen/radius_popup"/>
+
+        <TextView
+            android:id="@+id/tv_getCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取验证码"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginRight="@dimen/default_margin"
+            android:textColor="@color/blue"
+
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:gravity="center"
+        android:text="马上绑定"
+        android:background="@drawable/shape_button"
+        android:layout_marginLeft="@dimen/defalut_layout_height"
+        android:layout_marginRight="@dimen/defalut_layout_height"
+        android:layout_marginTop="@dimen/default_margin"
+        android:textSize="@dimen/default_text_size"
+        android:textColor="@color/color_white"
+        />
+</LinearLayout>

@@ -39,6 +39,12 @@
             android:layout_gravity="center_vertical"
             />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ll_Withdraw"
+        >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,52 +59,52 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_radius"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
-        android:background="@color/color_white"
-        android:layout_marginTop="@dimen/default_radius"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/default_margin"
-        android:paddingRight="@dimen/default_margin"
-        >
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:id="@+id/tv_setting_Withdraw_psd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/defalut_layout_height"
+            android:text="设置提现密码"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            android:drawableRight="@drawable/image_right"
+            android:background="@color/color_white"
+            android:paddingLeft="@dimen/default_margin"
+            android:paddingRight="@dimen/default_margin"
+            android:layout_marginTop="1dp"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_update_Withdraw_psd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/defalut_layout_height"
             android:text="@string/str_update_withdraw_psd"
             android:gravity="center_vertical"
             android:textSize="@dimen/default_text_size"
+            android:drawableRight="@drawable/image_right"
+            android:background="@color/color_white"
+            android:visibility="gone"
+            android:paddingLeft="@dimen/default_margin"
+            android:paddingRight="@dimen/default_margin"
+            android:layout_marginTop="1dp"
             />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
-        android:background="@color/color_white"
-        android:layout_marginTop="1dp"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/default_margin"
-        android:paddingRight="@dimen/default_margin"
-        >
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:id="@+id/tv_tv_forget_Withdraw_psd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/defalut_layout_height"
             android:text="@string/str_forget_withdraw_psd"
             android:gravity="center_vertical"
             android:textSize="@dimen/default_text_size"
+            android:drawableRight="@drawable/image_right"
+            android:background="@color/color_white"
+            android:paddingLeft="@dimen/default_margin"
+            android:paddingRight="@dimen/default_margin"
+            android:layout_marginTop="1dp"
+            android:visibility="gone"
             />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 
+
+    </LinearLayout>
 
 
     <TextView
