@@ -6,7 +6,7 @@
     android:orientation="vertical"
     >
 
-    <include layout="@layout/layout_title"></include>
+    <include layout="@layout/layout_default_title"></include>
 
 
     <TextView
@@ -134,15 +134,17 @@
             android:textSize="@dimen/default_text_size"
             />
         <TextView
+            android:id="@+id/tv_version"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="v1.0.1"
+            android:text=""
             android:gravity="center_vertical"
             android:textSize="@dimen/default_text_size"
             />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_cache_data"
         android:layout_width="match_parent"
         android:layout_height="@dimen/defalut_layout_height"
         android:background="@color/color_white"
@@ -160,6 +162,7 @@
             android:textSize="@dimen/default_text_size"
             />
         <TextView
+            android:id="@+id/tv_cacheSize"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="9.0M"

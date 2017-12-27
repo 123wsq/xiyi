@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +28,7 @@ import java.util.List;
 public class RegiesterActivity1 extends BaseActivity implements View.OnClickListener {
 
     private Button btn_next;
-    private ImageView iv_back;
+    private LinearLayout iv_back;
 
     private EditText et_username, et_password1, et_password2, et_name, et_email;
     private TextView tv_sex;

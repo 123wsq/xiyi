@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.ProductAdapter;
 import com.example.wsq.android.constant.ResponseKey;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
@@ -140,51 +140,39 @@ public class DeviceListActivity extends Activity{
         param.put(ResponseKey.KEYWORDS, getIntent().getStringExtra(ResponseKey.KEYWORDS));
         param.put(ResponseKey.CAT, "1");
 
-        try {
-            orderTaskService.onSearchDeviceList(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
+        orderTaskService.onSearchDeviceList(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                total = (int) result.get(ResponseKey.TOTAL);
 
-                    total = (int) result.get(ResponseKey.TOTAL);
-
-                    unitPage = (int) result.get(ResponseKey.PER_PAGE);
-                    List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
+                unitPage = (int) result.get(ResponseKey.PER_PAGE);
+                List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
 
 
-                    if (list.size()!=0){
-                        mData.addAll(list);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    if (mData.size() ==0){
-                        ll_nodata.setVisibility(View.VISIBLE);
-                        rv_RecyclerView.setVisibility(View.GONE);
-                    }else{
-                        ll_nodata.setVisibility(View.GONE);
-                        rv_RecyclerView.setVisibility(View.VISIBLE);
-                    }
-                    if (type == 1){
-                        refreshLayout.finishRefresh();
-                    }else if(type ==2 ){
-                        refreshLayout.finishLoadmore();
-                    }
-                    dialog.dismiss();
+                if (list.size()!=0){
+                    mData.addAll(list);
+                    mAdapter.notifyDataSetChanged();
                 }
-
-                @Override
-                public void onCallFail(String msg) {
-                    if (type == 1){
-                        refreshLayout.finishRefresh();
-                    }else if(type ==2 ){
-                        refreshLayout.finishLoadmore();
-                    }
-                    dialog.dismiss();
+                if (mData.size() ==0){
+                    ll_nodata.setVisibility(View.VISIBLE);
+                    rv_RecyclerView.setVisibility(View.GONE);
+                }else{
+                    ll_nodata.setVisibility(View.GONE);
+                    rv_RecyclerView.setVisibility(View.VISIBLE);
                 }
-            });
-        } catch (Exception e) {
-            dialog.dismiss();
-            e.printStackTrace();
+                if (type == 1){
+                    refreshLayout.finishRefresh();
+                }else if(type ==2 ){
+                    refreshLayout.finishLoadmore();
+                }
+                dialog.dismiss();
+            }
 
-        }
+            @Override
+            public void onFailure() {
+                dialog.dismiss();
+            }
+        });
 
     }
 }

@@ -17,7 +17,7 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.OrderAdapter;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.view.LoddingDialog;
@@ -158,55 +158,40 @@ public class ServerFinshFragment extends Fragment {
 
         param.put(ResponseKey.STATUS, state);
         param.put(ResponseKey.JUESE, shared.getString(Constant.SHARED.JUESE,""));
-        try {
-            orderTaskService.onGetOrderList(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result)  {
 
-                    total = (int) result.get(ResponseKey.TOTAL);
-                    unitPage = (int) result.get(ResponseKey.PER_PAGE);
-                    List< Map<String, Object>> list =  (List< Map<String, Object>>) result.get(ResponseKey.DATA);
+        orderTaskService.onGetOrderList(getActivity(), param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                total = (int) result.get(ResponseKey.TOTAL);
+                unitPage = (int) result.get(ResponseKey.PER_PAGE);
+                List< Map<String, Object>> list =  (List< Map<String, Object>>) result.get(ResponseKey.DATA);
 
 
-                    if (list.size() != 0){
+                if (list.size() != 0){
 
-                        mList.addAll(list);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    if (mList.size()==0){
-                        rv_view.setVisibility(View.GONE);
-                        ll_nodata.setVisibility(View.VISIBLE);
-                    }else{
-                        rv_view.setVisibility(View.VISIBLE);
-                        ll_nodata.setVisibility(View.GONE);
-                    }
-                    if (type == 1){
-                        refreshLayout.finishRefresh();
-                    }else if(type ==2 ){
-                        refreshLayout.finishLoadmore();
-                    }
-                    dialog.dismiss();
+                    mList.addAll(list);
+                    mAdapter.notifyDataSetChanged();
                 }
-
-                @Override
-                public void onCallFail(String msg) {
-                    if (type == 1){
-                        refreshLayout.finishRefresh();
-                    }else if(type ==2 ){
-                        refreshLayout.finishLoadmore();
-                    }
-                    dialog.dismiss();
+                if (mList.size()==0){
+                    rv_view.setVisibility(View.GONE);
+                    ll_nodata.setVisibility(View.VISIBLE);
+                }else{
+                    rv_view.setVisibility(View.VISIBLE);
+                    ll_nodata.setVisibility(View.GONE);
                 }
-            });
-        } catch (Exception e) {
-            if (type == 1){
-                refreshLayout.finishRefresh();
-            }else if(type ==2 ){
-                refreshLayout.finishLoadmore();
+                if (type == 1){
+                    refreshLayout.finishRefresh();
+                }else if(type ==2 ){
+                    refreshLayout.finishLoadmore();
+                }
+                dialog.dismiss();
             }
-            dialog.dismiss();
-            e.printStackTrace();
-        }
+
+            @Override
+            public void onFailure() {
+                dialog.dismiss();
+            }
+        });
     }
 
 

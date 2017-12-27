@@ -76,14 +76,13 @@ public class UploadAdapter extends BaseAdapter{
             holder.iv_pictrue = convertView.findViewById(R.id.iv_pictrue);
             holder.iv_delete = convertView.findViewById(R.id.iv_delete);
             holder.ll_layout = convertView.findViewById(R.id.ll_layout);
-
+            holder.iv_video = convertView.findViewById(R.id.iv_video);
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
 
         WindowManager wm = (WindowManager) mContext
                 .getSystemService(Context.WINDOW_SERVICE);
-        Logger.d("屏幕大小 w= "+wm.getDefaultDisplay().getWidth()+"   h= "+wm.getDefaultDisplay().getHeight());
         int width = wm.getDefaultDisplay().getWidth();
         int itemSize = width / Constant.IMAGE_COUNT -10;
         holder.iv_pictrue.setLayoutParams(new RelativeLayout.LayoutParams(itemSize, itemSize));
@@ -91,36 +90,24 @@ public class UploadAdapter extends BaseAdapter{
             holder.iv_pictrue.setVisibility(View.VISIBLE);
             holder.iv_delete.setVisibility(View.GONE);
             holder.iv_pictrue.setImageResource(R.drawable.image_add);
-        }else if(mData.get(position).getType() == 3){
+            holder.iv_video.setVisibility(View.GONE);
 
+        }else if(mData.get(position).getType() == 3){
+            holder.iv_video.setVisibility(View.VISIBLE);
             File file = new File(mData.get(position).getFile_path());
             if (file.exists()){
                 mRetriever.setDataSource(file.getAbsolutePath());
+                Bitmap bitmap=mRetriever.getFrameAtTime();
+                holder.iv_pictrue.setImageBitmap(bitmap);
+
             }else{
-
-//                holder.iv_pictrue.setVisibility(View.GONE);
-//                holder.vv_VideoView.setVisibility(View.VISIBLE);
-//                Uri uri = Uri.parse(mData.get(position).getFile_path());
-//                holder.vv_VideoView.setMediaController(new MediaController(mContext));
-//                holder.vv_VideoView.setVideoURI(uri);
-//                holder.vv_VideoView.set
-                //videoView.start();
-//                holder.vv_VideoView.requestFocus();
-
-
-//                mRetriever.setDataSource(mData.get(position).getFile_path(), new HashMap<String, String>());
-//                new MyAsyncTask(mData.get(position).getFile_path(), holder.iv_pictrue).execute();
-
-
-//                PictureSelector.create(mContext).externalPictureVideo(mData.get(position).getFile_path());
-//                holder.iv_pictrue.setImageBitmap(MediaDecoder.createVideoThumbnail(
-//                        mData.get(position).getFile_path(), 100, 100));
+//
+                new MyAsyncTask(mData.get(position).getFile_path(), holder.iv_pictrue).execute();
             }
-//            Bitmap bitmap=mRetriever.getFrameAtTime();
-//            holder.iv_pictrue.setImageBitmap(bitmap);
-//            mRetriever.release();
+//
         }else{
             holder.iv_pictrue.setVisibility(View.VISIBLE);
+            holder.iv_video.setVisibility(View.GONE);
             if (mData.get(position).getFile_path().startsWith("http:")){
                 RequestOptions options = new RequestOptions();
                 options.error(R.drawable.image_no);
@@ -177,6 +164,7 @@ public class UploadAdapter extends BaseAdapter{
     class ViewHolder{
         ImageView iv_pictrue;
         ImageView iv_delete;
+        ImageView iv_video;
         RelativeLayout ll_layout;
     }
 
@@ -194,11 +182,11 @@ public class UploadAdapter extends BaseAdapter{
         @Override
         protected Bitmap doInBackground(String... strings) {
             Logger.d("开始加载视频");
-//            mRetriever.setDataSource(url, new HashMap<String, String>());
-//            Bitmap bitmap=mRetriever.getFrameAtTime();
-
-            return  createVideoThumbnail(
-                    url, 100, 100);
+            mRetriever.setDataSource(url, new HashMap<String, String>());
+            Bitmap bitmap=mRetriever.getFrameAtTime(1000);
+//            createVideoThumbnail(
+//                    url, 100, 100)
+            return  bitmap;
         }
 
 

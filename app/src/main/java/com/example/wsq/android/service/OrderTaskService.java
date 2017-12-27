@@ -1,6 +1,9 @@
 package com.example.wsq.android.service;
 
+import android.content.Context;
+
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +30,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onGetOrderList(Map<String, String> params, HttpResponseCallBack callBack) throws  Exception;
+    void onGetOrderList(Context context, Map<String, String> params, HttpResponseListener callBack);
 
     /**
      * 获取订单详情
@@ -71,7 +74,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onGetProductInformation(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onGetProductInformation(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -88,7 +91,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onGetDeviceList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onGetDeviceList(Context context,Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -106,7 +109,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onGetNewsList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onGetNewsList(Context context, Map<String, String> params, HttpResponseListener callBack);
 
     /**
      * 获取圈内知识列表
@@ -123,7 +126,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onSearchDeviceList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onSearchDeviceList(Context context,Map<String, String> params, HttpResponseListener callBack);
 
 
     /**

@@ -19,7 +19,7 @@ public class AppUtils {
         try {
             packageInfo = ctx.getApplicationContext()
                     .getPackageManager()
-                    .getPackageInfo(ctx.getPackageName(), 0);
+                    .getPackageInfo(ctx.getPackageName(), PackageManager.GET_CONFIGURATIONS);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -35,9 +35,8 @@ public class AppUtils {
     public static String getLocalVersionName(Context ctx) {
         String localVersion = "";
         try {
-            PackageInfo packageInfo = ctx.getApplicationContext()
-                    .getPackageManager()
-                    .getPackageInfo(ctx.getPackageName(), 0);
+            PackageInfo packageInfo = ctx.getPackageManager()
+                    .getPackageInfo(ctx.getPackageName(), PackageManager.GET_CONFIGURATIONS);
             localVersion = packageInfo.versionName;
             Log.d("TAG", "本软件的版本号。。" + localVersion);
         } catch (PackageManager.NameNotFoundException e) {

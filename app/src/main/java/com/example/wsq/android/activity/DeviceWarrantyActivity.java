@@ -8,7 +8,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +30,7 @@ import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
@@ -126,7 +127,6 @@ public class DeviceWarrantyActivity extends Activity{
     public void onEdit(){
 
         intent = getIntent();
-        Logger.d(intent.getStringExtra(ResponseKey.IMGS));
         isUpdate = intent.getBooleanExtra(OrderInfoActivity.UPDATE, false);
         if (!isUpdate){
             tv_title.setText("设备维修");
@@ -138,26 +138,28 @@ public class DeviceWarrantyActivity extends Activity{
         String imags = intent.getStringExtra(ResponseKey.IMGS);
 
         // 清空所有数据
-        try {
-            JSONArray jsona = new JSONArray(imags);
-            for (int i = 0; i < jsona.length(); i++) {
-                List<LocalMedia> list = new ArrayList<>();
-                LocalMedia media = new LocalMedia();
-                media.setCompressPath(Urls.HOST+Urls.GET_IMAGES+jsona.get(i).toString());
-                media.setCompressed(true);
+        if (!TextUtils.isEmpty(imags)) {
+            try {
 
-                list.add(media);
-                if (jsona.get(i).toString().endsWith(".mp4")){
-                    onSetData(3, list);
-                }else{
-                    onSetData(2, list);
+                JSONArray jsona = new JSONArray(imags);
+                for (int i = 0; i < jsona.length(); i++) {
+                    List<LocalMedia> list = new ArrayList<>();
+                    LocalMedia media = new LocalMedia();
+                    media.setCompressPath(Urls.HOST + Urls.GET_IMAGES + jsona.get(i).toString());
+                    media.setCompressed(true);
+
+                    list.add(media);
+                    if (jsona.get(i).toString().endsWith(".mp4")) {
+                        onSetData(3, list);
+                    } else {
+                        onSetData(2, list);
+                    }
                 }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
         et_model.setText(intent.getStringExtra(ResponseKey.XINGHAO));
         et_num.setText(intent.getStringExtra(ResponseKey.BIANHAO));
         et_description.setText(intent.getStringExtra(ResponseKey.DES));
@@ -258,10 +260,9 @@ public class DeviceWarrantyActivity extends Activity{
         CameraBean bean = mData.get(position);
         if (bean.getType() == 1){
             popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-//            ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
-//                    .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-//                            InputMethodManager.HIDE_NOT_ALWAYS);
+
         }else if(bean.getType() == 2){
+            int num = 0;
             List<LocalMedia> list = new ArrayList<>();
             for (int i = 0; i< mData.size(); i ++){
                 if (mData.get(i).getType()==2) {
@@ -269,13 +270,20 @@ public class DeviceWarrantyActivity extends Activity{
 
                     media.setPath(bean.getFile_path());
                     list.add(media);
+                }else{
+                    if (i < position){
+                        num++;
+                    }
                 }
             }
-            Log.d("剩余个数：", list.size()+"");
-            PictureSelector.create(DeviceWarrantyActivity.this).externalPicturePreview(position, list);
+            PictureSelector.create(DeviceWarrantyActivity.this).externalPicturePreview(num, list);
         }else if(bean.getType() == 3){
-        PictureSelector.create(DeviceWarrantyActivity.this)
-                .externalPictureVideo(bean.getFile_path());
+
+//        PictureSelector.create(DeviceWarrantyActivity.this)
+//                .externalPictureVideo(bean.getFile_path());
+            Map<String, Object> param = new HashMap<>();
+            param.put("URL", bean.getFile_path());
+            IntentFormat.startActivity(DeviceWarrantyActivity.this, VideoPlayActivity.class, param);
 
         }
 

@@ -125,13 +125,13 @@ public class MainFragment extends Fragment {
                 break;
             case R.id.ll_engineer:
 
-                if (shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
+//                if (shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
                     Map<String, Object> mapP = new HashMap<>();
                     mapP.put(UserFragment.FLAG_ORDER_KEY, 5);
                     IntentFormat.startActivity(getActivity(), OrderActivity.class, mapP);
-                }else{
-                    Toast.makeText(getActivity(), "您没有权限", Toast.LENGTH_SHORT).show();
-                }
+//                }else{
+//                    Toast.makeText(getActivity(), "您没有权限", Toast.LENGTH_SHORT).show();
+//                }
 
                 break;
             case R.id.ll_news:

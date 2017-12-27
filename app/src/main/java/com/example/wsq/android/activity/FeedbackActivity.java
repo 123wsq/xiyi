@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +64,7 @@ public class FeedbackActivity extends Activity{
     @BindView(R.id.et_contact_tel) TextView et_contact_tel;
     @BindView(R.id.et_results_1) TextView et_results_1;
     @BindView(R.id.et_results_2) TextView et_results_2;
-    @BindView(R.id.iv_back) ImageView iv_back;
+    @BindView(R.id.iv_back) LinearLayout iv_back;
     @BindView(R.id.gridview) GridView gridview;
     @BindView(R.id.ll_layout) LinearLayout ll_layout;
 
@@ -304,6 +303,7 @@ public class FeedbackActivity extends Activity{
                 public void callBack(Map<String, Object> result) {
 
                     Toast.makeText(FeedbackActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
 
                 @Override
@@ -312,6 +312,7 @@ public class FeedbackActivity extends Activity{
                 }
             });
         } catch (Exception e) {
+            Toast.makeText(FeedbackActivity.this, "必要参数不能为空", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

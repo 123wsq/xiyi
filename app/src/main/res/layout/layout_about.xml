@@ -6,13 +6,13 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     >
-    <include layout="@layout/layout_title"></include>
+    <include layout="@layout/layout_default_title"></include>
 
 
     <ImageView
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:src="@drawable/icon_login"
+        android:src="@drawable/image_app_icon"
         android:layout_marginTop="@dimen/defalut_layout_height"
         />
     <TextView

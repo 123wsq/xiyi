@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,7 +50,6 @@ import butterknife.OnClick;
 
 public class UserInfoActivity extends Activity{
 
-    @BindView(R.id.iv_back) ImageView iv_back;
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_username) TextView tv_username;
     @BindView(R.id.tv_sex) TextView tv_sex;

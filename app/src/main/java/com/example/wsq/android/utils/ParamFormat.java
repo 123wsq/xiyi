@@ -46,6 +46,40 @@ public class ParamFormat {
         return map;
     }
 
+    /**
+     * 最新
+     * @param string
+     * @return
+     * @throws Exception
+     */
+    public static Map<String, Object> onAllJsonToMap(String string) throws  Exception{
+
+        JSONObject jsonObject = new JSONObject(string);
+        int count = jsonObject.length();
+        Map<String, Object> map = new HashMap<>();
+        Iterator<String> iterator =  jsonObject.keys();
+        while (iterator.hasNext()){
+            String key = iterator.next();
+            Object value = jsonObject.opt(key);
+            if (value instanceof JSONArray){
+                List<Map<String, Object>> list = new ArrayList<>();
+                JSONArray jsona = (JSONArray) value;
+                for (int i = 0; i < jsona.length(); i++){
+
+                    list.add(onAllJsonToMap(jsona.get(i).toString()));
+                }
+                map.put(key, list);
+            }else if(value instanceof JSONObject){
+                map.put(key, onJsonToMap(value.toString()));
+            }else{
+                map.put(key, value);
+            }
+
+
+        }
+        return map;
+    }
+
     public static Intent onMapToIntent(Map<String, Object> param){
 
         Intent intent = new Intent();

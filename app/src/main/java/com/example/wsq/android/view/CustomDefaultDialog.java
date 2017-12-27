@@ -137,6 +137,10 @@ public class CustomDefaultDialog extends Dialog{
                     dialog_cancel.setVisibility(View.GONE);
                     dialig_view.setVisibility(View.GONE);
                 }
+                if (okListener != null && cancelListener != null){
+                    dialog_cancel.setVisibility(View.VISIBLE);
+                    dialog_ok.setVisibility(View.VISIBLE);
+                }
 
                 if (isInput){
                     tv_inputMessage.setVisibility(View.VISIBLE);

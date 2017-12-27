@@ -1,1 +1,1 @@
-include ':app', ':ucrop', ':picture', ':log', ':tag', ':refresh'
+include ':app', ':ucrop', ':picture', ':log', ':tag', ':refresh', ':nicevideoplayer'

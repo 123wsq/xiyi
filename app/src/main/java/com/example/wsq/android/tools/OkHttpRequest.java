@@ -282,6 +282,7 @@ public class OkHttpRequest {
         OkhttpUtil.okHttpGet(path, params, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
+                callBack.onCallFail("请求失败");
                 e.printStackTrace();
             }
 
@@ -293,27 +294,64 @@ public class OkHttpRequest {
                 com.orhanobut.logger.Logger.d(result);
                 try {
 
-                    Map<String, Object> map = ParamFormat.onJsonToMap(result);
+                    Map<String, Object> map = ParamFormat.onAllJsonToMap(result);
+                    com.orhanobut.logger.Logger.d("code = ");
+                    if(!map.containsKey(ResponseKey.CODE)){
+                        callBack.callBack(map);
+                    }else {
 
-                    if (map.containsKey(ResponseKey.DATA)){
+                        if ((int) map.get(ResponseKey.CODE) == 1001) {//成功
 
-                        if (map.get(ResponseKey.DATA).toString().startsWith("{")) {
-                            map.put(ResponseKey.DATA, ParamFormat.onJsonToMap(map.get(ResponseKey.DATA).toString()));
+                            callBack.callBack(map);
 
-                        }else if(map.get(ResponseKey.DATA).toString().startsWith("[")){
-                            JSONArray jsona = new JSONArray(map.get(ResponseKey.DATA).toString());
-                            List<Map<String, Object>> list = new ArrayList<>();
-
-                            for (int i = 0 ; i< jsona.length(); i ++){
-                                list.add(ParamFormat.onJsonToMap(jsona.getJSONObject(i).toString()));
-                            }
-                            map.put(ResponseKey.DATA, list);
-                        }else{
-                            callBack.onCallFail("未知数据格式");
+                        } else {
+                            com.orhanobut.logger.Logger.d(map);
+                            callBack.onCallFail(map.get(ResponseKey.MESSAGE).toString());
                         }
-
                     }
+                } catch (Exception e) {
+                    callBack.onCallFail("数据解析异常");
+                    e.printStackTrace();
+                }
 
+            }
+        });
+    }
+
+
+    /**
+     *
+     * @param url
+     * @param params
+     * @param callBack
+     */
+    public static void sendHttpPost(String url, Map<String, String> params, final HttpResponseCallBack callBack){
+
+
+        long timeMillis = System.currentTimeMillis();
+        params.put("timestamp", timeMillis+"");
+        String sign = MD5Util.encrypt(Constant.SECRET+timeMillis+Constant.SECRET);
+        params.put("sign", sign);
+
+        String path = Urls.HOST + url;
+        com.orhanobut.logger.Logger.d("url="+path +"\nparam="+params.toString());
+
+
+        OkhttpUtil.okHttpPost(path, params, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                callBack.onCallFail("请求失败");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+                String result = UnicodeUtil.unicodeToString(response);
+                com.orhanobut.logger.Logger.json(result);
+                try {
+
+                    Map<String, Object> map = ParamFormat.onAllJsonToMap(result);
 
                     if(!map.containsKey(ResponseKey.CODE)){
                         callBack.callBack(map);
@@ -322,8 +360,12 @@ public class OkHttpRequest {
 
                             callBack.callBack(map);
 
-                        } else {
-                            callBack.onCallFail(map.get(ResponseKey.MESSAGE).toString());
+                        } else if((int)map.get(ResponseKey.CODE) == 1000){ //用户名或密码错误
+                            map.putAll(ParamFormat.onJsonToMap(result));
+//                            callBack.callBack(map);
+                            callBack.onCallFail(map.get(ResponseKey.MESSAGE)+"");
+                        }else {
+                            callBack.onCallFail(map.get(ResponseKey.MESSAGE)+"");
                         }
                     }
                 } catch (Exception e) {

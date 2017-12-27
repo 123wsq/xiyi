@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -309,7 +310,11 @@ public class OrderInfoActivity extends Activity{
                         tv_upName.setText(result.get(ResponseKey.NAME).toString() + "");
                         tv_upTel.setText(result.get(ResponseKey.TEL).toString() + "");
                     }
-                    String imags = result.get(ResponseKey.IMGS).toString();
+                    String imags = result.get(ResponseKey.IMGS)+"";
+                    if (TextUtils.isEmpty(imags)) {
+                        imags = result.get(ResponseKey.R_IMGS)+"";
+                    }
+
                     try {
                         JSONArray jsona = new JSONArray(imags);
                         for (int i = 0; i < jsona.length(); i++) {

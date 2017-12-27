@@ -1,6 +1,8 @@
 package com.example.wsq.android.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -8,7 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RegisterParam;
@@ -33,12 +36,13 @@ import java.util.Map;
 public class RegisterActivity3 extends BaseActivity implements View.OnClickListener {
 
     private TextView tv_protocols, tv_birth, tv_register, tv_getCode;
-    private ImageView iv_back;
+    private LinearLayout iv_back;
 
     private EditText et_sfz, et_tel, et_validateCode;
     private CheckBox cb_checkBox;
 
     private UserService userService;
+    private int curLen = 60;
 
 
     @Override
@@ -95,6 +99,25 @@ public class RegisterActivity3 extends BaseActivity implements View.OnClickListe
         });
     }
 
+    Handler handler = new Handler(){};
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            curLen--;
+            if (curLen == 0){
+                curLen = 60;
+                tv_getCode.setText("获取验证码");
+                tv_getCode.setBackgroundColor(getResources().getColor(R.color.defalut_title_color));
+                tv_getCode.setClickable(true);
+            }else{
+                tv_getCode.setText("请耐心等待 "+curLen+"s");
+                tv_getCode.setClickable(false);
+                tv_getCode.setBackgroundColor(Color.parseColor("#A8A8A8"));
+                handler.postDelayed(this, 1000);
+            }
+
+        }
+    };
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -139,24 +162,18 @@ public class RegisterActivity3 extends BaseActivity implements View.OnClickListe
             case R.id.tv_getCode: //获取验证码
                 if(validateParam(1)){
                     Map<String, String> map = new HashMap<>();
-                    try {
-                        userService.getValidateCode(map, new HttpResponseCallBack() {
-                            @Override
-                            public void callBack(Map<String, Object> result) {
+                    userService.getValidateCode(this, map, new HttpResponseListener() {
+                        @Override
+                        public void onSuccess(Map<String, Object> result) {
+                            handler.postDelayed(runnable, 1000);
+                        }
 
-                            }
+                        @Override
+                        public void onFailure() {
 
-                            @Override
-                            public void onCallFail(String msg) {
+                        }
+                    });
 
-                            }
-
-
-                        });
-                    } catch (Exception e) {
-                        Log.e("本地异常", e.getMessage());
-                        e.printStackTrace();
-                    }
                 }else{
                     Toast.makeText(RegisterActivity3.this, "输入参数格式错误", Toast.LENGTH_SHORT).show();
                 }

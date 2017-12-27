@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,9 +18,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
-import com.example.wsq.android.utils.ParamFormat;
-
-import org.json.JSONArray;
+import com.example.wsq.android.tools.RecyclerViewDivider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +65,9 @@ public class OrderMessageInfoActivity extends Activity{
         order_no = getIntent().getStringExtra(ResponseKey.ORDER_NO);
         tv_order_no.setText(order_no);
 
+        rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
+                this, LinearLayoutManager.HORIZONTAL, 2,
+                ContextCompat.getColor(this, R.color.default_backgroud_color)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
@@ -96,15 +97,10 @@ public class OrderMessageInfoActivity extends Activity{
                 @Override
                 public void callBack(Map<String, Object> result) {
 
-                    JSONArray jsona = (JSONArray) result.get(ResponseKey.XIAOXI);
-                    for (int i =0; i< jsona.length(); i ++){
-                        try {
-                            mData.add(ParamFormat.onJsonToMap(jsona.optJSONObject(i).toString()));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.XIAOXI);
+
                     tv_order_status.setText(result.get(ResponseKey.STATUS).toString());
+                    mData.addAll(list);
                     if (mData.size() != 0){
                         mAdapter.notifyDataSetChanged();
                     }

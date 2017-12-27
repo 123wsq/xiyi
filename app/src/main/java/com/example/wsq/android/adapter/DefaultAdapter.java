@@ -37,7 +37,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.tv_name.setText(mData.get(position).get(ResponseKey.NAME).toString());
+        holder.tv_name.setText(mData.get(position).get(ResponseKey.NAME)+"");
     }
 
 
@@ -62,8 +62,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         @Override
         public void onClick(View v) {
 
-
-            mFragment.updateData(mData.get(getPosition()).get(ResponseKey.SHEBEI).toString());
+        List<Map<String, Object>> list = (List<Map<String, Object>>) mData.get(getPosition()).get(ResponseKey.SHEBEI);
+            mFragment.updateData(list);
         }
     }
 }

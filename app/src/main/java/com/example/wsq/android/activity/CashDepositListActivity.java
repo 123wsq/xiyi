@@ -105,6 +105,11 @@ public class CashDepositListActivity extends Activity{
                     mAdapter.notifyDataSetChanged();
                 }
             }
+
+            @Override
+            public void onFailure() {
+
+            }
         });
     }
 

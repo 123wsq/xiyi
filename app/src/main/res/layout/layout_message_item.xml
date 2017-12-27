@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_login"
+        android:src="@drawable/image_login_icon"
         android:layout_marginLeft="@dimen/default_radius"
 
         />

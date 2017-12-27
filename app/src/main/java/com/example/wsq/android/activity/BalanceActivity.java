@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.Constant;
@@ -82,7 +83,16 @@ public class BalanceActivity extends Activity{
                 }
                 break;
             case R.id.ll_withdraw:   //提现
-                IntentFormat.startActivity(this, WithdrawActivity.class);
+                String moneys = mData.get(ResponseKey.MY_MONEY)+"";
+                if (!TextUtils.isEmpty(moneys)){
+                    double money = Double.parseDouble(moneys);
+                    if (money >= 2000){
+                        IntentFormat.startActivity(this, WithdrawActivity.class);
+                    }else{
+                        Toast.makeText(BalanceActivity.this, "提现金额必须大于2000", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
                 break;
         }
     }

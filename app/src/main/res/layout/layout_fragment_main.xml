@@ -35,18 +35,17 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:background="@color/defalut_title_color"
+                        android:background="#EDECEC"
                         >
+
                         <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/image_sbwh_m"
-                            />
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/image_sbwh_m" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="设备维护"
-                            android:textColor="@color/color_white"
                             android:textSize="@dimen/default_text_min_size"
                             android:layout_marginTop="@dimen/default_radius"
                             />
@@ -54,7 +53,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="提交问题秒回复"
-                            android:textColor="@color/color_white"
                             android:textSize="@dimen/default_text_size"
                             android:layout_marginTop="@dimen/default_radius"
                             />
@@ -68,21 +66,18 @@
                     android:layout_marginLeft="@dimen/default_radius"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:background="@color/defalut_title_color"
+                    android:background="#E7E6E6"
                     android:orientation="vertical"
                     >
 
-
-                        <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/image_gcs"
-                            />
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/image_gcs" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="工程师"
-                            android:textColor="@color/color_white"
                             android:textSize="@dimen/default_text_min_size"
                             android:layout_marginTop="@dimen/default_radius"
                             />
@@ -90,7 +85,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="问题反馈 及时跟进"
-                            android:textColor="@color/color_white"
                             android:textSize="@dimen/default_text_size"
                             android:layout_marginTop="@dimen/default_radius"
                             />
@@ -115,15 +109,20 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="@drawable/image_new_background"
+                    android:background="#E7E6E6"
                     android:orientation="vertical"
+                    android:gravity="center"
                     >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/image_news" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="新闻中心"
                         android:textSize="@dimen/default_text_size"
-                        android:textColor="@color/color_white"
                         android:layout_marginLeft="@dimen/default_radius"
                         android:layout_marginTop="@dimen/default_radius"
 
@@ -133,7 +132,6 @@
                         android:layout_height="wrap_content"
                         android:text="最新行业新闻咨询"
                         android:textSize="@dimen/default_text_min_size"
-                        android:textColor="@color/color_white"
                         android:layout_marginLeft="@dimen/default_radius"
                         />
 
@@ -154,16 +152,26 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/image_fw"
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:background="#EDECEC"
                             >
 
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/image_kefu" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                >
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="客服中心"
                                 android:textSize="@dimen/default_text_size"
-                                android:textColor="@color/defalut_title_color"
                                 android:layout_marginLeft="@dimen/default_radius"
                                 android:layout_marginTop="@dimen/default_radius"
                                 />
@@ -172,35 +180,48 @@
                                 android:layout_height="wrap_content"
                                 android:text="解答疑难问题"
                                 android:textSize="@dimen/default_text_min_size"
-                                android:textColor="@color/defalut_title_color"
                                 android:layout_marginLeft="@dimen/default_radius"
                                 />
+                                </LinearLayout>
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/ll_knowledge"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:background="@drawable/image_main_qnzs"
-                            android:orientation="vertical"
-                            >
+                            android:background="#F4F4F4"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="圈内知识"
-                                android:textSize="@dimen/default_text_size"
-                                android:textColor="@color/color_white"
                                 android:layout_marginLeft="@dimen/default_radius"
                                 android:layout_marginTop="@dimen/default_radius"
-                                />
+                                android:text="圈内知识"
+                                 />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="圈内黑科技集合中心"
-                                android:textSize="@dimen/default_text_min_size"
-                                android:textColor="@color/color_white"
                                 android:layout_marginLeft="@dimen/default_radius"
-                                />
+                                android:text="圈内黑科技集合中心"
+                                android:textSize="10sp"
+                               />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="@dimen/default_radius"
+                                android:src="@drawable/image_main_qnzs" />
+
 
                         </LinearLayout>
                     </LinearLayout>

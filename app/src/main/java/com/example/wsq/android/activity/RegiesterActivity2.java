@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,7 @@ import java.util.List;
 public class RegiesterActivity2 extends BaseActivity implements View.OnClickListener {
 
     private Button btn_next;
-    private ImageView iv_back;
+    private LinearLayout iv_back;
     private TextView tv_xueli, tv_juese;
     private LinearLayout ll_layout;
     private EditText et_bumen, et_company;

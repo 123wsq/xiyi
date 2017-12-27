@@ -7,7 +7,7 @@ package com.example.wsq.android.activity;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.base.BaseActivity;
@@ -18,7 +18,7 @@ import com.example.wsq.android.base.BaseActivity;
 public class ProtocolsActivity extends BaseActivity{
 
     private WebView register_webView;
-    private ImageView iv_back;
+    private LinearLayout iv_back;
 
 
     @Override

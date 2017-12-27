@@ -5,10 +5,12 @@
     android:orientation="vertical"
     android:background="@color/default_backgroud_color"
     >
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/defalut_layout_height"
-        android:background="@color/defalut_title_color"
+        android:background="@drawable/image_title_background"
         >
         <TextView
             android:layout_width="match_parent"
@@ -46,7 +48,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/defalut_title_color"
+        android:background="@drawable/image_title_background"
         >
 
         <LinearLayout

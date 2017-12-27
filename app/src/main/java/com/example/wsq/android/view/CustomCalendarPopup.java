@@ -43,7 +43,7 @@ public class CustomCalendarPopup extends PopupWindow{
     private WheelView wvYear;
     private WheelView wvMonth;
     private WheelView wvDay;
-    private TextView tv_ok;
+    private TextView tv_ok, tv_cencal;
     private int month;
     private int day;
 
@@ -71,6 +71,13 @@ public class CustomCalendarPopup extends PopupWindow{
         wvYear = popupView.findViewById(R.id.wv_year);
         wvMonth = popupView.findViewById(R.id.wv_month);
         wvDay = popupView.findViewById(R.id.wv_day);
+        tv_cencal = popupView.findViewById(R.id.tv_cencal);
+        tv_cencal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         tv_ok.setOnClickListener(new View.OnClickListener() {
             @Override

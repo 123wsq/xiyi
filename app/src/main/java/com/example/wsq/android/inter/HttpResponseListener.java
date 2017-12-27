@@ -18,7 +18,7 @@ public interface HttpResponseListener {
      * 失败
      * @param params
      */
-//    void onFailure(String result);
+    void onFailure();
 
 
 }

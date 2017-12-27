@@ -16,10 +16,10 @@ public interface UserService {
 
     /**
      * 用户登录
-     * @param params
+     * @param param
      * @throws Exception
      */
-    void login(Map<String, String> params, HttpResponseCallBack callBack) throws  Exception;
+    void login(Context context, Map<String, String> param, HttpResponseListener listener);
 
     /**
      * 用户登出
@@ -48,7 +48,7 @@ public interface UserService {
      * @param params
      * @throws Exception
      */
-    void getValidateCode(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void getValidateCode(Context context, Map<String, String> params, HttpResponseListener callBack);
 
     /**
      * 获取用户信息
@@ -90,7 +90,7 @@ public interface UserService {
      * @param callBack
      * @throws Exception
      */
-    void getCollectList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void getCollectList( Context context, Map<String, String> params, HttpResponseListener callBack);
 
     /**
      * 取消收藏
@@ -107,7 +107,7 @@ public interface UserService {
      * @param callBack
      * @throws Exception
      */
-    void onMessageList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onMessageList(Context context, Map<String, String> params, HttpResponseListener callBack);
 
     /**
      * 获取订单信息详情
@@ -123,7 +123,7 @@ public interface UserService {
      * @param callBack
      * @throws Exception
      */
-    void onUpdatePayPasswordValidate(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onUpdatePayPasswordValidate(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -132,7 +132,7 @@ public interface UserService {
      * @param callBack
      * @throws Exception
      */
-    void onForgetPayPasswordValidate(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onForgetPayPasswordValidate(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
 
@@ -142,7 +142,7 @@ public interface UserService {
      * @param callBack
      * @throws Exception
      */
-    void onSettingPayPassword(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onSettingPayPassword(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -205,4 +205,31 @@ public interface UserService {
      * @param callBack
      */
     void onApplyCashDepositInfo(Context context, Map<String, String> param, HttpResponseListener callBack);
+
+
+    /**
+     * 申请提现列表
+     * @param context
+     * @param param
+     * @param callBack
+     */
+    void onApplyCashDetailList(Context context, Map<String, String> param, HttpResponseListener callBack);
+
+    /**
+     * 账单详情
+     * @param context
+     * @param param
+     * @param callBack
+     */
+    void onApplyCashDetailInfo(Context context, Map<String, String> param, HttpResponseListener callBack);
+
+
+    /**
+     * 获取当前时间的账单详情
+     * @param context
+     * @param param
+     * @param callBack
+     */
+    void onCurCashDetailList(Context context, Map<String, String> param, HttpResponseListener callBack);
+
 }

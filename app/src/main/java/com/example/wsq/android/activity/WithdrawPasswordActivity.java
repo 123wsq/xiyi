@@ -2,6 +2,7 @@ package com.example.wsq.android.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
@@ -49,6 +50,8 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
     @BindView(R.id.et_name) EditText et_name;
     @BindView(R.id.et_sfz) EditText et_sfz;
     @BindView(R.id.et_tel) EditText et_tel;
+
+    public static final String ACTION = "com.example.wsq.android.activity.WithdrawPasswordActivity";
 
     /**
      * 1 设置提现
@@ -201,7 +204,7 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
      * 设置密码
      * @param password
      */
-    public void onSettingPassword(String password){
+    public void onSettingPassword(final String password){
 
         String oldPassword = getIntent().getStringExtra("password");
         if (!password.equals(oldPassword)){
@@ -213,23 +216,27 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
         param.put(ResponseKey.ID, shared.getString(Constant.SHARED.ID, ""));
         param.put(ResponseKey.PAY_PASSWORD, password);  //
 
-        try {
-            userService.onSettingPayPassword(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
-                    Toast.makeText(WithdrawPasswordActivity.this,
-                            result.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
-                    IntentFormat.startActivity(WithdrawPasswordActivity.this, SettingActivity.class);
-                }
+        userService.onSettingPayPassword(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Toast.makeText(WithdrawPasswordActivity.this,
+                        result.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
+                Map<String, Object> param = new HashMap<>();
+                IntentFormat.startActivity(WithdrawPasswordActivity.this, SettingActivity.class);
 
-                @Override
-                public void onCallFail(String msg) {
-
+                if (flagNum ==2){
+                    Intent intent = new Intent();
+                    intent.setAction(ACTION);
+                    sendBroadcast(intent);
                 }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
 
 
     }
@@ -245,25 +252,20 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
         param.put(ResponseKey.ID, shared.getString(Constant.SHARED.ID, ""));
         param.put(ResponseKey.PAY_PASSWORD, password);  //这里的密码是旧密码
 
-        try {
-            userService.onUpdatePayPasswordValidate(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
-//                    Toast.makeText(WithdrawPasswordActivity.this,
-//                            result.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
-                    Map<String, Object> param = new HashMap<>();
-                    param.put("type", 3);
-                    IntentFormat.startActivity(WithdrawPasswordActivity.this, WithdrawPasswordActivity.class, param);
-                }
+        userService.onUpdatePayPasswordValidate(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Map<String, Object> param = new HashMap<>();
+                param.put("type", 3);
+                IntentFormat.startActivity(WithdrawPasswordActivity.this, WithdrawPasswordActivity.class, param);
+            }
 
-                @Override
-                public void onCallFail(String msg) {
+            @Override
+            public void onFailure() {
 
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            }
+        });
+//
     }
 
     /**
@@ -280,22 +282,20 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
         param.put(ResponseKey.SFZ, et_sfz.getText().toString());
         param.put(ResponseKey.TEL, et_tel.getText().toString());
 
-        try {
-            userService.onForgetPayPasswordValidate(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
-                    Map<String, Object> param = new HashMap<>();
-                    param.put("type", 5);
-                    IntentFormat.startActivity(WithdrawPasswordActivity.this, WithdrawPasswordActivity.class, param);
-                }
+        userService.onForgetPayPasswordValidate(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Map<String, Object> param = new HashMap<>();
+                param.put("type", 5);
+                IntentFormat.startActivity(WithdrawPasswordActivity.this, WithdrawPasswordActivity.class, param);
 
-                @Override
-                public void onCallFail(String msg) {
+            }
 
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
     }
 }

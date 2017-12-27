@@ -68,9 +68,11 @@ public class WithdrawActivity extends Activity{
 
         enabledMoney = Double.parseDouble(BalanceActivity.mData.get(ResponseKey.CASH_MONEY)+"");
         String bankcard = BalanceActivity.mData.get(ResponseKey.BANK_CARD)+"";
-        String str[] = BankInfo.getNameOfBank(bankcard.toCharArray(), 0).split("_");
-        tv_bank.setText(str[0]+" ("+bankcard.substring(bankcard.length()-4)+")");
-        tv_card_type.setText(str[1]);
+        if (!TextUtils.isEmpty(bankcard)) {
+            String str[] = BankInfo.getNameOfBank(bankcard.toCharArray(), 0).split("_");
+            tv_bank.setText(str[0] + " (" + bankcard.substring(bankcard.length() - 4) + ")");
+            tv_card_type.setText(str[1]);
+        }
     }
 
     @OnClick({R.id.tv_submit, R.id.tv_withdraw_all, R.id.iv_back})

@@ -16,6 +16,7 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RegisterParam;
@@ -108,23 +109,18 @@ public class ForgetPsdActivity extends Activity{
                 RegisterParam.TEL = tel;
                 Map<String, String> map = new HashMap<>();
                 map.put(ResponseKey.TEL, tel);
-                try {
-                    userService.getValidateCode(map, new HttpResponseCallBack() {
-                        @Override
-                        public void callBack(Map<String, Object> result) {
-                            handler.postDelayed(runnable, 1000);
-                        }
 
-                        @Override
-                        public void onCallFail(String msg) {
+                userService.getValidateCode(this, map, new HttpResponseListener() {
+                    @Override
+                    public void onSuccess(Map<String, Object> result) {
+                        handler.postDelayed(runnable, 1000);
+                    }
 
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e("本地异常",e.getMessage());
-                    e.printStackTrace();
-                }
+                    @Override
+                    public void onFailure() {
 
+                    }
+                });
 
                 break;
             case R.id.tv_ok:

@@ -7,7 +7,7 @@
     android:id="@+id/ll_layout"
     >
 
-    <include layout="@layout/layout_title"></include>
+    <include layout="@layout/layout_default_title"></include>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,17 +16,20 @@
         android:gravity="center_vertical"
         >
         <RadioGroup
+            android:id="@+id/rg_group"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_marginLeft="@dimen/default_margin"
             >
             <RadioButton
+                android:id="@+id/rb_all"
                 android:layout_width="@dimen/defalut_layout_height"
                 android:layout_height="match_parent"
                 android:text="全部"
                 android:button="@null"
                 android:gravity="center"
+                android:textColor="@drawable/selector_menu_color"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -36,11 +39,13 @@
                 android:textSize="@dimen/default_text_title_size"
                 />
             <RadioButton
+                android:id="@+id/rb_cur_month"
                 android:layout_width="@dimen/defalut_layout_height"
                 android:layout_height="match_parent"
                 android:text="本月"
                 android:button="@null"
                 android:gravity="center"
+                android:textColor="@drawable/selector_menu_color"
                 />
         </RadioGroup>
         <View
@@ -74,11 +79,14 @@
         android:gravity="center"
         android:visibility="gone"
         android:layout_marginTop="@dimen/default_margin"
+        android:orientation="vertical"
         >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/image_main_massage"
+            />
 
         <TextView
             android:layout_width="match_parent"

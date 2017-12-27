@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/defalut_layout_height"
-    android:background="@color/defalut_title_color"
+    android:background="@drawable/image_title_background"
 
     >
 

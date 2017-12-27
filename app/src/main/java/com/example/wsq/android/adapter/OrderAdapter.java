@@ -123,7 +123,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             Map<String, Object> map = mData.get(getPosition());
             if (shared.getString(Constant.SHARED.JUESE, "").endsWith("1")){
 
-                if (map.get(ResponseKey.STATUS).equals("7.1")
+                if (map.get(ResponseKey.STATUS).equals("5")
+                        ||map.get(ResponseKey.STATUS).equals("7.1")
                         || map.get(ResponseKey.STATUS).equals("8.1")
                         || map.get(ResponseKey.STATUS).equals("8.2")){
                     IntentFormat.startActivity(mContext, ServerOrderInfoActivity.class, map);

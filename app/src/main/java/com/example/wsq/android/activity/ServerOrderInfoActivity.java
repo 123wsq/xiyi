@@ -61,6 +61,7 @@ public class ServerOrderInfoActivity extends Activity{
     @BindView(R.id.tv_spare_fee) TextView tv_spare_fee;//备件费
     @BindView(R.id.tv_other_fee) TextView tv_other_fee;//其他费
     @BindView(R.id.tv_all_fee) TextView tv_all_fee;//总费
+    @BindView(R.id.tv_transfer) TextView tv_transfer;
 
 
     private OrderTaskService orderTaskService;
@@ -111,6 +112,13 @@ public class ServerOrderInfoActivity extends Activity{
         mAdapter2 = new UploadAdapter(this, mData2);
         rv_gridview_scene.setAdapter(mAdapter2);
 
+
+        if (intent.getStringExtra(ResponseKey.STATUS).equals("5")
+                ||intent.getStringExtra(ResponseKey.STATUS).equals("7.1")){
+            tv_transfer.setVisibility(View.VISIBLE);
+            tv_transfer.setText("填写移交报告");
+        }
+
         getServerOrderInfo();
 
 
@@ -126,6 +134,7 @@ public class ServerOrderInfoActivity extends Activity{
             case R.id.tv_transfer:
 //                Map<String, Object> map = new HashMap<>();
 //                map.put(ResponseKey.ID, id);
+
                 IntentFormat.startActivity(this, FeedbackActivity.class, mResultInfo);
                 break;
         }
@@ -165,7 +174,7 @@ public class ServerOrderInfoActivity extends Activity{
                     }
                     showImags(mData1, list1, 1);
                     //现场图片
-                    String imags2 = result.get(ResponseKey.IMGS).toString();
+                    String imags2 = result.get(ResponseKey.R_IMGS).toString();
                     List<String> list2 = new ArrayList<>();
                     try {
                         JSONArray jsona2 = new JSONArray(imags2);

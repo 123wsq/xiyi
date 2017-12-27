@@ -8,14 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.ProductAdapter;
 import com.example.wsq.android.constant.ResponseKey;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.view.LoddingDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +44,7 @@ public class NewsActivity extends Activity{
     private List<Map<String, Object>> mData;
     private OrderTaskService orderTaskService;
     private int curPage = 0;
+    private LoddingDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class NewsActivity extends Activity{
 
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
-
+        dialog = new LoddingDialog(this);
         tv_title.setText("新闻列表");
         mAdapter = new ProductAdapter(this, mData);
 
@@ -71,38 +72,37 @@ public class NewsActivity extends Activity{
     }
 
     public void getNewsList(){
+
+        dialog.show();
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.PAGE, (curPage+1)+"");
         param.put(ResponseKey.KEYWORDS, "");
 
-        try {
-            orderTaskService.onGetNewsList(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
+        orderTaskService.onGetNewsList(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
+                if (list.size() != 0){
+                    mData.addAll(list);
+                    mAdapter.notifyDataSetChanged();
 
-                    List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
-                    if (list.size() != 0){
-                        mData.addAll(list);
-                        mAdapter.notifyDataSetChanged();
-
-                    }
-                    if (mData.size()!=0){
-                        ll_nodata.setVisibility(View.GONE);
-                        rv_RecyclerView.setVisibility(View.VISIBLE);
-                    }else {
-                        ll_nodata.setVisibility(View.VISIBLE);
-                        rv_RecyclerView.setVisibility(View.GONE);
-                    }
                 }
-
-                @Override
-                public void onCallFail(String msg) {
-                    Toast.makeText(NewsActivity.this, msg, Toast.LENGTH_SHORT).show();
+                if (mData.size()!=0){
+                    ll_nodata.setVisibility(View.GONE);
+                    rv_RecyclerView.setVisibility(View.VISIBLE);
+                }else {
+                    ll_nodata.setVisibility(View.VISIBLE);
+                    rv_RecyclerView.setVisibility(View.GONE);
                 }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure() {
+                dialog.dismiss();
+            }
+        });
+
     }
 
     @OnClick({R.id.iv_back, R.id.tv_refresh})

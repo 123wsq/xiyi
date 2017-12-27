@@ -2,19 +2,19 @@ package com.example.wsq.android.activity;
 
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,13 +30,20 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.Constant;
+import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.DeviceFragment;
 import com.example.wsq.android.fragment.FaultFragment;
 import com.example.wsq.android.fragment.MainFragment;
 import com.example.wsq.android.fragment.UserFragment;
+import com.example.wsq.android.inter.HttpResponseListener;
+import com.example.wsq.android.service.UserService;
+import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.view.CustomDefaultDialog;
+import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -53,6 +60,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @BindView(R.id.tv_location) TextView tv_location;
     @BindView(R.id.rb_fault)  RadioButton rb_fault;
     @BindView(R.id.et_search) EditText et_search;
+    @BindView(R.id.view_point) View view_point;
 
     public static boolean isForeground = false;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
@@ -68,6 +76,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     private Fragment[] fragments = {MainFragment.getInstance(), DeviceFragment.getInstance(),
             FaultFragment.getInstance(), UserFragment.getInstance()};
 
+
+    private UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +99,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         rl_title_back.setVisibility(View.GONE);
         rg_menu.setOnCheckedChangeListener(this);
 
+        userService = new UserServiceImpl();
 
 
         locationClient = new AMapLocationClient(this.getApplicationContext());
@@ -106,6 +117,13 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         locationClient.startLocation();
 
         onRegister();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onGetMessageCount();
     }
 
     public void enter(int page, Fragment fragment){
@@ -137,36 +155,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         rl_title_back.setVisibility(View.GONE);
     }
 
-    /**
-     * 首先将Fragment添加到一个集合中
-     */
-//    public void addFragment(){
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        int i = 0;
-//        for (Fragment fragment : fragments){
-//            fragmentTransaction.add(R.id.main_layout, fragment).addToBackStack(i+"");
-//            i++;
-//        }
-//    }
-
-
-
-    /**
-     * 确认显示和隐藏
-     * @param position
-     */
-//    public void showFragment(int position){
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//        for (int i =0 ; i< fragments.length; i++){
-//            if (position ==i){
-//                fragmentTransaction.show(fragments[position]);
-//            }else {
-//                fragmentTransaction.hide(fragments[i]);
-//            }
-//        }
-//        fragmentTransaction.commit();
-//    }
 
     @OnClick({R.id.iv_setting, R.id.iv_message, R.id.et_search})
     public void onClick(View v){
@@ -284,7 +272,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                 .setOngoing(false)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
                 .setDefaults(Notification.DEFAULT_VIBRATE)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
                 //Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND 添加声音 // requires VIBRATE permission
-                .setSmallIcon(R.drawable.icon_login);//设置通知小ICON
+                .setSmallIcon(R.drawable.image_app_icon);//设置通知小ICON
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,MessageActivity.class), 0);
 
 
@@ -294,5 +282,62 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         //用这个Notification管理器把Notification弹出去，那个0是id，用来标识这个Notification的
         notificationManager.notify(1, mBuilder.build());
 //        notificationManager.notify("1", 1, mBuilder.build());
+    }
+
+
+    /**
+     * 获取消息个数
+     */
+    public void onGetMessageCount(){
+
+        Map<String, String> param = new HashMap<>();
+        param.put(ResponseKey.PAGE, "1");
+        param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
+
+
+        userService.onMessageList(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
+
+                Logger.d(list.size());
+                if (list.size() != 0 ){
+                    view_point.setVisibility(View.VISIBLE);
+                }else{
+                    view_point.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode== KeyEvent.KEYCODE_BACK){
+            CustomDefaultDialog.Builder builder = new CustomDefaultDialog.Builder(this);
+            builder.setTitle("提示");
+            builder.setMessage("您确定退出该应用吗？");
+            builder.setOkBtn("退出", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+            builder.setCancelBtn("还想玩", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

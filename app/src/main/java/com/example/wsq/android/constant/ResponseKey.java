@@ -183,4 +183,23 @@ public class ResponseKey {
     public static final String  BAIL_LIST = "bail_list";
 
     public static final String  BAIL_ID = "bail_id";
+
+    public static final String CASH_LIST = "cash_list";
+
+    public static final String STATE = "state";
+
+    public static final String BANK_NUMBER = "bank_number";
+
+    public static final String BANK_NAME_C = "bank_name";
+
+    public static final String ACTUAL_MONEY = "actual_money";
+
+    public static final String PAY_ID = "pay_id";
+
+    public static final String PAY_SN = "pay_sn";
+
+    public static final String YEAR = "year";
+
+    public static final String MONTH = "month";
+
 }

@@ -9,19 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.DefaultAdapter;
 import com.example.wsq.android.adapter.DeviceAdapter;
 import com.example.wsq.android.constant.ResponseKey;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
-import com.example.wsq.android.utils.ParamFormat;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,52 +97,40 @@ public class DeviceFragment extends Fragment{
     public void getDeviceList(){
         Map<String, String> param = new HashMap<>();
 
-        try {
-            orderTaskService.onGetDeviceList(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
+        orderTaskService.onGetDeviceList(getActivity(), param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                List<Map<String, Object>> list1 = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
+                //设置左边显示的列表
+                leftData.addAll(list1);
+                defaultAdapter.notifyDataSetChanged();
 
-                    List<Map<String, Object>> list1 = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
-                    //设置左边显示的列表
-                    leftData.addAll(list1);
-                    defaultAdapter.notifyDataSetChanged();
-
-                    //设置右边显示的列表
-                    if (leftData.size()!=0){
-                        updateData(list1.get(0).get(ResponseKey.SHEBEI).toString());
-                    }
+                //设置右边显示的列表
+                if (leftData.size()!=0){
+                    List<Map<String, Object>> list2 = (List<Map<String, Object>>) list1.get(0).get(ResponseKey.SHEBEI);
+                    rightData.addAll(list2);
+                    deviceAdapter.notifyDataSetChanged();
                 }
+            }
 
-                @Override
-                public void onCallFail(String msg) {
-                    Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onFailure() {
+
+            }
+        });
+//
     }
 
     /**
      * 当点击左边的时候，更新右边的数据
-     * @param result
+     * @param list
      */
-    public void updateData(String result){
+    public void updateData(List<Map<String, Object>> list){
 
         rightData.clear();
-        try {
-            JSONArray jsona = new JSONArray(result);
+        rightData.addAll(list);
+        deviceAdapter.notifyDataSetChanged();
 
-            List<Map<String, Object>> list = new ArrayList<>();
-
-            for (int i = 0 ; i< jsona.length(); i ++){
-
-                rightData.add(ParamFormat.onJsonToMap(jsona.getJSONObject(i).toString()));
-            }
-            deviceAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }

@@ -11,13 +11,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
@@ -114,77 +113,62 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                     }
                     break;
                 case R.id.btn_login:
-                    dialog.show();
-                    String username = et_username.getText().toString();
-                    String password = et_password.getText().toString();
-                    //检测复选框的状态
-                    if(cb_checkBox.isChecked()){
-                        shared.edit()
-                                .putString(Constant.SHARED.USERNAME, username)
-                                .putString(Constant.SHARED.PASSWORD, password)
-                                .commit();
 
-                    }else{
-                        shared.edit()
-                                .putString(Constant.SHARED.USERNAME, "")
-                                .putString(Constant.SHARED.PASSWORD, "")
-                                .commit();
-                    }
-                    Map<String, String> map = new HashMap<>();
-                    map.put("username",username);
-                    map.put("password",password);
-                    try {
-
-                        userService.login(map, new HttpResponseCallBack() {
-                            @Override
-                            public void callBack(Map<String, Object> result) {
-
-                                if ((int)result.get(ResponseKey.CODE) == 1000){
-                                    Toast.makeText(LoginActivity.this,
-                                            result.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                if(result.containsKey(ResponseKey.DATA)&& result.get(ResponseKey.DATA) instanceof Map){
-
-                                    Map<String,Object> data = (Map<String, Object>) result.get(ResponseKey.DATA);
-
-                                    shared.edit().putString(Constant.SHARED.TOKEN, data.get(ResponseKey.TOKEN).toString()).commit();
-                                    shared.edit().putString(Constant.SHARED.JUESE, data.get(ResponseKey.JUESE).toString()).commit();
-                                    shared.edit().putString(Constant.SHARED.NAME, data.get(ResponseKey.NAME).toString()).commit();
-                                    shared.edit().putString(Constant.SHARED.TEL, data.get(ResponseKey.TEL).toString()).commit();
-                                    shared.edit().putString(Constant.SHARED.COMPANY, data.get(ResponseKey.COMPANY).toString()).commit();
-                                    shared.edit().putString(Constant.SHARED.ID, data.get(ResponseKey.ID).toString()).commit();
-                                    IntentFormat.startActivity(LoginActivity.this, MainActivity.class);
-
-                                    /**
-                                     * 极光推送
-                                     */
-                                    JPushInterface.setAlias(LoginActivity.this, 0,data.get(ResponseKey.ID).toString());
-                                    finish();
-
-                                }
-
-
-                            }
-
-                            @Override
-                            public void onCallFail(String msg) {
-                                dialog.dismiss();
-                            }
-
-
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-
-                    }finally {
-                        if (dialog.isShowing()) {
-                            dialog.dismiss();
-                        }
-                    }
-
+                    onLogin();
                     break;
 
             }
+    }
+
+    /**
+     * 开始登录
+     */
+    public void onLogin(){
+        dialog.show();
+        String username = et_username.getText().toString();
+        String password = et_password.getText().toString();
+        //检测复选框的状态
+        if(cb_checkBox.isChecked()){
+            shared.edit()
+                    .putString(Constant.SHARED.USERNAME, username)
+                    .putString(Constant.SHARED.PASSWORD, password)
+                    .commit();
+
+        }else{
+            shared.edit()
+                    .putString(Constant.SHARED.USERNAME, "")
+                    .putString(Constant.SHARED.PASSWORD, "")
+                    .commit();
+        }
+        Map<String, String> map = new HashMap<>();
+        map.put(ResponseKey.USERNAME,username);
+        map.put(ResponseKey.PASSWORD,password);
+
+        userService.login(this, map, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Map<String,Object> data = (Map<String, Object>) result.get(ResponseKey.DATA);
+
+                shared.edit().putString(Constant.SHARED.TOKEN, data.get(ResponseKey.TOKEN).toString()).commit();
+                shared.edit().putString(Constant.SHARED.JUESE, data.get(ResponseKey.JUESE).toString()).commit();
+                shared.edit().putString(Constant.SHARED.NAME, data.get(ResponseKey.NAME).toString()).commit();
+                shared.edit().putString(Constant.SHARED.TEL, data.get(ResponseKey.TEL).toString()).commit();
+                shared.edit().putString(Constant.SHARED.COMPANY, data.get(ResponseKey.COMPANY).toString()).commit();
+                shared.edit().putString(Constant.SHARED.ID, data.get(ResponseKey.ID).toString()).commit();
+                IntentFormat.startActivity(LoginActivity.this, MainActivity.class);
+
+                /**
+                 * 极光推送
+                 */
+                JPushInterface.setAlias(LoginActivity.this, 0,data.get(ResponseKey.ID).toString());
+                finish();
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure() {
+                dialog.dismiss();
+            }
+        });
     }
 }

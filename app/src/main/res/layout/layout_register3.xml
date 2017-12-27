@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <include layout="@layout/layout_title" ></include>
+    <include layout="@layout/layout_default_title" ></include>
 
 
     <LinearLayout
@@ -126,6 +126,7 @@
             android:hint="请告诉我你的手机号码"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
+            android:inputType="number"
             />
     </LinearLayout>
 

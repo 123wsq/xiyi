@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
@@ -26,7 +26,7 @@ public class ProductInfoActivity extends BaseActivity{
 
     private WebView register_webView;
     private TextView tv_title;
-    private ImageView iv_back;
+    private LinearLayout iv_back;
     private SharedPreferences shared;
     private OrderTaskService orderTaskService;
 

@@ -11,6 +11,7 @@ import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.tools.OkHttpRequest;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.ValidateParam;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -28,9 +29,31 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void login(Map<String, String> params, final HttpResponseCallBack callBack) throws Exception {
+    public void login(final Context context, Map<String, String> param, final HttpResponseListener callBack) {
 
-        OkHttpRequest.sendPost(Urls.LOGIN, params, callBack);
+
+
+        try {
+
+            ValidateParam.validateParam(param, ResponseKey.USERNAME, ResponseKey.PASSWORD);
+
+            OkHttpRequest.sendHttpPost(Urls.LOGIN, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -94,14 +117,33 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void getValidateCode(Map<String, String> params, final HttpResponseCallBack callBack) throws Exception {
-        params.put(ResponseKey.JUESE, RegisterParam.JUESE+"");
-        params.put(ResponseKey.TEL, RegisterParam.TEL);
+    public void getValidateCode(final Context context, Map<String, String> param, final HttpResponseListener callBack){
+        param.put(ResponseKey.JUESE, RegisterParam.JUESE+"");
+        param.put(ResponseKey.TEL, RegisterParam.TEL);
 
         //必填参数验证
-        ValidateParam.validateParam(params,ResponseKey.TEL);
+        try {
 
-        OkHttpRequest.sendPost(Urls.GET_VALIDATE_CODE, params, callBack);
+            ValidateParam.validateParam(param, ResponseKey.TEL);
+
+            OkHttpRequest.sendHttpPost(Urls.GET_VALIDATE_CODE, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
@@ -170,12 +212,31 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void getCollectList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void getCollectList(final Context context,Map<String, String> params, final HttpResponseListener callBack){
 
-        //必填参数验证
-        ValidateParam.validateParam(params,ResponseKey.TOKEN, ResponseKey.PAGE);
 
-        OkHttpRequest.sendPost(Urls.COLLECT, params, callBack);
+
+
+        try {
+            //必填参数验证
+            ValidateParam.validateParam(params,ResponseKey.TOKEN, ResponseKey.PAGE);
+            OkHttpRequest.sendHttpPost(Urls.COLLECT, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -200,12 +261,28 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void onMessageList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onMessageList(final Context context, Map<String, String> params, final HttpResponseListener callBack) {
 
-        //必填参数验证
-        ValidateParam.validateParam(params,ResponseKey.TOKEN, ResponseKey.PAGE);
+        try {
+            //必填参数验证
+            ValidateParam.validateParam(params,ResponseKey.TOKEN, ResponseKey.PAGE);
+            OkHttpRequest.sendHttpPost(Urls.MESSAGE_LIST, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
 
-        OkHttpRequest.sendGet(Urls.MESSAGE_LIST, params, callBack);
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -230,10 +307,34 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void onUpdatePayPasswordValidate(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onUpdatePayPasswordValidate(final Context context, Map<String, String> params, final HttpResponseListener callBack){
 
-        ValidateParam.validateParam(params, ResponseKey.ID, ResponseKey.PAY_PASSWORD);
-        OkHttpRequest.sendGet(Urls.UPDATE_PAY_PSD, params, callBack);
+
+
+        try {
+
+            ValidateParam.validateParam(params, ResponseKey.ID, ResponseKey.PAY_PASSWORD);
+
+            OkHttpRequest.sendHttpGet(Urls.UPDATE_PAY_PSD, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                    callBack.onFailure();
+                }
+            });
+        } catch (Exception e) {
+
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            callBack.onFailure();
+        }
+
     }
 
     /**
@@ -243,10 +344,33 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void onForgetPayPasswordValidate(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onForgetPayPasswordValidate(final Context context, Map<String, String> params, final HttpResponseListener callBack){
 
-        ValidateParam.validateParam(params, ResponseKey.ID, ResponseKey.NAME, ResponseKey.BANK_CARD, ResponseKey.SFZ, ResponseKey.TEL);
-        OkHttpRequest.sendGet(Urls.FORGET_PAY_PSD, params, callBack);
+
+
+        try {
+
+            ValidateParam.validateParam(params, ResponseKey.ID, ResponseKey.NAME, ResponseKey.BANK_CARD, ResponseKey.SFZ, ResponseKey.TEL);
+
+            OkHttpRequest.sendHttpGet(Urls.FORGET_PAY_PSD, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                    callBack.onFailure();
+                }
+            });
+        } catch (Exception e) {
+
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            callBack.onFailure();
+        }
 
     }
 
@@ -257,10 +381,34 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void onSettingPayPassword(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onSettingPayPassword(final Context context, Map<String, String> params, final HttpResponseListener callBack) {
 
-        ValidateParam.validateParam(params, ResponseKey.ID, ResponseKey.PAY_PASSWORD);
-        OkHttpRequest.sendGet(Urls.SETTING_PAY_PSD, params, callBack);
+
+
+        try {
+
+            ValidateParam.validateParam(params, ResponseKey.ID, ResponseKey.PAY_PASSWORD);
+
+            OkHttpRequest.sendHttpGet(Urls.SETTING_PAY_PSD, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+
+                    Logger.d(msg);
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                    callBack.onFailure();
+                }
+            });
+        } catch (Exception e) {
+
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            callBack.onFailure();
+        }
     }
 
     /**
@@ -351,10 +499,12 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
+            callBack.onFailure();
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
@@ -383,10 +533,108 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 申请提现列表
+     * @param context
+     * @param param
+     * @param callBack
+     */
+    @Override
+    public void onApplyCashDetailList(final Context context, Map<String, String> param, final HttpResponseListener callBack) {
+
+        try {
+
+            ValidateParam.validateParam(param, ResponseKey.TOKEN);
+
+            OkHttpRequest.sendHttpGet(Urls.CASH_LIST, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 提现详情
+     * @param context
+     * @param param
+     * @param callBack
+     */
+    @Override
+    public void onApplyCashDetailInfo(final Context context, Map<String, String> param, final HttpResponseListener callBack) {
+
+        try {
+
+            ValidateParam.validateParam(param, ResponseKey.TOKEN, ResponseKey.PAY_ID);
+
+            OkHttpRequest.sendHttpGet(Urls.CASH_DETAIL, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 获取当前时间的账单详情
+     * @param context
+     * @param param
+     * @param callBack
+     */
+    @Override
+    public void onCurCashDetailList(final Context context, Map<String, String> param, final HttpResponseListener callBack) {
+
+        try {
+
+            ValidateParam.validateParam(param, ResponseKey.TOKEN, ResponseKey.YEAR, ResponseKey.MONTH);
+
+            OkHttpRequest.sendHttpGet(Urls.SEARCH_CASH_LIST, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

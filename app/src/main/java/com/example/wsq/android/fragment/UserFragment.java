@@ -27,6 +27,7 @@ import com.example.wsq.android.activity.BillDetailsActivity;
 import com.example.wsq.android.activity.CollectActivity;
 import com.example.wsq.android.activity.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.KnowledgeActivity;
+import com.example.wsq.android.activity.LoginActivity;
 import com.example.wsq.android.activity.OrderActivity;
 import com.example.wsq.android.activity.UpdatePsdActivity;
 import com.example.wsq.android.activity.UserInfoActivity;
@@ -201,7 +202,7 @@ public class UserFragment extends Fragment {
     };
 
 
-    @OnClick({ R.id.ll_user_layout, R.id.ll_order_unfinish, R.id.ll_order_handler,
+    @OnClick({R.id.tv_quit, R.id.ll_user_layout, R.id.ll_order_unfinish, R.id.ll_order_handler,
             R.id.ll_order_finish, R.id.ll_order, R.id.ll_order_fllocation, R.id.ll_order_progress,
             R.id.ll_order_feedback,R.id.ll_server_finish, R.id.ll_device_assert, R.id.ll_device_report,
             R.id.ll_device_bank_code, R.id.ll_device_server_share, R.id.ll_server_call,
@@ -209,6 +210,10 @@ public class UserFragment extends Fragment {
             R.id.ll_manager_upload, R.id.ll_device_knowledge, R.id.ll_balance, R.id.ll_pay_Record})
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.tv_quit:
+                IntentFormat.startActivity(getActivity(), LoginActivity.class);
+                getActivity().finish();
+                break;
 
             case R.id.ll_user_layout:
                 IntentFormat.startActivity(getActivity(), UserInfoActivity.class);

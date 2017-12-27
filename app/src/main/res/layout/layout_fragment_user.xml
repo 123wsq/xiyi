@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/defalut_title_color"
+        android:background="@drawable/image_title_background"
         >
     <LinearLayout
         android:layout_width="match_parent"
@@ -130,9 +130,9 @@
                 android:gravity="center"
                 >
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/image_wcl"/>
+                    android:layout_width="@dimen/default_image_size"
+                    android:layout_height="@dimen/default_image_size"
+                    android:src="@drawable/image_tab_untreated"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -164,9 +164,9 @@
                 android:gravity="center"
                 >
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/image_ywc"/>
+                    android:layout_width="@dimen/default_image_size"
+                    android:layout_height="@dimen/default_image_size"
+                    android:src="@drawable/image_my_approved"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -198,8 +198,8 @@
                 android:gravity="center"
                 >
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/default_image_size"
+                    android:layout_height="@dimen/default_image_size"
                     android:src="@drawable/image_clz"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -233,9 +233,9 @@
                 android:gravity="center"
                 >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_dd"/>
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
+                android:src="@drawable/image_tab_finish"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -278,9 +278,9 @@
                     android:gravity="center"
                     >
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/image_wcl"/>
+                    android:layout_width="@dimen/default_image_size"
+                    android:layout_height="@dimen/default_image_size"
+                    android:src="@drawable/image_my_approved"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -315,7 +315,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/image_ywc"/>
+                    android:src="@drawable/image_clz"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -347,9 +347,9 @@
                     android:gravity="center"
                     >
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/image_clz"/>
+                    android:layout_width="@dimen/default_image_size"
+                    android:layout_height="@dimen/default_image_size"
+                    android:src="@drawable/image_tab_documents"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -383,9 +383,9 @@
                     android:gravity="center"
                     >
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/image_dd"/>
+                    android:layout_width="@dimen/default_image_size"
+                    android:layout_height="@dimen/default_image_size"
+                    android:src="@drawable/image_tab_finish"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -502,9 +502,9 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_sbwh"
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
+                android:src="@drawable/image_tab_report"
                 />
 
             <TextView
@@ -526,7 +526,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/image_sbwh"
+                    android:src="@drawable/image_tab_bank"
                     />
 
                 <TextView
@@ -546,9 +546,9 @@
                 android:gravity="center"
                 >
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/image_sbwh"
+                    android:layout_width="@dimen/default_image_size"
+                    android:layout_height="@dimen/default_image_size"
+                    android:src="@drawable/image_tab_share"
                     />
 
                 <TextView
@@ -568,9 +568,9 @@
                 android:gravity="center"
                 >
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/image_sbwh"
+                    android:layout_width="@dimen/default_image_size"
+                    android:layout_height="@dimen/default_image_size"
+                    android:src="@drawable/image_tab_knowledge"
                     />
 
                 <TextView
@@ -598,8 +598,8 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
                 android:src="@drawable/image_sbwh"
                 />
 
@@ -618,9 +618,9 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_gz"
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
+                android:src="@drawable/image_tab_knowledge"
                 />
 
             <TextView
@@ -638,9 +638,9 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_aufh"
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
+                android:src="@drawable/image_tab_share"
                 />
 
             <TextView
@@ -659,9 +659,9 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_qnzs"
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
+                android:src="@drawable/image_tab_repair"
                 />
 
             <TextView
@@ -688,9 +688,9 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_news"
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
+                android:src="@drawable/image_my_sc"
                 />
 
             <TextView
@@ -708,8 +708,8 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
                 android:src="@drawable/image_kf"
                 />
             <TextView
@@ -727,9 +727,9 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_about"
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
+                android:src="@drawable/chang_password"
                 />
 
             <TextView
@@ -748,9 +748,9 @@
             android:gravity="center"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_zx"
+                android:layout_width="@dimen/default_image_size"
+                android:layout_height="@dimen/default_image_size"
+                android:src="@drawable/tab_about"
                 />
 
             <TextView
@@ -763,6 +763,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_quit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/defalut_layout_height"
         android:text="退出登录"

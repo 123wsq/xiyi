@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_backgroud_color"
+    android:orientation="vertical"
     >
 
     <RelativeLayout
@@ -21,14 +22,22 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/default_text_size"
             />
-        <ImageView
+        <LinearLayout
             android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/image_back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/radius_popup"
-            />
+            android:layout_width="@dimen/defalut_layout_height"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_back"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/radius_popup"
+                />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_edit"
@@ -48,7 +57,7 @@
         android:layout_height="match_parent"
         app:srlEnablePreviewInEditMode="true"
         >
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -59,7 +68,7 @@
         android:id="@+id/rv_RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/defalut_layout_height"
+
         />
         <!--没有数据是显示-->
         <LinearLayout
@@ -111,44 +120,45 @@
                 android:paddingBottom="@dimen/default_radius"
                 />
         </LinearLayout>
-        </LinearLayout>
+            <!--可编辑的-->
+            <LinearLayout
+                android:id="@+id/ll_collect_buttom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/defalut_layout_height"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                >
+                <CheckBox
+                    android:id="@+id/cb_all_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    android:text="全选"
+                    android:background="@color/color_white"
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"></View>
+
+                <TextView
+                    android:id="@+id/tv_finish"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:text="完成"
+                    android:background="@drawable/shape_button"
+                    android:textColor="@color/color_white"
+                    android:gravity="center"
+                    android:layout_marginRight="@dimen/default_radius"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <!--可编辑的-->
-    <LinearLayout
-        android:id="@+id/ll_collect_buttom"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color_white"
-        android:gravity="center_vertical"
-        android:visibility="gone"
-        >
-        <CheckBox
-            android:id="@+id/cb_all_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_radius"
-            android:text="全选"
-            android:background="@color/color_white"
-            />
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"></View>
-
-        <TextView
-            android:id="@+id/tv_finish"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:text="完成"
-            android:background="@drawable/shape_button"
-            android:textColor="@color/color_white"
-            android:gravity="center"
-            android:layout_marginRight="@dimen/default_radius"
-            />
-    </LinearLayout>
 
 
-</RelativeLayout>
+
+</LinearLayout>

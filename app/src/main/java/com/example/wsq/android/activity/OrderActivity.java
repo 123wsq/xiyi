@@ -101,27 +101,35 @@ public class OrderActivity extends FragmentActivity implements ViewPager.OnPageC
         switch (curPage){
             case 1:
                 enter(UnAuditFragment.getInstance());
+                rb_unfinsh.setChecked(true);
                 break;
             case 2:
                 enter(AuditFragment.getInstance());
+                rb_finish.setChecked(true);
                 break;
             case 3:
                 enter(DisposeFragment.getInstance());
+                rb_dispose.setChecked(true);
                 break;
             case 4:
                 enter(FinishOrderFragment.getInstance());
+                rb_order.setChecked(true);
                 break;
             case 5:
                 enter(ServerFllocationFragment.getInstance());
+                rb_fllocation.setChecked(true);
                 break;
             case 6:
                 enter(ServerProgressFragment.getInstance());
+                rb_progress.setChecked(true);
                 break;
             case 7:
                 enter(ServerFeedbackFragment.getInstance());
+                rb_feedback.setChecked(true);
                 break;
             case 8:
                 enter(ServerFinshFragment.getInstance());
+                rb_finish_s.setChecked(true);
                 break;
         }
 

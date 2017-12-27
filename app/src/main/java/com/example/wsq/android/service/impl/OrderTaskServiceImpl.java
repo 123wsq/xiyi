@@ -1,8 +1,12 @@
 package com.example.wsq.android.service.impl;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.tools.OkHttpRequest;
 import com.example.wsq.android.utils.ValidateParam;
@@ -40,10 +44,8 @@ public class OrderTaskServiceImpl implements OrderTaskService {
      * @throws Exception
      */
     @Override
-    public void onGetOrderList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onGetOrderList(final Context context, Map<String, String> params, final HttpResponseListener callBack)  {
         //验证必填参数
-        ValidateParam.validateParam(params, ResponseKey.TOKEN, ResponseKey.PAGE,
-                ResponseKey.STATUS);
         String url = "";
         if (params.get(ResponseKey.JUESE).equals("1")){
             url = Urls.SERVER_ORDER;
@@ -52,7 +54,29 @@ public class OrderTaskServiceImpl implements OrderTaskService {
         }else if(params.get(ResponseKey.JUESE).equals("3")){
             url = Urls.MANAGER_ORDER_INFO;
         }
-        OkHttpRequest.sendPost(url, params,callBack);
+
+        try {
+
+            ValidateParam.validateParam(params, ResponseKey.TOKEN, ResponseKey.PAGE,
+                    ResponseKey.STATUS);
+
+            OkHttpRequest.sendHttpPost(url, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -130,12 +154,33 @@ public class OrderTaskServiceImpl implements OrderTaskService {
     }
 
     @Override
-    public void onGetProductInformation(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onGetProductInformation(final Context context, Map<String, String> param, final HttpResponseListener listener){
 
-        //参数验证
-        ValidateParam.validateParam(params, ResponseKey.CAT, ResponseKey.PAGE);
 
-        OkHttpRequest.sendGet(Urls.GET_PRODUCT, params, callBack);
+
+//        OkHttpRequest.sendGet(Urls.GET_PRODUCT, params, callBack);
+
+        try {
+            //参数验证
+            ValidateParam.validateParam(param, ResponseKey.CAT, ResponseKey.PAGE);
+
+            OkHttpRequest.sendHttpGet(Urls.GET_PRODUCT, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    listener.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            listener.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -154,11 +199,30 @@ public class OrderTaskServiceImpl implements OrderTaskService {
      * @throws Exception
      */
     @Override
-    public void onGetDeviceList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onGetDeviceList(final Context context, Map<String, String> params, final HttpResponseListener callBack) {
         //参数验证
 //        ValidateParam.validateParam(params, ResponseKey.ID, ResponseKey.TOKEN);
 
-        OkHttpRequest.sendGet(Urls.GET_DEVICE, params, callBack);
+//        OkHttpRequest.sendGet(Urls.GET_DEVICE, params, callBack);
+
+        try {
+            OkHttpRequest.sendHttpPost(Urls.GET_DEVICE, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -182,11 +246,31 @@ public class OrderTaskServiceImpl implements OrderTaskService {
      * @throws Exception
      */
     @Override
-    public void onGetNewsList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onGetNewsList(final Context context, Map<String, String> params, final HttpResponseListener callBack){
 
         //参数验证
-        ValidateParam.validateParam(params, ResponseKey.PAGE);
-        OkHttpRequest.sendGet(Urls.GET_NEWS, params, callBack);
+
+        try {
+
+            ValidateParam.validateParam(params, ResponseKey.PAGE);
+
+            OkHttpRequest.sendHttpGet(Urls.GET_NEWS, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -204,11 +288,29 @@ public class OrderTaskServiceImpl implements OrderTaskService {
     }
 
     @Override
-    public void onSearchDeviceList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onSearchDeviceList(final Context context, Map<String, String> params, final HttpResponseListener callBack) {
 
-        //参数验证
-        ValidateParam.validateParam(params, ResponseKey.PAGE, ResponseKey.KEYWORDS, ResponseKey.CAT);
-        OkHttpRequest.sendGet(Urls.SEARCH, params, callBack);
+        try {
+
+            ValidateParam.validateParam(params, ResponseKey.PAGE, ResponseKey.KEYWORDS, ResponseKey.CAT);
+
+            OkHttpRequest.sendHttpGet(Urls.SEARCH, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

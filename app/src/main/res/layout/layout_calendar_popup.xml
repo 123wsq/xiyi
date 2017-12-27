@@ -17,13 +17,25 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/defalut_layout_height"
         android:orientation="horizontal"
-        android:background="@color/color_white"
+
         android:visibility="visible"
         android:gravity="center_vertical"
         android:layout_marginRight="@dimen/default_margin"
         android:paddingLeft="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
+
         >
+
+        <TextView
+            android:id="@+id/tv_cencal"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:gravity="center"
+            android:textSize="@dimen/default_text_size"
+            />
+
         <TextView
             android:id="@+id/tv_ok"
             android:layout_width="wrap_content"

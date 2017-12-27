@@ -1,6 +1,6 @@
 package com.example.wsq.android.constant;
 
-g/**
+/**
  * Created by wsq on 2017/12/11.
  */
 
@@ -174,4 +174,20 @@ public class Urls {
      * 保证金详情
      */
     public static final String BAIL_DETAIL = "/api/member/bail_detail";
+
+    /**
+     * 提现列表
+     */
+    public static final String CASH_LIST = "/api/member/cash_list";
+
+    /**
+     * 提现详情
+     */
+    public static final String CASH_DETAIL = "/api/member/cach_detail";
+
+    /**
+     * 获取当前时间的提现详情
+     */
+    public static final String  SEARCH_CASH_LIST = "/api/member/search_cachList";
+
 }

@@ -14,7 +14,7 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.MessageAdapter;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
@@ -142,50 +142,40 @@ public class MessageActivity extends Activity{
     public void getMessageList(final RefreshLayout refreshLayout, final int type){
         dialog.show();
         Map<String, String> param = new HashMap<>();
-        param.put(ResponseKey.PAGE, (curPage+1)+"");
+        param.put(ResponseKey.PAGE, curPage+"");
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
 
-        try {
-            userService.onMessageList(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
+        userService.onMessageList(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                total = (int) result.get(ResponseKey.TOTAL);
+                unitPage = (int) result.get(ResponseKey.PER_PAGE);
+                List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
 
-                    total = (int) result.get(ResponseKey.TOTAL);
-                    unitPage = (int) result.get(ResponseKey.PER_PAGE);
-                    List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
+                mData.addAll(list);
 
-                    mData.addAll(list);
-
-                    if (mData.size() != 0){
-                        mAdapter.notifyDataSetChanged();
-                        rv_RecyclerView.setVisibility(View.VISIBLE);
-                        ll_nodata.setVisibility(View.GONE);
-                    }else{
-                        rv_RecyclerView.setVisibility(View.GONE);
-                        ll_nodata.setVisibility(View.VISIBLE);
-                    }
-
-                    if (type == 1){
-                        refreshLayout.finishRefresh();
-                    }else if(type ==2 ){
-                        refreshLayout.finishLoadmore();
-                    }
-                    dialog.dismiss();
+                if (mData.size() != 0){
+                    mAdapter.notifyDataSetChanged();
+                    rv_RecyclerView.setVisibility(View.VISIBLE);
+                    ll_nodata.setVisibility(View.GONE);
+                }else{
+                    rv_RecyclerView.setVisibility(View.GONE);
+                    ll_nodata.setVisibility(View.VISIBLE);
                 }
 
-                @Override
-                public void onCallFail(String msg) {
-                    if (type == 1){
-                        refreshLayout.finishRefresh();
-                    }else if(type ==2 ){
-                        refreshLayout.finishLoadmore();
-                    }
-                    dialog.dismiss();
+                if (type == 1){
+                    refreshLayout.finishRefresh();
+                }else if(type ==2 ){
+                    refreshLayout.finishLoadmore();
                 }
-            });
-        } catch (Exception e) {
-            dialog.dismiss();
-            e.printStackTrace();
-        }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure() {
+                dialog.dismiss();
+            }
+        });
+
     }
 }

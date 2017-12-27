@@ -9,5 +9,5 @@
         android:layout_height="match_parent"
 
         android:scaleType="fitXY"
-        android:src="@drawable/wellcome_4" />
+        android:src="@drawable/image_start" />
 </LinearLayout>

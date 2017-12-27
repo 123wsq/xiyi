@@ -7,7 +7,7 @@
     android:id="@+id/ll_layout"
     >
 
-    <include layout="@layout/layout_title"></include>
+    <include layout="@layout/layout_default_title"></include>
 
 
     <ScrollView
