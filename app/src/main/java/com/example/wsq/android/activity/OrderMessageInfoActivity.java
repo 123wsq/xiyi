@@ -42,10 +42,11 @@ public class OrderMessageInfoActivity extends Activity{
     @BindView(R.id.tv_order_status) TextView tv_order_status;
 
     private UserService userService;
-    private SharedPreferences shared;
+    private SharedPreferences shared, sharedMsg;
     private String order_no = "";
     private List<Map<String, Object>> mData;
     private OrderMessageAdapter mAdapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,7 @@ public class OrderMessageInfoActivity extends Activity{
         userService = new UserServiceImpl();
         mData = new ArrayList<>();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
+        sharedMsg = getSharedPreferences(Constant.SHARED_MSG, Context.MODE_PRIVATE);
         tv_title.setText("订单详情");
         tv_order_model.setText(getIntent().getStringExtra(ResponseKey.XINGHAO));
 
@@ -71,6 +73,7 @@ public class OrderMessageInfoActivity extends Activity{
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
+        sharedMsg.edit().putBoolean(getIntent().getIntExtra(ResponseKey.ID,0)+"", true).commit();
 
         mAdapter = new OrderMessageAdapter(this, mData);
 

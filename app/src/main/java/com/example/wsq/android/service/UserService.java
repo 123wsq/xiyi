@@ -33,7 +33,7 @@ public interface UserService {
      * @param params
      * @throws Exception
      */
-    void register(Map<String, String> params, HttpResponseCallBack callBack) throws  Exception;
+    void register(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -64,7 +64,7 @@ public interface UserService {
      * @param callBack
      * @throws Exception
      */
-    void updateUserInfo(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void updateUserInfo(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -187,7 +187,7 @@ public interface UserService {
      * @param callBack
      * @throws Exception
      */
-    void onApplyCashDeposit(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onApplyCashDeposit(Context context, Map<String, String> params, HttpResponseListener callBack) ;
 
 
     /**

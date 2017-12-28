@@ -60,19 +60,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             }else if (status.equals("3")){
                 holder.tv_status.setText("处理中");
             }else if (status.equals("4")){
-                holder.tv_status.setText("完成");
+                holder.tv_status.setText("完成(待提交完成反馈报告)");
             }else if (status.equals("5")){
                 holder.tv_status.setText("已移交(待提交移交反馈报告)");
             }else if (status.equals("6")){
-                holder.tv_status.setText("已提交完成反馈");
+                holder.tv_status.setText("已提交完成反馈(待审核)");
             }else if (status.equals("6.1")){
-                holder.tv_status.setText("重写完成反馈");
+                holder.tv_status.setText("重写完成反馈(需重写)");
             }else if (status.equals("7")){
                 holder.tv_status.setText("已提交移交反馈");
             }else if (status.equals("7.1")){
-                holder.tv_status.setText("重写移交反馈报告");
+                holder.tv_status.setText("重写移交反馈报告(待审核)");
             }else if (status.equals("8")){
                 holder.tv_status.setText("已结束");
+            }else if (status.equals("8.1") || status.equals("8.2")){
+                holder.tv_status.setText("已完成");
             }
         }else if(shared.getString(Constant.SHARED.JUESE,"").equals("2")
                 || shared.getString(Constant.SHARED.JUESE,"").equals("3")){
@@ -123,8 +125,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             Map<String, Object> map = mData.get(getPosition());
             if (shared.getString(Constant.SHARED.JUESE, "").endsWith("1")){
 
-                if (map.get(ResponseKey.STATUS).equals("5")
-                        ||map.get(ResponseKey.STATUS).equals("7.1")
+                if (map.get(ResponseKey.STATUS).equals("7.1")
                         || map.get(ResponseKey.STATUS).equals("8.1")
                         || map.get(ResponseKey.STATUS).equals("8.2")){
                     IntentFormat.startActivity(mContext, ServerOrderInfoActivity.class, map);

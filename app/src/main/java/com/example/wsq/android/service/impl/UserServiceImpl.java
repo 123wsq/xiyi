@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void register(Map<String, String> params, final HttpResponseCallBack callBack) throws Exception {
+    public void register(final Context context, Map<String, String> params, final HttpResponseListener callBack){
 
         params.put(ResponseKey.USERNAME, RegisterParam.USERNAME);
         params.put(ResponseKey.PASSWORD, RegisterParam.PASSWORD);
@@ -93,9 +93,29 @@ public class UserServiceImpl implements UserService{
         params.put(ResponseKey.EMAIL, RegisterParam.EMAIL);
         params.put(ResponseKey.SFZ1, RegisterParam.SFZ1);
         params.put(ResponseKey.SFZ2, RegisterParam.SFZ2);
+        params.put(ResponseKey.DIQU, RegisterParam.DIQU);
 
 
-        OkHttpRequest.sendPost(Urls.REGISTER, params, callBack);
+        try {
+
+            OkHttpRequest.sendHttpPost(Urls.REGISTER, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            callBack.onFailure();
+
+        }
 
     }
 
@@ -168,12 +188,31 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void updateUserInfo(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void updateUserInfo(final Context context, Map<String, String> params, final HttpResponseListener callBack){
 
-        //必填参数验证
-        ValidateParam.validateParam(params,ResponseKey.TOKEN,ResponseKey.NAME, ResponseKey.SEX);
 
-        OkHttpRequest.sendPost(Urls.UPDATE_USER_INFO, params, callBack);
+        try {
+
+            //必填参数验证
+            ValidateParam.validateParam(params,ResponseKey.TOKEN,ResponseKey.NAME, ResponseKey.SEX);
+
+            OkHttpRequest.sendHttpPost(Urls.UPDATE_USER_INFO, params, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -471,10 +510,30 @@ public class UserServiceImpl implements UserService{
      * @throws Exception
      */
     @Override
-    public void onApplyCashDeposit(Map<String, String> params, HttpResponseCallBack callBack) throws Exception {
+    public void onApplyCashDeposit(final Context context, Map<String, String> params, final HttpResponseListener callBack){
 
-        ValidateParam.validateParam(params, ResponseKey.TOKEN, ResponseKey.MESSAGE);
-        OkHttpRequest.sendGet(Urls.ADD_BAIL, params, callBack);
+        try {
+
+            ValidateParam.validateParam(params, ResponseKey.TOKEN, ResponseKey.MESSAGE);
+
+            OkHttpRequest.sendHttpGet(Urls.ADD_BAIL, params, new HttpResponseCallBack() {
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, "请填写退保证金的原因", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /**

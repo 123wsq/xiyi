@@ -26,16 +26,16 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:gravity="top"
 
         >
         <com.example.wsq.android.view.RoundImageView
             android:id="@+id/roundImage_header"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="@dimen/defalut_layout_height"
             android:layout_marginRight="10dp"
-            imagecontrol:border_outside_color="#FFFFFF"
+            imagecontrol:border_outside_color="#E4E4E4"
             imagecontrol:border_inside_color="#FFFFFF"
             imagecontrol:border_thickness="2dp"
             android:src="@drawable/image_header_bg" />
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:gravity="top"
             >
 
 
@@ -91,12 +91,20 @@
                     android:textColor="@color/color_white"/>
             </LinearLayout>
         </LinearLayout>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/image_left"
-            android:layout_marginRight="@dimen/default_margin"
-            />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/image_left"
+                    android:layout_marginRight="@dimen/default_margin"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 
@@ -139,17 +147,18 @@
                     android:layout_marginTop="@dimen/default_radius"
                     android:text="未审核"/>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_uncheck"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:textColor="@color/color_white"
-                android:text="0"
-                android:background="@drawable/shape_num"
-                android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/radius_popup"
-                />
+                android:background="@drawable/shape_num"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/color_white"
+                android:visibility="gone" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/ll_order_finish"
@@ -173,17 +182,18 @@
                     android:layout_marginTop="@dimen/default_radius"
                     android:text="已审核"/>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_hascheck"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:textColor="@color/color_white"
-                android:text="0"
-                android:background="@drawable/shape_num"
-                android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/radius_popup"
-                />
+                android:background="@drawable/shape_num"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/color_white"
+                android:visibility="gone" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/ll_order_handler"
@@ -207,17 +217,18 @@
                     android:layout_marginTop="@dimen/default_radius"
                     android:text="处理中"/>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_processed"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:textColor="@color/color_white"
-                android:text="0"
-                android:background="@drawable/shape_num"
-                android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/radius_popup"
-                />
+                android:background="@drawable/shape_num"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/color_white"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -243,17 +254,18 @@
                 android:layout_marginTop="@dimen/default_radius"
                 android:text="已完成" />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_done"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:textColor="@color/color_white"
-                android:text="0"
-                android:background="@drawable/shape_num"
-                android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/radius_popup"
-                />
+                android:background="@drawable/shape_num"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/color_white"
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -287,17 +299,18 @@
                     android:layout_marginTop="@dimen/default_radius"
                     android:text="已分配"/>
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_assigned"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:textColor="@color/color_white"
-                    android:text="0"
-                    android:background="@drawable/shape_num"
-                    android:gravity="center"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/radius_popup"
-                    />
+                    android:background="@drawable/shape_num"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_white"
+                    android:visibility="gone" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/ll_order_progress"
@@ -322,17 +335,18 @@
                     android:layout_marginTop="@dimen/default_radius"
                     android:text="处理中"/>
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_server_processed"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:textColor="@color/color_white"
-                    android:text="0"
-                    android:background="@drawable/shape_num"
-                    android:gravity="center"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/radius_popup"
-                    />
+                    android:background="@drawable/shape_num"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_white"
+                    android:visibility="gone" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/ll_order_feedback"
@@ -356,17 +370,18 @@
                     android:layout_marginTop="@dimen/default_radius"
                     android:text="反馈中"/>
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_feedback"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:textColor="@color/color_white"
-                    android:text="0"
-                    android:background="@drawable/shape_num"
-                    android:gravity="center"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/radius_popup"
-                    />
+                    android:background="@drawable/shape_num"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_white"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -393,17 +408,18 @@
                     android:layout_marginTop="@dimen/default_radius"
                     android:text="完成" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_server_done"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:textColor="@color/color_white"
-                    android:text="0"
-                    android:background="@drawable/shape_num"
-                    android:gravity="center"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/radius_popup"
-                    />
+                    android:background="@drawable/shape_num"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_white"
+                    android:visibility="gone" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -488,7 +504,7 @@
         <LinearLayout
             android:id="@+id/ll_device_server"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="110dp"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/radius_popup"
             android:background="@color/color_white"

@@ -1,7 +1,10 @@
 package com.example.wsq.android.activity;
 
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +14,13 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.WellcomeAdapter;
-import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.utils.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -23,30 +28,25 @@ import java.util.List;
  * Created by wsq on 2017/12/11.
  */
 
-public class WellcomeActivity  extends BaseActivity {
+public class WellcomeActivity  extends Activity {
 
-    private ViewPager viewPager;
+    @BindView(R.id.viewPager) ViewPager viewPager;
+
+    @BindView(R.id.layout_Indicator) LinearLayout layout_Indicator;
+
     private WellcomeAdapter mAdapter;
-    private LinearLayout layout_Indicator;
-
     private List<View> mDate;
 
 
-
     @Override
-    public int getByLayoutId() {
-        return R.layout.layout_wellcome;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.layout_wellcome);
+        ButterKnife.bind(this);
+        initView();
     }
 
-    @Override
-    public void init() {
-
-
-
-    }
-
-
-    @Override
     public void initView() {
 
         viewPager = this.findViewById(R.id.viewPager);

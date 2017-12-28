@@ -6,9 +6,8 @@
     android:layout_margin="@dimen/default_radius"
     android:orientation="vertical"
     android:paddingLeft="@dimen/default_margin"
-    android:paddingTop="@dimen/default_margin"
+    android:paddingTop="@dimen/default_radius"
     android:paddingRight="@dimen/default_margin"
-
     android:id="@+id/ll_order_layout"
     >
     
@@ -21,7 +20,7 @@
         >
         <View
             android:layout_width="3dp"
-            android:layout_height="30dp"
+            android:layout_height="15dp"
             android:background="#E90523"
             />
         <TextView
@@ -42,7 +41,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/default_height_min"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="bottom"
         >

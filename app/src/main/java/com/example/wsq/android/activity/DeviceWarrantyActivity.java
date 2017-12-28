@@ -205,7 +205,6 @@ public class DeviceWarrantyActivity extends Activity{
                                 .imageFormat(PictureMimeType.PNG)
                                 .compress(true)// 是否压缩 true or false
                                 .minimumCompressSize(100)// 小于100kb的图片不压缩
-
                                 .forResult(RESULT_IMAGE);
 
                         break;
@@ -438,7 +437,7 @@ public class DeviceWarrantyActivity extends Activity{
                 deviceTaskService.onDeviceRepairs(param, listFile,new HttpResponseCallBack() {
                     @Override
                     public void callBack(Map<String, Object> result) {
-//                        Toast.makeText(DeviceWarrantyActivity.this, param.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DeviceWarrantyActivity.this, result.get(ResponseKey.MESSAGE) +"", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 

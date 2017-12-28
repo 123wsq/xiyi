@@ -36,11 +36,11 @@ import com.example.wsq.android.fragment.FaultFragment;
 import com.example.wsq.android.fragment.MainFragment;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.HttpResponseListener;
+import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
-import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +61,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @BindView(R.id.rb_fault)  RadioButton rb_fault;
     @BindView(R.id.et_search) EditText et_search;
     @BindView(R.id.view_point) View view_point;
+    @BindView(R.id.rl_layout) RelativeLayout rl_layout;
 
     public static boolean isForeground = false;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
@@ -72,7 +73,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     MyBroadcastReceiver receiver = new MyBroadcastReceiver();
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
-    private SharedPreferences shared;
+    private SharedPreferences shared, sharedMsg;
     private Fragment[] fragments = {MainFragment.getInstance(), DeviceFragment.getInstance(),
             FaultFragment.getInstance(), UserFragment.getInstance()};
 
@@ -85,6 +86,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
+        sharedMsg = getSharedPreferences(Constant.SHARED_MSG, Context.MODE_PRIVATE);
         init();
 
         enter(1, fragments[0]);
@@ -242,11 +244,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                 rl_title_back.setVisibility(View.GONE);
                 iv_setting.setVisibility(View.GONE);
                 ll_title_location.setVisibility(View.VISIBLE);
-            }else if(action.equals(MESSAGE_RECEIVED_ACTION)){
-
+            }else if(action.equals(MESSAGE_RECEIVED_ACTION)){  //推送过来的消息
                 Log.d("接收到的消息", intent.getStringExtra(KEY_MESSAGE));
-
-
                 setNotification(intent.getStringExtra(KEY_MESSAGE));
 
             }
@@ -300,8 +299,20 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             public void onSuccess(Map<String, Object> result) {
                 List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
 
-                Logger.d(list.size());
-                if (list.size() != 0 ){
+                boolean isState = false;
+
+                for (int i =0 ; i < list.size(); i++){
+
+                    String id = list.get(i).get(ResponseKey.ID)+"";
+                    boolean state =  sharedMsg.getBoolean(id, false);
+
+                    if (!state){
+                        isState = true;
+
+                    }
+                }
+
+                if (isState){
                     view_point.setVisibility(View.VISIBLE);
                 }else{
                     view_point.setVisibility(View.GONE);
@@ -323,9 +334,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             CustomDefaultDialog.Builder builder = new CustomDefaultDialog.Builder(this);
             builder.setTitle("提示");
             builder.setMessage("您确定退出该应用吗？");
-            builder.setOkBtn("退出", new DialogInterface.OnClickListener() {
+            builder.setOkBtn("退出", new OnDialogClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onClick(CustomDefaultDialog dialog, String result) {
                     dialog.dismiss();
                     finish();
                 }

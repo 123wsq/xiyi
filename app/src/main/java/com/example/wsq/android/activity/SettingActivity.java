@@ -23,6 +23,7 @@ import com.example.wsq.android.utils.AppUtils;
 import com.example.wsq.android.utils.CacheUtil;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
+import com.example.wsq.android.view.SwitchView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +36,7 @@ import butterknife.OnClick;
  * Created by wsq on 2017/12/13.
  */
 
-public class SettingActivity extends Activity {
+public class SettingActivity extends Activity implements SwitchView.OnStateChangedListener {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_setting_Withdraw_psd)
@@ -46,6 +47,7 @@ public class SettingActivity extends Activity {
     LinearLayout ll_Withdraw;
     @BindView(R.id.tv_cacheSize) TextView tv_cacheSize;
     @BindView(R.id.tv_version) TextView tv_version;
+    @BindView(R.id.sv_switchBtn) SwitchView sv_switchBtn;
 
 
     private String payPassword;
@@ -103,6 +105,7 @@ public class SettingActivity extends Activity {
         }
 
         tv_version.setText(AppUtils.getLocalVersionName(this));
+        sv_switchBtn.setOnStateChangedListener(this);
 
     }
 
@@ -146,9 +149,9 @@ public class SettingActivity extends Activity {
             case R.id.ll_cache_data:
 
                 CustomDefaultDialog.Builder builder1 = new CustomDefaultDialog.Builder(SettingActivity.this);
-                builder1.setTitle("");
-                builder1.setMessage("");
-                builder1.setOkBtn("", new OnDialogClickListener() {
+                builder1.setTitle("提示");
+                builder1.setMessage("清理缓存后，将需要花费更多的时间加载页面，您确定要清除吗？");
+                builder1.setOkBtn("确定", new OnDialogClickListener() {
                     @Override
                     public void onClick(CustomDefaultDialog dialog, String result) {
 
@@ -161,7 +164,7 @@ public class SettingActivity extends Activity {
                         }
                     }
                 });
-                builder1.setCancelBtn("", new DialogInterface.OnClickListener() {
+                builder1.setCancelBtn("点错了", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -190,4 +193,35 @@ public class SettingActivity extends Activity {
             tv_tv_forget_Withdraw_psd.setVisibility(View.VISIBLE);
         }
     };
+
+    @Override
+    public void toggleToOn(SwitchView view) {
+
+        onInitDialog();
+        view.setOpened(false);
+    }
+
+    @Override
+    public void toggleToOff(SwitchView view) {
+
+        onInitDialog();
+        view.setOpened(false);
+    }
+
+
+    public void onInitDialog(){
+
+        CustomDefaultDialog.Builder builder = new CustomDefaultDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("暂时还不可用");
+        builder.setOkBtn("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+        CustomDefaultDialog dialog = builder.create();
+        dialog.show();
+    }
 }

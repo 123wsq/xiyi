@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +41,7 @@ import butterknife.OnClick;
  * Created by wsq on 2017/12/18.
  */
 
-public class ServerOrderInfoActivity extends Activity{
+public class ServerOrderInfoActivity extends Activity implements AdapterView.OnItemClickListener {
 
     @BindView(R.id.tv_title) TextView tv_title; //标题
     @BindView(R.id.iv_back) ImageView iv_back; //返回
@@ -113,11 +116,14 @@ public class ServerOrderInfoActivity extends Activity{
         rv_gridview_scene.setAdapter(mAdapter2);
 
 
-        if (intent.getStringExtra(ResponseKey.STATUS).equals("5")
-                ||intent.getStringExtra(ResponseKey.STATUS).equals("7.1")){
+       if(intent.getStringExtra(ResponseKey.STATUS).equals("7.1")) {
             tv_transfer.setVisibility(View.VISIBLE);
-            tv_transfer.setText("填写移交报告");
+            tv_transfer.setText("重写反馈报告");
         }
+
+
+        rv_gridview.setOnItemClickListener(this);
+        rv_gridview_scene.setOnItemClickListener(this);
 
         getServerOrderInfo();
 
@@ -250,6 +256,57 @@ public class ServerOrderInfoActivity extends Activity{
             mAdapter1.notifyDataSetChanged();
         }else{  //现场更新
             mAdapter2.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        CameraBean bean;
+        if (view.getId() ==rv_gridview.getId()){
+            bean = mData1.get(position);
+        }else{
+            bean = mData2.get(position);
+        }
+
+        if(bean.getType() == 2){
+            int num = 0;
+            List<LocalMedia> list = new ArrayList<>();
+            if (view.getId() ==rv_gridview.getId()){
+                for (int i = 0; i< mData1.size(); i ++){
+                    if (mData1.get(i).getType()==2) {
+                        LocalMedia media = new LocalMedia();
+
+                        media.setPath(bean.getFile_path());
+                        list.add(media);
+                    }else{
+                        if (i < position){
+                            num++;
+                        }
+                    }
+                }
+            }else{
+                for (int i = 0; i< mData2.size(); i ++){
+                    if (mData2.get(i).getType()==2) {
+                        LocalMedia media = new LocalMedia();
+
+                        media.setPath(bean.getFile_path());
+                        list.add(media);
+                    }else{
+                        if (i < position){
+                            num++;
+                        }
+                    }
+                }
+            }
+
+
+            PictureSelector.create(ServerOrderInfoActivity.this).externalPicturePreview(num, list);
+        }else if(bean.getType() == 3){
+
+            Map<String, Object> param = new HashMap<>();
+            param.put("URL", bean.getFile_path());
+            IntentFormat.startActivity(ServerOrderInfoActivity.this, VideoPlayActivity.class, param);
+
         }
     }
 }

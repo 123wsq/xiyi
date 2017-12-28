@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 
@@ -78,23 +78,20 @@ public class CashDepositActivity extends Activity implements TextWatcher {
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
         param.put(ResponseKey.MESSAGE, et_description.getText().toString());
 
-        try {
-            userService.onApplyCashDeposit(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
-                    Toast.makeText(CashDepositActivity.this,
-                            result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+        userService.onApplyCashDeposit(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Toast.makeText(CashDepositActivity.this,
+                        result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
+                finish();
+            }
 
-                @Override
-                public void onCallFail(String msg) {
+            @Override
+            public void onFailure() {
 
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            }
+        });
+
     }
 
 

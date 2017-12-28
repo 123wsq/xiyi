@@ -348,7 +348,7 @@ public class OkHttpRequest {
             public void onResponse(String response) {
 
                 String result = UnicodeUtil.unicodeToString(response);
-                com.orhanobut.logger.Logger.json(result);
+                com.orhanobut.logger.Logger.d(result);
                 try {
 
                     Map<String, Object> map = ParamFormat.onAllJsonToMap(result);
@@ -360,16 +360,16 @@ public class OkHttpRequest {
 
                             callBack.callBack(map);
 
-                        } else if((int)map.get(ResponseKey.CODE) == 1000){ //用户名或密码错误
-                            map.putAll(ParamFormat.onJsonToMap(result));
+                        } else { //用户名或密码错误
+//                            map.putAll(ParamFormat.onJsonToMap(result));
 //                            callBack.callBack(map);
-                            callBack.onCallFail(map.get(ResponseKey.MESSAGE)+"");
-                        }else {
+//                            callBack.onCallFail(map.get(ResponseKey.MESSAGE)+"");
+//                        }else {
                             callBack.onCallFail(map.get(ResponseKey.MESSAGE)+"");
                         }
                     }
                 } catch (Exception e) {
-                    callBack.onCallFail("数据解析异常");
+                    callBack.onCallFail("数据返回异常");
                     e.printStackTrace();
                 }
 

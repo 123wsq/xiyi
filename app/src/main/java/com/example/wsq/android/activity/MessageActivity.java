@@ -52,7 +52,7 @@ public class MessageActivity extends Activity{
     private int total = 1;
     private int unitPage = 15;
     private UserService userService;
-    private SharedPreferences shared;
+    private SharedPreferences shared, sharedMsg;
     private MessageAdapter mAdapter;
     private List<Map<String, Object>> mData;
     private LoddingDialog dialog;
@@ -77,6 +77,7 @@ public class MessageActivity extends Activity{
 
         userService = new UserServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
+        sharedMsg = getSharedPreferences(Constant.SHARED_MSG, Context.MODE_PRIVATE);
 
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 2,
@@ -151,6 +152,13 @@ public class MessageActivity extends Activity{
                 total = (int) result.get(ResponseKey.TOTAL);
                 unitPage = (int) result.get(ResponseKey.PER_PAGE);
                 List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
+
+                for (int i =0 ; i < list.size(); i++){
+                    String id = list.get(i).get(ResponseKey.ID)+"";
+                   boolean state =  sharedMsg.getBoolean(id, false);
+
+                    sharedMsg.edit().putBoolean(id, state).commit();
+                }
 
                 mData.addAll(list);
 

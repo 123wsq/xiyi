@@ -1,17 +1,18 @@
 package com.example.wsq.android.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.ValidateParam;
@@ -20,67 +21,66 @@ import com.example.wsq.android.view.CustomPopup;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by wsq on 2017/12/11.
  */
 
-public class RegiesterActivity2 extends BaseActivity implements View.OnClickListener {
+public class RegiesterActivity2 extends Activity {
 
-    private Button btn_next;
-    private LinearLayout iv_back;
-    private TextView tv_xueli, tv_juese;
-    private LinearLayout ll_layout;
-    private EditText et_bumen, et_company;
-
+    @BindView(R.id.tv_xueli) TextView tv_xueli;
+    @BindView(R.id.tv_juese) TextView tv_juese;
+    @BindView(R.id.ll_layout) LinearLayout ll_layout;
+    @BindView(R.id.et_bumen) EditText et_bumen;
+    @BindView(R.id.et_company) EditText et_company;
+    @BindView(R.id.et_location) EditText et_location;
+    @BindView(R.id.ll_location) LinearLayout ll_location;
+    @BindView(R.id.layout_company) LinearLayout layout_company;
     private CustomPopup popup;
 
-    private LinearLayout layout_company;
 
 
     @Override
-    public int getByLayoutId() {
-        return R.layout.layout_regiester2;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.layout_regiester2);
+        ButterKnife.bind(this);
+        init();
+
     }
 
-    @Override
+
     public void init() {
 
         RegisterParam.XUELI = 1;
         RegisterParam.JUESE = 1;
+        et_location.setVisibility(View.VISIBLE);
     }
-
-    @Override
-    public void initView() {
-
-        btn_next = this.findViewById(R.id.btn_next);
-        iv_back = this.findViewById(R.id.iv_back);
-        tv_xueli = this.findViewById(R.id.tv_xueli);
-        tv_juese = this.findViewById(R.id.tv_juese);
-        ll_layout = this.findViewById(R.id.ll_layout);
-        et_bumen = this.findViewById(R.id.et_bumen);
-        et_company = this.findViewById(R.id.et_company);
-        layout_company = this.findViewById(R.id.layout_company);
-
-        btn_next.setOnClickListener(this);
-        iv_back.setOnClickListener(this);
-        tv_xueli.setOnClickListener(this);
-        tv_juese.setOnClickListener(this);
-    }
-
-    @Override
+    @OnClick({R.id.btn_next, R.id.iv_back, R.id.tv_xueli, R.id.tv_juese})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_next:
                 //判断当选择企业工程师的时候必须要填写公司
 
-                if (RegisterParam.JUESE==2){
+                if (RegisterParam.JUESE != 1){
                     if(ValidateParam.validateParamIsNull(et_company.getText().toString())){
                         Toast.makeText(RegiesterActivity2.this, "公司必填参数", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
+                if (RegisterParam.JUESE == 1){
+                    if(ValidateParam.validateParamIsNull(et_location.getText().toString())){
+                        Toast.makeText(RegiesterActivity2.this, "工作地点必须要填写", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 RegisterParam.BUMEN = et_bumen.getText().toString();
                 RegisterParam.COMPANY = et_company.getText().toString();
+                RegisterParam.DIQU = et_location.getText().toString();
                 startActivity(new Intent(RegiesterActivity2.this, RegisterActivity3.class));
                 break;
             case R.id.iv_back:
@@ -131,7 +131,8 @@ public class RegiesterActivity2 extends BaseActivity implements View.OnClickList
                         tv_juese.setText(result);
                         RegisterParam.JUESE = position+1;
                         popup.dismiss();
-                        layout_company.setVisibility(position ==1 ? View.VISIBLE : View.GONE);
+                        layout_company.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
+                        ll_location.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
                     }
                 });
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);

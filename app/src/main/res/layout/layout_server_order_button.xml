@@ -8,7 +8,7 @@
     <RadioGroup
         android:id="@+id/rg_group_s"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/defalut_radiogroup_height"
         android:orientation="horizontal"
         android:gravity="center"
         android:background="@color/color_white"
@@ -17,11 +17,12 @@
             android:id="@+id/rb_fllocation"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/image_wcl"
             android:text="已分配"
             android:button="@null"
             android:gravity="center"
+            android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
             />
 
@@ -29,33 +30,36 @@
             android:id="@+id/rb_progress"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/image_ywc"
             android:text="处理中"
             android:button="@null"
             android:gravity="center"
+            android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
             />
         <RadioButton
             android:id="@+id/rb_feedback"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/image_clz"
             android:text="反馈中"
             android:button="@null"
             android:gravity="center"
+            android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
             />
 
         <RadioButton
             android:id="@+id/rb_finish_s"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
             android:drawableTop="@drawable/image_dd"
             android:gravity="center"
+            android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
             android:text="完成" />
 

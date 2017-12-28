@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
@@ -21,7 +22,6 @@ import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.IntentFormat;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +42,8 @@ public class CashDepositListActivity extends Activity{
     RecyclerView rv_RecyclerView;
     @BindView(R.id.tv_title)
     TextView tv_title;
+    @BindView(R.id.ll_nodata)
+    LinearLayout ll_nodata;
 
     private UserService userService;
     private CashDepositAdapter mAdapter;
@@ -99,10 +101,17 @@ public class CashDepositListActivity extends Activity{
             public void onSuccess(Map<String, Object> result) {
                 List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.BAIL_LIST);
 
-                Logger.d("保证金个数  "+list.size());
                 if (list.size() != 0){
                     mData.addAll(list);
                     mAdapter.notifyDataSetChanged();
+                }
+
+                if (mData.size() == 0 ){
+                    ll_nodata.setVisibility(View.VISIBLE);
+                    rv_RecyclerView.setVisibility(View.GONE);
+                }else{
+                    ll_nodata.setVisibility(View.GONE);
+                    rv_RecyclerView.setVisibility(View.VISIBLE);
                 }
             }
 

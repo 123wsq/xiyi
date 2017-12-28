@@ -23,6 +23,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 //    private Context mContext;
     private DeviceFragment mFragment;
     private List<Map<String, Object>> mData;
+    private int selectPosition  = 0;
     public DefaultAdapter(DeviceFragment fragment, List<Map<String, Object>> list){
         this.mFragment = fragment;
         this.mData = list;
@@ -38,6 +39,16 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.tv_name.setText(mData.get(position).get(ResponseKey.NAME)+"");
+
+
+        //设置选中效果  默认选中 0
+        if(position == selectPosition){
+            holder.ll_layout.setBackgroundResource(R.drawable.image_equ_left_arrow);
+        }else{
+            holder.ll_layout.setBackgroundColor(mFragment.getResources().getColor(R.color.color_white));
+        }
+
+
     }
 
 
@@ -64,6 +75,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
         List<Map<String, Object>> list = (List<Map<String, Object>>) mData.get(getPosition()).get(ResponseKey.SHEBEI);
             mFragment.updateData(list);
+            selectPosition = getPosition();
+            notifyDataSetChanged();
         }
     }
 }

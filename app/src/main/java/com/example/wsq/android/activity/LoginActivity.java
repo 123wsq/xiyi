@@ -1,8 +1,11 @@
 package com.example.wsq.android.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -13,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
@@ -25,23 +27,27 @@ import com.example.wsq.android.view.LoddingDialog;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by wsq on 2017/12/11.
  */
 
-public class LoginActivity extends BaseActivity implements OnClickListener {
+public class LoginActivity extends Activity implements OnClickListener {
 
 
-    private TextView tv_register;
+    @BindView(R.id.tv_register) TextView tv_register;
 
-    private  TextView tv_forget_pwd;
-    private EditText et_username, et_password;
+    @BindView(R.id.tv_forget_pwd)  TextView tv_forget_pwd;
+    @BindView(R.id.et_username) EditText et_username;
+    @BindView(R.id.et_password)EditText et_password;
 
-    private TextView btn_login;
-    private ImageView im_eye;
-    private CheckBox cb_checkBox;
+    @BindView(R.id.btn_login) TextView btn_login;
+    @BindView(R.id.im_eye) ImageView im_eye;
+    @BindView(R.id.cb_checkBox) CheckBox cb_checkBox;
 
 
     private UserService userService;
@@ -52,11 +58,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 
     @Override
-    public int getByLayoutId() {
-        return R.layout.layout_login;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.layout_login);
+        ButterKnife.bind(this);
+        init();
+        initView();
     }
 
-    @Override
     public void init() {
         userService = new UserServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
@@ -64,22 +74,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         dialog = new LoddingDialog(this );
     }
 
-    @Override
     public void initView() {
-        tv_register = this.findViewById(R.id.tv_register);
-        tv_forget_pwd = this.findViewById(R.id.tv_forget_pwd);
-        et_username = this.findViewById(R.id.et_username);
-        et_password = this.findViewById(R.id.et_password);
-        im_eye = this.findViewById(R.id.im_eye);
-        btn_login = this.findViewById(R.id.btn_login);
-        cb_checkBox = this.findViewById(R.id.cb_checkBox);
 
         et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        tv_register.setOnClickListener(this);
-        tv_forget_pwd.setOnClickListener(this);
-        btn_login.setOnClickListener(this);
-        im_eye.setOnClickListener(this);
-        cb_checkBox.setOnClickListener(this);
+
 
         cb_checkBox.setChecked(true);
         et_username.setText(shared.getString(Constant.SHARED.USERNAME, ""));
@@ -89,7 +87,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
 
-    @Override
+    @OnClick({R.id.tv_register, R.id.tv_forget_pwd, R.id.im_eye, R.id.btn_login})
     public void onClick(View v) {
             switch (v.getId()){
                 case R.id.tv_register:

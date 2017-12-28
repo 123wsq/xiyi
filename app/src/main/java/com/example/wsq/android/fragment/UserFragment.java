@@ -119,6 +119,13 @@ public class UserFragment extends Fragment {
         initView();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getUserInfo();
+        getOrderNum();
+    }
 
     public void init() {
 
@@ -130,8 +137,8 @@ public class UserFragment extends Fragment {
 
         dialog = new LoddingDialog(getActivity());
         dialog.show();
-        getUserInfo();
-        getOrderNum();
+//        getUserInfo();
+//        getOrderNum();
     }
 
 
@@ -397,23 +404,27 @@ public class UserFragment extends Fragment {
                         if (result.get(ResponseKey.UNCHECK).toString().equals("0")){
                             tv_uncheck.setVisibility(View.GONE);
                         }else{
+                            tv_uncheck.setVisibility(View.VISIBLE);
                             tv_uncheck.setText(result.get(ResponseKey.UNCHECK).toString());
                         }
 
                         if (result.get(ResponseKey.HASCHECK).toString().equals("0")){
                             tv_hascheck.setVisibility(View.GONE);
                         }else{
+                            tv_hascheck.setVisibility(View.VISIBLE);
                             tv_hascheck.setText(result.get(ResponseKey.HASCHECK).toString());
                         }
 
                         if (result.get(ResponseKey.PROCESSED).toString().equals("0")){
                             tv_processed.setVisibility(View.GONE);
                         }else{
+                            tv_processed.setVisibility(View.VISIBLE);
                             tv_processed.setText(result.get(ResponseKey.PROCESSED).toString());
                         }
                         if (result.get(ResponseKey.DONE).toString().equals("0")){
                             tv_done.setVisibility(View.GONE);
                         }else{
+                            tv_done.setVisibility(View.VISIBLE);
                             tv_done.setText(result.get(ResponseKey.DONE).toString());
                         }
                     }else{
@@ -421,23 +432,27 @@ public class UserFragment extends Fragment {
                         if (result.get(ResponseKey.ASSIGNED).toString().equals("0")){
                             tv_assigned.setVisibility(View.GONE);
                         }else{
+                            tv_assigned.setVisibility(View.VISIBLE);
                             tv_assigned.setText(result.get(ResponseKey.ASSIGNED).toString());
                         }
 
                         if (result.get(ResponseKey.PROCESSED).toString().equals("0")){
                             tv_server_processed.setVisibility(View.GONE);
                         }else{
+                            tv_server_processed.setVisibility(View.VISIBLE);
                             tv_server_processed.setText(result.get(ResponseKey.PROCESSED).toString());
                         }
 
                         if (result.get(ResponseKey.FEEDBACK).toString().equals("0")){
                             tv_feedback.setVisibility(View.GONE);
                         }else{
+                            tv_feedback.setVisibility(View.VISIBLE);
                             tv_feedback.setText(result.get(ResponseKey.FEEDBACK).toString());
                         }
                         if (result.get(ResponseKey.DONE).toString().equals("0")){
                             tv_server_done.setVisibility(View.GONE);
                         }else{
+                            tv_server_done.setVisibility(View.VISIBLE);
                             tv_server_done.setText(result.get(ResponseKey.DONE).toString());
                         }
 

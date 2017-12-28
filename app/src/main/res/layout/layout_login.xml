@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/image_login_icon"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="@dimen/default_height_min"
         android:layout_gravity="center_horizontal"
         />
 
@@ -91,13 +91,13 @@
                 android:paddingLeft="10dp"
                 android:textColor="@color/color_white"
                 />
+
             <ImageView
                 android:id="@+id/im_eye"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_eye_close"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                />
+                android:src="@drawable/image_eye_close" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

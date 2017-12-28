@@ -1,12 +1,14 @@
 package com.example.wsq.android.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.utils.IntentFormat;
 
@@ -15,18 +17,18 @@ import com.example.wsq.android.utils.IntentFormat;
  * Created by wsq on 2017/12/12.
  */
 
-public class StartActivity extends BaseActivity{
+public class StartActivity extends Activity {
+
+
     @Override
-    public int getByLayoutId() {
-        return R.layout.layout_start;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.layout_start);
+        initView();
     }
 
-    @Override
-    public void init() {
 
-    }
-
-    @Override
     public void initView() {
 
         handler.post(thread);

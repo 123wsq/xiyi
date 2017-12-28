@@ -34,6 +34,7 @@
             android:textSize="@dimen/default_text_size"
             />
         <com.example.wsq.android.view.SwitchView
+            android:id="@+id/sv_switchBtn"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"

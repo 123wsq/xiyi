@@ -144,7 +144,37 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/ll_location"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:orientation="horizontal"
+        android:background="@color/color_white"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="visible"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="期望地点"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/default_text_size"
+            android:drawableRight="@drawable/image_important"
+            />
 
+        <EditText
+            android:id="@+id/et_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:textSize="14sp"
+            android:hint="请输入您期望的工作地点"
+            android:background="@drawable/shape_text_stroken"
+            android:singleLine="true"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -183,7 +213,7 @@
         android:layout_height="@dimen/defalut_layout_height"
         android:text="下一步"
         android:textColor="@color/color_white"
-        android:background="@color/color_default_btn"
+        android:background="@drawable/shape_button"
         android:layout_margin="@dimen/defalut_layout_height"
         />
 

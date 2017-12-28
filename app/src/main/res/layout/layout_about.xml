@@ -33,7 +33,7 @@
     <LinearLayout
         android:id="@+id/ll_about"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/default_height_min"
+        android:layout_height="@dimen/default_height_small"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/radius_popup"
         android:background="@color/color_white"
@@ -57,7 +57,7 @@
     <LinearLayout
         android:id="@+id/ll_protocols"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/default_height_min"
+        android:layout_height="@dimen/default_height_small"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/radius_popup"
         android:background="@color/color_white"

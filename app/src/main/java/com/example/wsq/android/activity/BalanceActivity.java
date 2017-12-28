@@ -43,6 +43,8 @@ public class BalanceActivity extends Activity{
     private SharedPreferences shared;
     private LoddingDialog dialog;
     private String bailState = "";
+    private String depositMoeny = "";  //保证金金额
+    private String cashMoney = ""; //可提现金额
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +78,15 @@ public class BalanceActivity extends Activity{
                 IntentFormat.startActivity(this, BankActivity.class);
                 break;
             case R.id.ll_deposit:// 保证金
-                if (TextUtils.isEmpty(bailState)) {
+
+                if (!TextUtils.isEmpty(depositMoeny)){
+                    double deposit = Double.parseDouble(depositMoeny);
+                    if (deposit == 0){
+                        Toast.makeText(BalanceActivity.this, "您没有可用的保证金", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                if (TextUtils.isEmpty(bailState) || bailState.equals("null")) {
                     IntentFormat.startActivity(this, CashDepositActivity.class);
                 }else{
                     IntentFormat.startActivity(this, CashDepositListActivity.class);
@@ -84,6 +94,15 @@ public class BalanceActivity extends Activity{
                 break;
             case R.id.ll_withdraw:   //提现
                 String moneys = mData.get(ResponseKey.MY_MONEY)+"";
+                if (!TextUtils.isEmpty(cashMoney)){
+
+                    double cashM = Double.parseDouble(cashMoney);
+                    if (cashM == 0){
+                        Toast.makeText(BalanceActivity.this, "没有可用的提现金额", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
                 if (!TextUtils.isEmpty(moneys)){
                     double money = Double.parseDouble(moneys);
                     if (money >= 2000){
@@ -114,6 +133,8 @@ public class BalanceActivity extends Activity{
                             result.get(ResponseKey.CASH_MONEY)+"元，保证金金额"+
                             result.get(ResponseKey.DEPOSIT_MOENY)+"元整)");
 
+                    cashMoney = result.get(ResponseKey.CASH_MONEY)+"";
+                    depositMoeny = result.get(ResponseKey.DEPOSIT_MOENY)+"";
                     bailState = result.get(ResponseKey.BAIL_STATE)+"";
                 }
 

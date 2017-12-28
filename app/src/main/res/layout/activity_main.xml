@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/defalut_layout_height"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="@dimen/default_menu_height"
         />
 
     <LinearLayout

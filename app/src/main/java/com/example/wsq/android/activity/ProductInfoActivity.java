@@ -1,54 +1,58 @@
 package com.example.wsq.android.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 /**
  * Created by wsq on 2017/12/18.
  */
 
-public class ProductInfoActivity extends BaseActivity{
+public class ProductInfoActivity extends Activity {
 
-    private WebView register_webView;
-    private TextView tv_title;
-    private LinearLayout iv_back;
+    @BindView(R.id.register_webView) WebView register_webView;
+    @BindView(R.id.tv_title) TextView tv_title;
+
+
     private SharedPreferences shared;
     private OrderTaskService orderTaskService;
 
     @Override
-    public int getByLayoutId() {
-        return R.layout.layout_protocols;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.layout_protocols);
+        ButterKnife.bind(this);
+
+        initView();
+
     }
 
-    @Override
-    public void init() {
-
+    public void initView() {
         orderTaskService = new OrderTaskServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-    }
-
-    @Override
-    public void initView() {
-
-        register_webView = this.findViewById(R.id.register_webView);
-        tv_title = this.findViewById(R.id.tv_title);
-        iv_back = this.findViewById(R.id.iv_back);
-
         tv_title.setText("资料详情");
 
         //声明WebSettings子类
@@ -76,12 +80,16 @@ public class ProductInfoActivity extends BaseActivity{
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
-        iv_back.setOnClickListener(new View.OnClickListener() {
+
+        register_webView.setWebViewClient(new WebViewClient(){
             @Override
-            public void onClick(View v) {
-                finish();
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return true;
             }
         });
+
+
+
 
         String url = Urls.HOST+Urls.GET_DETAIL+"?"+ResponseKey.TOKEN+"="+shared.getString(Constant.SHARED.TOKEN, "")
                 +"&";
@@ -90,15 +98,14 @@ public class ProductInfoActivity extends BaseActivity{
         }else{
             url += url+ResponseKey.ID+"="+getIntent().getIntExtra(ResponseKey.ID,0);
         }
-//        if (getIntent().getStringExtra(CollectActivity.COLLECT).equals("1")){
-//            url += ResponseKey.ID+"="+getIntent().getIntExtra(ResponseKey.ARTICLE_ID,0);
-//        }else{
-//            url += url+ResponseKey.ID+"="+getIntent().getIntExtra(ResponseKey.ID,0);
-//        }
         Log.d("显示网页地址", url);
         register_webView.loadUrl(url);
 //        getProductInfo();
     }
 
 
+    @OnClick({R.id.iv_back})
+    public void onClick(View view){
+        finish();
+    }
 }

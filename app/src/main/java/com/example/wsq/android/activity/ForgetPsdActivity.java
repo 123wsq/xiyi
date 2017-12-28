@@ -134,6 +134,7 @@ public class ForgetPsdActivity extends Activity{
                         userService.updatePassword(param, new HttpResponseCallBack() {
                             @Override
                             public void callBack(Map<String, Object> result) {
+                                Toast.makeText(ForgetPsdActivity.this, result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
                                 IntentFormat.startActivity(ForgetPsdActivity.this, LoginActivity.class);
                                 finish();
                             }

@@ -1,17 +1,19 @@
 package com.example.wsq.android.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.ValidateDataFormat;
@@ -21,53 +23,44 @@ import com.example.wsq.android.view.CustomPopup;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by wsq on 2017/12/11.
  */
 
-public class RegiesterActivity1 extends BaseActivity implements View.OnClickListener {
+public class RegiesterActivity1 extends Activity{
 
-    private Button btn_next;
-    private LinearLayout iv_back;
 
-    private EditText et_username, et_password1, et_password2, et_name, et_email;
-    private TextView tv_sex;
-    private CustomPopup popup;
-    private LinearLayout ll_layout;
+    @BindView(R.id.et_username) EditText et_username;
+    @BindView(R.id.et_password1)EditText et_password1;
+    @BindView(R.id.et_password2)EditText et_password2;
+    @BindView(R.id.et_name) EditText et_name;
+    @BindView(R.id.et_email)EditText et_email;
+    @BindView(R.id.tv_sex) TextView tv_sex;
+    @BindView(R.id.ll_layout) LinearLayout ll_layout;
 
+    CustomPopup popup;
 
     @Override
-    public int getByLayoutId() {
-        return R.layout.layout_register;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.layout_register);
+        ButterKnife.bind(this);
+        init();
     }
 
-    @Override
+
     public void init() {
 
         RegisterParam.SEX = 1;
 
     }
 
-    @Override
-    public void initView() {
-
-        btn_next = this.findViewById(R.id.btn_next);
-        iv_back =  this.findViewById(R.id.iv_back);
-        et_username =  this.findViewById(R.id.et_username);
-        et_password1 =  this.findViewById(R.id.et_password1);
-        et_password2 =  this.findViewById(R.id.et_password2);
-        et_name =  this.findViewById(R.id.et_name);
-        et_email =  this.findViewById(R.id.et_email);
-        tv_sex =  this.findViewById(R.id.tv_sex);
-        ll_layout = this.findViewById(R.id.ll_layout);
-
-        btn_next.setOnClickListener(this);
-        iv_back.setOnClickListener(this);
-        tv_sex.setOnClickListener(this);
-
-    }
-
-    @Override
+    @OnClick({R.id.btn_next, R.id.iv_back, R.id.tv_sex})
     public void onClick(View v) {
 
         switch (v.getId()){
@@ -153,14 +146,15 @@ public class RegiesterActivity1 extends BaseActivity implements View.OnClickList
         String name = et_name.getText().toString();
         RegisterParam.NAME = name;
 
-         if(ValidateDataFormat.isEmail(et_email.getText().toString())){
-             String email = et_email.getText().toString();
-             RegisterParam.EMAIL = email;
-        }else{
-             Toast.makeText(RegiesterActivity1.this, "邮箱格式错误", Toast.LENGTH_SHORT).show();
-             return false;
-         }
-
+        if (!TextUtils.isEmpty(et_email.getText().toString())) {
+            if (ValidateDataFormat.isEmail(et_email.getText().toString())) {
+                String email = et_email.getText().toString();
+                RegisterParam.EMAIL = email;
+            } else {
+                Toast.makeText(RegiesterActivity1.this, "邮箱格式错误", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
         return true;
     }
 }

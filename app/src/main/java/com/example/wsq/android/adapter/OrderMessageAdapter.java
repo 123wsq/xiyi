@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
@@ -44,16 +45,31 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
         holder.tv_time.setText(mData.get(position).get(ResponseKey.CREATE_AT).toString()+"");
         holder.tv_content.setText(mData.get(position).get(ResponseKey.DETAIL).toString()+"");
 
-        if (position == 0 ){
-            holder.view_top.setVisibility(View.INVISIBLE);
-            holder.view_down.setVisibility(View.VISIBLE);
-        }else if(mData.size()-1 == position){
-            holder.view_top.setVisibility(View.VISIBLE);
-            holder.view_down.setVisibility(View.INVISIBLE);
+        if (mData.size() != 1) {
+            if (position == 0) {
+                holder.view_top.setVisibility(View.INVISIBLE);
+                holder.view_down.setVisibility(View.VISIBLE);
+            } else if (mData.size() - 1 == position) {
+                holder.view_top.setVisibility(View.VISIBLE);
+                holder.view_down.setVisibility(View.INVISIBLE);
+            } else {
+                holder.view_top.setVisibility(View.VISIBLE);
+                holder.view_down.setVisibility(View.VISIBLE);
+            }
         }else{
-            holder.view_top.setVisibility(View.VISIBLE);
-            holder.view_down.setVisibility(View.VISIBLE);
+            holder.view_top.setVisibility(View.INVISIBLE);
+            holder.view_down.setVisibility(View.INVISIBLE);
         }
+        if (position == 0){
+            holder.tv_content.setTextColor(mContext.getResources().getColor(R.color.RED));
+            holder.iv_cur_state.setVisibility(View.VISIBLE);
+            holder.iv_state.setVisibility(View.GONE);
+        }else{
+            holder.iv_cur_state.setVisibility(View.GONE);
+            holder.iv_state.setVisibility(View.VISIBLE);
+        }
+
+
 
     }
 
@@ -67,6 +83,7 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
 
         private TextView tv_time, tv_content;
         private View view_top, view_down;
+        private ImageView iv_state, iv_cur_state;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -74,6 +91,9 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
             tv_content = itemView.findViewById(R.id.tv_content);
             view_down = itemView.findViewById(R.id.view_down);
             view_top = itemView.findViewById(R.id.view_top);
+            iv_cur_state = itemView.findViewById(R.id.iv_cur_state);
+            iv_state = itemView.findViewById(R.id.iv_state);
+
         }
 
     }

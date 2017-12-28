@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.WindowManager;
 
+import butterknife.ButterKnife;
+
 
 /**
  * Created by wsq on 2017/12/11.
@@ -19,17 +21,16 @@ public abstract  class BaseActivity extends Activity{
         getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         setContentView(getByLayoutId());
+        ButterKnife.bind(this);
 
         init();
-
-        initView();
     }
+
+
 
     public abstract int getByLayoutId();
 
     public abstract void init();
 
-
-    public abstract void initView();
 
 }

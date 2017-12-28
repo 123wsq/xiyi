@@ -40,4 +40,6 @@ public class RegisterParam {
     public static String SFZ1 = "";
 
     public static String SFZ2 = "";
+
+    public static String DIQU = "";
 }

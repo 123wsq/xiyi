@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -24,10 +25,12 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.view.CustomPopup;
+import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.android.view.RoundImageView;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
 import com.luck.picture.lib.PictureSelector;
@@ -77,9 +80,8 @@ public class UserInfoActivity extends Activity{
     private int xueli = 1;
     private CustomPopup popup;
 
-    public static final int REQUEST_CODE_CHOOSE = 1;
-    private List<Uri> mSelected;
     private String headerImage = "";
+    private LoddingDialog dialog;
 
 
     @Override
@@ -99,6 +101,8 @@ public class UserInfoActivity extends Activity{
 
         tv_title.setText("个人资料");
 
+        dialog = new LoddingDialog(this);
+
         tv_username.setText(UserFragment.mUserData.get(ResponseKey.USERNAME).toString()+"");
         //设置头像
 //        Glide.with(this).load(Urls.HOST+UserFragment.mUserData.get(ResponseKey.USER_PIC)).into(image_header);
@@ -111,12 +115,13 @@ public class UserInfoActivity extends Activity{
                 .apply(options)
                 .into(image_header);
 
-        String name = UserFragment.mUserData.get(ResponseKey.NAME).toString();
+        String name = UserFragment.mUserData.get(ResponseKey.NAME)+"";
         tv_name.setText( "****"+name.substring(name.length()-1));
-        tv_tel.setText(UserFragment.mUserData.get(ResponseKey.TEL).toString()+" 已验证");
-        et_bumen.setText(UserFragment.mUserData.get(ResponseKey.BUMEN).toString()+"");
-        et_company.setText(UserFragment.mUserData.get(ResponseKey.COMPANY).toString()+"");
-        et_email.setText(UserFragment.mUserData.get(ResponseKey.EMAIL).toString()+"");
+        tv_tel.setText(UserFragment.mUserData.get(ResponseKey.TEL)+" 已验证");
+        et_bumen.setText(UserFragment.mUserData.get(ResponseKey.BUMEN)+"");
+        et_company.setText(UserFragment.mUserData.get(ResponseKey.COMPANY)+"");
+        et_email.setText(UserFragment.mUserData.get(ResponseKey.EMAIL)+"");
+        et_jieshao.setText(UserFragment.mUserData.get(ResponseKey.JIESHAO)+"");
         String sSex = UserFragment.mUserData.get(ResponseKey.SEX).toString();
 
         if (null != sSex || sSex.length()!=0){
@@ -124,13 +129,13 @@ public class UserInfoActivity extends Activity{
             tv_sex.setText(Integer.parseInt(sSex)==1 ? "男" : "女");
         }
 
-        String sEduc = UserFragment.mUserData.get(ResponseKey.XUELI).toString();
+        String sEduc = UserFragment.mUserData.get(ResponseKey.XUELI)+"";
         if (null != sEduc || sEduc.length()!=0){
             xueli = Integer.parseInt(sEduc);
             tv_xueli.setText(Constant.EDUCATION[Integer.parseInt(sEduc)-1]+"");
         }
-        et_hope.setText(UserFragment.mUserData.get(ResponseKey.DIQU).toString());
-        et_skill.setText(UserFragment.mUserData.get(ResponseKey.JINENG).toString()+"");
+        et_hope.setText(UserFragment.mUserData.get(ResponseKey.DIQU)+"");
+        et_skill.setText(UserFragment.mUserData.get(ResponseKey.JINENG)+"");
         //判断角色  角色为服务工程师的时候  是需要期望地区和技能  别的时候是需要部门和介绍
         if(shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
             ll_hope.setVisibility(View.VISIBLE);
@@ -249,8 +254,13 @@ public class UserInfoActivity extends Activity{
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.btn_save:
+
                 updateUserInfo();
-                uploadHeader();
+
+                if (!TextUtils.isEmpty(headerImage)){
+                    uploadHeader();
+                }
+
                 break;
         }
     }
@@ -279,6 +289,7 @@ public class UserInfoActivity extends Activity{
      */
     public void updateUserInfo(){
 
+        dialog.show();
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
         param.put(ResponseKey.SEX, sex+"");
@@ -288,30 +299,27 @@ public class UserInfoActivity extends Activity{
         param.put(ResponseKey.EMAIL, et_email.getText().toString());
 
         param.put(ResponseKey.COMPANY, et_company.getText().toString());
-//                if (shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
         param.put(ResponseKey.JINENG, et_skill.getText().toString());
         param.put(ResponseKey.DIQU, et_hope.getText().toString());
-//                }else{
         param.put(ResponseKey.BUMEN, et_bumen.getText().toString());
         param.put(ResponseKey.JIESHAO, et_jieshao.getText().toString());
-//                }
 
-        try {
-            userService.updateUserInfo(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
+        userService.updateUserInfo(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
 
-                }
+                Toast.makeText(UserInfoActivity.this,
+                        result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
 
-                @Override
-                public void onCallFail(String msg) {
+                dialog.dismiss();
+            }
+            @Override
+            public void onFailure() {
 
-                }
+                dialog.dismiss();
+            }
+        });
 
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**

@@ -133,7 +133,7 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
         }
     }
 
-    @OnClick({R.id.tv_next})
+    @OnClick({R.id.tv_next, R.id.iv_back})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.tv_next:
@@ -255,6 +255,10 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
         userService.onUpdatePayPasswordValidate(this, param, new HttpResponseListener() {
             @Override
             public void onSuccess(Map<String, Object> result) {
+
+                Toast.makeText(WithdrawPasswordActivity.this,
+                        result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
+
                 Map<String, Object> param = new HashMap<>();
                 param.put("type", 3);
                 IntentFormat.startActivity(WithdrawPasswordActivity.this, WithdrawPasswordActivity.class, param);
@@ -285,6 +289,10 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
         userService.onForgetPayPasswordValidate(this, param, new HttpResponseListener() {
             @Override
             public void onSuccess(Map<String, Object> result) {
+
+                Toast.makeText(WithdrawPasswordActivity.this,
+                        result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
+
                 Map<String, Object> param = new HashMap<>();
                 param.put("type", 5);
                 IntentFormat.startActivity(WithdrawPasswordActivity.this, WithdrawPasswordActivity.class, param);

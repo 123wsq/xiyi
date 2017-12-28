@@ -104,7 +104,7 @@ public class MainFragment extends Fragment {
         //设置自动轮播，默认为true
         banner.isAutoPlay(true);
         //设置轮播时间
-        banner.setDelayTime(1500);
+        banner.setDelayTime(5*1000);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.DURATION);
         //banner设置方法全部调用完毕时最后调用

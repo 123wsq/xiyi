@@ -4,39 +4,42 @@ package com.example.wsq.android.activity;
  * Created by wsq on 2017/12/11.
  */
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.base.BaseActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 用于在注册的时候展示用户协议
  */
-public class ProtocolsActivity extends BaseActivity{
+public class ProtocolsActivity extends Activity {
 
-    private WebView register_webView;
-    private LinearLayout iv_back;
+    @BindView(R.id.register_webView) WebView register_webView;
 
 
     @Override
-    public int getByLayoutId() {
-        return R.layout.layout_protocols;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.layout_protocols);
+        ButterKnife.bind(this);
+
+        initView();
     }
 
-    @Override
-    public void init() {
-
-    }
-
-    @Override
     public void initView() {
 
         register_webView = this.findViewById(R.id.register_webView);
 
-        iv_back = this.findViewById(R.id.iv_back);
 
         //声明WebSettings子类
         WebSettings webSettings = register_webView.getSettings();
@@ -66,12 +69,11 @@ public class ProtocolsActivity extends BaseActivity{
 
         register_webView.loadUrl("http://xiyicontrol.com/api/xieyi");
 
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    }
+
+    @OnClick({R.id.iv_back})
+    public void onClick(View view){
+        finish();
     }
 
     @Override

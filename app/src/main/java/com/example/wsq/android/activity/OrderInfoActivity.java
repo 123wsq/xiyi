@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +27,9 @@ import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +47,7 @@ import butterknife.OnClick;
  * Created by wsq on 2017/12/14.
  */
 
-public class OrderInfoActivity extends Activity{
+public class OrderInfoActivity extends Activity implements AdapterView.OnItemClickListener {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_edit) TextView tv_edit;
@@ -107,6 +111,17 @@ public class OrderInfoActivity extends Activity{
         status = getIntent().getStringExtra(ResponseKey.STATUS);
 
         tv_edit.setVisibility(status.equals("-1") ? View.VISIBLE : View.GONE);
+
+        rv_gridview.setOnItemClickListener(this);
+
+        Logger.d(getIntent().getStringExtra(ResponseKey.STATUS).equals("5"));
+        if(role.equals("1") && getIntent().getStringExtra(ResponseKey.STATUS).equals("4")){
+            tv_transfer.setVisibility(View.VISIBLE);
+            tv_transfer.setText("填写反馈报告");
+        }else if(role.equals("1") && getIntent().getStringExtra(ResponseKey.STATUS).equals("5")){
+            tv_transfer.setVisibility(View.VISIBLE);
+            tv_transfer.setText("填写移交反馈报告");
+        }
 
     }
 
@@ -186,6 +201,7 @@ public class OrderInfoActivity extends Activity{
 //                Map<String, Object> map = new HashMap<>();
 //                map.put(ResponseKey.ID, id);
                 IntentFormat.startActivity(this, FeedbackActivity.class, mResultInfo);
+                finish();
                 break;
             case R.id.tv_edit:
                 mResultInfo.put(UPDATE, true);
@@ -233,7 +249,9 @@ public class OrderInfoActivity extends Activity{
                 @Override
                 public void callBack(Map<String, Object> result) {
 
-                    Toast.makeText(OrderInfoActivity.this, "审核成功", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(OrderInfoActivity.this, result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
 
                 @Override
@@ -266,6 +284,8 @@ public class OrderInfoActivity extends Activity{
                 public void callBack(Map<String, Object> result) {
 
                     Toast.makeText(OrderInfoActivity.this, result.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
+
+                    finish();
                 }
 
                 @Override
@@ -311,7 +331,7 @@ public class OrderInfoActivity extends Activity{
                         tv_upTel.setText(result.get(ResponseKey.TEL).toString() + "");
                     }
                     String imags = result.get(ResponseKey.IMGS)+"";
-                    if (TextUtils.isEmpty(imags)) {
+                    if (TextUtils.isEmpty(imags) || imags.equals("null")) {
                         imags = result.get(ResponseKey.R_IMGS)+"";
                     }
 
@@ -380,6 +400,37 @@ public class OrderInfoActivity extends Activity{
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        CameraBean bean = mData.get(position);
+        if(bean.getType() == 2){
+            int num = 0;
+            List<LocalMedia> list = new ArrayList<>();
+            for (int i = 0; i< mData.size(); i ++){
+                if (mData.get(i).getType()==2) {
+                    LocalMedia media = new LocalMedia();
+
+                    media.setPath(bean.getFile_path());
+                    list.add(media);
+                }else{
+                    if (i < position){
+                        num++;
+                    }
+                }
+            }
+            PictureSelector.create(OrderInfoActivity.this).externalPicturePreview(num, list);
+        }else if(bean.getType() == 3){
+
+//        PictureSelector.create(DeviceWarrantyActivity.this)
+//                .externalPictureVideo(bean.getFile_path());
+            Map<String, Object> param = new HashMap<>();
+            param.put("URL", bean.getFile_path());
+            IntentFormat.startActivity(OrderInfoActivity.this, VideoPlayActivity.class, param);
+
         }
     }
 }

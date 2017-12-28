@@ -637,7 +637,7 @@
                     android:id="@+id/tv_transfer"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/defalut_layout_height"
-                    android:background="@color/defalut_title_color"
+                    android:background="@drawable/shape_button"
                     android:text="重写移交反馈报告"
                     android:textSize="@dimen/default_text_size"
                     android:textColor="@color/color_white"

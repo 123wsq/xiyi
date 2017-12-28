@@ -44,7 +44,7 @@
             android:layout_height="60dp"
             android:layout_marginLeft="@dimen/defalut_layout_height"
             android:layout_marginRight="10dp"
-            imagecontrol:border_outside_color="#FFFFFF"
+            imagecontrol:border_outside_color="#E4E4E4"
             imagecontrol:border_inside_color="#FFFFFF"
             imagecontrol:border_thickness="2dp"
             android:src="@drawable/image_header_bg" />
@@ -318,7 +318,7 @@
                 android:hint="企业概况描述"
                 android:textSize="@dimen/default_text_size"
                 android:background="@drawable/shape_edit"
-
+                android:gravity="top"
                 />
 
 
@@ -349,7 +349,7 @@
                 android:hint="所掌握哪些技能"
                 android:textSize="@dimen/default_text_size"
                 android:background="@drawable/shape_edit"
-
+                android:gravity="top"
                 />
 
 

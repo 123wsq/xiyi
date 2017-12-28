@@ -23,6 +23,7 @@
 
     <color name="top_bg">#0f0f0f</color>
     <color name="black2">#000000</color>
+    <color name="color_default">#666666</color>
 
     <!--video-->
     <color name="control_bar_bg">#77000000</color>

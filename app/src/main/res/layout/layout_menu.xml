@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="@dimen/default_menu_height"
     android:orientation="horizontal"
+    android:background="@color/color_white"
     >
 
     <RadioGroup
@@ -11,6 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/default_radius"
+        android:gravity="center_vertical"
         >
         <RadioButton
             android:id="@+id/rb_main"
@@ -22,7 +24,7 @@
             android:button="@null"
             android:gravity="center"
             android:checked="true"
-
+            android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
             />
         <RadioButton
@@ -35,6 +37,7 @@
             android:button="@null"
             android:gravity="center"
             android:textColor="@drawable/selector_menu_color"
+            android:textSize="@dimen/default_text_min_size"
             />
         <RadioButton
             android:id="@+id/rb_fault"
@@ -45,6 +48,7 @@
             android:drawableTop="@drawable/selector_main_gz"
             android:button="@null"
             android:gravity="center"
+            android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
             />
         <RadioButton
@@ -56,6 +60,7 @@
             android:drawableTop="@drawable/selector_main_user"
             android:button="@null"
             android:gravity="center"
+            android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
 
             />

@@ -331,7 +331,7 @@ public class CustomCalendarPopup extends PopupWindow{
 
 
     public void initYears() {
-        for (int i = 1950; i <= getYear(); i++) {
+        for (int i = 2000; i <= getYear(); i++) {
             arry_years.add(i + "");
         }
     }
