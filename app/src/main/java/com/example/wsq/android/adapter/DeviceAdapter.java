@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.activity.DeviceInfoActivity;
+import com.example.wsq.android.activity.order.DeviceInfoActivity;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.utils.IntentFormat;
 

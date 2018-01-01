@@ -140,6 +140,7 @@
         android:layout_marginTop="1dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:gravity="center"
         >
 
         <TextView
@@ -164,12 +165,13 @@
             />
         <TextView
             android:id="@+id/tv_getCode"
+            style="@style/default_button"
             android:layout_width="100dp"
             android:layout_height="40dp"
+            android:layout_margin="0dp"
             android:text="获取验证码"
-            android:textColor="@color/color_white"
-            android:background="@drawable/shape_button"
-            android:gravity="center"
+            android:textSize="@dimen/default_text_min_size"
+
             />
     </LinearLayout>
 
@@ -206,14 +208,9 @@
 
     <TextView
         android:id="@+id/tv_register"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
+        style="@style/default_button"
         android:text="注册"
-        android:textColor="@color/color_white"
-        android:background="@drawable/shape_button"
-        android:layout_margin="@dimen/defalut_layout_height"
-        android:gravity="center"
-        android:textSize="@dimen/default_text_title_size"
+
         />
 
 </LinearLayout>

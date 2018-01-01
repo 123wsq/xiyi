@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.utils.IntentFormat;
 

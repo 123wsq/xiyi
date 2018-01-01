@@ -42,7 +42,7 @@ public class KnowledgeActivity extends Activity{
     TextView tv_title;
     @BindView(R.id.rv_RecyclerView)
     RecyclerView rv_RecyclerView;
-    @BindView(R.id.tv_edit) TextView tv_edit;
+    @BindView(R.id.tv_Details) TextView tv_Details;
     @BindView(R.id.ll_nodata)
     LinearLayout ll_nodata;
     @BindView(R.id.store_house_ptr_frame)
@@ -71,7 +71,6 @@ public class KnowledgeActivity extends Activity{
         mData = new ArrayList<>();
         orderTaskService = new OrderTaskServiceImpl();
 
-        tv_edit.setVisibility(View.GONE);
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 

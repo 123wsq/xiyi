@@ -29,6 +29,8 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.example.wsq.android.R;
+import com.example.wsq.android.activity.order.MessageActivity;
+import com.example.wsq.android.activity.user.SettingActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.DeviceFragment;
@@ -73,7 +75,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     MyBroadcastReceiver receiver = new MyBroadcastReceiver();
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
-    private SharedPreferences shared, sharedMsg;
+    private SharedPreferences shared;
     private Fragment[] fragments = {MainFragment.getInstance(), DeviceFragment.getInstance(),
             FaultFragment.getInstance(), UserFragment.getInstance()};
 
@@ -86,7 +88,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-        sharedMsg = getSharedPreferences(Constant.SHARED_MSG, Context.MODE_PRIVATE);
         init();
 
         enter(1, fragments[0]);
@@ -246,6 +247,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                 ll_title_location.setVisibility(View.VISIBLE);
             }else if(action.equals(MESSAGE_RECEIVED_ACTION)){  //推送过来的消息
                 Log.d("接收到的消息", intent.getStringExtra(KEY_MESSAGE));
+                shared.edit().putBoolean(Constant.SHARED.MESSAGE, true).commit();
                 setNotification(intent.getStringExtra(KEY_MESSAGE));
 
             }
@@ -280,7 +282,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         //用这个Notification管理器把Notification弹出去，那个0是id，用来标识这个Notification的
         notificationManager.notify(1, mBuilder.build());
-//        notificationManager.notify("1", 1, mBuilder.build());
     }
 
 
@@ -299,19 +300,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             public void onSuccess(Map<String, Object> result) {
                 List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
 
-                boolean isState = false;
+                boolean isState = shared.getBoolean(Constant.SHARED.MESSAGE, false);
 
-                for (int i =0 ; i < list.size(); i++){
-
-                    String id = list.get(i).get(ResponseKey.ID)+"";
-                    boolean state =  sharedMsg.getBoolean(id, false);
-
-                    if (!state){
-                        isState = true;
-
-                    }
+                if (!shared.contains(Constant.SHARED.MESSAGE)){
+                    isState = true;
                 }
-
                 if (isState){
                     view_point.setVisibility(View.VISIBLE);
                 }else{

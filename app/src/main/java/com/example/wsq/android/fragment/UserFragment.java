@@ -2,6 +2,7 @@ package com.example.wsq.android.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -21,20 +22,23 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.AboutWeActivity;
-import com.example.wsq.android.activity.BalanceActivity;
-import com.example.wsq.android.activity.BankActivity;
-import com.example.wsq.android.activity.BillDetailsActivity;
-import com.example.wsq.android.activity.CollectActivity;
-import com.example.wsq.android.activity.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.KnowledgeActivity;
-import com.example.wsq.android.activity.LoginActivity;
-import com.example.wsq.android.activity.OrderActivity;
-import com.example.wsq.android.activity.UpdatePsdActivity;
-import com.example.wsq.android.activity.UserInfoActivity;
+import com.example.wsq.android.activity.cash.BalanceActivity;
+import com.example.wsq.android.activity.cash.BankActivity;
+import com.example.wsq.android.activity.cash.BillDetailsActivity;
+import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
+import com.example.wsq.android.activity.order.OrderActivity;
+import com.example.wsq.android.activity.user.CollectActivity;
+import com.example.wsq.android.activity.user.LoginActivity;
+import com.example.wsq.android.activity.user.SignActivity;
+import com.example.wsq.android.activity.user.SignaturePadActivity;
+import com.example.wsq.android.activity.user.UpdatePsdActivity;
+import com.example.wsq.android.activity.user.UserInfoActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
@@ -47,6 +51,8 @@ import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.android.view.RoundImageView;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -214,12 +220,39 @@ public class UserFragment extends Fragment {
             R.id.ll_order_feedback,R.id.ll_server_finish, R.id.ll_device_assert, R.id.ll_device_report,
             R.id.ll_device_bank_code, R.id.ll_device_server_share, R.id.ll_server_call,
             R.id.ll_password, R.id.ll_about, R.id.ll_fault, R.id.ll_collect,R.id.ll_manager_shared,
-            R.id.ll_manager_upload, R.id.ll_device_knowledge, R.id.ll_balance, R.id.ll_pay_Record})
+            R.id.ll_manager_upload, R.id.ll_device_knowledge, R.id.ll_balance, R.id.ll_pay_Record,
+            R.id.tv_sign, R.id.iv_integral, R.id.roundImage_header})
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.roundImage_header: //点击头像查看
+                //Urls.HOST+result.get(ResponseKey.USER_PIC)
+                List<LocalMedia> listMedia = new ArrayList<>();
+                LocalMedia media = new LocalMedia();
+                media.setPath(Urls.HOST+mUserData.get(ResponseKey.USER_PIC));
+                listMedia.add(media);
+                PictureSelector.create(getActivity()).externalPicturePreview(0, listMedia);
+                break;
             case R.id.tv_quit:
-                IntentFormat.startActivity(getActivity(), LoginActivity.class);
-                getActivity().finish();
+
+                CustomDefaultDialog.Builder builderExit = new CustomDefaultDialog.Builder(getActivity());
+                builderExit.setTitle("提示");
+                builderExit.setMessage("您确定退出该应用吗？");
+                builderExit.setOkBtn("退出", new OnDialogClickListener() {
+                    @Override
+                    public void onClick(CustomDefaultDialog dialog, String result) {
+
+                        IntentFormat.startActivity(getActivity(), LoginActivity.class);
+                        dialog.dismiss();
+                    }
+                });
+                builderExit.setCancelBtn("还想玩", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderExit.create().show();
+
                 break;
 
             case R.id.ll_user_layout:
@@ -344,6 +377,12 @@ public class UserFragment extends Fragment {
             case R.id.ll_about:  //关于我们
                 IntentFormat.startActivity(getActivity(), AboutWeActivity.class);
                 break;
+            case R.id.tv_sign:  //签到
+                IntentFormat.startActivity(getActivity(), SignActivity.class);
+                break;
+            case R.id.iv_integral:  //我的积分
+                IntentFormat.startActivity(getActivity(), SignaturePadActivity.class);
+                break;
 
 
         }
@@ -359,30 +398,23 @@ public class UserFragment extends Fragment {
         //获取用户信息
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
-        try {
-            userService.getUserInfo(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
-                    mUserData.putAll(result);
-                    Message msg = new Message();
-                    msg.obj = result;
-                    msg.what = httpSec;
-                    handler.sendMessage(msg);
-                }
 
-                @Override
-                public void onCallFail(String msg) {
-
-                }
-
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            if (dialog.isShowing()){
-                dialog.dismiss();
+        userService.getUserInfo(getActivity(), param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                mUserData.putAll(result);
+                Message msg = new Message();
+                msg.obj = result;
+                msg.what = httpSec;
+                handler.sendMessage(msg);
             }
-        }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
 
     }
 

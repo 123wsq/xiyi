@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.activity.DeviceWarrantyActivity;
+import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.KnowledgeActivity;
 import com.example.wsq.android.activity.NewsActivity;
-import com.example.wsq.android.activity.OrderActivity;
+import com.example.wsq.android.activity.order.OrderActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.loader.GlideImageLoader;

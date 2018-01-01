@@ -3,6 +3,7 @@ package com.example.wsq.android.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.view.LoddingDialog;
 
 import java.util.ArrayList;
@@ -61,6 +63,9 @@ public class NewsActivity extends Activity{
         mData = new ArrayList<>();
         orderTaskService = new OrderTaskServiceImpl() ;
 
+        rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
+                this, LinearLayoutManager.HORIZONTAL, 2,
+                ContextCompat.getColor(this, R.color.default_backgroud_color)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
         dialog = new LoddingDialog(this);

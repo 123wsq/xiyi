@@ -75,7 +75,7 @@ public class OrderTaskServiceImpl implements OrderTaskService {
             });
         } catch (Exception e) {
             callBack.onFailure();
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -179,7 +179,7 @@ public class OrderTaskServiceImpl implements OrderTaskService {
             });
         } catch (Exception e) {
             listener.onFailure();
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -221,7 +221,7 @@ public class OrderTaskServiceImpl implements OrderTaskService {
             });
         } catch (Exception e) {
             callBack.onFailure();
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -269,7 +269,7 @@ public class OrderTaskServiceImpl implements OrderTaskService {
             });
         } catch (Exception e) {
             callBack.onFailure();
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -309,7 +309,7 @@ public class OrderTaskServiceImpl implements OrderTaskService {
             });
         } catch (Exception e) {
             callBack.onFailure();
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
         }
     }
 

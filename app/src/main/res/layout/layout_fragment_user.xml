@@ -90,6 +90,44 @@
                     android:textSize="@dimen/default_text_size"
                     android:textColor="@color/color_white"/>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/default_radius">
+
+                <ImageView
+                    android:id="@+id/iv_integral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/image_integral"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="积分 2000"
+                    android:textSize="@dimen/default_text_size"
+                    android:textColor="@color/color_white"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="签到"
+                    android:background="@drawable/shape_text_stroken"
+                    android:paddingLeft="@dimen/default_radius"
+                    android:paddingRight="@dimen/default_radius"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="@dimen/default_text_size"
+                    android:textColor="@color/color_white"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    />
+            </LinearLayout>
         </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -780,15 +818,9 @@
 
     <TextView
         android:id="@+id/tv_quit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
+        style="@style/default_button"
         android:text="退出登录"
-        android:textSize="@dimen/default_text_size"
-        android:gravity="center"
-        android:textColor="@color/color_white"
-        android:background="@drawable/shape_user_out"
-        android:layout_margin="@dimen/defalut_layout_height"
-        android:layout_marginBottom="10dp"
+
         />
 
     </LinearLayout>

@@ -49,6 +49,7 @@
             android:paddingLeft="@dimen/defalut_layout_Indicator"
             android:background="@color/color_white"
             android:layout_marginTop="0.5dp"
+            android:gravity="center"
             >
 
 
@@ -64,14 +65,11 @@
 
             <TextView
                 android:id="@+id/tv_getCode"
+                style="@style/default_button"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_margin="0dp"
                 android:text="获取验证码"
-                android:textColor="@color/color_white"
-                android:background="@drawable/shape_button"
-                android:gravity="center"
-
                 />
         </LinearLayout>
     </LinearLayout>
@@ -159,15 +157,9 @@
 
     <TextView
         android:id="@+id/tv_ok"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
+        style="@style/default_button"
         android:text="确认"
-        android:textColor="@color/color_white"
-        android:background="@drawable/shape_button"
-        android:textSize="20sp"
-        android:layout_marginLeft="@dimen/defalut_layout_height"
-        android:layout_marginRight="@dimen/defalut_layout_height"
-        android:gravity="center"
+
         />
 
 </LinearLayout>

@@ -231,14 +231,9 @@
 
             <TextView
                 android:id="@+id/tv_away_back"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/defalut_layout_height"
-                android:gravity="center"
+                style="@style/default_button"
                 android:text="马上反馈"
-                android:textColor="@color/color_white"
-                android:background="@color/defalut_title_color"
-                android:textSize="@dimen/default_text_size"
-                android:layout_margin="@dimen/defalut_layout_height"
+
                 />
         </LinearLayout>
 

@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:background="@color/default_backgroud_color"
     android:id="@+id/ll_layout"
+
     >
 
     <include layout="@layout/layout_default_title"></include>

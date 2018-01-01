@@ -4,12 +4,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    
+
+    <color name="title_color">#DDAC00</color>
     <color name="defalut_title_color">#0AC8CF</color>
 
+    <color name="default_btn_color">@color/defalut_title_color</color>
 
-
-
+    <color name="color_line">@color/color_gray</color>
 
     <color name="color_white">#FFFFFF</color>
     <color name="color_default_btn">#F4C51F</color>

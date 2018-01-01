@@ -5,43 +5,8 @@
     android:orientation="vertical"
     android:background="@color/default_backgroud_color"
     >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
-        android:background="@color/defalut_title_color"
-        >
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="银行卡管理"
-            android:textColor="@color/color_white"
-            android:gravity="center"
-            android:textSize="@dimen/default_text_size"
-            />
-        <LinearLayout
-            android:id="@+id/iv_back"
-            android:layout_width="@dimen/defalut_layout_height"
-            android:layout_height="@dimen/defalut_layout_height"
-            android:gravity="center"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_back"
-                />
-        </LinearLayout>
-        <ImageView
-            android:id="@+id/iv_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/image_add_bank"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/default_margin"
-            />
+    <include layout="@layout/layout_default_title"></include>
 
-    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_bank_info"
@@ -129,14 +94,9 @@
 
         <TextView
             android:id="@+id/tv_reseat_bank"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/defalut_layout_height"
+            style="@style/default_button"
             android:text="更换银行卡"
-            android:background="@drawable/shape_button"
-            android:textColor="@color/color_white"
-            android:gravity="center"
-            android:paddingLeft="@dimen/default_margin"
-            android:paddingRight="@dimen/default_margin"
+
             android:layout_marginTop="@dimen/defalut_layout_height"
 
             />

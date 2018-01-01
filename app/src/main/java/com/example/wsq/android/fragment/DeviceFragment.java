@@ -70,7 +70,7 @@ public class DeviceFragment extends Fragment{
 
         rv_deviceList.addItemDecoration(new RecyclerViewDivider(
                 getActivity(), LinearLayoutManager.HORIZONTAL, 2,
-                ContextCompat.getColor(getActivity(), R.color.default_backgroud_color)));
+                ContextCompat.getColor(getActivity(), R.color.color_line)));
         rv_deviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_deviceList.setHasFixedSize(true);
 

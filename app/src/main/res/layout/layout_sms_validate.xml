@@ -70,15 +70,8 @@
 
     <TextView
         android:id="@+id/tv_submit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
-        android:gravity="center"
+        style="@style/default_button"
         android:text="马上绑定"
-        android:background="@drawable/shape_button"
-        android:layout_marginLeft="@dimen/defalut_layout_height"
-        android:layout_marginRight="@dimen/defalut_layout_height"
-        android:layout_marginTop="@dimen/default_margin"
-        android:textSize="@dimen/default_text_size"
-        android:textColor="@color/color_white"
+
         />
 </LinearLayout>

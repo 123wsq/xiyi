@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.activity.OrderMessageInfoActivity;
+import com.example.wsq.android.activity.order.OrderMessageInfoActivity;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.DeviceFragment;
 import com.example.wsq.android.utils.IntentFormat;

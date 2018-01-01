@@ -635,14 +635,9 @@
 
                 <TextView
                     android:id="@+id/tv_transfer"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/defalut_layout_height"
-                    android:background="@drawable/shape_button"
+                    style="@style/default_button"
                     android:text="重写移交反馈报告"
-                    android:textSize="@dimen/default_text_size"
-                    android:textColor="@color/color_white"
-                    android:gravity="center"
-                    android:layout_margin="@dimen/defalut_layout_height"
+
                     android:visibility="gone"
                     />
 

@@ -290,14 +290,9 @@
 
     <TextView
         android:id="@+id/tv_repairs"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
+        style="@style/default_button"
         android:text="马上报修"
-        android:textColor="@color/color_white"
-        android:background="@drawable/shape_user_out"
-        android:gravity="center"
-        android:textSize="@dimen/default_text_size"
-        android:layout_margin="@dimen/defalut_layout_height"
+
         />
         </LinearLayout>
 

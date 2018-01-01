@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
-	页面名称：sys_loading.xml
-	页面功能：系统自定义加载视图
-	创  建  人： 谢泽鹏
-	创建时间：2014-10-09
- -->
+
 <RelativeLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="30dp"

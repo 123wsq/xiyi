@@ -32,46 +32,51 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             />
-        <activity android:name=".activity.LoginActivity"  android:screenOrientation="portrait" android:launchMode="singleTask"></activity>
-        <activity android:name=".activity.RegiesterActivity1" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.RegiesterActivity2" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.RegisterActivity3" android:screenOrientation="portrait" android:launchMode="singleInstance"></activity>
+        <activity android:name=".activity.user.LoginActivity"  android:screenOrientation="portrait" android:launchMode="singleTask"></activity>
+        <activity android:name=".activity.user.RegiesterActivity1" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.user.RegiesterActivity2" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.user.RegisterActivity3" android:screenOrientation="portrait" android:launchMode="singleInstance"></activity>
         <activity android:name=".activity.ProtocolsActivity"></activity>
-        <activity android:name=".activity.ForgetPsdActivity" android:screenOrientation="portrait" android:launchMode="singleInstance"></activity>
-        <activity android:name=".activity.SettingActivity" android:screenOrientation="portrait" android:launchMode="singleTask"></activity>
-        <activity android:name=".activity.UserInfoActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.DeviceWarrantyActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.OrderActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.OrderInfoActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.FeedbackActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.ServerOrderInfoActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.user.ForgetPsdActivity" android:screenOrientation="portrait" android:launchMode="singleInstance"></activity>
+        <activity android:name=".activity.user.SettingActivity" android:screenOrientation="portrait" android:launchMode="singleTask"></activity>
+        <activity android:name=".activity.user.UserInfoActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.DeviceWarrantyActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.OrderActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.OrderInfoActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.FeedbackActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.ServerOrderInfoActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.ProductInfoActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.DeviceInfoActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.DeviceInfoActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.NewsActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.UpdatePsdActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.user.UpdatePsdActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.AboutActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.AboutWeActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.CollectActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.user.CollectActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.KnowledgeActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.MessageActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.OrderMessageInfoActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.MessageActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.OrderMessageInfoActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.SearchActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.DeviceListActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.DeviceListActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.FaultActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.WithdrawPasswordActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.BankActivity" android:screenOrientation="portrait" android:launchMode="singleTask"></activity>
-        <activity android:name=".activity.AddBankActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.ValidateCodeActivity" android:screenOrientation="portrait" android:launchMode="singleInstance"></activity>
-        <activity android:name=".activity.BalanceActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.BillDetailsActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.WithdrawActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.CashDepositActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.CashDepositListActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.CashDepositInfoActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.VideoPlayActivity"
+        <activity android:name=".activity.cash.WithdrawPasswordActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.cash.BankActivity" android:screenOrientation="portrait" android:launchMode="singleTask"></activity>
+        <activity android:name=".activity.cash.AddBankActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.cash.ValidateCodeActivity" android:screenOrientation="portrait" android:launchMode="singleInstance"></activity>
+        <activity android:name=".activity.cash.BalanceActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.cash.BillDetailsActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.cash.WithdrawActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.cash.CashDepositActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.cash.CashDepositListActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.cash.CashDepositInfoActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.order.VideoPlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             />
+        <activity android:name=".activity.user.SignActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.user.IntegralActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.user.SignaturePadActivity"
+            android:configChanges="keyboardHidden|orientation|orientation"
+            android:screenOrientation="landscape"></activity>
         <!--图片选择器-->
         <provider
             android:name="android.support.v4.content.FileProvider"

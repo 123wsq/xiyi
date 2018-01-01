@@ -1,6 +1,7 @@
 package com.example.wsq.android.utils;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -38,7 +39,12 @@ public class ParamFormat {
 //            }else if(value instanceof JSONObject){
 //                map.put(key, onJsonToMap(value.toString()));
             }else{
-                map.put(key, value);
+                if (TextUtils.isEmpty(value+"") ||value.equals("null") ){
+                    map.put(key, "");
+                }else {
+                    map.put(key, value);
+                }
+
             }
 
 
@@ -72,7 +78,12 @@ public class ParamFormat {
             }else if(value instanceof JSONObject){
                 map.put(key, onJsonToMap(value.toString()));
             }else{
-                map.put(key, value);
+                if (TextUtils.isEmpty(value+"") || value.equals("null")){
+                    map.put(key, "");
+                }else {
+                    map.put(key, value);
+                }
+
             }
 
 

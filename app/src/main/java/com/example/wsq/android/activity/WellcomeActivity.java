@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.adapter.WellcomeAdapter;
 import com.example.wsq.android.utils.DensityUtil;
 

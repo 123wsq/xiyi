@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.tag.androidtagview.TagContainerLayout;
 import com.example.tag.androidtagview.TagView;
 import com.example.wsq.android.R;
+import com.example.wsq.android.activity.order.DeviceListActivity;
 import com.example.wsq.android.adapter.SearchRecordAdapter;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;

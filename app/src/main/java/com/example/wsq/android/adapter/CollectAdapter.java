@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
-import com.example.wsq.android.activity.CollectActivity;
+import com.example.wsq.android.activity.user.CollectActivity;
 import com.example.wsq.android.activity.ProductInfoActivity;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;

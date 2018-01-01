@@ -139,14 +139,9 @@
 
     <TextView
         android:id="@+id/tv_submit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
-        android:layout_margin="@dimen/defalut_layout_height"
+        style="@style/default_button"
         android:text="1-5个工作日到账，确认提现"
-        android:gravity="center"
-        android:textSize="@dimen/default_text_min_size"
-        android:background="@drawable/shape_button"
-        android:textColor="@color/color_white"
+
         />
 
 

@@ -209,12 +209,9 @@
 
     <Button
         android:id="@+id/btn_next"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
+        style="@style/default_button"
         android:text="下一步"
-        android:textColor="@color/color_white"
-        android:background="@drawable/shape_button"
-        android:layout_margin="@dimen/defalut_layout_height"
+
         />
 
 

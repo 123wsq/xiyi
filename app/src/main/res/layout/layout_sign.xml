@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_backgroud_color"
+    android:orientation="vertical"
+    android:id="@+id/ll_layout"
+    >
+
+    <include layout="@layout/layout_default_title"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/image_sign_background"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_startSign"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/image_sign_un" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/radius_popup"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="已连续签到 "
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 天"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/default_text_size" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_height_small"
+                android:background="#EEEEEE"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/default_text_week"
+                    android:text="一" />
+
+                <TextView
+                    style="@style/default_text_week"
+                    android:text="二" />
+
+                <TextView
+                    style="@style/default_text_week"
+                    android:text="三" />
+
+                <TextView
+                    style="@style/default_text_week"
+                    android:text="四" />
+
+                <TextView
+                    style="@style/default_text_week"
+                    android:text="五" />
+
+                <TextView
+                    style="@style/default_text_week"
+                    android:text="六" />
+
+                <TextView
+                    style="@style/default_text_week"
+                    android:text="日" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

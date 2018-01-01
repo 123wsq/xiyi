@@ -10,13 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.activity.DeviceListActivity;
+import com.example.wsq.android.activity.order.DeviceListActivity;
 import com.example.wsq.android.activity.FaultActivity;
 import com.example.wsq.android.activity.SearchActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.utils.IntentFormat;
-import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.List;

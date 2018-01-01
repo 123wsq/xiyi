@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.activity.OrderInfoActivity;
-import com.example.wsq.android.activity.ServerOrderInfoActivity;
+import com.example.wsq.android.activity.order.OrderInfoActivity;
+import com.example.wsq.android.activity.order.ServerOrderInfoActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.utils.IntentFormat;
@@ -125,7 +125,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             Map<String, Object> map = mData.get(getPosition());
             if (shared.getString(Constant.SHARED.JUESE, "").endsWith("1")){
 
-                if (map.get(ResponseKey.STATUS).equals("7.1")
+                if (map.get(ResponseKey.STATUS).equals("6")
+                        ||map.get(ResponseKey.STATUS).equals("6.1")
+                        ||map.get(ResponseKey.STATUS).equals("7")
+                        ||map.get(ResponseKey.STATUS).equals("7.1")
+                        || map.get(ResponseKey.STATUS).equals("8")
                         || map.get(ResponseKey.STATUS).equals("8.1")
                         || map.get(ResponseKey.STATUS).equals("8.2")){
                     IntentFormat.startActivity(mContext, ServerOrderInfoActivity.class, map);

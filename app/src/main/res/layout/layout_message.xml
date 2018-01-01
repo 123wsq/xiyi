@@ -6,36 +6,9 @@
     android:orientation="vertical"
 
     >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
-        android:background="@color/defalut_title_color"
-        >
-        <LinearLayout
-            android:id="@+id/iv_back"
-            android:layout_width="@dimen/defalut_layout_height"
-            android:layout_height="@dimen/defalut_layout_height"
-            android:gravity="center"
-            >
-            <ImageView
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_back"
-                />
-        </LinearLayout>
+    <include layout="@layout/layout_default_title"></include>
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="消息列表"
-            android:textSize="@dimen/default_text_size"
-            android:gravity="center"
-            android:textColor="@color/color_white"
-            />
-
-    </RelativeLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/store_house_ptr_frame"

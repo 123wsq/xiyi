@@ -11,7 +11,7 @@
         android:layout_height="@dimen/defalut_layout_height"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="@color/defalut_title_color"
+        android:background="@drawable/image_title_background"
         >
         <RelativeLayout
             android:layout_width="0dp"
@@ -74,7 +74,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
-            android:padding="10dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="@dimen/default_radius"
+            android:paddingRight="@dimen/default_radius"
             app:container_enable_drag="false"
             app:horizontal_interval="10dp"
             app:vertical_interval="10dp"

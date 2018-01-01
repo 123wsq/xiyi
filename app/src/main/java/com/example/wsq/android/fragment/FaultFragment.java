@@ -89,7 +89,7 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
         dialog = new LoddingDialog(getActivity());
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
                 getActivity(), LinearLayoutManager.HORIZONTAL, 2,
-                ContextCompat.getColor(getActivity(), R.color.default_backgroud_color)));
+                ContextCompat.getColor(getActivity(), R.color.color_line)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_RecyclerView.setHasFixedSize(true);
 

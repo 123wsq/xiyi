@@ -376,4 +376,51 @@ public class OkHttpRequest {
             }
         });
     }
+
+
+    /**
+     *
+     * @param url
+     * @param params
+     * @param callBack
+     */
+    public static void onGetUploadFile(String url, Map<String, String> params, List<Map<String, Object>> list,  final HttpResponseCallBack callBack){
+
+
+        long timeMillis = System.currentTimeMillis();
+        params.put("timestamp", timeMillis+"");
+        String sign = MD5Util.encrypt(Constant.SECRET+timeMillis+Constant.SECRET);
+        params.put("sign", sign);
+
+        String path = Urls.HOST + url;
+
+        com.orhanobut.logger.Logger.d("url = "+path+"\nparam = "+params.toString());
+        OkhttpUtil.okHttpFileGet(path, params, list, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                e.printStackTrace();
+                callBack.onCallFail("请求失败");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                String result = UnicodeUtil.unicodeToString(response);
+                com.orhanobut.logger.Logger.json(result);
+                try {
+                    Map<String, Object> map = ParamFormat.onJsonToMap(result);
+                    callBack.callBack(map);
+                } catch (Exception e) {
+                    callBack.onCallFail("数据返回异常");
+                }
+            }
+
+
+            @Override
+            public void onProgress(float progress, long total) {
+                super.onProgress(progress, total);
+                Log.d(TAG, "uploadProgress = "+ progress +"   total = "+total);
+            }
+        });
+
+    }
 }

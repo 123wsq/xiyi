@@ -1,5 +1,7 @@
 package com.example.wsq.android.constant;
 
+import android.os.Environment;
+
 /**
  * Created by wsq on 2017/12/11.
  */
@@ -17,6 +19,9 @@ public class Constant {
     public static final String [] EDUCATION = {"高中及以下","专科","本科","研究生","博士及以上"};
     public static final String [] ACTION_CAMERA = {"相册","相机","录像","视频"};
     public static final String[] PIC = {"JPG","JPEG","PNG","jpg","jpeg","png"};
+
+
+    public static final String BITMAP_PATH = Environment.getExternalStorageDirectory()+"/image/xiyi/";
 
     //验证码长度
     public static final int CODE_LENGTH = 6;
@@ -53,6 +58,8 @@ public class Constant {
         public static final String COMPANY = "company";
 
         public static final String ID = "uId";
+
+        public static final String MESSAGE = "message";
     }
 
 
