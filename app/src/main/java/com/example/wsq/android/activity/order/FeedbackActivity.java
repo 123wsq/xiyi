@@ -28,6 +28,7 @@ import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
 import com.luck.picture.lib.PictureSelector;
@@ -36,7 +37,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.tools.PictureFileUtils;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -67,6 +67,7 @@ public class FeedbackActivity extends Activity{
     @BindView(R.id.iv_back) LinearLayout iv_back;
     @BindView(R.id.gridview) GridView gridview;
     @BindView(R.id.ll_layout) LinearLayout ll_layout;
+    @BindView(R.id.order_no) TextView order_no;
 
 
     private OrderTaskService deviceTaskService;
@@ -89,6 +90,7 @@ public class FeedbackActivity extends Activity{
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.layout_feedback);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         initView();
         onRegister();
@@ -104,6 +106,8 @@ public class FeedbackActivity extends Activity{
 
 
         intent = getIntent();
+
+        order_no.setText(intent.getStringExtra(ResponseKey.ORDER_NO));
         et_server_loc.setText(intent.getStringExtra(ResponseKey.DIDIAN));
         et_contact.setText(intent.getStringExtra(ResponseKey.S_NAME));
         et_contact_tel.setText(intent.getStringExtra(ResponseKey.S_TEL));
@@ -115,22 +119,22 @@ public class FeedbackActivity extends Activity{
         mAdapter = new UploadAdapter(this, mData);
         gridview.setAdapter(mAdapter);
 
-        String str = intent.getStringExtra(ResponseKey.R_IMGS);
-        List<String> list0 = new ArrayList<>();
-        if (str!= null || str.length()!=0 ){
-            try {
-                JSONArray jsona = new JSONArray(str);
-                for (int i = 0; i < jsona.length(); i++) {
-                    String s = jsona.get(i).toString();
-                    list0.add(s);
-                }
-                updateImags(list0, false);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }else{
-            onSetData(0, null);
-        }
+//        String str = intent.getStringExtra(ResponseKey.R_IMGS);
+//        List<String> list0 = new ArrayList<>();
+//        if (str!= null || str.length()!=0 ){
+//            try {
+//                JSONArray jsona = new JSONArray(str);
+//                for (int i = 0; i < jsona.length(); i++) {
+//                    String s = jsona.get(i).toString();
+//                    list0.add(s);
+//                }
+//                updateImags(list0, false);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }else{
+//            onSetData(0, null);
+//        }
 
         initPopup();
     }

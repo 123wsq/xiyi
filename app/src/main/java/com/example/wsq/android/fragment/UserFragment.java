@@ -29,9 +29,9 @@ import com.example.wsq.android.activity.cash.BillDetailsActivity;
 import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.order.OrderActivity;
 import com.example.wsq.android.activity.user.CollectActivity;
+import com.example.wsq.android.activity.user.IntegralActivity;
 import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.activity.user.SignActivity;
-import com.example.wsq.android.activity.user.SignaturePadActivity;
 import com.example.wsq.android.activity.user.UpdatePsdActivity;
 import com.example.wsq.android.activity.user.UserInfoActivity;
 import com.example.wsq.android.constant.Constant;
@@ -49,7 +49,6 @@ import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ValidateParam;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.CustomPopup;
-import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.android.view.RoundImageView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -90,6 +89,7 @@ public class UserFragment extends Fragment {
     @BindView(R.id.tv_pay_num) TextView tv_pay_num;
     @BindView(R.id.tv_money) TextView tv_money;
     @BindView(R.id.tv_money_amount) TextView tv_money_amount;
+    @BindView(R.id.ll_iv_integral) LinearLayout ll_iv_integral;
 
     public static final String FLAG_ORDER_KEY = "flag_order";
     private Map<String, Object> orderMap;
@@ -98,7 +98,6 @@ public class UserFragment extends Fragment {
 
     private SharedPreferences shared;
     private CustomPopup popup;
-    private LoddingDialog dialog;
 
     private final int httpSec = 1; //获取用户信息
     public static Map<String, Object> mUserData; //用户信息
@@ -141,8 +140,6 @@ public class UserFragment extends Fragment {
         orderMap = new HashMap<>();
         shared = getActivity().getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
-        dialog = new LoddingDialog(getActivity());
-        dialog.show();
 //        getUserInfo();
 //        getOrderNum();
     }
@@ -243,6 +240,7 @@ public class UserFragment extends Fragment {
 
                         IntentFormat.startActivity(getActivity(), LoginActivity.class);
                         dialog.dismiss();
+                        getActivity().finish();
                     }
                 });
                 builderExit.setCancelBtn("还想玩", new DialogInterface.OnClickListener() {
@@ -366,6 +364,7 @@ public class UserFragment extends Fragment {
                     public void onClickItemListener(int position, String result) {
                         Intent intent=new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+result));
                         startActivity(intent);
+                        popup.dismiss();
                     }
                 });
                 popup.showAtLocation(getActivity().findViewById(R.id.ll_layout), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -381,7 +380,7 @@ public class UserFragment extends Fragment {
                 IntentFormat.startActivity(getActivity(), SignActivity.class);
                 break;
             case R.id.iv_integral:  //我的积分
-                IntentFormat.startActivity(getActivity(), SignaturePadActivity.class);
+                IntentFormat.startActivity(getActivity(), IntegralActivity.class);
                 break;
 
 
@@ -392,9 +391,7 @@ public class UserFragment extends Fragment {
      * 获取用户信息
      */
     public void getUserInfo(){
-        if (!dialog.isShowing()){
-            dialog.show();
-        }
+
         //获取用户信息
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
@@ -419,9 +416,7 @@ public class UserFragment extends Fragment {
     }
 
     public void getOrderNum(){
-        if (!dialog.isShowing()){
-            dialog.show();
-        }
+
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
         param.put(ResponseKey.CAT, shared.getString(Constant.SHARED.JUESE,"0"));
@@ -498,10 +493,6 @@ public class UserFragment extends Fragment {
             });
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (dialog.isShowing()){
-                dialog.dismiss();
-            }
         }
     }
 }

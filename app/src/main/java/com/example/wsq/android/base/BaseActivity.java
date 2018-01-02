@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.example.wsq.android.inter.OnDialogClickListener;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.LoddingDialog;
 
@@ -32,6 +33,7 @@ public abstract  class BaseActivity extends Activity{
         getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         setContentView(getByLayoutId());
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         init();

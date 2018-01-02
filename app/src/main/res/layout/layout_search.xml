@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/default_backgroud_color"
+    android:fitsSystemWindows="true"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
             android:paddingLeft="@dimen/default_height_min"
             android:textColorHint="@color/color_white"
             android:textSize="@dimen/default_text_min_size"
-            android:layout_marginLeft="@dimen/default_radius"
+            android:layout_marginLeft="@dimen/default_margin"
             android:singleLine="true"
             android:textColor="@color/color_white"
             android:imeOptions="actionSearch"

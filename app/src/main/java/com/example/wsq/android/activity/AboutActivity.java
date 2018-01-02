@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.Urls;
+import com.example.wsq.android.tools.AppStatus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +32,7 @@ public class AboutActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_protocols);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         tv_title.setText("关于蜥蜴");

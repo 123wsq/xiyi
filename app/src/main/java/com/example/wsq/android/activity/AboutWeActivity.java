@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.AppUtils;
 import com.example.wsq.android.utils.IntentFormat;
 
@@ -29,6 +30,7 @@ public class AboutWeActivity extends Activity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_about);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         tv_title.setText("关于我们");

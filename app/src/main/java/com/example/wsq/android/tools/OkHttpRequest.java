@@ -11,6 +11,7 @@ import com.example.wsq.android.utils.ParamFormat;
 import com.example.wsq.android.utils.UnicodeUtil;
 import com.example.wsq.plugin.okhttp.CallBackUtil;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 
@@ -42,7 +43,7 @@ public class OkHttpRequest {
         params.put("sign", sign);
 
         String path = Urls.HOST + url;
-        com.orhanobut.logger.Logger.d("url="+path +"\nparam="+params.toString());
+        Logger.d("url="+path +"\nparam="+params.toString());
         OkhttpUtil.okHttpPost(path, params, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -53,7 +54,7 @@ public class OkHttpRequest {
             public void onResponse(String response) {
 
                 String result = UnicodeUtil.unicodeToString(response);
-                com.orhanobut.logger.Logger.json(result);
+                Logger.json(result);
                 try {
 
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
@@ -111,7 +112,7 @@ public class OkHttpRequest {
         params.put("sign", sign);
 
         String path = Urls.HOST + url;
-        com.orhanobut.logger.Logger.d("url="+path +"\nparam="+params.toString());
+        Logger.d("url="+path +"\nparam="+params.toString());
         OkhttpUtil.okHttpGet(path, params, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -123,7 +124,7 @@ public class OkHttpRequest {
 
                 String result = UnicodeUtil.unicodeToString(response);
 
-                com.orhanobut.logger.Logger.d(result);
+                Logger.json(result);
                 try {
 
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
@@ -183,7 +184,7 @@ public class OkHttpRequest {
         params.put("sign", sign);
 
         String path = Urls.HOST + url;
-        com.orhanobut.logger.Logger.d("url = "+path+"\nparam = "+params.toString());
+        Logger.d("url = "+path+"\nparam = "+params.toString());
 
         OkhttpUtil.okHttpFilePost(path, params, list, new CallBackUtil.CallBackString() {
             @Override
@@ -197,7 +198,7 @@ public class OkHttpRequest {
 
                 String result = UnicodeUtil.unicodeToString(response);
 
-                com.orhanobut.logger.Logger.d(result);
+                Logger.json(result);
                 try {
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
                     callBack.callBack(map);
@@ -232,7 +233,7 @@ public class OkHttpRequest {
 
         String path = Urls.HOST + url;
 
-        com.orhanobut.logger.Logger.d("url = "+path+"\nparam = "+params.toString());
+        Logger.d("url = "+path+"\nparam = "+params.toString());
         OkhttpUtil.okHttpFileGet(path, params, list, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -243,7 +244,7 @@ public class OkHttpRequest {
             @Override
             public void onResponse(String response) {
                 String result = UnicodeUtil.unicodeToString(response);
-                com.orhanobut.logger.Logger.json(result);
+               Logger.json(result);
                 try {
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
                     callBack.callBack(map);
@@ -278,7 +279,7 @@ public class OkHttpRequest {
         params.put("sign", sign);
 
         String path = Urls.HOST + url;
-        com.orhanobut.logger.Logger.d("url="+path +"\nparam="+params.toString());
+        Logger.d("url="+path +"\nparam="+params.toString());
         OkhttpUtil.okHttpGet(path, params, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -291,11 +292,11 @@ public class OkHttpRequest {
 
                 String result = UnicodeUtil.unicodeToString(response);
 
-                com.orhanobut.logger.Logger.d(result);
+                Logger.json(result);
                 try {
 
                     Map<String, Object> map = ParamFormat.onAllJsonToMap(result);
-                    com.orhanobut.logger.Logger.d("code = ");
+                    Logger.d("code = ");
                     if(!map.containsKey(ResponseKey.CODE)){
                         callBack.callBack(map);
                     }else {
@@ -305,7 +306,7 @@ public class OkHttpRequest {
                             callBack.callBack(map);
 
                         } else {
-                            com.orhanobut.logger.Logger.d(map);
+                            Logger.d(map);
                             callBack.onCallFail(map.get(ResponseKey.MESSAGE).toString());
                         }
                     }
@@ -334,7 +335,7 @@ public class OkHttpRequest {
         params.put("sign", sign);
 
         String path = Urls.HOST + url;
-        com.orhanobut.logger.Logger.d("url="+path +"\nparam="+params.toString());
+        Logger.d("url="+path +"\nparam="+params.toString());
 
 
         OkhttpUtil.okHttpPost(path, params, new CallBackUtil.CallBackString() {
@@ -348,7 +349,7 @@ public class OkHttpRequest {
             public void onResponse(String response) {
 
                 String result = UnicodeUtil.unicodeToString(response);
-                com.orhanobut.logger.Logger.d(result);
+                Logger.json(result);
                 try {
 
                     Map<String, Object> map = ParamFormat.onAllJsonToMap(result);
@@ -394,7 +395,7 @@ public class OkHttpRequest {
 
         String path = Urls.HOST + url;
 
-        com.orhanobut.logger.Logger.d("url = "+path+"\nparam = "+params.toString());
+        Logger.d("url = "+path+"\nparam = "+params.toString());
         OkhttpUtil.okHttpFileGet(path, params, list, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -405,7 +406,7 @@ public class OkHttpRequest {
             @Override
             public void onResponse(String response) {
                 String result = UnicodeUtil.unicodeToString(response);
-                com.orhanobut.logger.Logger.json(result);
+                Logger.json(result);
                 try {
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
                     callBack.callBack(map);

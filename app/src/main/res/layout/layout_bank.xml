@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/default_backgroud_color"
+    android:fitsSystemWindows="true"
     >
     <include layout="@layout/layout_default_title"></include>
 
@@ -32,7 +33,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:orientation="horizontal"
                     >
                     <ImageView
@@ -52,18 +53,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="工商银行"
+                            android:text=""
                             android:gravity="center_vertical"
                             android:layout_marginLeft="@dimen/default_margin"
                             android:textColor="@color/color_white"
-                            android:textSize="@dimen/default_text_size"
+                            android:textSize="@dimen/default_text_max_size"
                             />
                         <TextView
                             android:id="@+id/tv_card_type"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="借记卡"
+                            android:text=""
                             android:gravity="center_vertical"
                             android:layout_marginLeft="@dimen/default_margin"
                             android:textColor="@color/color_white"

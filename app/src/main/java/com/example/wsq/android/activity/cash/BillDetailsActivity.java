@@ -24,6 +24,7 @@ import com.example.wsq.android.inter.OnDefaultClickListener;
 import com.example.wsq.android.inter.OnWheelViewCalendarListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomCalendarPopup;
@@ -68,6 +69,7 @@ public class BillDetailsActivity extends Activity implements RadioGroup.OnChecke
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_bill_details);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }

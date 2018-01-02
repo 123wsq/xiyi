@@ -44,6 +44,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.tv_model.setText(mData.get(position).get(ResponseKey.XINGHAO).toString());
         holder.tv_content.setText(mData.get(position).get(ResponseKey.DETAIL).toString());
         holder.tv_time.setText(mData.get(position).get(ResponseKey.CREATE_AT).toString());
+
+        int isread = (int)mData.get(position).get(ResponseKey.ISREAD);
+        holder.view_point.setVisibility(isread == 1 ? View.GONE : View.VISIBLE);
+
     }
 
 
@@ -56,6 +60,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         TextView tv_model, tv_content, tv_time;
         LinearLayout ll_layout;
+        View view_point;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +68,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             ll_layout = itemView.findViewById(R.id.ll_layout);
             tv_content = itemView.findViewById(R.id.tv_content);
             tv_time = itemView.findViewById(R.id.tv_time);
+            view_point = itemView.findViewById(R.id.view_point);
 
             ll_layout.setOnClickListener(this);
         }

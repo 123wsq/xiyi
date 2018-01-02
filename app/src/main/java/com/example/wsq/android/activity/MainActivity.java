@@ -32,20 +32,18 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.activity.order.MessageActivity;
 import com.example.wsq.android.activity.user.SettingActivity;
 import com.example.wsq.android.constant.Constant;
-import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.DeviceFragment;
 import com.example.wsq.android.fragment.FaultFragment;
 import com.example.wsq.android.fragment.MainFragment;
 import com.example.wsq.android.fragment.UserFragment;
-import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -86,6 +84,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         init();
@@ -126,7 +125,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @Override
     protected void onResume() {
         super.onResume();
-        onGetMessageCount();
+//        onGetMessageCount();
     }
 
     public void enter(int page, Fragment fragment){
@@ -248,6 +247,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             }else if(action.equals(MESSAGE_RECEIVED_ACTION)){  //推送过来的消息
                 Log.d("接收到的消息", intent.getStringExtra(KEY_MESSAGE));
                 shared.edit().putBoolean(Constant.SHARED.MESSAGE, true).commit();
+                 view_point.setVisibility(View.VISIBLE);
                 setNotification(intent.getStringExtra(KEY_MESSAGE));
 
             }
@@ -288,36 +288,36 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     /**
      * 获取消息个数
      */
-    public void onGetMessageCount(){
-
-        Map<String, String> param = new HashMap<>();
-        param.put(ResponseKey.PAGE, "1");
-        param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
-
-
-        userService.onMessageList(this, param, new HttpResponseListener() {
-            @Override
-            public void onSuccess(Map<String, Object> result) {
-                List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
-
-                boolean isState = shared.getBoolean(Constant.SHARED.MESSAGE, false);
-
-                if (!shared.contains(Constant.SHARED.MESSAGE)){
-                    isState = true;
-                }
-                if (isState){
-                    view_point.setVisibility(View.VISIBLE);
-                }else{
-                    view_point.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure() {
-
-            }
-        });
-    }
+//    public void onGetMessageCount(){
+//
+//        Map<String, String> param = new HashMap<>();
+//        param.put(ResponseKey.PAGE, "1");
+//        param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
+//
+//
+//        userService.onMessageList(this, param, new HttpResponseListener() {
+//            @Override
+//            public void onSuccess(Map<String, Object> result) {
+//                List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
+//
+//                boolean isState = shared.getBoolean(Constant.SHARED.MESSAGE, false);
+//
+//                if (!shared.contains(Constant.SHARED.MESSAGE)){
+//                    isState = true;
+//                }
+//                if (isState){
+//                    view_point.setVisibility(View.VISIBLE);
+//                }else{
+//                    view_point.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure() {
+//
+//            }
+//        });
+//    }
 
 
     @Override

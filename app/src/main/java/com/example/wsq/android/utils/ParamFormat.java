@@ -39,7 +39,8 @@ public class ParamFormat {
 //            }else if(value instanceof JSONObject){
 //                map.put(key, onJsonToMap(value.toString()));
             }else{
-                if (TextUtils.isEmpty(value+"") ||value.equals("null") ){
+
+                if (TextUtils.isEmpty(value+"") || value.toString().equals("null")){
                     map.put(key, "");
                 }else {
                     map.put(key, value);
@@ -78,7 +79,9 @@ public class ParamFormat {
             }else if(value instanceof JSONObject){
                 map.put(key, onJsonToMap(value.toString()));
             }else{
-                if (TextUtils.isEmpty(value+"") || value.equals("null")){
+
+
+                if (TextUtils.isEmpty(value+"") || value.toString().equals("null")){
                     map.put(key, "");
                 }else {
                     map.put(key, value);

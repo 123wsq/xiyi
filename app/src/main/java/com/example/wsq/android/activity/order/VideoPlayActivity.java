@@ -1,20 +1,25 @@
 package com.example.wsq.android.activity.order;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
-import com.xiao.nicevideoplayer.NiceVideoPlayer;
-import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
-import com.xiao.nicevideoplayer.TxVideoPlayerController;
+import com.example.wsq.android.tools.AppStatus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.vov.vitamio.MediaPlayer;
+import io.vov.vitamio.Vitamio;
+import io.vov.vitamio.widget.MediaController;
+import io.vov.vitamio.widget.VideoView;
 
 /**
  * Created by wsq on 2017/12/27.
@@ -22,16 +27,19 @@ import butterknife.OnClick;
 
 public class VideoPlayActivity extends AppCompatActivity{
 
-    @BindView(R.id.video_player)
-    NiceVideoPlayer video_player;
+//    @BindView(R.id.video_player)
+//    NiceVideoPlayer video_player;
+    @BindView(R.id.vv_VideoView)
+    VideoView vv_VideoView;
     String url;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Vitamio.isInitialized(this);
         setContentView(R.layout.layout_video_play);
-
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }
@@ -48,23 +56,31 @@ public class VideoPlayActivity extends AppCompatActivity{
             finish();
         }
 
-//        RelativeLayout.LayoutParams layoutParams=
-//                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT,
-//                        RelativeLayout.LayoutParams.FILL_PARENT);
-//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-//        video_player.setLayoutParams(layoutParams);
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        int height = wm.getDefaultDisplay().getHeight();
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+        vv_VideoView.setVideoPath(url);
+        vv_VideoView.setMediaController(new MediaController(this));
+//        vv_VideoView.set
+        vv_VideoView.requestFocus();
+
+        vv_VideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                // optional need Vitamio 4.0
+                mediaPlayer.setPlaybackSpeed(1.0f);
+            }
+        });
+        vv_VideoView.start();
 
 
-        video_player.setPlayerType(NiceVideoPlayer.TYPE_IJK); // or NiceVideoPlayer.TYPE_NATIVE
-        video_player.setUp(url, null);
-
-        TxVideoPlayerController controller = new TxVideoPlayerController(this);
-        controller.setTitle("蜥蜴");
-//        controller.setImage(mImageUrl);
-        video_player.setController(controller);
+//        video_player.setPlayerType(NiceVideoPlayer.TYPE_IJK); // or NiceVideoPlayer.TYPE_NATIVE
+//        video_player.setUp(url, null);
+//        video_player.isFullScreen();
+//        TxVideoPlayerController controller = new TxVideoPlayerController(this);
+//        controller.setTitle("蜥蜴");
+//        video_player.setController(controller);
 
     }
 
@@ -72,14 +88,14 @@ public class VideoPlayActivity extends AppCompatActivity{
     protected void onStop() {
         super.onStop();
         // 在onStop时释放掉播放器
-        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
+//        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
     }
 
     @Override
     public void onBackPressed() {
         // 在全屏或者小窗口时按返回键要先退出全屏或小窗口，
         // 所以在Activity中onBackPress要交给NiceVideoPlayer先处理。
-        if (NiceVideoPlayerManager.instance().onBackPressd()) return;
+//        if (NiceVideoPlayerManager.instance().onBackPressd()) return;
         super.onBackPressed();
     }
 

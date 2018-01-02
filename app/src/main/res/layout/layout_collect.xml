@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/default_backgroud_color"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     >
     <include layout="@layout/layout_default_title"></include>
 

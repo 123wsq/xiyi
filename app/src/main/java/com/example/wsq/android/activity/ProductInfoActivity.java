@@ -20,6 +20,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +45,7 @@ public class ProductInfoActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_protocols);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         initView();

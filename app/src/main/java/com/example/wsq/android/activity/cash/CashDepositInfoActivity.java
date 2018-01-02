@@ -15,7 +15,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
-import com.example.wsq.android.utils.BankInfo;
+import com.example.wsq.android.tools.AppStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +53,7 @@ public class CashDepositInfoActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_cash_deposit_info);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }
@@ -155,9 +156,9 @@ public class CashDepositInfoActivity extends Activity{
         tv_apply_time.setText(data.get(ResponseKey.CREAT_AT)+"");
         tv_apply_time_i.setText(data.get(ResponseKey.CREAT_AT)+"");
         String bankCode = data.get(ResponseKey.BANK_NUMBER)+"";
-        String[] bankType = BankInfo.getNameOfBank(bankCode.toCharArray(), 0).split("_");
-        tv_apply_name.setText(bankType[0]+" ("+bankCode.substring(bankCode.length()-4)+") "+
-                data.get(ResponseKey.BANK_NAME_C)+"");
+//        String[] bankType = BankInfo.getNameOfBank(bankCode.toCharArray(), 0).split("_");
+//        tv_apply_name.setText(bankType[0]+" ("+bankCode.substring(bankCode.length()-4)+") "+
+//                data.get(ResponseKey.BANK_NAME_C)+"");
 
         if (type == 1 ){
             ll_apply_content.setVisibility(View.VISIBLE);

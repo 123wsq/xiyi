@@ -25,11 +25,11 @@ import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,6 +90,7 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_order_info);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         init();
@@ -114,7 +115,6 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
 
         rv_gridview.setOnItemClickListener(this);
 
-        Logger.d(getIntent().getStringExtra(ResponseKey.STATUS).equals("5"));
         if(role.equals("1") && getIntent().getStringExtra(ResponseKey.STATUS).equals("4")){
             tv_transfer.setVisibility(View.VISIBLE);
             tv_transfer.setText("填写反馈报告");
@@ -337,22 +337,32 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
 
                     try {
                         JSONArray jsona = new JSONArray(imags);
-                        for (int i = 0; i < jsona.length(); i++) {
-                            CameraBean bean = new CameraBean();
 
-                            for (int j=0; j< Constant.PIC.length; j++){
-                                if (jsona.get(i).toString().endsWith(Constant.PIC[j])){
-                                    bean.setType(2);
-                                }
-                            }
-                            if (bean.getType()==0){
-                                bean.setType(3);
-                            }
-                            bean.setFile_path(Urls.HOST+Urls.GET_IMAGES+jsona.get(i).toString());
-                            bean.setShow(false);
-                            bean.setChange(false);
-                            mData.add(bean);
+                        List<String> list = new ArrayList<>();
+
+                        for (int i = 0; i < jsona.length(); i++) {
+
+                            list.add(jsona.get(i).toString());
                         }
+                             showImags( list);
+//                            CameraBean bean = new CameraBean();
+//
+//
+//
+//                            for (int j=0; j< Constant.PIC.length; j++){
+//
+//                                if (jsona.get(i).toString().endsWith(Constant.PIC[j])){
+//                                    bean.setType(2);
+//                                }
+//                            }
+//                            if (bean.getType()==0){
+//                                bean.setType(3);
+//                            }
+//                            bean.setFile_path(Urls.HOST+Urls.GET_IMAGES+jsona.get(i).toString());
+//                            bean.setShow(false);
+//                            bean.setChange(false);
+//                            mData.add(bean);
+//                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -403,6 +413,34 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
         }
     }
 
+
+    public void showImags( List<String>  array){
+
+        mData.clear();
+        for (int i =0 ; i< array.size(); i ++) {
+            CameraBean bean = new CameraBean();
+            bean.setFile_path(Urls.HOST + Urls.GET_IMAGES + array.get(i));
+
+            for (int j = 0; j < Constant.PIC.length; j++) {
+
+                if (array.get(i).toString().endsWith(Constant.PIC[j])) {
+                    bean.setType(2);
+                }
+            }
+            if (bean.getType() == 0) {
+                bean.setType(3);
+            }
+            bean.setFile_path(Urls.HOST + Urls.GET_IMAGES + array.get(i).toString());
+            bean.setShow(false);
+            bean.setChange(false);
+            mData.add(bean);
+
+        }
+
+        mAdapter.notifyDataSetChanged();
+
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -425,7 +463,7 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
             PictureSelector.create(OrderInfoActivity.this).externalPicturePreview(num, list);
         }else if(bean.getType() == 3){
 
-//        PictureSelector.create(DeviceWarrantyActivity.this)
+//        PictureSelector.create(OrderInfoActivity.this)
 //                .externalPictureVideo(bean.getFile_path());
             Map<String, Object> param = new HashMap<>();
             param.put("URL", bean.getFile_path());

@@ -6,6 +6,7 @@
     android:background="@color/default_backgroud_color"
     android:orientation="vertical"
     android:id="@+id/ll_layout"
+    android:fitsSystemWindows="true"
     >
 
     <include layout="@layout/layout_default_title"></include>
@@ -92,7 +93,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="真是姓名"
+            android:text="真实姓名"
             android:gravity="center_vertical"
             android:textSize="@dimen/default_text_size"
             />
@@ -218,6 +219,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:hint="期望服务地点"
+                android:textColorHint="@color/color_gray"
                 android:gravity="center_vertical|right"
                 android:textSize="@dimen/default_text_size"
                 android:background="@drawable/shape_edit"
@@ -252,6 +254,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:hint="您所在公司"
+            android:textColorHint="@color/color_gray"
             android:gravity="center_vertical|right"
             android:textSize="@dimen/default_text_size"
             android:background="@drawable/shape_edit"
@@ -316,7 +319,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:hint="企业概况描述"
-                android:textSize="@dimen/default_text_size"
+                android:textColorHint="@color/color_gray"
+                android:textSize="@dimen/default_text_min_size"
                 android:background="@drawable/shape_edit"
                 android:gravity="top"
                 />
@@ -347,7 +351,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:hint="所掌握哪些技能"
-                android:textSize="@dimen/default_text_size"
+                android:textColorHint="@color/color_gray"
+                android:textSize="@dimen/default_text_min_size"
                 android:background="@drawable/shape_edit"
                 android:gravity="top"
                 />
@@ -377,6 +382,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:hint="邮箱 如：12345@qq.com"
+            android:textColorHint="@color/color_gray"
             android:gravity="center_vertical|right"
             android:textSize="@dimen/default_text_size"
             android:singleLine="true"

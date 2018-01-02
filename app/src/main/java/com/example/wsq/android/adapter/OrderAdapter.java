@@ -73,8 +73,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 holder.tv_status.setText("重写移交反馈报告(待审核)");
             }else if (status.equals("8")){
                 holder.tv_status.setText("已结束");
+                holder.tv_time_name.setText("结束时间");
             }else if (status.equals("8.1") || status.equals("8.2")){
                 holder.tv_status.setText("已完成");
+                holder.tv_time_name.setText("结束时间");
             }
         }else if(shared.getString(Constant.SHARED.JUESE,"").equals("2")
                 || shared.getString(Constant.SHARED.JUESE,"").equals("3")){
@@ -104,7 +106,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tv_model, tv_ordernum, tv_outnum, tv_time, tv_status;
+        TextView tv_model, tv_ordernum, tv_outnum, tv_time, tv_status, tv_time_name;
         private LinearLayout ll_order_layout;
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -114,6 +116,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             tv_status = itemView.findViewById(R.id.tv_status);
             tv_time = itemView.findViewById(R.id.tv_time);
             ll_order_layout = itemView.findViewById(R.id.ll_order_layout);
+            tv_time_name = itemView.findViewById(R.id.tv_time_name);
             ll_order_layout.setOnClickListener(this);
 
         }

@@ -124,6 +124,7 @@
         android:layout_marginTop="@dimen/default_radius"
         >
         <TextView
+            android:id="@+id/tv_time_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="报修时间"
@@ -146,22 +147,25 @@
         android:layout_height="1dp"
         android:background="@color/default_backgroud_color"
         />
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_height_min"
-        android:orientation="horizontal"
         android:gravity="center"
         >
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="查看详情"
             android:textSize="@dimen/default_text_size"
-            android:drawableRight="@drawable/image_right"
             />
 
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/image_right"
+            android:layout_alignParentRight="true"
+            />
 
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

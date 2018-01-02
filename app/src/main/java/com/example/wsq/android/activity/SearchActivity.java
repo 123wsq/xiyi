@@ -23,6 +23,7 @@ import com.example.wsq.android.activity.order.DeviceListActivity;
 import com.example.wsq.android.adapter.SearchRecordAdapter;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.IntentFormat;
 
@@ -59,6 +60,7 @@ public class SearchActivity extends Activity implements TagView.OnTagClickListen
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_search);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }

@@ -1,6 +1,7 @@
 package com.example.wsq.android.view;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -29,7 +30,10 @@ public class CustomPopup extends PopupWindow{
     private Activity mContext;
     private View popupView;
     private List<String> mData;
+    private String textColor = "#000000";
     private View.OnClickListener onClickListener;
+
+
     private PopupItemListener listener;
     public CustomPopup(Activity context, View view, List<String> list, View.OnClickListener clickListener, final PopupItemListener listener){
 
@@ -39,7 +43,9 @@ public class CustomPopup extends PopupWindow{
         this.onClickListener = clickListener;
         this.popupView = view;
         this.listener = listener;
+        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         TextView tv_cancel =  popupView.findViewById(R.id.tv_cancel);
+
         tv_cancel.setOnClickListener(onClickListener);
         ListView listview = popupView.findViewById(R.id.listview);
         MyAdapter adapter = new MyAdapter();
@@ -54,6 +60,9 @@ public class CustomPopup extends PopupWindow{
         initPopup();
 
     }
+
+
+
 
     public void initPopup(){
 
@@ -155,6 +164,7 @@ public class CustomPopup extends PopupWindow{
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_default_popup_item, null);
                 holder = new ViewHolder();
                 convertView.setTag(holder);
+                holder.tv_popup_name.setTextColor(Color.parseColor(textColor));
                 holder.tv_popup_name = convertView.findViewById(R.id.tv_popup_name);
             }else{
                 holder = (ViewHolder) convertView.getTag();
@@ -167,6 +177,15 @@ public class CustomPopup extends PopupWindow{
 
             TextView tv_popup_name;
         }
+    }
+
+
+    /**
+     * 设置popup显示内容的颜色
+     * @param color  默认#000000
+     */
+    public void setTextColor(String color){
+        this.textColor = color;
     }
 
 

@@ -65,6 +65,7 @@ public class CustomCalendarPopup extends PopupWindow{
 
         this.mContext = context;
         this.mListener = listener;
+        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         this.popupView = LayoutInflater.from(mContext).inflate(R.layout.layout_calendar_popup, null,false);
         TextView tv_cancel =  popupView.findViewById(R.id.tv_cancel);
         tv_ok = popupView.findViewById(R.id.tv_ok);

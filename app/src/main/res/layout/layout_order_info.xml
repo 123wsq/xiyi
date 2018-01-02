@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_backgroud_color"
+    android:fitsSystemWindows="true"
 
     >
     <LinearLayout
@@ -12,7 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/defalut_layout_height"
-            android:background="@color/defalut_title_color"
+            android:background="@drawable/image_title_background"
             >
             <TextView
                 android:id="@+id/tv_title"

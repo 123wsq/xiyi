@@ -19,6 +19,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +51,7 @@ public class CashDepositActivity extends Activity implements TextWatcher {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_cash_deposit);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }

@@ -22,6 +22,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.LoddingDialog;
 
@@ -63,6 +64,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_login);
+
         ButterKnife.bind(this);
         init();
         initView();
@@ -170,4 +172,7 @@ public class LoginActivity extends Activity implements OnClickListener {
             }
         });
     }
+
+
+
 }

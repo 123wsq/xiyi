@@ -29,6 +29,7 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.android.view.RoundImageView;
@@ -89,6 +90,7 @@ public class UserInfoActivity extends Activity{
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.layout_user_info);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         init();

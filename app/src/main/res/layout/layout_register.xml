@@ -55,6 +55,7 @@
             android:gravity="center_vertical|right"
             android:textSize="14sp"
             android:hint="6~18个字符，必须是字母、数字、下划线"
+            android:textColorHint="@color/color_gray"
             android:background="@drawable/shape_text_stroken"
             android:inputType="textVisiblePassword"
             android:singleLine="true"
@@ -89,6 +90,7 @@
             android:background="@drawable/shape_text_stroken"
             android:gravity="center_vertical|right"
             android:hint="6~16字符，区分大小写"
+            android:textColorHint="@color/color_gray"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textSize="14sp" />
@@ -122,6 +124,7 @@
             android:background="@drawable/shape_text_stroken"
             android:gravity="center_vertical|right"
             android:hint="6~16字符，区分大小写"
+            android:textColorHint="@color/color_gray"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textSize="14sp" />
@@ -156,6 +159,7 @@
             android:gravity="center_vertical|right"
             android:textSize="14sp"
             android:hint="请告诉我你的名字"
+            android:textColorHint="@color/color_gray"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
             />
@@ -224,6 +228,7 @@
             android:gravity="center_vertical|right"
             android:textSize="@dimen/default_text_size"
             android:hint="12345@xx.com"
+            android:textColorHint="@color/color_gray"
             android:background="@drawable/shape_text_stroken"
             android:inputType="textEmailAddress"
             android:singleLine="true"

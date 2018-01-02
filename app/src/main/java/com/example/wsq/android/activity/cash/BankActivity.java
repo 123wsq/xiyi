@@ -14,6 +14,7 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.OnDialogClickListener;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.BankInfo;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
@@ -45,6 +46,7 @@ public class BankActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_bank);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }
@@ -52,10 +54,7 @@ public class BankActivity extends Activity{
     public void init(){
 
         tv_title.setText("银行卡管理");
-        bankCode = UserFragment.mUserData.get(ResponseKey.BANK_CARD).toString();
-
-
-
+        bankCode = UserFragment.mUserData.get(ResponseKey.BANK_CARD)+"";
 
 
         if (TextUtils.isEmpty(bankCode)){
@@ -84,9 +83,16 @@ public class BankActivity extends Activity{
             }
             tv_cardCode.setText(str);
 
-            String bankType = BankInfo.getNameOfBank(bankCode.toCharArray(), 0);
-            tv_bank.setText(bankType.split("_")[0]);
-            tv_card_type.setText(bankType.split("_")[1]);
+            String bankType = BankInfo.getNameOfBank(this, Long.parseLong(bankCode.substring(0, 6)));
+            String[] str1 = bankType.split("-");
+            if (str1.length==1){
+                tv_bank.setText(str1[0]);
+            }else if(str1.length==3){
+                tv_bank.setText(str1[0]);
+                tv_card_type.setText(str1[2]);
+            }
+
+
         }
 
 

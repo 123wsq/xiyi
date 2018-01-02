@@ -101,23 +101,31 @@ public class UploadAdapter extends BaseAdapter{
                 holder.iv_pictrue.setImageBitmap(bitmap);
 
             }else{
-//
-                new MyAsyncTask(mData.get(position).getFile_path(), holder.iv_pictrue).execute();
+                RequestOptions options = new RequestOptions();
+                options.error(R.drawable.image_no);
+                options.fallback(R.drawable.default_image);
+                options.placeholder(R.drawable.default_image);
+                Glide.with(mContext)
+                        .load(mData.get(position).getFile_path())
+                        .apply(options)
+                        .into(holder.iv_pictrue);
+
+//                new MyAsyncTask(mData.get(position).getFile_path(), holder.iv_pictrue).execute();
+//                holder.iv_pictrue.setImageResource(R.drawable.default_image);
+
             }
-//
         }else{
             holder.iv_pictrue.setVisibility(View.VISIBLE);
             holder.iv_video.setVisibility(View.GONE);
             if (mData.get(position).getFile_path().startsWith("http:")){
                 RequestOptions options = new RequestOptions();
                 options.error(R.drawable.image_no);
-                options.fallback(R.drawable.image_no);
-                options.placeholder(R.drawable.image_no);
+                options.fallback(R.drawable.default_image);
+                options.placeholder(R.drawable.default_image);
                 Glide.with(mContext)
                         .load(mData.get(position).getFile_path())
                         .apply(options)
                         .into(holder.iv_pictrue);
-//                Glide.with(mContext).load(mData.get(position).getFile_path()).into(holder.iv_pictrue);
 
             }else{
                 holder.iv_pictrue.setImageBitmap(getLoacalBitmap(mData.get(position).getFile_path()));
@@ -173,6 +181,7 @@ public class UploadAdapter extends BaseAdapter{
         private ImageView imageView;
         private String url;
         MediaMetadataRetriever mRetriever;
+
         public MyAsyncTask(String url, ImageView imageView){
             this.url = url;
             this.imageView = imageView;
@@ -181,7 +190,7 @@ public class UploadAdapter extends BaseAdapter{
 
         @Override
         protected Bitmap doInBackground(String... strings) {
-            Logger.d("开始加载视频");
+            Logger.d("视频请求地址：  "+ url);
             mRetriever.setDataSource(url, new HashMap<String, String>());
             Bitmap bitmap=mRetriever.getFrameAtTime(1000);
 //            createVideoThumbnail(
@@ -193,9 +202,8 @@ public class UploadAdapter extends BaseAdapter{
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-                Logger.d("加载完成");
 //            mRetriever.release();
-
+            Logger.d("视频请求结束："+  bitmap);
             if (bitmap != null){
                 Logger.d("视频加载完成");
                 imageView.setImageBitmap(bitmap);

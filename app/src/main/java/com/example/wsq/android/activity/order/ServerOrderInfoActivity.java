@@ -21,6 +21,7 @@ import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -79,6 +80,7 @@ public class ServerOrderInfoActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_feedback_order_info);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         tv_title.setText("订单详情");
@@ -99,7 +101,14 @@ public class ServerOrderInfoActivity extends Activity{
         tv_companyName.setText(intent.getStringExtra(ResponseKey.COMPANY));
         tv_ordernum.setText(intent.getStringExtra(ResponseKey.ORDER_NO));
         tv_order_start.setText(intent.getStringExtra(ResponseKey.BEGIN_TIME));
-        tv_order_end.setText(intent.getStringExtra(ResponseKey.OVER_TIME));
+
+        double d = Double.parseDouble(intent.getStringExtra(ResponseKey.STATUS));
+        if (d >= 8){
+            tv_order_end.setText(intent.getStringExtra(ResponseKey.ETIME));
+        }else{
+            tv_order_end.setText(intent.getStringExtra(ResponseKey.OVER_TIME));
+        }
+
 
         //维修信息
         tv_device.setText(intent.getStringExtra(ResponseKey.XINGHAO));
@@ -236,11 +245,15 @@ public class ServerOrderInfoActivity extends Activity{
             for (int i =0 ; i< array.size(); i ++){
                 CameraBean bean = new CameraBean();
                 bean.setFile_path(Urls.HOST+Urls.GET_IMAGES+array.get(i));
-                if (array.get(i).toLowerCase().endsWith(".mp4")) {
-                    bean.setType(3);
-                }else{
-                    bean.setType(2);
+                for (int j = 0; j< Constant.PIC.length; j++){
+                    if (array.get(i).toString().endsWith(Constant.PIC[j])) {
+                        bean.setType(2);
+                    }
                 }
+                if (bean.getType() == 0){
+                    bean.setType(3);
+                }
+
                 bean.setShow(false);
                 list.add(bean);
             }
@@ -252,10 +265,13 @@ public class ServerOrderInfoActivity extends Activity{
             for (int i =0 ; i< array.size(); i ++){
                 CameraBean bean = new CameraBean();
                 bean.setFile_path(Urls.HOST+Urls.GET_IMAGES+array.get(i));
-                if (array.get(i).toLowerCase().endsWith(".mp4")) {
+                for (int j = 0; j< Constant.PIC.length; j++){
+                    if (array.get(i).toString().endsWith(Constant.PIC[j])) {
+                        bean.setType(2);
+                    }
+                }
+                if (bean.getType() == 0){
                     bean.setType(3);
-                }else{
-                    bean.setType(2);
                 }
                 bean.setShow(false);
                 list.add(bean);

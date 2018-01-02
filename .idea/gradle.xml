@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/refresh" />
             <option value="$PROJECT_DIR$/tag" />
             <option value="$PROJECT_DIR$/ucrop" />
+            <option value="$PROJECT_DIR$/vitamio" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -30,6 +30,7 @@ import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.BitmapUtils;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomPopup;
@@ -88,6 +89,7 @@ public class DeviceWarrantyActivity extends Activity{
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.layout_device_warranty);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
         onRegister();
@@ -215,9 +217,8 @@ public class DeviceWarrantyActivity extends Activity{
                                 .openCamera(PictureMimeType.ofVideo())
                                 .compress(true)// 是否压缩 true or false
                                 .recordVideoSecond(10)//视频秒数录制 默认60s int
-                                .compress(true)
                                 .videoQuality(0)
-                                .cropCompressQuality(50)
+                                .cropCompressQuality(90)
                                 .forResult(RESULT_VIDEO);
 
                         break;

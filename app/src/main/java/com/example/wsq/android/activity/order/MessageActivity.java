@@ -18,6 +18,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.view.LoddingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -54,7 +55,7 @@ public class MessageActivity extends Activity{
     private int total = 1;
     private int unitPage = 15;
     private UserService userService;
-    private SharedPreferences shared, sharedMsg;
+    private SharedPreferences shared;
     private MessageAdapter mAdapter;
     private List<Map<String, Object>> mData;
     private LoddingDialog dialog;
@@ -63,6 +64,7 @@ public class MessageActivity extends Activity{
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_message);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         init();
@@ -79,7 +81,7 @@ public class MessageActivity extends Activity{
 
         userService = new UserServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-        sharedMsg = getSharedPreferences(Constant.SHARED_MSG, Context.MODE_PRIVATE);
+        shared.edit().putBoolean(Constant.SHARED.MESSAGE, true).commit();
 
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 2,

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/default_backgroud_color"
+    android:fitsSystemWindows="true"
     android:id="@+id/ll_layout"
     >
 
@@ -36,11 +37,20 @@
 
                     />
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="设备保修"
+                    android:text="订单编号"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="@dimen/default_radius"
+
+                    />
+                <TextView
+                    android:id="@+id/order_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/default_margin"
 
                     />
             </LinearLayout>
@@ -161,6 +171,8 @@
                     android:minHeight="70dp"
                     android:hint="请再次输入故障简要以及处理说明"
                     android:background="@drawable/shape_edit"
+                    android:textColorHint="@color/color_gray"
+                    android:textSize="@dimen/default_text_min_size"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/default_radius"
                     android:layout_marginLeft="@dimen/default_radius"
@@ -193,6 +205,8 @@
                     android:layout_height="wrap_content"
                     android:minHeight="70dp"
                     android:hint="请再次输入故障简要以及处理说明"
+                    android:textColorHint="@color/color_gray"
+                    android:textSize="@dimen/default_text_min_size"
                     android:background="@drawable/shape_edit"
                     android:gravity="top"
                     android:layout_marginTop="@dimen/default_radius"

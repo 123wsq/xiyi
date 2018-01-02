@@ -20,6 +20,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.view.LoddingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -73,7 +74,7 @@ public class CollectActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_collect);
-
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         init();

@@ -20,6 +20,7 @@ import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.OnDialogClickListener;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.AppUtils;
 import com.example.wsq.android.utils.CacheUtil;
 import com.example.wsq.android.utils.IntentFormat;
@@ -63,6 +64,7 @@ public class SettingActivity extends Activity implements SwitchView.OnStateChang
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_setting);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         initView();

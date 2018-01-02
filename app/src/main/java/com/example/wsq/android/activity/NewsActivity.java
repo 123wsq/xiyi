@@ -16,6 +16,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.view.LoddingDialog;
 
@@ -54,6 +55,7 @@ public class NewsActivity extends Activity{
 
 
         setContentView(R.layout.layout_news);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }

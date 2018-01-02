@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/default_backgroud_color"
+    android:fitsSystemWindows="true"
     >
 
 
@@ -55,13 +56,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/default_height_min"
                 >
                 <ImageView
                     android:layout_width="20dp"
@@ -102,8 +103,8 @@
             android:gravity="center_vertical"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
                 android:src="@drawable/image_new_msg"
                 android:layout_marginLeft="@dimen/radius_popup"
                 />
@@ -141,6 +142,7 @@
             android:layout_marginRight="@dimen/default_margin"
             android:gravity="right|center_vertical"
             android:hint="(提现金额必须是100的整数)"
+            android:textColorHint="@color/color_gray"
             />
     </LinearLayout>
 

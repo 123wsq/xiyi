@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
@@ -117,7 +118,7 @@ public class MainFragment extends Fragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_device:
-                if (shared.getString(Constant.SHARED.JUESE,"0").equals("2")){
+                if (!shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
                     IntentFormat.startActivity(getActivity(), DeviceWarrantyActivity.class);
                 }else{
                     Toast.makeText(getActivity(), "您没有权限", Toast.LENGTH_SHORT).show();
@@ -140,6 +141,9 @@ public class MainFragment extends Fragment {
             case R.id.ll_server:
 
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_default_popup,null);
+                TextView popup_title = view.findViewById(R.id.tv_title);
+                popup_title.setText("提示");
+
                 List<String> list = new ArrayList<>();
                 list.add(getResources().getString(R.string.server_tel));
                 popup = new CustomPopup(getActivity(), view, list, new View.OnClickListener() {
@@ -153,8 +157,10 @@ public class MainFragment extends Fragment {
 
                         Intent intent=new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+result));
                         startActivity(intent);
+                        popup.dismiss();
                     }
                 });
+                popup.setTextColor("#3F51B5");
                 popup.showAtLocation(getActivity().findViewById(R.id.ll_layout), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.ll_knowledge:

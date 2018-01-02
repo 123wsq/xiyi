@@ -17,6 +17,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.view.LoddingDialog;
 import com.orhanobut.logger.Logger;
@@ -60,6 +61,7 @@ public class FaultActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_device_search);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }

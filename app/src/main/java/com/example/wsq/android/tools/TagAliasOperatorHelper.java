@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.SparseArray;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.Locale;
 import java.util.Set;
 

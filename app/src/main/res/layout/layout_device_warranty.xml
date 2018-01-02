@@ -5,6 +5,7 @@
     android:background="@color/default_backgroud_color"
     android:orientation="vertical"
     android:id="@+id/ll_layout"
+    android:fitsSystemWindows="true"
     >
 
     <include layout="@layout/layout_default_title"></include>
@@ -281,6 +282,8 @@
             android:layout_height="70dp"
             android:minHeight="70dp"
             android:hint="请再次输入故障简要以及处理说明"
+            android:textColorHint="@color/color_gray"
+            android:textSize="@dimen/default_text_min_size"
             android:background="@drawable/shape_edit"
             android:layout_marginLeft="@dimen/default_radius"
             android:gravity="top"

@@ -24,6 +24,7 @@ import com.example.wsq.android.fragment.ServerFllocationFragment;
 import com.example.wsq.android.fragment.ServerProgressFragment;
 import com.example.wsq.android.fragment.UnAuditFragment;
 import com.example.wsq.android.fragment.UserFragment;
+import com.example.wsq.android.tools.AppStatus;
 
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class OrderActivity extends FragmentActivity implements ViewPager.OnPageC
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_order_layout);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
         initView();

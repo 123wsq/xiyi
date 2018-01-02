@@ -9,7 +9,7 @@ import android.text.TextUtils;
 
 import com.example.wsq.android.activity.MainActivity;
 import com.example.wsq.android.tools.ExampleUtil;
-import com.example.wsq.android.tools.Logger;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.UserFragment;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.BankCardValidate;
 import com.example.wsq.android.utils.BankInfo;
 import com.example.wsq.android.utils.IntentFormat;
@@ -45,6 +46,7 @@ public class AddBankActivity extends Activity implements TextWatcher {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_add_bank);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }
@@ -75,9 +77,6 @@ public class AddBankActivity extends Activity implements TextWatcher {
                 map.put(ResponseKey.BANK_CARD, et_backcode.getText().toString());
                 IntentFormat.startActivity(AddBankActivity.this, ValidateCodeActivity.class, map);
 
-
-
-
                 break;
             case R.id.iv_back:
                 finish();
@@ -99,8 +98,7 @@ public class AddBankActivity extends Activity implements TextWatcher {
     public void afterTextChanged(Editable s) {
         String str = s.toString();
         if (str.length()>=6){
-            char[] cardNumber = str.toCharArray();
-            String name = BankInfo.getNameOfBank(cardNumber, 0);
+            String name = BankInfo.getNameOfBank(this, Long.parseLong(str.substring(0, 6)));
             tv_card_type.setText(name);
 
         }else{

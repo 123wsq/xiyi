@@ -17,6 +17,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.BankInfo;
 import com.example.wsq.android.view.LoddingDialog;
 
@@ -52,6 +53,7 @@ public class WithdrawActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_withdraw);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }
@@ -69,9 +71,12 @@ public class WithdrawActivity extends Activity{
         enabledMoney = Double.parseDouble(BalanceActivity.mData.get(ResponseKey.CASH_MONEY)+"");
         String bankcard = BalanceActivity.mData.get(ResponseKey.BANK_CARD)+"";
         if (!TextUtils.isEmpty(bankcard)) {
-            String str[] = BankInfo.getNameOfBank(bankcard.toCharArray(), 0).split("_");
+            String[] str = BankInfo.getNameOfBank(this, Long.parseLong(bankcard.substring(0, 6))).split("-");
             tv_bank.setText(str[0] + " (" + bankcard.substring(bankcard.length() - 4) + ")");
-            tv_card_type.setText(str[1]);
+            if (str.length==3){
+                tv_card_type.setText(str[2]);
+            }
+
         }
     }
 

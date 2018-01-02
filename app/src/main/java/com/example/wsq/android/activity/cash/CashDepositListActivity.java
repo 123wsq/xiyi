@@ -20,6 +20,7 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.OnDefaultClickListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.IntentFormat;
 
@@ -55,6 +56,7 @@ public class CashDepositListActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_cash_deposit_list);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }

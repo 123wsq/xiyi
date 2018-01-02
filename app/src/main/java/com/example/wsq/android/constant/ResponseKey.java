@@ -202,4 +202,9 @@ public class ResponseKey {
 
     public static final String MONTH = "month";
 
+    public static final String ISREAD = "isread";
+
+
+    public static final String ETIME = "etime";
+
 }

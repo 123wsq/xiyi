@@ -18,6 +18,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class OrderMessageInfoActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_order_message_info);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         init();
     }
@@ -72,7 +74,7 @@ public class OrderMessageInfoActivity extends Activity{
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
-        shared.edit().putBoolean(Constant.SHARED.MESSAGE, true).commit();
+
 
         mAdapter = new OrderMessageAdapter(this, mData);
 

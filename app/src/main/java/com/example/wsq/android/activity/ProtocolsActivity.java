@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.tools.AppStatus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +33,7 @@ public class ProtocolsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_protocols);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         initView();

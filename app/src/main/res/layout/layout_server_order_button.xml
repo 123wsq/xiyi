@@ -9,59 +9,71 @@
     <RadioGroup
         android:id="@+id/rg_group_s"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_radiogroup_height"
+        android:layout_height="55dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@color/color_white"
+        android:background="@drawable/selector_radiobutton"
         >
         <RadioButton
             android:id="@+id/rb_fllocation"
             android:layout_width="0dp"
+            android:layout_marginTop="@dimen/default_radius"
+            android:paddingBottom="@dimen/default_radius"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:drawableTop="@drawable/image_wcl"
             android:text="已分配"
             android:button="@null"
             android:gravity="center"
             android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
+            android:background="@drawable/selector_radiobutton"
             />
 
         <RadioButton
             android:id="@+id/rb_progress"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:drawableTop="@drawable/image_ywc"
+            android:layout_marginTop="@dimen/default_radius"
+            android:paddingBottom="@dimen/default_radius"
             android:text="处理中"
             android:button="@null"
             android:gravity="center"
             android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
+            android:background="@drawable/selector_radiobutton"
             />
         <RadioButton
             android:id="@+id/rb_feedback"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:drawableTop="@drawable/image_clz"
+            android:layout_marginTop="@dimen/default_radius"
+            android:paddingBottom="@dimen/default_radius"
             android:text="反馈中"
             android:button="@null"
             android:gravity="center"
             android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
+            android:background="@drawable/selector_radiobutton"
             />
 
         <RadioButton
             android:id="@+id/rb_finish_s"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:drawableTop="@drawable/image_dd"
+            android:layout_marginTop="@dimen/default_radius"
+            android:paddingBottom="@dimen/default_radius"
             android:gravity="center"
             android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
+            android:background="@drawable/selector_radiobutton"
             android:text="完成" />
 
     </RadioGroup>

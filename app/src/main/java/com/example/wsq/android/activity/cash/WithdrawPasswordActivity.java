@@ -21,6 +21,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.PasswordInputView;
 
@@ -74,6 +75,7 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_withdraw_password);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
 
         init();

@@ -88,6 +88,7 @@
             android:gravity="center_vertical|right"
             android:textSize="14sp"
             android:hint="高中及以下"
+            android:textColorHint="@color/color_gray"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
 
@@ -131,6 +132,7 @@
             android:gravity="center_vertical|right"
             android:textSize="14sp"
             android:hint="服务工程师"
+            android:textColorHint="@color/color_gray"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
             />
@@ -171,6 +173,7 @@
             android:gravity="center_vertical|right"
             android:textSize="14sp"
             android:hint="请输入您期望的工作地点"
+            android:textColorHint="@color/color_gray"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
             />
@@ -201,6 +204,7 @@
             android:gravity="center_vertical|right"
             android:textSize="14sp"
             android:hint="请填写您的部门和职务"
+            android:textColorHint="@color/color_gray"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
             />
