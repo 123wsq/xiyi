@@ -3,24 +3,29 @@ package com.example.wsq.android.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.user.CollectActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
-import com.example.wsq.android.service.OrderTaskService;
-import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.tools.AppStatus;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +43,7 @@ public class ProductInfoActivity extends Activity {
 
 
     private SharedPreferences shared;
-    private OrderTaskService orderTaskService;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,42 +58,8 @@ public class ProductInfoActivity extends Activity {
     }
 
     public void initView() {
-        orderTaskService = new OrderTaskServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         tv_title.setText("资料详情");
-
-        //声明WebSettings子类
-        WebSettings webSettings = register_webView.getSettings();
-
-        //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
-        webSettings.setJavaScriptEnabled(true);
-
-        //支持插件
-//        webSettings.setPluginsEnabled(true);
-
-        //设置自适应屏幕，两者合用
-        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
-        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-
-        //缩放操作
-        webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
-        webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
-        webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
-
-        //其他细节操作
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
-        webSettings.setAllowFileAccess(true); //设置可以访问文件
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
-        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
-        webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
-
-
-        register_webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return true;
-            }
-        });
 
 
 
@@ -98,11 +69,25 @@ public class ProductInfoActivity extends Activity {
         if (getIntent().hasExtra(CollectActivity.COLLECT)){
             url += ResponseKey.ID+"="+getIntent().getIntExtra(ResponseKey.ARTICLE_ID,0);
         }else{
-            url += url+ResponseKey.ID+"="+getIntent().getIntExtra(ResponseKey.ID,0);
+            url += ResponseKey.ID+"="+getIntent().getIntExtra(ResponseKey.ID,0);
         }
         Log.d("显示网页地址", url);
-        register_webView.loadUrl(url);
+
+
+        onSetting(url);
 //        getProductInfo();
+    }
+
+
+    public void onSetting(String url){
+        register_webView.getSettings().setJavaScriptEnabled(true);
+        register_webView.getSettings().setAppCacheEnabled(true);
+        register_webView.getSettings().setDatabaseEnabled(true);
+        register_webView.getSettings().setDomStorageEnabled(true);
+        register_webView.loadUrl(url);
+        register_webView.addJavascriptInterface(new JavascriptInterface(this), "imagelistener");
+
+        register_webView.setWebViewClient(new MyWebViewClient());
     }
 
 
@@ -110,4 +95,78 @@ public class ProductInfoActivity extends Activity {
     public void onClick(View view){
         finish();
     }
+
+
+
+    class JavascriptInterface {
+
+        private Context context;
+
+        public JavascriptInterface(Context context) {
+            this.context = context;
+        }
+
+        @android.webkit.JavascriptInterface
+        public void openImage(String all, String img) {
+            Logger.d(all+"\n"+img);
+
+            if (TextUtils.isEmpty(all)){
+                Toast.makeText(ProductInfoActivity.this, "读取图片失败", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            int position = -1;
+            String[] images = all.split(",");
+            List<LocalMedia> list = new ArrayList<>();
+            for (int i = 0 ; i < images.length; i++){
+                LocalMedia media = new LocalMedia();
+                media.setPath(images[i]);
+                list.add(media);
+                if (images[i].equals(img)){
+                    position = i;
+                }
+            }
+
+
+            if (position == -1){
+                position = 0 ;
+            }
+
+            PictureSelector.create(ProductInfoActivity.this).externalPicturePreview(position, list);
+        }
+    }
+
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            view.getSettings().setJavaScriptEnabled(true);
+            super.onPageFinished(view, url);
+            addImageClickListener(view);//待网页加载完全后设置图片点击的监听方法
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            view.getSettings().setJavaScriptEnabled(true);
+            super.onPageStarted(view, url, favicon);
+        }
+
+        private void addImageClickListener(WebView webView) {
+            webView.loadUrl("javascript:(function(){" +
+                    "var objs = document.getElementsByTagName(\"img\"); " +
+                    "var path =''; "+
+                    "for(var i=0;i<objs.length;i++)  " +
+                    "{"+
+                    "path += objs[i].src +\",\" ;"+
+                    "var obj = objs[i];"+
+                    "    objs[i].onclick=function()  " +
+                    "    {  " +
+                    "        window.imagelistener.openImage(path, this.src);  " +//通过js代码找到标签为img的代码块，设置点击的监听方法与本地的openImage方法进行连接
+                    "    }  " +
+                    "}" +
+                    "})()");
+        }
+    }
+
+
+
 }

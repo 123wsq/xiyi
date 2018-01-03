@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -77,10 +78,10 @@ public class CustomPopup extends PopupWindow{
         // 设置SelectPicPopupWindow弹出窗体的高
         int height = 0;
         if (null != mData) {
-            if (h / 2 <= DensityUtil.dp2px(mContext, (mData.size() * 50) + 90 )) {
+            if (h / 2 <= DensityUtil.dp2px(mContext, (mData.size() * 50) + 90 + 30)) {
                 height = h / 2;
             } else {
-                height = DensityUtil.dp2px(mContext, (mData.size() * 50) + 90);
+                height = DensityUtil.dp2px(mContext, (mData.size() * 50) + 90+ 30);
             }
         }else{
             height = h/2;
@@ -164,10 +165,13 @@ public class CustomPopup extends PopupWindow{
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_default_popup_item, null);
                 holder = new ViewHolder();
                 convertView.setTag(holder);
-                holder.tv_popup_name.setTextColor(Color.parseColor(textColor));
+
                 holder.tv_popup_name = convertView.findViewById(R.id.tv_popup_name);
             }else{
                 holder = (ViewHolder) convertView.getTag();
+            }
+            if (!TextUtils.isEmpty(textColor)){
+                holder.tv_popup_name.setTextColor(Color.parseColor(textColor));
             }
             holder.tv_popup_name.setText(mData.get(position)+"");
             return convertView;

@@ -207,4 +207,6 @@ public class ResponseKey {
 
     public static final String ETIME = "etime";
 
+    public static final String RATIO = "ratio";
+
 }

@@ -19,8 +19,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/defalut_layout_height">
+            <TextView
+                android:id="@+id/tv_ratio"
+                style="@style/default_text"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="资料完整度"
+                android:textColor="@color/defalut_title_color"
+                android:background="@drawable/shape_ratio"
+                android:paddingTop="@dimen/default_radius"
+                android:paddingBottom="@dimen/default_radius"
+                android:paddingLeft="@dimen/default_margin"
+                android:paddingRight="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                />
+        </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"

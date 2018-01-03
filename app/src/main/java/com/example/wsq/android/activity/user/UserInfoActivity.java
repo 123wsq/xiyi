@@ -73,6 +73,7 @@ public class UserInfoActivity extends Activity{
     @BindView(R.id.ll_jieshao ) LinearLayout ll_jieshao;
     @BindView(R.id.ll_bumen ) LinearLayout ll_bumen;
     @BindView(R.id.btn_save) Button btn_save;
+    @BindView(R.id.tv_ratio) TextView tv_ratio;
 
 
     private UserService userService;
@@ -105,7 +106,7 @@ public class UserInfoActivity extends Activity{
 
         dialog = new LoddingDialog(this);
 
-        tv_username.setText(UserFragment.mUserData.get(ResponseKey.USERNAME).toString()+"");
+        tv_username.setText(UserFragment.mUserData.get(ResponseKey.USERNAME)+"");
         //设置头像
 //        Glide.with(this).load(Urls.HOST+UserFragment.mUserData.get(ResponseKey.USER_PIC)).into(image_header);
         RequestOptions options = new RequestOptions();
@@ -117,6 +118,7 @@ public class UserInfoActivity extends Activity{
                 .apply(options)
                 .into(image_header);
 
+        tv_ratio.setText("资料完整度"+ UserFragment.mUserData.get(ResponseKey.RATIO)+"%");
         String name = UserFragment.mUserData.get(ResponseKey.NAME)+"";
         tv_name.setText( "****"+name.substring(name.length()-1));
         tv_tel.setText(UserFragment.mUserData.get(ResponseKey.TEL)+" 已验证");

@@ -23,6 +23,9 @@ import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.plugin.banner.Banner;
 import com.example.wsq.plugin.banner.BannerConfig;
 import com.example.wsq.plugin.banner.Transformer;
+import com.example.wsq.plugin.banner.listener.OnBannerListener;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,6 +106,20 @@ public class DeviceChildFragment extends Fragment{
         //banner设置方法全部调用完毕时最后调用
 //        banner.start();
 
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+
+                List<LocalMedia> list = new ArrayList<>();
+                for (int i = 0 ; i < mImages.size(); i++){
+
+                    LocalMedia media = new LocalMedia();
+                    media.setPath(mImages.get(i));
+                    list.add(media);
+                }
+                PictureSelector.create(getActivity()).externalPicturePreview(position, list);
+            }
+        });
 
         getDeviceInfo();
     }
