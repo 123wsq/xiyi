@@ -14,11 +14,13 @@ import android.widget.RadioGroup;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.ProductAdapter;
+import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.view.LoddingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -88,15 +90,16 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
     public void initView() {
 
         dialog = new LoddingDialog(getActivity());
+
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
-                getActivity(), LinearLayoutManager.HORIZONTAL, 2,
-                ContextCompat.getColor(getActivity(), R.color.color_line)));
+                getActivity(), LinearLayoutManager.HORIZONTAL, DensityUtil.dp2px(getActivity(), 10),
+                ContextCompat.getColor(getActivity(), R.color.default_backgroud_color)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_RecyclerView.setHasFixedSize(true);
 
         rg_type_group.setOnCheckedChangeListener(this);
 
-        mAdapter = new ProductAdapter(getActivity(), mData);
+        mAdapter = new ProductAdapter(getActivity(), mData, Constant.INFO_3);
         rv_RecyclerView.setAdapter(mAdapter);
 
         setRefresh();

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.AppStatus;
+import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.android.view.refresh.ClassicsCustomFooter;
 import com.example.wsq.android.view.refresh.ClassicsCustomHeader;
@@ -85,6 +88,9 @@ public class CollectActivity extends Activity{
         userService = new UserServiceImpl();
         mData = new ArrayList<>();
         tv_Details.setText("编辑");
+        rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
+                this, LinearLayoutManager.HORIZONTAL, DensityUtil.dp2px(this, 10),
+                ContextCompat.getColor(this, R.color.default_backgroud_color)));
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         tv_title.setText("我的收藏");
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));

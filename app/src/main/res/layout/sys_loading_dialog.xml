@@ -11,8 +11,8 @@
     <ImageView
         android:id="@+id/sys_loading_dialog_img"
         android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:contentDescription="@null"/>
     <!--加载中视图文本 -->
     <TextView 

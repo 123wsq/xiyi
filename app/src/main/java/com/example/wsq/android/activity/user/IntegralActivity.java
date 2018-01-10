@@ -119,6 +119,7 @@ public class IntegralActivity extends BaseActivity{
 
                 tv_integral.setText(result.get(ResponseKey.MEMBER_POINTS)+"分");
 
+                wv_WebView.loadData(result.get(ResponseKey.GUIZE)+"", "text/html; charset=UTF-8", null);
 
                 mAdapter.notifyDataSetChanged();
             }

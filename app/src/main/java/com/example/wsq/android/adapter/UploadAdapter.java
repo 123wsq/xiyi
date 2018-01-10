@@ -9,6 +9,7 @@ import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.bean.CameraBean;
 import com.example.wsq.android.constant.Constant;
+import com.example.wsq.android.utils.DensityUtil;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
@@ -66,7 +68,10 @@ public class UploadAdapter extends BaseAdapter{
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
-
+        WindowManager wm = (WindowManager) mContext
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        int itemSize = width / Constant.IMAGE_COUNT -10;
         if (convertView== null){
 
             convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_camera_item, parent, false);
@@ -77,15 +82,16 @@ public class UploadAdapter extends BaseAdapter{
             holder.iv_delete = convertView.findViewById(R.id.iv_delete);
             holder.ll_layout = convertView.findViewById(R.id.ll_layout);
             holder.iv_video = convertView.findViewById(R.id.iv_video);
+            convertView.setLayoutParams(new RecyclerView.LayoutParams(itemSize, itemSize));
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
 
-        WindowManager wm = (WindowManager) mContext
-                .getSystemService(Context.WINDOW_SERVICE);
-        int width = wm.getDefaultDisplay().getWidth();
-        int itemSize = width / Constant.IMAGE_COUNT -10;
-        holder.iv_pictrue.setLayoutParams(new RelativeLayout.LayoutParams(itemSize, itemSize));
+
+
+        holder.iv_pictrue.setLayoutParams(new RelativeLayout.LayoutParams(itemSize
+                - DensityUtil.dp2px(mContext, 40),
+                itemSize - DensityUtil.dp2px(mContext, 40)));
         if (mData.get(position).getType() == 1){
             holder.iv_pictrue.setVisibility(View.VISIBLE);
             holder.iv_delete.setVisibility(View.GONE);

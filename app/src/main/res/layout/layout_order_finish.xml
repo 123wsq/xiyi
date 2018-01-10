@@ -7,32 +7,39 @@
     android:background="@color/default_backgroud_color"
     >
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/rg_group"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:orientation="horizontal"
-        android:background="@drawable/shape_finish"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
+        android:layout_marginLeft="@dimen/defalut_layout_height"
+        android:layout_marginRight="@dimen/defalut_layout_height"
         android:layout_marginTop="@dimen/default_radius"
         >
-        <TextView
+        <RadioButton
             android:id="@+id/tv_finish"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="已通过"
             android:gravity="center"
+            android:button="@null"
+            android:checked="true"
+            android:textColor="@drawable/selector_order_font"
+            android:background="@drawable/selector_order_progress_left"
             />
-        <TextView
+        <RadioButton
             android:id="@+id/tv_unfinish"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="未通过"
             android:gravity="center"
+            android:button="@null"
+            android:background="@drawable/selector_order_progress_right"
+            android:textColor="@drawable/selector_order_font"
             />
-    </LinearLayout>
+    </RadioGroup>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/store_house_ptr_frame"

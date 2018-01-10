@@ -37,9 +37,9 @@
                 android:visibility="gone">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/image_gz_press" />
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/image_main_massage" />
 
                 <TextView
                     android:layout_width="match_parent"

@@ -12,10 +12,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +33,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.order.MessageActivity;
+import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.activity.user.SettingActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.fragment.DeviceFragment;
@@ -42,6 +46,7 @@ import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
+import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +54,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.event.LoginStateChangeEvent;
+import cn.jpush.im.android.api.model.UserInfo;
 
 
 public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener, AMapLocationListener {
@@ -80,6 +88,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
 
     private UserService userService;
+    private CustomDefaultDialog customDefaultDialog;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,15 +130,18 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         // 启动定位
         locationClient.startLocation();
 
+        JMessageClient.registerEventReceiver(this);
+
         onRegister();
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
 //        onGetMessageCount();
     }
+
+
 
     public void enter(int page, Fragment fragment){
 
@@ -136,7 +150,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         switch (curShowPage){
             case 1:
-                et_search.setHint("A2变速发动机");
+                et_search.setHint("变频器");
                 iv_setting.setVisibility(View.GONE);
                 ll_title_location.setVisibility(View.VISIBLE);
                 rl_message.setVisibility(View.VISIBLE);
@@ -210,7 +224,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         locationClient.onDestroy();
         locationClient = null;
         locationOption = null;
-
+        JMessageClient.unRegisterEventReceiver(this);
         unregisterReceiver(receiver);
     }
 
@@ -350,5 +364,59 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
 
+
+    public void onEvent(LoginStateChangeEvent event) {
+        LoginStateChangeEvent.Reason reason = event.getReason();//获取变更的原因
+        UserInfo myInfo = event.getMyInfo();//获取当前被登出账号的信息
+        switch (reason) {
+            case user_password_change:
+                //用户密码在服务器端被修改
+                Logger.d("用户密码修改");
+                break;
+            case user_logout:
+                //用户换设备登录
+                Logger.d("用户换设备登录");
+//                onCreateDialog();
+                Message msg = new Message();
+                handler.sendMessage(msg);
+                break;
+            case user_deleted:
+                //用户被删除
+                Logger.d("用户被删除");
+                break;
+        }
+
+    }
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            onCreateDialog();
+        }
+    };
+
+
+    public void onCreateDialog(){
+
+        CustomDefaultDialog.Builder builder = new CustomDefaultDialog.Builder(getApplicationContext());
+        builder.setTitle("提示");
+        builder.setMessage("您的账号已在其他设备行登录，如果不是您本人操作，请及时修改唯一密码");
+        builder.setOkBtn("我知道了", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                IntentFormat.startActivity(MainActivity.this, LoginActivity.class);
+                finish();
+
+            }
+        });
+
+        customDefaultDialog = builder.create();
+        customDefaultDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        customDefaultDialog.show();
+
+    }
 
 }

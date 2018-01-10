@@ -13,10 +13,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.ProductInfoActivity;
+import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.utils.IntentFormat;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -27,16 +29,19 @@ import java.util.Random;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder>{
 
+    public static final String KEY = "ProductAdapter";
     private int [] images = {R.drawable.images_product_1,R.drawable.images_product_2,R.drawable.images_product_3,
             R.drawable.images_product_4, R.drawable.images_product_5, R.drawable.images_product_6};
     Context mContext;
     List<Map<String, Object>> mData;
+    private int mType;
     Random mRandom;
 
-    public ProductAdapter(Context context, List<Map<String, Object>> list){
+    public ProductAdapter(Context context, List<Map<String, Object>> list, int type){
 
         this.mContext = context;
         this.mData = list;
+        this.mType = type;
         mRandom = new Random();
     }
 
@@ -87,7 +92,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
         @Override
         public void onClick(View v) {
-            IntentFormat.startActivity(mContext, ProductInfoActivity.class, mData.get(getPosition()));
+            Map<String, Object> map = new HashMap<>();
+            map.putAll(mData.get(getPosition()));
+            map.put(Constant.INFO_TYPE, mType);
+            IntentFormat.startActivity(mContext, ProductInfoActivity.class, map);
         }
     }
 

@@ -11,7 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.OrderAdapter;
@@ -43,15 +44,15 @@ import butterknife.OnClick;
  * Created by wsq on 2017/12/14.
  */
 
-public class ServerFinshFragment extends Fragment {
+public class ServerFinshFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.rv_view) RecyclerView rv_view;
     @BindView(R.id.ll_nodata) LinearLayout ll_nodata;
     @BindView(R.id.store_house_ptr_frame)
     SmartRefreshLayout store_house_ptr_frame;
-    @BindView(R.id.tv_finish)
-    TextView tv_finish;
-    @BindView(R.id.tv_unfinish) TextView tv_unfinish;
+    @BindView(R.id.tv_finish) RadioButton tv_finish;
+    @BindView(R.id.tv_unfinish) RadioButton tv_unfinish;
+    @BindView(R.id.rg_group) RadioGroup rg_group;
 
     private LoddingDialog dialog;
 
@@ -99,10 +100,8 @@ public class ServerFinshFragment extends Fragment {
 
 
         dialog = new LoddingDialog(getActivity());
-        tv_finish.setBackgroundColor(getResources().getColor(R.color.defalut_title_color));
-        tv_finish.setTextColor(getResources().getColor(R.color.color_white));
-        tv_unfinish.setBackgroundColor(getResources().getColor(R.color.color_white));
-        tv_unfinish.setTextColor(getResources().getColor(R.color.defalut_title_color));
+
+        rg_group.setOnCheckedChangeListener(this);
 
         rv_view.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_view.setHasFixedSize(true);
@@ -195,36 +194,36 @@ public class ServerFinshFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.tv_finish, R.id.tv_unfinish, R.id.tv_refresh})
+    @OnClick({R.id.tv_refresh})
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.tv_finish:
-                tv_finish.setBackgroundColor(getResources().getColor(R.color.defalut_title_color));
-                tv_finish.setTextColor(getResources().getColor(R.color.color_white));
-                tv_unfinish.setBackgroundColor(getResources().getColor(R.color.color_white));
-                tv_unfinish.setTextColor(getResources().getColor(R.color.defalut_title_color));
-                mList.clear();
-                curPage = 1;
-                state = "8.1";
-                getOrderTask(null, 0);
-                break;
-            case R.id.tv_unfinish:
-                tv_finish.setBackgroundColor(getResources().getColor(R.color.color_white));
-                tv_finish.setTextColor(getResources().getColor(R.color.defalut_title_color));
-                tv_unfinish.setBackgroundColor(getResources().getColor(R.color.defalut_title_color));
-                tv_unfinish.setTextColor(getResources().getColor(R.color.color_white));
-
-                mList.clear();
-                curPage = 1;
-                state = "8.2";
-                getOrderTask(null, 0);
-                break;
             case R.id.tv_refresh:
                 curPage = 1;
                 getOrderTask(null, 0);
                 break;
 
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+        switch (checkedId){
+            case R.id.tv_finish:
+
+                mList.clear();
+                curPage = 1;
+                state = "8.1";
+                getOrderTask(null, 0);
+
+                break;
+            case R.id.tv_unfinish:
+                mList.clear();
+                curPage = 1;
+                state = "8.2";
+                getOrderTask(null, 0);
+
+                break;
         }
     }
 }

@@ -62,9 +62,16 @@ public class ProductInfoActivity extends Activity {
 
     public void initView() {
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-        tv_title.setText("资料详情");
-
-
+        int type = getIntent().getIntExtra(Constant.INFO_TYPE, 0);
+        if (type == 1){
+            tv_title.setText("新闻中心");
+        }else if(type ==2){
+            tv_title.setText("设备列表");
+        }else if(type ==3){
+            tv_title.setText("资料详情");
+        }else if(type ==4){
+            tv_title.setText("知识详情");
+        }
 
 
         String url = Urls.HOST+Urls.GET_DETAIL+"?"+ResponseKey.TOKEN+"="+shared.getString(Constant.SHARED.TOKEN, "")

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.ProductAdapter;
+import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
@@ -78,7 +79,7 @@ public class FaultActivity extends Activity{
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
-        mAdapter = new ProductAdapter(this, mData);
+        mAdapter = new ProductAdapter(this, mData, Constant.INFO_3);
         rv_RecyclerView.setAdapter(mAdapter);
 
         rv_RecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {

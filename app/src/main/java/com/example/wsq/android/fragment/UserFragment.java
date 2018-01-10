@@ -92,6 +92,7 @@ public class UserFragment extends Fragment {
     @BindView(R.id.tv_money_amount) TextView tv_money_amount;
     @BindView(R.id.ll_iv_integral) LinearLayout ll_iv_integral;
     @BindView(R.id.ll_sign_integral) LinearLayout ll_sign_integral;
+    @BindView(R.id.tv_integral) TextView tv_integral;
 
     public static final String FLAG_ORDER_KEY = "flag_order";
     private Map<String, Object> orderMap;
@@ -211,7 +212,9 @@ public class UserFragment extends Fragment {
                         tv_role.setText(Constant.ROLE[role-1]);
                     }
 
-                    //
+                    //设置积分
+                    tv_integral.setText("积分 "+result.get(ResponseKey.MEMBER_POINTS)+" 分");
+                    //账单
                     tv_pay_num.setText(result.get(ResponseKey.CACH_COUNT)+"");
                     tv_money.setText(result.get(ResponseKey.MONEY)+"");
                     tv_money_amount.setText(result.get(ResponseKey.MONEY_AMOUNT)+"");

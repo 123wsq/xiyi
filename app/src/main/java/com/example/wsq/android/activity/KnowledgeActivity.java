@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.ProductAdapter;
+import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.service.OrderTaskService;
@@ -75,7 +76,7 @@ public class KnowledgeActivity extends Activity{
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
-        mAdapter = new ProductAdapter(this, mData);
+        mAdapter = new ProductAdapter(this, mData, Constant.INFO_4);
         rv_RecyclerView.setAdapter(mAdapter);
         getKnowdgeList(null, 0);
 

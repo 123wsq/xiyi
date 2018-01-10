@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.ResponseKey;
+import com.example.wsq.android.utils.DataFormat;
 import com.example.wsq.android.utils.DateUtil;
 
 import java.util.List;
@@ -39,23 +40,25 @@ public class IntegralRecordAdapter  extends RecyclerView.Adapter<IntegralRecordA
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         int state = (int) mData.get(position).get(ResponseKey.STATE);
+        String str = mData.get(position).get(ResponseKey.POINTS_ACCOUNT)+"";
+        int num = DataFormat.onStringForInteger(str);;
         if (state==1){
-            holder.tv_integral_type.setText("签到 +1");
+            holder.tv_integral_type.setText("签到 +" + num);
         }else if(state ==2 ){
-            holder.tv_integral_type.setText("服务单");
+            holder.tv_integral_type.setText("服务单 +" + num);
         }else if(state ==3 ){
-            holder.tv_integral_type.setText("注册");
+            holder.tv_integral_type.setText("注册 +" +num);
         }else if(state ==4 ){
-            holder.tv_integral_type.setText("兑换");
+            holder.tv_integral_type.setText("兑换 -" +num);
         }
 
 
         holder.tv_integral_time.setText(
                 DateUtil.onMillisForDate(mData.get(position).get(ResponseKey.CREAT_AT)+"000", DateUtil.DATA_FORMAT_5));
-        String str = mData.get(position).get(ResponseKey.POINTS_ACCOUNT)+"";
 
 
-        holder.tv_integral_num.setText(str+"分");
+        int integral = DataFormat.onStringForInteger(mData.get(position).get(ResponseKey.SUM_POINTS)+"");
+        holder.tv_integral_num.setText(integral+" 分");
 
     }
 

@@ -87,6 +87,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     implementation files('libs/jmessage-android_v2.4.1.jar')
     compile 'com.lidong.pdf:android_pdf:1.0.1'
+    compile 'com.github.delight-im:git -AdvancedWebView:v3.0.0'
     implementation project(':ball')
 }
 //

@@ -229,4 +229,7 @@ public class ResponseKey {
 
     public static final String CHECK_TIME = "checktime";
 
+    public static final String SUM_POINTS = "sum_points";
+
+
 }

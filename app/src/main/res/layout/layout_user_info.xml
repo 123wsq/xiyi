@@ -156,9 +156,9 @@
             />
 
         <ImageView
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:src="@drawable/image_right"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/image_right_next"
             android:layout_marginLeft="@dimen/default_margin"
             />
     </LinearLayout>
@@ -220,9 +220,9 @@
             android:textSize="@dimen/default_text_size"
             />
         <ImageView
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:src="@drawable/image_right"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/image_right_next"
             android:layout_marginLeft="@dimen/default_margin"
             />
 
@@ -354,7 +354,8 @@
                 android:hint="企业概况描述"
                 android:textColorHint="@color/color_gray"
                 android:textSize="@dimen/default_text_min_size"
-                android:background="@drawable/shape_edit"
+                android:background="@drawable/shape_edit_stoken"
+                android:padding="@dimen/default_radius"
                 android:gravity="top"
                 />
 
@@ -386,7 +387,8 @@
                 android:hint="所掌握哪些技能"
                 android:textColorHint="@color/color_gray"
                 android:textSize="@dimen/default_text_min_size"
-                android:background="@drawable/shape_edit"
+                android:background="@drawable/shape_edit_stoken"
+                android:padding="@dimen/default_radius"
                 android:gravity="top"
                 />
 

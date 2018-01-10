@@ -135,6 +135,7 @@ public class SignActivity extends BaseActivity{
                 tv_time.setText((Integer.parseInt(time)+1)+"");
 
                 iv_startSign.setImageResource(R.drawable.image_sign_finish);
+                iv_startSign.setClickable(false);
 
                 popup = new SignPopup(SignActivity.this);
                 popup.setIntegral("1");
@@ -205,7 +206,7 @@ public class SignActivity extends BaseActivity{
                 }
                 if (isSign.get(curDay)){
                     iv_startSign.setImageResource(R.drawable.image_sign_finish);
-//                    iv_startSign.setClickable(false);
+                    iv_startSign.setClickable(false);
                 }
 
                 tv_time.setText(num+"");

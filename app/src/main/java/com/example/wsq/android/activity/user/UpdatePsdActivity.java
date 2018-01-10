@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ public class UpdatePsdActivity extends Activity{
     @BindView(R.id.et_new_password2) EditText et_new_password2;
     @BindView(R.id.et_old_password) EditText et_old_password;
     @BindView(R.id.tv_title) TextView tv_title;
+    @BindView(R.id.tv_submit_password) TextView tv_submit_password;
 
     private UserService userService;
     private SharedPreferences shared;
@@ -54,6 +57,9 @@ public class UpdatePsdActivity extends Activity{
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
         tv_title.setText("修改密码");
+        tv_submit_password.setBackgroundResource(R.drawable.shape_button);
+
+        onEditChangeListener();
     }
 
     @OnClick({R.id.tv_submit_password, R.id.iv_back})
@@ -131,5 +137,33 @@ public class UpdatePsdActivity extends Activity{
         }
 
         return true;
+    }
+
+
+    public void onEditChangeListener(){
+        et_old_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                String s = editable.toString();
+
+                if (s.length()<6){
+                    tv_submit_password.setBackgroundResource(R.drawable.shape_disable_button);
+                    tv_submit_password.setClickable(false);
+                }else{
+                    tv_submit_password.setBackgroundResource(R.drawable.shape_button);
+                }
+            }
+        });
     }
 }

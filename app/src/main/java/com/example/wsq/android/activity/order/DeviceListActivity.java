@@ -12,12 +12,14 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.ProductAdapter;
+import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.view.LoddingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -71,12 +73,12 @@ public class DeviceListActivity extends Activity{
         tv_title.setText("设备列表");
 
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
-                this, LinearLayoutManager.HORIZONTAL, 2,
+                this, LinearLayoutManager.HORIZONTAL, DensityUtil.dp2px(this, 10),
                 ContextCompat.getColor(this, R.color.default_backgroud_color)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
-        mAdapter = new ProductAdapter(this, mData);
+        mAdapter = new ProductAdapter(this, mData, Constant.INFO_2);
         rv_RecyclerView.setAdapter(mAdapter);
 
         dialog = new LoddingDialog(this);

@@ -18,6 +18,7 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,7 +77,7 @@ public class DeviceFragment extends Fragment{
 
 
         rv_device.addItemDecoration(new RecyclerViewDivider(
-                getActivity(), LinearLayoutManager.HORIZONTAL, 10,
+                getActivity(), LinearLayoutManager.HORIZONTAL, DensityUtil.dp2px(getActivity(), 10),
                 ContextCompat.getColor(getActivity(), R.color.default_backgroud_color)));
 
         rv_device.setLayoutManager(new LinearLayoutManager(getActivity()));

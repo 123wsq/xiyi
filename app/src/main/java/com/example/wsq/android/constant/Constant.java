@@ -20,6 +20,13 @@ public class Constant {
     public static final String [] ACTION_CAMERA = {"相册","相机","录像","视频"};
     public static final String[] PIC = {"JPG","JPEG","PNG","jpg","jpeg","png"};
 
+    public static final String INFO_TYPE = "INFO_TYPE";
+    public static final int INFO_1 = 1;  //新闻页面进入
+    public static final int INFO_2 = 2;  //搜索列表
+    public static final int INFO_3 = 3;  //资料列表进入
+    public static final int INFO_4 = 4;  //圈内知识
+
+
 
     public static final String BITMAP_PATH = Environment.getExternalStorageDirectory()+"/image/xiyi/";
 

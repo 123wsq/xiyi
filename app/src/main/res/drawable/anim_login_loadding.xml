@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	页面名称：sys_loading_dialog.xml
+	页面功能：系统自定义加载视图动画
+	创  建  人： 谢泽鹏
+	创建时间：2014-10-09
+ -->
+<animation-list
+    android:oneshot="false"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@mipmap/loading_1" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_2" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_3" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_4" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_5" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_6" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_7" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_8" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_9" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_10" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_11" android:duration="100"/>
+    <item android:drawable="@mipmap/loading_12" android:duration="100"/>
+</animation-list>
+
+

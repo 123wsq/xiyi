@@ -113,4 +113,16 @@ public class SysLoading  extends LinearLayout {
         //设置加载时文本隐藏
         sys_loading_dialog_tv.setVisibility(View.GONE);
     }
+
+
+    /**
+     * 设置加载动画
+     * @param drawableId
+     */
+    public void setAnimLodding(int drawableId){
+
+        sys_loading_dialog_img.setBackgroundResource(drawableId);
+
+    }
+
 }

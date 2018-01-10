@@ -49,4 +49,11 @@ public class LoddingDialog extends Dialog {
 			loadingView.setText(str);
 		}
 	}
+
+
+	public void setLoaddingAnim(){
+
+	}
+
 }
+

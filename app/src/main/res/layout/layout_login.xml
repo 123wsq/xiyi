@@ -145,19 +145,37 @@
                 />
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/btn_login"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/default_height_small"
-        android:background="@drawable/image_login_button"
-        android:gravity="center"
-        android:text="登录"
-        android:textColor="@color/color_white"
-        android:textSize="20sp"
-        android:layout_marginLeft="@dimen/defalut_layout_height"
-        android:layout_marginRight="@dimen/defalut_layout_height"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/iv_login_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:src="@drawable/anim_login_loadding"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_height_small"
+            android:background="@drawable/image_login_button"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@color/color_white"
+            android:textSize="20sp"
+            android:layout_marginLeft="@dimen/defalut_layout_height"
+            android:layout_marginRight="@dimen/defalut_layout_height"
+            android:visibility="visible"
         />
+
+    </RelativeLayout>
+
+
 
 
 

@@ -2,6 +2,9 @@ package com.example.wsq.android.utils;
 
 import android.text.TextUtils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by wsq on 2017/12/12.
  */
@@ -39,5 +42,24 @@ public class ValidateDataFormat {
         } else {
             return strEmail.matches(strPattern);
         }
+    }
+
+
+    /**
+     * 检测是否是数字
+     *
+     * 验证正数   [0-9]*
+     * 验证负数   -?[0-9]+
+     * 所有数字   -?[0-9]+.?[0-9]+
+     * @return
+     */
+    public static boolean isNumber(String str){
+        Pattern pattern = Pattern.compile("-?[0-9]+.?[0-9]+");
+        Matcher isNum = pattern.matcher(str);
+        if( !isNum.matches() ){
+            return false;
+        }
+        return true;
+
     }
 }

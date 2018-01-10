@@ -218,7 +218,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/default_radius"
-                                android:text="圈内黑科技集合中心"
+                                android:text="黑科技集合中心"
                                 android:textSize="@dimen/default_text_min_size"
                                 android:textColor="@color/color_default"
                                />
