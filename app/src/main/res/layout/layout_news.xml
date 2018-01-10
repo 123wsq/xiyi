@@ -1,65 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
-    >
+    android:orientation="vertical">
+
     <include layout="@layout/layout_default_title"></include>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_RecyclerView"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/store_house_ptr_frame"
+        app:srlEnablePreviewInEditMode="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
-
-    <LinearLayout
-        android:id="@+id/ll_nodata"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        >
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/image_gz_press"
-            />
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="您还没有订单~"
-            android:textSize="@dimen/default_text_title_size"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/defalut_layout_height"
-            android:textColor="@color/default_font_color"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_RecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="点击查看有没有新数据."
-            android:textSize="@dimen/default_text_title_size"
-            android:gravity="center"
-            android:textColor="@color/default_font_color"
-            />
 
-        <TextView
-            android:id="@+id/tv_refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="点击刷新"
-            android:textSize="@dimen/default_text_title_size"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/default_margin"
-            android:textColor="@color/default_font_color"
-            android:background="@drawable/shape_refresh"
-            android:paddingLeft="@dimen/default_margin"
-            android:paddingRight="@dimen/default_margin"
-            android:paddingTop="@dimen/default_radius"
-            android:paddingBottom="@dimen/default_radius"
-            />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_nodata"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/image_gz_press" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defalut_layout_height"
+                    android:gravity="center"
+                    android:text="您还没有订单~"
+                    android:textColor="@color/color_gray"
+                    android:textSize="@dimen/default_text_title_size"
+
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="点击查看有没有新数据."
+                    android:textColor="@color/color_gray"
+                    android:textSize="@dimen/default_text_title_size" />
+
+                <TextView
+                    android:id="@+id/tv_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@drawable/shape_refresh"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/default_radius"
+                    android:paddingLeft="@dimen/default_margin"
+                    android:paddingRight="@dimen/default_margin"
+                    android:paddingTop="@dimen/default_radius"
+                    android:text="点击刷新"
+                    android:textColor="@color/color_gray"
+                    android:textSize="@dimen/default_text_title_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

@@ -45,11 +45,7 @@ public class MainFragment extends Fragment {
 
 
     @BindView(R.id.banner) Banner banner;
-//    RelativeLayout rl_title_back;
-//    @BindView(R.id.iv_setting)
-//ImageView iv_setting;
-//    @BindView(R.id.ll_title_location)
-//    LinearLayout ll_title_location;
+
 
     private List<String> mImages;
     private List<String> mTitles;
@@ -126,13 +122,13 @@ public class MainFragment extends Fragment {
                 break;
             case R.id.ll_engineer:
 
-//                if (shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
+                if (shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
                     Map<String, Object> mapP = new HashMap<>();
-                    mapP.put(UserFragment.FLAG_ORDER_KEY, 5);
+                    mapP.put(UserFragment.FLAG_ORDER_KEY, 7);
                     IntentFormat.startActivity(getActivity(), OrderActivity.class, mapP);
-//                }else{
-//                    Toast.makeText(getActivity(), "您没有权限", Toast.LENGTH_SHORT).show();
-//                }
+                }else{
+                    Toast.makeText(getActivity(), "您没有权限", Toast.LENGTH_SHORT).show();
+                }
 
                 break;
             case R.id.ll_news:

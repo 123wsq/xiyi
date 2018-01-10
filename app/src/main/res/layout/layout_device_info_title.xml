@@ -25,9 +25,9 @@
                 android:textSize="@dimen/default_text_size"
                 android:button="@null"
                 android:textColor="@color/color_white"
-                android:gravity="right|center_vertical"
+                android:gravity="center"
                 android:paddingRight="@dimen/default_margin"
-                android:background="@drawable/selector_radiobutton"
+                android:background="@drawable/selector_radiobutton_deviceinfo"
                 />
             <RadioButton
                 android:id="@+id/tv_info"
@@ -37,9 +37,9 @@
                 android:button="@null"
                 android:textSize="@dimen/default_text_size"
                 android:textColor="@color/color_white"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:paddingLeft="@dimen/default_margin"
-                android:background="@drawable/selector_radiobutton"
+                android:background="@drawable/selector_radiobutton_deviceinfo"
                 />
         </RadioGroup>
         <ImageView

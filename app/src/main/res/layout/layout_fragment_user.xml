@@ -95,29 +95,35 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/ll_sign_integral"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/default_radius"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                >
 
                                 <LinearLayout
                                     android:id="@+id/ll_iv_integral"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:gravity="center"
+                                    android:layout_margin="@dimen/default_radius"
+                                    >
 
                                     <ImageView
                                         android:id="@+id/iv_integral"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
                                         android:src="@drawable/image_integral" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/default_radius"
-                                        android:text="积分 "
+                                        android:text="积分 10分"
                                         android:textColor="@color/color_white"
                                         android:textSize="@dimen/default_text_size" />
                                 </LinearLayout>
@@ -127,13 +133,13 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/default_margin"
-                                    android:background="@drawable/shape_text_stroken"
+                                    android:background="@drawable/shape_sign_button"
                                     android:paddingBottom="2dp"
-                                    android:paddingLeft="@dimen/default_radius"
-                                    android:paddingRight="@dimen/default_radius"
+                                    android:paddingLeft="@dimen/radius_popup"
+                                    android:paddingRight="@dimen/radius_popup"
                                     android:paddingTop="2dp"
                                     android:text="签到"
-                                    android:textColor="@color/color_white"
+                                    android:textColor="@color/defalut_title_color"
                                     android:textSize="@dimen/default_text_size" />
                             </LinearLayout>
                         </LinearLayout>

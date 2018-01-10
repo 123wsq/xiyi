@@ -20,12 +20,15 @@ import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.tools.AppStatus;
+import com.example.wsq.android.utils.IntentFormat;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -134,6 +137,23 @@ public class ProductInfoActivity extends Activity {
 
             PictureSelector.create(ProductInfoActivity.this).externalPicturePreview(position, list);
         }
+
+
+        @android.webkit.JavascriptInterface
+        public void openPdf(String path, String name){
+
+            Logger.d("pdf路径  "+path+"\n"+name);
+
+            Map<String, Object> param = new HashMap<>();
+            param.put("url", path);
+            param.put("name", name);
+            if (path.endsWith(".pdf") || path.endsWith(".PDF")) {
+
+                IntentFormat.startActivity(ProductInfoActivity.this, PdfReadActivity.class, param);
+            }else{
+                IntentFormat.startActivity(ProductInfoActivity.this, WordReadActivity.class, param);
+            }
+        }
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -142,6 +162,7 @@ public class ProductInfoActivity extends Activity {
             view.getSettings().setJavaScriptEnabled(true);
             super.onPageFinished(view, url);
             addImageClickListener(view);//待网页加载完全后设置图片点击的监听方法
+
         }
 
         @Override
@@ -163,8 +184,18 @@ public class ProductInfoActivity extends Activity {
                     "        window.imagelistener.openImage(path, this.src);  " +//通过js代码找到标签为img的代码块，设置点击的监听方法与本地的openImage方法进行连接
                     "    }  " +
                     "}" +
+                    "var objpdfs = document.getElementsByTagName(\"a\"); " +
+                    "for(var i=0;i<objpdfs.length;i++)  " +
+                    "{"+
+                    "var objpdf = objpdfs[i];"+
+                    "    objpdfs[i].onclick=function()  " +
+                    "    {  " +
+                    "        window.imagelistener.openPdf(this.href, this.innerText);  " +//通过js代码找到标签为img的代码块，设置点击的监听方法与本地的openImage方法进行连接
+                    "    }  " +
+                    "}" +
                     "})()");
         }
+
     }
 
 

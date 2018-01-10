@@ -117,7 +117,7 @@ public class RegiesterActivity1 extends Activity{
         if(userName.length()>= 6 && userName.length() <= 18){
             RegisterParam.USERNAME = userName;
         }else {
-            Toast.makeText(RegiesterActivity1.this, "用户名长度不能为"+userName.length(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegiesterActivity1.this, "请输入6-18位的用户名", Toast.LENGTH_SHORT).show();
             return false;
         }
 

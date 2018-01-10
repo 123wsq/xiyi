@@ -185,14 +185,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/defalut_layout_height"
         android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_margin"
 
         >
         <CheckBox
             android:id="@+id/cb_checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-
+            android:button="@null"
+            android:background="@drawable/selector_collect_check"
             />
 
         <TextView
@@ -202,6 +204,7 @@
             android:text="《注册前倾阅读并同意服务协议》"
             android:gravity="center_vertical"
             android:textColor="#aaff0000"
+            android:layout_marginLeft="@dimen/default_margin"
 
             />
     </LinearLayout>

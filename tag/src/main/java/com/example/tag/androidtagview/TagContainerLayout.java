@@ -81,12 +81,12 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * TagContainerLayout border color(default #22FF0000)
      */
-    private int mBorderColor = Color.parseColor("#22FF0000");
+    private int mBorderColor = Color.parseColor("#FFFFFF");
 
     /**
      * TagContainerLayout background color(default #11FF0000)
      */
-    private int mBackgroundColor = Color.parseColor("#11FF0000");
+    private int mBackgroundColor = Color.parseColor("#FFFFFF");
 
     /**
      * The container layout gravity(default left)
@@ -116,7 +116,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * TagView Text size(default 14sp)
      */
-    private float mTagTextSize = 14;
+    private float mTagTextSize = 12;
 
     /**
      * Text direction(support:TEXT_DIRECTION_RTL & TEXT_DIRECTION_LTR, default TEXT_DIRECTION_LTR)
@@ -141,7 +141,7 @@ public class TagContainerLayout extends ViewGroup {
     /**
      * TagView background color(default #33F44336)
      */
-    private int mTagBackgroundColor = Color.parseColor("#33F44336");
+    private int mTagBackgroundColor = Color.parseColor("#FFFFFF");
 
     /**
      * TagView text color(default #FF666666)
@@ -446,7 +446,7 @@ public class TagContainerLayout extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        mPaint.setStyle(Paint.Style.FILL);
+//        mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mBackgroundColor);
         canvas.drawRoundRect(mRectF, mBorderRadius, mBorderRadius, mPaint);
 

@@ -241,4 +241,22 @@ public interface UserService {
      */
      void onSign(Context context, Map<String, String> param, HttpResponseListener listener);
 
+
+    /**
+     * 积分记录
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void onIntegralRecord(Context context, Map<String, String> param, HttpResponseListener listener);
+
+
+    /**
+     * 签到列表
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void onSignList(final Context context, Map<String, String> param, final HttpResponseListener listener);
+
 }

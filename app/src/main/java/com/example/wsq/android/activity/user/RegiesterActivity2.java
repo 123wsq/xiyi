@@ -74,12 +74,12 @@ public class RegiesterActivity2 extends Activity {
                         return;
                     }
                 }
-                if (RegisterParam.JUESE == 1){
-                    if(ValidateParam.validateParamIsNull(et_location.getText().toString())){
-                        Toast.makeText(RegiesterActivity2.this, "工作地点必须要填写", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
+//                if (RegisterParam.JUESE == 1){
+//                    if(ValidateParam.validateParamIsNull(et_location.getText().toString())){
+//                        Toast.makeText(RegiesterActivity2.this, "工作地点必须要填写", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
+//                }
                 RegisterParam.BUMEN = et_bumen.getText().toString();
                 RegisterParam.COMPANY = et_company.getText().toString();
                 RegisterParam.DIQU = et_location.getText().toString();
@@ -134,7 +134,7 @@ public class RegiesterActivity2 extends Activity {
                         RegisterParam.JUESE = position+1;
                         popup.dismiss();
                         layout_company.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
-                        ll_location.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+//                        ll_location.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
                     }
                 });
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);

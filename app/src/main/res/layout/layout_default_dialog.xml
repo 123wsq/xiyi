@@ -11,18 +11,31 @@
         android:layout_gravity="center"
         android:minWidth="200dp"
         android:orientation="vertical"
-        android:scrollbars="vertical" >
+        android:scrollbars="vertical">
 
-        <TextView
-            android:id="@+id/title"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="提示"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="10dp"
-            android:textSize="18sp" />
+            android:layout_height="@dimen/default_height_small">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="提示"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/default_text_max_size" />
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/image_close"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/default_radius"
+                />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,66 +48,66 @@
             android:layout_height="70dp"
             android:background="@drawable/shape_text_stroken"
             android:padding="@dimen/default_radius"
-            android:visibility="gone"
-            />
+            android:textColorHint="@color/color_gray"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/dialog_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:gravity="center"
             android:minHeight="70dp"
             android:text="nnnnn"
-            android:gravity="center"
             android:textSize="@dimen/default_text_size"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/dialog_btn_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            style="@style/common_line_horizontal_style"
-            />
         <LinearLayout
+            android:id="@+id/dialog_btn_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <Button
-            android:id="@+id/dialog_ok"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/default_text_size"
-            android:text="确定"
-            android:background="@drawable/shape_dialog_left"
-            />
             <View
-                android:id="@+id/dialig_view"
-                android:layout_width="0.1dp"
-                android:layout_height="match_parent"
                 style="@style/common_line_horizontal_style"
-                />
-        <Button
-            android:id="@+id/dialog_cancel"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/default_text_size"
-            android:text="取消"
-            android:background="@drawable/shape_dialog_right"
-            />
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/dialog_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_dialog_left"
+                    android:text="确定"
+                    android:textSize="@dimen/default_text_size" />
+
+                <View
+                    android:id="@+id/dialig_view"
+                    style="@style/common_line_horizontal_style"
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/dialog_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_dialog_right"
+                    android:text="取消"
+                    android:textSize="@dimen/default_text_size" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

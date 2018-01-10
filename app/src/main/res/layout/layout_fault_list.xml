@@ -3,123 +3,120 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/default_backgroud_color"
-    >
+    android:orientation="vertical">
+
     <RadioGroup
         android:id="@+id/rg_type_group"
         android:layout_width="match_parent"
         android:layout_height="@dimen/defalut_layout_height"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/rb_all"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="全部"
+            android:layout_weight="1"
             android:button="@null"
-            android:gravity="center"
             android:checked="true"
-            android:textColor="@drawable/selector_menu_color"
-            />
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@drawable/selector_menu_color" />
+
         <RadioButton
             android:id="@+id/rb_data"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="产品资料"
-            android:gravity="center"
+            android:layout_weight="1"
             android:button="@null"
-            android:textColor="@drawable/selector_menu_color"
-            />
+            android:gravity="center"
+            android:text="产品资料"
+            android:textColor="@drawable/selector_menu_color" />
+
         <RadioButton
             android:id="@+id/rb_case"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="经典案例"
-            android:gravity="center"
+            android:layout_weight="1"
             android:button="@null"
-            android:textColor="@drawable/selector_menu_color"
-            />
+            android:gravity="center"
+            android:text="经典案例"
+            android:textColor="@drawable/selector_menu_color" />
+
         <RadioButton
             android:id="@+id/rb_other"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="其他"
-            android:gravity="center"
+            android:layout_weight="1"
             android:button="@null"
-            android:textColor="@drawable/selector_menu_color"
-            />
+            android:gravity="center"
+            android:text="其他"
+            android:textColor="@drawable/selector_menu_color" />
     </RadioGroup>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/store_house_ptr_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnablePreviewInEditMode="true"
-        >
+        app:srlEnablePreviewInEditMode="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_RecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_RecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/ll_nodata"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:gravity="center"
-                android:visibility="gone"
-                >
+                android:orientation="vertical"
+                android:visibility="gone">
+
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/image_gz_press"
-                    />
+                    android:src="@drawable/image_gz_press" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="您还没有订单~"
-                    android:textSize="@dimen/default_text_title_size"
-                    android:gravity="center"
                     android:layout_marginTop="@dimen/defalut_layout_height"
-                    android:textColor="@color/default_font_color"
+                    android:gravity="center"
+                    android:text="您还没有订单~"
+                    android:textColor="@color/color_gray"
+                    android:textSize="@dimen/default_text_title_size"
 
                     />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="点击查看有没有新数据."
-                    android:textSize="@dimen/default_text_title_size"
                     android:gravity="center"
-                    android:textColor="@color/default_font_color"
-                    />
+                    android:text="点击查看有没有新数据."
+                    android:textColor="@color/color_gray"
+                    android:textSize="@dimen/default_text_title_size" />
 
                 <TextView
                     android:id="@+id/tv_refresh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="点击刷新"
-                    android:textSize="@dimen/default_text_title_size"
-                    android:gravity="center"
                     android:layout_marginTop="@dimen/default_margin"
-                    android:textColor="@color/default_font_color"
                     android:background="@drawable/shape_refresh"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/default_radius"
                     android:paddingLeft="@dimen/default_margin"
                     android:paddingRight="@dimen/default_margin"
                     android:paddingTop="@dimen/default_radius"
-                    android:paddingBottom="@dimen/default_radius"
-                    />
+                    android:text="点击刷新"
+                    android:textColor="@color/color_gray"
+                    android:textSize="@dimen/default_text_title_size" />
             </LinearLayout>
         </LinearLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

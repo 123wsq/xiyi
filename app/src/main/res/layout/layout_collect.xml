@@ -4,121 +4,121 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/default_backgroud_color"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
-    >
-    <include layout="@layout/layout_default_title"></include>
+    android:orientation="vertical">
 
+    <include layout="@layout/layout_default_title"></include>
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/store_house_ptr_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnablePreviewInEditMode="true"
-        >
+        app:srlEnablePreviewInEditMode="true">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_RecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        />
-        <!--没有数据是显示-->
-        <LinearLayout
-            android:id="@+id/ll_nodata"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:visibility="gone"
-            >
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/image_gz_press"
-                />
-            <TextView
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_RecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="您还没有订单~"
-                android:textSize="@dimen/default_text_title_size"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/defalut_layout_height"
-                android:textColor="@color/default_font_color"
-
-                />
-
-            <TextView
+                android:layout_height="match_parent"
+                android:visibility="visible" />
+            <!--没有数据是显示-->
+            <LinearLayout
+                android:id="@+id/ll_nodata"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="点击查看有没有新数据."
-                android:textSize="@dimen/default_text_title_size"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:textColor="@color/default_font_color"
-                />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/tv_refresh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="点击刷新"
-                android:textSize="@dimen/default_text_title_size"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/default_margin"
-                android:textColor="@color/default_font_color"
-                android:background="@drawable/shape_refresh"
-                android:paddingLeft="@dimen/default_margin"
-                android:paddingRight="@dimen/default_margin"
-                android:paddingTop="@dimen/default_radius"
-                android:paddingBottom="@dimen/default_radius"
-                />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/image_gz_press" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defalut_layout_height"
+                    android:gravity="center"
+                    android:text="您还没有发布知识点呢~"
+                    android:textColor="@color/color_gray"
+                    android:textSize="@dimen/default_text_size"
+
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="点击查看有没有新数据."
+                    android:textColor="@color/color_gray"
+                    android:textSize="@dimen/default_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@drawable/shape_refresh"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/default_radius"
+                    android:paddingLeft="@dimen/default_margin"
+                    android:paddingRight="@dimen/default_margin"
+                    android:paddingTop="@dimen/default_radius"
+                    android:text="点击刷新"
+                    android:textColor="@color/color_gray"
+                    android:textSize="@dimen/default_text_size" />
+            </LinearLayout>
             <!--可编辑的-->
             <LinearLayout
                 android:id="@+id/ll_collect_buttom"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/defalut_layout_height"
-                android:orientation="horizontal"
                 android:layout_alignParentBottom="true"
                 android:background="@color/color_white"
                 android:gravity="center_vertical"
-                android:visibility="gone"
-                >
+                android:orientation="horizontal"
+                android:visibility="gone">
+
                 <CheckBox
                     android:id="@+id/cb_all_select"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginLeft="@dimen/default_radius"
-                    android:text="全选"
-                    android:background="@color/color_white"
-                    />
+                    android:background="@drawable/selector_collect_check"
+                    android:button="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/default_radius"
+                    android:gravity="center"
+                    android:text="全选" />
+
+
                 <View
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"></View>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"></View>
 
                 <TextView
                     android:id="@+id/tv_finish"
                     android:layout_width="70dp"
                     android:layout_height="30dp"
-                    android:text="完成"
-                    android:background="@drawable/shape_button"
-                    android:textColor="@color/color_white"
-                    android:gravity="center"
                     android:layout_marginRight="@dimen/default_radius"
-                    />
+                    android:background="@drawable/shape_button"
+                    android:gravity="center"
+                    android:text="删除"
+                    android:textColor="@color/color_white" />
             </LinearLayout>
         </RelativeLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-
 
 
 </LinearLayout>

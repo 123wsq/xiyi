@@ -128,6 +128,8 @@ public class ResponseKey {
 
     public static final String CREAT_AT = "creat_time";
 
+    public static final String CREATE_TIME = "create_time";
+
     public static final String  THUMB = "thumb";
 
     public static final String TITLE = "title";
@@ -207,6 +209,24 @@ public class ResponseKey {
 
     public static final String ETIME = "etime";
 
+    public static final String DONETIME = "donetime";
+
     public static final String RATIO = "ratio";
+
+    public static final String GUIZE = "guize";
+
+    public static final String SIGN_LIST = "sign_list";
+
+    public static final String POINTS_LIST = "points_list";
+
+    public static final String POINTS_ACCOUNT = "points_acount";
+
+    public static final String MEMBER_POINTS = "member_points";
+
+    public static final String WNAME = "wname";
+
+    public static final String DONE_TIME = "donetime";
+
+    public static final String CHECK_TIME = "checktime";
 
 }

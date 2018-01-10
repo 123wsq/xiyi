@@ -21,7 +21,7 @@
         android:id="@+id/rv_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginTop="@dimen/default_radius"
         />
 
@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:visibility="visible"
+            android:visibility="gone"
             >
             <ImageView
                 android:layout_width="60dp"
@@ -45,7 +45,7 @@
                 android:textSize="@dimen/default_text_max_size"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/defalut_layout_height"
-                android:textColor="@color/default_font_color"
+                android:textColor="@color/color_gray"
 
                 />
 
@@ -55,7 +55,7 @@
                 android:text="点击查看有没有新数据."
                 android:textSize="@dimen/default_text_size"
                 android:gravity="center"
-                android:textColor="@color/default_font_color"
+                android:textColor="@color/color_gray"
                 />
 
             <TextView
@@ -66,7 +66,7 @@
                 android:textSize="@dimen/default_text_max_size"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/default_margin"
-                android:textColor="@color/default_font_color"
+                android:textColor="@color/color_gray"
                 android:background="@drawable/shape_refresh"
                 android:paddingLeft="@dimen/default_margin"
                 android:paddingRight="@dimen/default_margin"

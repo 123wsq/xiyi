@@ -19,6 +19,7 @@
         android:layout_marginBottom="@dimen/default_radius"
         >
         <View
+            android:id="@+id/view"
             android:layout_width="3dp"
             android:layout_height="15dp"
             android:background="#E90523"

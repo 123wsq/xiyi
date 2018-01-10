@@ -19,6 +19,12 @@ import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.view.LoddingDialog;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,11 +48,15 @@ public class NewsActivity extends Activity{
     @BindView(R.id.ll_nodata)
     LinearLayout ll_nodata;
     @BindView(R.id.tv_refresh) TextView tv_refresh;
+    @BindView(R.id.store_house_ptr_frame)
+    SmartRefreshLayout store_house_ptr_frame;
 
     private ProductAdapter mAdapter;
     private List<Map<String, Object>> mData;
     private OrderTaskService orderTaskService;
-    private int curPage = 0;
+    private int curPage = 1;
+    private int total = 1;
+    private int unitPage = 15;
     private LoddingDialog dialog;
 
     @Override
@@ -75,14 +85,46 @@ public class NewsActivity extends Activity{
         mAdapter = new ProductAdapter(this, mData);
 
         rv_RecyclerView.setAdapter(mAdapter);
-        getNewsList();
+        setRefresh();
+
+        getNewsList(null, 0);
     }
 
-    public void getNewsList(){
+    public void setRefresh(){
+
+        store_house_ptr_frame.setRefreshHeader(new ClassicsHeader(this)
+                .setProgressResource(R.drawable.refresh_loadding).setDrawableProgressSize(40));
+        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(this)
+        );
+        store_house_ptr_frame.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mData.clear();
+                curPage = 1;
+                refreshlayout.resetNoMoreData();
+                getNewsList(refreshlayout, 1 );
+            }
+        });
+        store_house_ptr_frame.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                if (curPage == (total % unitPage ==0 ? total/unitPage : total/unitPage +1)){
+
+                    refreshlayout.finishLoadmoreWithNoMoreData();
+                }else {
+                    curPage++;
+                    getNewsList(refreshlayout, 2);
+                }
+
+            }
+        });
+    }
+    public void getNewsList(final RefreshLayout refreshLayout, final int type){
 
         dialog.show();
         Map<String, String> param = new HashMap<>();
-        param.put(ResponseKey.PAGE, (curPage+1)+"");
+        param.put(ResponseKey.PAGE, curPage+"");
         param.put(ResponseKey.KEYWORDS, "");
 
         orderTaskService.onGetNewsList(this, param, new HttpResponseListener() {
@@ -101,11 +143,23 @@ public class NewsActivity extends Activity{
                     ll_nodata.setVisibility(View.VISIBLE);
                     rv_RecyclerView.setVisibility(View.GONE);
                 }
+
+                if (type == 1){
+                    refreshLayout.finishRefresh();
+                }else if(type ==2 ){
+                    refreshLayout.finishLoadmore();
+                }
+
                 dialog.dismiss();
             }
 
             @Override
             public void onFailure() {
+
+
+                if (type == 2 && curPage>1){
+                    curPage --;
+                }
                 dialog.dismiss();
             }
         });
@@ -120,7 +174,8 @@ public class NewsActivity extends Activity{
                 finish();
                 break;
             case R.id.tv_refresh:
-                getNewsList();
+                curPage = 1;
+                getNewsList(null, 0);
                 break;
         }
     }

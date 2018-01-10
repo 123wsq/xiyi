@@ -82,6 +82,7 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
         mData = new ArrayList<>();
         orderTaskService = new OrderTaskServiceImpl();
 
+
     }
 
     public void initView() {
@@ -112,8 +113,9 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
 
         store_house_ptr_frame.setRefreshHeader(new ClassicsHeader(getActivity())
                 .setProgressResource(R.drawable.refresh_loadding).setDrawableProgressSize(40));
-        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(getActivity())
-        );
+        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(getActivity()));
+
+//        store_house_ptr_frame.setL
         store_house_ptr_frame.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {

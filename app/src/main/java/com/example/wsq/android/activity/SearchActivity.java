@@ -3,6 +3,7 @@ package com.example.wsq.android.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -50,7 +51,7 @@ public class SearchActivity extends Activity implements TagView.OnTagClickListen
     @BindView(R.id.ll_hot) LinearLayout ll_hot;
 
     public static  int curPage = 0;
-    private String[]  tagArrays;
+    private List<String>  tagArrays;
     SharedPreferences shared;
     private SearchRecordAdapter mAdapter;
     private List<Map<String, String>> mData;
@@ -66,7 +67,7 @@ public class SearchActivity extends Activity implements TagView.OnTagClickListen
     }
 
     public void init(){
-
+        tagArrays = new ArrayList<>();
         shared = getSharedPreferences(Constant.SHARED_RECORD, Context.MODE_PRIVATE);
         mData = new ArrayList<>();
         curPage = getIntent().getIntExtra("page",0);
@@ -74,8 +75,19 @@ public class SearchActivity extends Activity implements TagView.OnTagClickListen
             case 1:
                 et_search.setHint("搜索装备");
                 ll_hot.setVisibility(View.VISIBLE);
-                tagArrays = getResources().getStringArray(R.array.searchTag);
-                tl_Tag_layout.setTags(tagArrays);
+                String[] arrays = getResources().getStringArray(R.array.searchTag);
+//                tl_Tag_layout.setTags(tagArrays);
+                List<int[]> colors = new ArrayList<int[]>();
+                //int[]color = {backgroundColor, tagBorderColor, tagTextColor}
+                int[] col = {Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"), Color.parseColor("#555555")};
+                List<int[]> list = new ArrayList<>();
+                for (int i =0 ; i< arrays.length; i++){
+
+                    tagArrays.add(arrays[i]);
+                    list.add(col);
+                }
+
+                tl_Tag_layout.setTags(tagArrays, list);
                 tl_Tag_layout.setOnTagClickListener(this);
                 break;
             case 2:
@@ -89,10 +101,10 @@ public class SearchActivity extends Activity implements TagView.OnTagClickListen
         }
         rv_search_Record.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 2,
-                ContextCompat.getColor(this, R.color.default_backgroud_color)));
+                    ContextCompat.getColor(this, R.color.default_backgroud_color)));
         rv_search_Record.setLayoutManager(new LinearLayoutManager(this));
         rv_search_Record.setHasFixedSize(true);
-
+//        tl_Tag_layout.setLa
         getInputContent();
         mAdapter = new SearchRecordAdapter(this, mData);
 
@@ -159,10 +171,10 @@ public class SearchActivity extends Activity implements TagView.OnTagClickListen
 
     @Override
     public void onTagClick(int position, String text) {
-        et_search.setText(tagArrays[position]);
+        et_search.setText(tagArrays.get(position));
         if (curPage ==1 || curPage ==2) {
             Map<String, Object> map = new HashMap<>();
-            map.put(ResponseKey.KEYWORDS, tagArrays[position]);
+            map.put(ResponseKey.KEYWORDS, tagArrays.get(position));
             IntentFormat.startActivity(SearchActivity.this, DeviceListActivity.class, map);
             shared.edit().putString(System.currentTimeMillis()+"",
                     et_search.getText().toString()).commit();

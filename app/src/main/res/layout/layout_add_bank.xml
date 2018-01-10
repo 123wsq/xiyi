@@ -81,6 +81,19 @@
             />
 
     </LinearLayout>
+        <TextView
+            android:id="@+id/tv_cordCode_error"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/defalut_layout_height"
+            android:text="请输入正确的工商银行卡号"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:textColor="@color/RED"
+            android:visibility="gone"
+            />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -133,7 +146,7 @@
         android:id="@+id/tv_next"
         style="@style/default_button"
         android:text="下一步"
-
+        android:background="@drawable/shape_disable_button"
         />
 
 

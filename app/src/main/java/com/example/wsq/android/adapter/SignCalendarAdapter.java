@@ -1,6 +1,7 @@
 package com.example.wsq.android.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.constant.ResponseKey;
+import com.example.wsq.android.utils.DateUtil;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wsq on 2017/12/19.
@@ -18,11 +22,13 @@ import java.util.List;
 public class SignCalendarAdapter extends RecyclerView.Adapter<SignCalendarAdapter.ViewHolder>{
 
     private Context mContext;
-    private List<String> mData;
+    private List<String> mCander;
+    private List<Map<String, Object>> mData;
     private int selectPosition  = 0;
-    public SignCalendarAdapter(Context context, List<String> list){
+    public SignCalendarAdapter(Context context, List<String> list, List<Map<String, Object>> data){
         this.mContext = context;
-        this.mData = list;
+        this.mCander = list;
+        this.mData = data;
     }
 
     @Override
@@ -34,13 +40,30 @@ public class SignCalendarAdapter extends RecyclerView.Adapter<SignCalendarAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.tv_day.setText(mData.get(position));
+//        Logger.d(mData.size());
+        //
+
+        for (int i = 0 ; i <mData.size(); i ++){
+            String create_time = mData.get(i).get(ResponseKey.CREATE_TIME)+"000";
+
+            String sDay = DateUtil.onMillisForDay(create_time);
+//            Logger.d(sDay);
+            int day = Integer.parseInt(sDay);
+//            Logger.d(day +"====="+Integer.parseInt(mCander.get(position)));
+            if (day == Integer.parseInt(mCander.get(position))){
+                holder.tv_day.setBackgroundResource(R.drawable.shape_sign);
+                holder.tv_day.setTextColor(Color.WHITE);
+            }
+
+        }
+
+        holder.tv_day.setText(mCander.get(position));
     }
 
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mCander.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

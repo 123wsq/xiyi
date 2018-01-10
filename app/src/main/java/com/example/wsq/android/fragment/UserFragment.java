@@ -45,6 +45,7 @@ import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.JGIM;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ValidateParam;
 import com.example.wsq.android.view.CustomDefaultDialog;
@@ -90,6 +91,7 @@ public class UserFragment extends Fragment {
     @BindView(R.id.tv_money) TextView tv_money;
     @BindView(R.id.tv_money_amount) TextView tv_money_amount;
     @BindView(R.id.ll_iv_integral) LinearLayout ll_iv_integral;
+    @BindView(R.id.ll_sign_integral) LinearLayout ll_sign_integral;
 
     public static final String FLAG_ORDER_KEY = "flag_order";
     private Map<String, Object> orderMap;
@@ -140,6 +142,11 @@ public class UserFragment extends Fragment {
         orderMap = new HashMap<>();
         shared = getActivity().getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
+        String sRole = shared.getString(Constant.SHARED.JUESE,"0");
+
+        if (sRole.equals("1")){
+            ll_sign_integral.setVisibility(View.VISIBLE);
+        }
 //        getUserInfo();
 //        getOrderNum();
     }
@@ -182,10 +189,12 @@ public class UserFragment extends Fragment {
                     options.error(R.drawable.image_header_bg);
                     options.fallback(R.drawable.image_header_bg);
                     options.placeholder(R.drawable.image_header_bg);
-                    Glide.with(getActivity())
-                            .load(Urls.HOST+result.get(ResponseKey.USER_PIC))
-                            .apply(options)
-                            .into(roundImage_header);
+                    if (null != getActivity()) {
+                        Glide.with(getActivity())
+                                .load(Urls.HOST + result.get(ResponseKey.USER_PIC))
+                                .apply(options)
+                                .into(roundImage_header);
+                    }
 
                     //判断性别是否为空
                     String strSex = result.get(ResponseKey.SEX)+"";
@@ -218,7 +227,7 @@ public class UserFragment extends Fragment {
             R.id.ll_device_bank_code, R.id.ll_device_server_share, R.id.ll_server_call,
             R.id.ll_password, R.id.ll_about, R.id.ll_fault, R.id.ll_collect,R.id.ll_manager_shared,
             R.id.ll_manager_upload, R.id.ll_device_knowledge, R.id.ll_balance, R.id.ll_pay_Record,
-            R.id.tv_sign, R.id.iv_integral, R.id.roundImage_header})
+            R.id.tv_sign, R.id.ll_iv_integral, R.id.roundImage_header})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.roundImage_header: //点击头像查看
@@ -237,9 +246,10 @@ public class UserFragment extends Fragment {
                 builderExit.setOkBtn("退出", new OnDialogClickListener() {
                     @Override
                     public void onClick(CustomDefaultDialog dialog, String result) {
-
+                        JGIM.JGIM_logout();
                         IntentFormat.startActivity(getActivity(), LoginActivity.class);
                         dialog.dismiss();
+
                         getActivity().finish();
                     }
                 });
@@ -367,6 +377,7 @@ public class UserFragment extends Fragment {
                         popup.dismiss();
                     }
                 });
+                popup.setTextColor("#3F51B5");
                 popup.showAtLocation(getActivity().findViewById(R.id.ll_layout), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.ll_password:  //修改密码
@@ -379,10 +390,9 @@ public class UserFragment extends Fragment {
             case R.id.tv_sign:  //签到
                 IntentFormat.startActivity(getActivity(), SignActivity.class);
                 break;
-            case R.id.iv_integral:  //我的积分
+            case R.id.ll_iv_integral:  //我的积分
                 IntentFormat.startActivity(getActivity(), IntegralActivity.class);
                 break;
-
 
         }
     }

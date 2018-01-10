@@ -71,6 +71,11 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
     @BindView(R.id.rv_gridview) GridView rv_gridview;
     @BindView(R.id.ll_fee) LinearLayout ll_fee;
     @BindView(R.id.ll_submit) LinearLayout ll_submit ;
+    @BindView(R.id.ll_order) LinearLayout ll_order;
+    @BindView(R.id.tv_server_name) TextView tv_server_name;
+    @BindView(R.id.ll_audit_time) LinearLayout ll_audit_time;
+    @BindView(R.id.tv_audit_name) TextView tv_audit_name;
+    @BindView(R.id.tv_audit_time) TextView tv_audit_time;
 
     private UploadAdapter mAdapter;
     private List<CameraBean> mData;
@@ -123,6 +128,7 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
             tv_transfer.setText("填写移交反馈报告");
         }
 
+        onInitState();
     }
 
     public void initView() {
@@ -143,12 +149,6 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
         }else{
             ll_fee.setVisibility(View.VISIBLE);
         }
-        //当为服务工程师的时候，在已移交中，需要填写移交报告
-//        if (role.equals("1")
-//                && status.equals("7.1")){
-//            tv_transfer.setVisibility(View.VISIBLE);
-//        }
-
 
 
     }
@@ -184,6 +184,8 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
                     CustomDefaultDialog.Builder builder = new CustomDefaultDialog.Builder(OrderInfoActivity.this);
                     builder.setIsShowInput(true);
                     builder.setTitle("审核不通过");
+                    builder.setTitleColor("#FF0000");
+                    builder.setShowCloseDialog(true);
                     builder.setHintInput("说一说您拒绝人家的原因~");
                     builder.setOkBtn("确认", new OnDialogClickListener() {
                         @Override
@@ -209,6 +211,39 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
                 break;
         }
 
+    }
+
+
+    public void onInitState(){
+
+        //当角色是2，3的时候显示
+        if (!role.equals("1")){
+            ll_order.setVisibility(View.VISIBLE);
+
+        }
+        if (status.equals("-1") || status.equals("0")){
+            tv_server_name.setText("当前状态");
+            tv_serverName.setText(status.equals("0") ?"未审核":"待评估" );
+            ll_audit_time.setVisibility(View.GONE);
+        }
+
+        if (status.equals("1") || status.equals("1.1")){
+            tv_server_name.setText("服务人员");
+            tv_serverName.setText(status.equals("1") ?"待分配":"不通过" );
+            ll_audit_time.setVisibility(View.VISIBLE);
+            tv_audit_name.setText("审核时间");
+        }
+        if (status.equals("2")){
+            tv_server_name.setText("服务人员");
+            ll_audit_time.setVisibility(View.VISIBLE);
+            tv_audit_name.setText("审核时间");
+        }
+
+        if (status.equals("8")){
+            tv_server_name.setText("服务人员");
+            ll_audit_time.setVisibility(View.VISIBLE);
+            tv_audit_name.setText("结束时间");
+        }
     }
 
     public void onCreateDialog(String msg , final String action){
@@ -314,22 +349,40 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
                 public void callBack(Map<String, Object> result) {
 
                     mResultInfo.putAll(result);
-                    tv_ordernum.setText(result.get(ResponseKey.ORDER_NO).toString()+"");
-                    tv_companyName.setText(result.get(ResponseKey.COMPANY).toString()+"");
-                    tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME).toString()+"");
+                    tv_ordernum.setText(result.get(ResponseKey.ORDER_NO)+"");
+                    tv_companyName.setText(result.get(ResponseKey.COMPANY)+"");
+                    tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
 
-                    tv_device.setText(result.get(ResponseKey.XINGHAO).toString()+"");
-                    tv_outnum.setText(result.get(ResponseKey.BIANHAO).toString()+"");
-                    tv_fault_desc.setText(result.get(ResponseKey.DES).toString()+"");
+                    tv_device.setText(result.get(ResponseKey.XINGHAO)+"");
+                    tv_outnum.setText(result.get(ResponseKey.BIANHAO)+"");
+                    tv_fault_desc.setText(result.get(ResponseKey.DES)+"");
 
                     if (role.equals("1")){
 
-                        tv_upName.setText(result.get(ResponseKey.S_NAME).toString() + "");
-                        tv_upTel.setText(result.get(ResponseKey.S_TEL).toString() + "");
+                        tv_upName.setText(result.get(ResponseKey.S_NAME) + "");
+                        tv_upTel.setText(result.get(ResponseKey.S_TEL) + "");
                     }else {
-                        tv_upName.setText(result.get(ResponseKey.NAME).toString() + "");
-                        tv_upTel.setText(result.get(ResponseKey.TEL).toString() + "");
+                        tv_upName.setText(result.get(ResponseKey.NAME) + "");
+                        tv_upTel.setText(result.get(ResponseKey.TEL) + "");
                     }
+
+                    //设置结束、审核时间
+                    if (!role.equals("1") && !status.equals("8")){
+                        tv_audit_time.setText(result.get(ResponseKey.CHECK_TIME)+"");
+                    }
+
+                    if (!role.equals("1")){
+                        if (status.equals("2")){
+                            tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
+                        }else if(status.equals("8")){
+                            tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
+                            tv_audit_time.setText(result.get(ResponseKey.DONE_TIME)+"");
+                        }
+                    }
+
+
+
+                    //设置图片
                     String imags = result.get(ResponseKey.IMGS)+"";
                     if (TextUtils.isEmpty(imags) || imags.equals("null")) {
                         imags = result.get(ResponseKey.R_IMGS)+"";
@@ -345,24 +398,6 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
                             list.add(jsona.get(i).toString());
                         }
                              showImags( list);
-//                            CameraBean bean = new CameraBean();
-//
-//
-//
-//                            for (int j=0; j< Constant.PIC.length; j++){
-//
-//                                if (jsona.get(i).toString().endsWith(Constant.PIC[j])){
-//                                    bean.setType(2);
-//                                }
-//                            }
-//                            if (bean.getType()==0){
-//                                bean.setType(3);
-//                            }
-//                            bean.setFile_path(Urls.HOST+Urls.GET_IMAGES+jsona.get(i).toString());
-//                            bean.setShow(false);
-//                            bean.setChange(false);
-//                            mData.add(bean);
-//                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -372,11 +407,11 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
                         mAdapter.notifyDataSetChanged();
                     }
 
-                    tv_traveling_fee.setText(result.get(ResponseKey.CHAILV).toString()+"元");
-                    tv_server_fee.setText(result.get(ResponseKey.FUWU).toString()+"元");
-                    tv_spare_fee.setText(result.get(ResponseKey.BEIJIAN).toString()+"元");
-                    tv_other_fee.setText(result.get(ResponseKey.QITA).toString()+"元");
-                    tv_all_fee.setText(result.get(ResponseKey.ZONG).toString()+"元");
+                    tv_traveling_fee.setText(result.get(ResponseKey.CHAILV)+"元");
+                    tv_server_fee.setText(result.get(ResponseKey.FUWU)+"元");
+                    tv_spare_fee.setText(result.get(ResponseKey.BEIJIAN)+"元");
+                    tv_other_fee.setText(result.get(ResponseKey.QITA)+"元");
+                    tv_all_fee.setText(result.get(ResponseKey.ZONG)+"元");
 
 
                     //判断当前角色

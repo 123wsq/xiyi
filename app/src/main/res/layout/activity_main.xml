@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/defalut_layout_height"
+        android:layout_marginTop="@dimen/default_height_small"
         android:layout_marginBottom="@dimen/default_menu_height"
         />
 

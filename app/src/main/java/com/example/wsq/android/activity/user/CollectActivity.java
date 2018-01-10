@@ -22,10 +22,10 @@ import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.view.LoddingDialog;
+import com.example.wsq.android.view.refresh.ClassicsCustomFooter;
+import com.example.wsq.android.view.refresh.ClassicsCustomHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -53,8 +53,7 @@ public class CollectActivity extends Activity{
     @BindView(R.id.ll_nodata) LinearLayout ll_nodata;
     @BindView(R.id.tv_Details) TextView tv_Details;
     @BindView(R.id.ll_collect_buttom) LinearLayout ll_collect_buttom;
-    @BindView(R.id.cb_all_select)
-    CheckBox cb_all_select;
+    @BindView(R.id.cb_all_select) CheckBox cb_all_select;
     @BindView(R.id.store_house_ptr_frame)
     SmartRefreshLayout store_house_ptr_frame;
 
@@ -100,10 +99,14 @@ public class CollectActivity extends Activity{
 
     public void setRefresh(){
 
-        store_house_ptr_frame.setRefreshHeader(new ClassicsHeader(this)
-                .setProgressResource(R.drawable.refresh_loadding).setDrawableProgressSize(40));
-        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(this)
-        );
+//        store_house_ptr_frame.setRefreshHeader(new ClassicsHeader(this)
+//                .setProgressResource(R.drawable.refresh_loadding).setDrawableProgressSize(40));
+        store_house_ptr_frame.setRefreshHeader(new ClassicsCustomHeader(this));
+//        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(this)
+//                .setArrowResource(R.drawable.refresh_loadding).setDrawableArrowSize(50));
+//        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(this));
+        store_house_ptr_frame.setRefreshFooter(new ClassicsCustomFooter(this));
+
         store_house_ptr_frame.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -153,7 +156,7 @@ public class CollectActivity extends Activity{
                     mAdapter.onAllSelected(false);
                 }else {
                     isEditCollect = true;
-                    tv_Details.setText("取消");
+                    tv_Details.setText("完成");
                     ll_collect_buttom.setVisibility(View.VISIBLE);
                     mAdapter.onEditCollect(false);
                     cb_all_select.setChecked(false);

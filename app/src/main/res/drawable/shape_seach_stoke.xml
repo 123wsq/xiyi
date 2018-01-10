@@ -3,5 +3,7 @@
 
     <corners android:radius="@dimen/default_margin"></corners>
 
-    <solid android:color="#33000000"></solid>
+
+
+    <solid android:color="#50FFFFFF"></solid>
 </shape>

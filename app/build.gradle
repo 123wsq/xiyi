@@ -15,8 +15,10 @@ android {
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName '1.0.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
 
         ndk {
             //选择要添加的对应cpu类型的.so库。
@@ -41,6 +43,12 @@ android {
         debug {
             signingConfig signingConfigs.xiyi
         }
+
+
+    }
+
+    packagingOptions{
+        exclude 'META-INF/rxjava.properties'
     }
     productFlavors {
     }
@@ -69,7 +77,6 @@ dependencies {
     //    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.7'
     implementation project(':picture')
     implementation 'com.android.support:support-v4:27.0.2'
-    compile 'com.umeng.analytics:analytics:latest.integration'
     //    implementation project(':log')
     compile 'com.orhanobut:logger:1.15'
     implementation project(':tag')
@@ -77,19 +84,23 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-5'
     //没有使用特殊Header，可以不加这行
     implementation project(':vitamio')
+    compile 'com.android.support:multidex:1.0.1'
+    implementation files('libs/jmessage-android_v2.4.1.jar')
+    compile 'com.lidong.pdf:android_pdf:1.0.1'
+    implementation project(':ball')
 }
-
-configurations.all {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        def requested = details.requested
-        if (requested.group == 'com.android.support') {
-            if (!requested.name.startsWith("support-v4")) {
-                details.useVersion '27.0.2'
-            }
-
-
-        }
-
-
-    }
-}
+//
+//configurations.all {
+//    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+//        def requested = details.requested
+//        if (requested.group == 'com.android.support') {
+//            if (!requested.name.startsWith("support-v4")) {
+//                details.useVersion '27.0.2'
+//            }
+//
+//
+//        }
+//
+//
+//    }
+//}

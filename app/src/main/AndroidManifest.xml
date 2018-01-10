@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wsq.android"
     android:versionCode="1"
-    android:versionName="1.0"
+    android:versionName="1.0.1"
     >
     <uses-sdk
         android:minSdkVersion="14"
@@ -68,8 +68,10 @@
         <activity android:name=".activity.cash.CashDepositActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.cash.CashDepositListActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.cash.CashDepositInfoActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.PdfReadActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.WordReadActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.order.VideoPlayActivity"
-
+            android:process=":vitamio"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             />
         <activity android:name=".activity.user.SignActivity" android:screenOrientation="portrait"></activity>
@@ -133,6 +135,19 @@
                 <category android:name="com.example.wsq.android" />
             </intent-filter>
         </activity>
+
+        <!-- Required SDK核心功能-->
+        <receiver
+            android:name="cn.jpush.im.android.helpers.IMReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.im.android.action.IM_RESPONSE" />
+                <action android:name="cn.jpush.im.android.action.NOTIFICATION_CLICK_PROXY" />
+
+                <category android:name="com.example.wsq.android" />
+            </intent-filter>
+        </receiver>
         <!-- Required SDK 核心功能-->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
@@ -150,7 +165,7 @@
         <provider
             android:authorities="com.example.wsq.android.DataProvider"
             android:name="cn.jpush.android.service.DataProvider"
-            android:exported="false"
+            android:exported="true"
             />
 
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
@@ -170,7 +185,8 @@
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
-            android:exported="false">
+            android:exported="false"
+            android:process=":pushcore">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
                 <category android:name="com.example.wsq.android" />
@@ -232,6 +248,8 @@
         android:name="com.example.wsq.android.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
     <uses-permission android:name="com.example.wsq.android.permission.JPUSH_MESSAGE" />
+
+
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <!--读取缓存数据-->

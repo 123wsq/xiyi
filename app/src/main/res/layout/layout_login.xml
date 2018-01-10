@@ -7,10 +7,10 @@
     >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/image_login_icon"
-        android:layout_marginTop="@dimen/default_height_min"
+        android:layout_marginTop="@dimen/defalut_layout_height"
         android:layout_gravity="center_horizontal"
         />
 
@@ -139,7 +139,7 @@
                 android:layout_height="match_parent"
                 android:text="忘记密码？"
                 android:gravity="center_vertical|right"
-                android:textColor="@color/color_default_btn"
+                android:textColor="@color/color_white"
 
 
                 />
@@ -149,7 +149,7 @@
     <TextView
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
+        android:layout_height="@dimen/default_height_small"
         android:background="@drawable/image_login_button"
         android:gravity="center"
         android:text="登录"

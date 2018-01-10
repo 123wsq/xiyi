@@ -1,9 +1,9 @@
 package com.example.wsq.android.activity.order;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,7 +25,7 @@ import io.vov.vitamio.widget.VideoView;
  * Created by wsq on 2017/12/27.
  */
 
-public class VideoPlayActivity extends AppCompatActivity{
+public class VideoPlayActivity extends Activity {
 
 //    @BindView(R.id.video_player)
 //    NiceVideoPlayer video_player;
@@ -87,16 +87,9 @@ public class VideoPlayActivity extends AppCompatActivity{
     @Override
     protected void onStop() {
         super.onStop();
+//        PictureFileUtils.deleteCacheDirFile(VideoPlayActivity.this);
         // 在onStop时释放掉播放器
 //        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
-    }
-
-    @Override
-    public void onBackPressed() {
-        // 在全屏或者小窗口时按返回键要先退出全屏或小窗口，
-        // 所以在Activity中onBackPress要交给NiceVideoPlayer先处理。
-//        if (NiceVideoPlayerManager.instance().onBackPressd()) return;
-        super.onBackPressed();
     }
 
     @OnClick({R.id.iv_back})

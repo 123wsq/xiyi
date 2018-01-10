@@ -7,4 +7,89 @@
     android:fitsSystemWindows="true"
     >
     <include layout="@layout/layout_default_title"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/image_integral_background"
+        >
+
+        <LinearLayout
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="@drawable/image_integral_item_background"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_white"
+                android:text="积分"
+                android:textSize="@dimen/default_text_max_size"
+                />
+            <TextView
+                android:id="@+id/tv_integral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_white"
+                android:text="100分"
+                android:textSize="@dimen/default_text_max_size"
+                />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_integral_rule"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/image_integral_item_background"
+            android:text="积分规则"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:layout_marginLeft="@dimen/radius_popup"
+            android:layout_marginTop="@dimen/radius_popup"
+            />
+
+        <TextView
+            android:id="@+id/tv_integral_record"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/image_integral_item_background"
+            android:text="积分记录"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/radius_popup"
+            android:layout_marginRight="@dimen/radius_popup"
+            />
+    </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_integral_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/defalut_layout_height"
+            android:text="积分规则"
+            android:textColor="#262626"
+            android:background="@drawable/image_radiobutton_selector"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:paddingLeft="@dimen/radius_popup"
+            android:paddingRight="@dimen/radius_popup"
+            />
+           <WebView
+               android:id="@+id/wv_WebView"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:visibility="gone"
+               />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_RecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                />
+
 </LinearLayout>

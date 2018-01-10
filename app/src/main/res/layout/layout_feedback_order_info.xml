@@ -6,267 +6,257 @@
     android:fitsSystemWindows="true"
 
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <include layout="@layout/layout_title"></include>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            >
+            android:scrollbars="none">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/defalut_layout_height"
-                >
-
+                android:paddingBottom="@dimen/defalut_layout_height">
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_height_min"
-                    android:text="基本信息"
+                    android:layout_marginTop="@dimen/radius_popup"
+                    android:background="@color/color_white"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
-                    android:textSize="@dimen/default_text_size"
+                    android:text="基本信息"
                     android:textColor="@color/defalut_title_color"
-                    android:background="@color/color_white"
-                    android:layout_marginTop="@dimen/radius_popup"
-                    />
+                    android:textSize="@dimen/default_text_size" />
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/defalut_title_color"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
-                    />
+                    android:background="@color/color_line" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
-                    android:paddingTop="2dp"
-                    >
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="公司名称:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        />
+                        android:text="公司名称:" />
+
                     <TextView
                         android:id="@+id/tv_companyName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
-                        android:paddingLeft="@dimen/default_margin"
                         android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:text="" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
-                    android:paddingTop="2dp"
-                    >
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp">
+
                     <TextView
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="订单编号:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        />
+                        android:text="订单编号:" />
+
                     <TextView
                         android:id="@+id/tv_ordernum"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
-                        android:paddingLeft="@dimen/default_margin"
                         android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:text="" />
                 </LinearLayout>
-
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
+                        android:id="@+id/tv_finish_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="开始时间:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
                         android:paddingTop="2dp"
-                        />
+                        android:text="开始时间:" />
 
                     <TextView
                         android:id="@+id/tv_order_start"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/default_margin"
-                        android:gravity="center_vertical|right"
+                        android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
                         android:paddingTop="2dp"
                         android:text="" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/default_radius"
-                    android:paddingTop="2dp"
-                    >
+                    android:paddingTop="2dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="结束时间:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        />
+                        android:text="结束时间:" />
 
                     <TextView
                         android:id="@+id/tv_order_end"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/default_margin"
-                        android:gravity="center_vertical|right"
+                        android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
                         android:text="" />
                 </LinearLayout>
-
 
 
                 <!--维修信息-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_height_min"
-                    android:text="维修信息"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@color/color_white"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
-                    android:textSize="@dimen/default_text_size"
+                    android:text="维修信息"
                     android:textColor="@color/defalut_title_color"
-                    android:background="@color/color_white"
-                    android:layout_marginTop="@dimen/default_margin"
-                    />
+                    android:textSize="@dimen/default_text_size" />
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/defalut_title_color"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
-                    ></View>
+                    android:background="@color/color_line"></View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
-                    android:paddingTop="2dp"
-                    >
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="报修设备:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        />
+                        android:text="报修设备:" />
+
                     <TextView
                         android:id="@+id/tv_device"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
-                        android:paddingLeft="@dimen/default_margin"
                         android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:text="" />
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
-                    android:paddingTop="2dp"
-                    >
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="出厂编号:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        />
+                        android:text="出厂编号:" />
+
                     <TextView
                         android:id="@+id/tv_outnum"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
-                        android:paddingLeft="@dimen/default_margin"
                         android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:text="" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/default_radius"
-                    android:paddingTop="2dp"
-                    >
+                    android:paddingTop="2dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="故障描述:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        />
+                        android:text="故障描述:" />
+
                     <TextView
                         android:id="@+id/tv_fault_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
-                        android:paddingLeft="@dimen/default_margin"
                         android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:text="" />
                 </LinearLayout>
 
                 <!--故障照片视频-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_height_min"
-                    android:text="故障照片/视频"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@color/color_white"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
-                    android:textSize="@dimen/default_text_size"
+                    android:text="故障照片/视频"
                     android:textColor="@color/defalut_title_color"
-                    android:background="@color/color_white"
-                    android:layout_marginTop="@dimen/default_margin"
-                    />
+                    android:textSize="@dimen/default_text_size" />
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/defalut_title_color"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
-                    />
+                    android:background="@color/color_line" />
 
                 <GridView
                     android:id="@+id/rv_gridview"
@@ -279,98 +269,95 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_height_min"
-                    android:text="服务信息"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@color/color_white"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
-                    android:textSize="@dimen/default_text_size"
+                    android:text="服务信息"
                     android:textColor="@color/defalut_title_color"
-                    android:background="@color/color_white"
-                    android:layout_marginTop="@dimen/default_margin"
-                    />
+                    android:textSize="@dimen/default_text_size" />
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/defalut_title_color"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
-                    />
+                    android:background="@color/color_line" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="服务地点:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
                         android:paddingTop="@dimen/radius_popup"
-                        />
+                        android:text="服务地点:" />
+
                     <TextView
                         android:id="@+id/tv_server_loc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
+                        android:layout_marginRight="@dimen/default_margin"
+                        android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
                         android:paddingTop="@dimen/radius_popup"
-                        android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:text="" />
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/default_radius"
-                    android:paddingTop="2dp"
-                    >
+                    android:paddingTop="2dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="服务内容及结果:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        />
+                        android:text="服务内容及结果:" />
+
                     <TextView
                         android:id="@+id/tv_server_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
-                        android:paddingLeft="@dimen/default_margin"
                         android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:text="" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/default_radius"
-                    android:paddingTop="2dp"
-                    >
+                    android:paddingTop="2dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="遗留问题:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        />
+                        android:text="遗留问题:" />
+
                     <TextView
                         android:id="@+id/tv_server_leave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
-                        android:paddingLeft="@dimen/default_margin"
                         android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:text="" />
                 </LinearLayout>
 
 
@@ -378,21 +365,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_height_min"
-                    android:text="现场服务照片/视频"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@color/color_white"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
-                    android:textSize="@dimen/default_text_size"
+                    android:text="现场服务照片/视频"
                     android:textColor="@color/defalut_title_color"
-                    android:background="@color/color_white"
-                    android:layout_marginTop="@dimen/default_margin"
-                    />
+                    android:textSize="@dimen/default_text_size" />
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/defalut_title_color"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
-                    />
+                    android:background="@color/color_line" />
 
                 <GridView
                     android:id="@+id/rv_gridview_scene"
@@ -406,77 +392,71 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_height_min"
-                    android:text="其他信息"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@color/color_white"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
-                    android:textSize="@dimen/default_text_size"
+                    android:text="其他信息"
                     android:textColor="@color/defalut_title_color"
-                    android:background="@color/color_white"
-                    android:layout_marginTop="@dimen/default_margin"
-                    />
+                    android:textSize="@dimen/default_text_size" />
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/defalut_title_color"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/default_margin"
                     android:layout_marginRight="@dimen/default_margin"
-                    />
+                    android:background="@color/color_line" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="现场联系人:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
                         android:paddingTop="@dimen/radius_popup"
-                        />
+                        android:text="现场联系人:" />
+
                     <TextView
                         android:id="@+id/tv_scene_contact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
+                        android:layout_marginRight="@dimen/default_margin"
+                        android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
                         android:paddingTop="@dimen/radius_popup"
-                        android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:text="" />
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/color_white"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/default_radius"
-                    android:paddingTop="2dp"
-                    >
+                    android:paddingTop="2dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="手机:"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        />
+                        android:text="手机:" />
+
                     <TextView
                         android:id="@+id/tv_scene_tel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center_vertical|right"
-                        android:paddingLeft="@dimen/default_margin"
                         android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:text="" />
                 </LinearLayout>
-
-
-
 
 
                 <!--服务费用-->
@@ -484,154 +464,151 @@
                     android:id="@+id/ll_fee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/default_height_min"
-                        android:text="预估费用"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:background="@color/color_white"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        android:textSize="@dimen/default_text_size"
+                        android:text="服务费用"
                         android:textColor="@color/defalut_title_color"
-                        android:background="@color/color_white"
-                        android:layout_marginTop="@dimen/default_margin"
-                        />
+                        android:textSize="@dimen/default_text_size" />
+
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/defalut_title_color"
+                        android:layout_height="1dp"
                         android:layout_marginLeft="@dimen/default_margin"
                         android:layout_marginRight="@dimen/default_margin"
-                        />
+                        android:background="@color/color_line" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="@color/color_white"
-                        android:paddingTop="2dp"
-                        >
+                        android:orientation="horizontal"
+                        android:paddingTop="2dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="差旅费:"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
-                            />
+                            android:text="差旅费:" />
+
                         <TextView
                             android:id="@+id/tv_traveling_fee"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:gravity="center_vertical|right"
-                            android:paddingLeft="@dimen/default_margin"
                             android:layout_marginRight="@dimen/default_margin"
-                            />
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="@dimen/default_margin"
+                            android:text="" />
                     </LinearLayout>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="@color/color_white"
-                        android:paddingTop="2dp"
-                        >
+                        android:orientation="horizontal"
+                        android:paddingTop="2dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="服务费:"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
-                            />
+                            android:text="服务费:" />
+
                         <TextView
                             android:id="@+id/tv_server_fee"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:gravity="center_vertical|right"
-                            android:paddingLeft="@dimen/default_margin"
                             android:layout_marginRight="@dimen/default_margin"
-                            />
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="@dimen/default_margin"
+                            android:text="" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="@color/color_white"
-                        android:paddingTop="2dp"
-                        >
+                        android:orientation="horizontal"
+                        android:paddingTop="2dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="备件费:"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
-                            />
+                            android:text="备件费:" />
+
                         <TextView
                             android:id="@+id/tv_spare_fee"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:gravity="center_vertical|right"
-                            android:paddingLeft="@dimen/default_margin"
                             android:layout_marginRight="@dimen/default_margin"
-                            />
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="@dimen/default_margin"
+                            android:text="" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="@color/color_white"
-                        android:paddingTop="2dp"
-                        >
+                        android:orientation="horizontal"
+                        android:paddingTop="2dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="其它费:"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
-                            />
+                            android:text="其它费:" />
+
                         <TextView
                             android:id="@+id/tv_other_fee"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:gravity="center_vertical|right"
-                            android:paddingLeft="@dimen/default_margin"
                             android:layout_marginRight="@dimen/default_margin"
-                            />
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="@dimen/default_margin"
+                            android:text="" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="@color/color_white"
+                        android:orientation="horizontal"
                         android:paddingBottom="@dimen/default_margin"
                         android:paddingTop="2dp"
 
                         >
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="总费用:"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
-                            />
+                            android:text="总费用:" />
+
                         <TextView
                             android:id="@+id/tv_all_fee"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:gravity="center_vertical|right"
-                            android:paddingLeft="@dimen/default_margin"
                             android:layout_marginRight="@dimen/default_margin"
-                            />
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="@dimen/default_margin"
+                            android:text="" />
                     </LinearLayout>
 
                 </LinearLayout>
-
 
 
                 <TextView
@@ -639,8 +616,7 @@
                     style="@style/default_button"
                     android:text="重写移交反馈报告"
 
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
 
             </LinearLayout>
 

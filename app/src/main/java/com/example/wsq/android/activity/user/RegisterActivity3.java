@@ -89,7 +89,7 @@ public class RegisterActivity3 extends Activity {
             public void afterTextChanged(Editable s) {
 
                 String str = s.toString();
-                if (str.length() == 14){
+                if (str.length() >= 14){
                     String birth = str.substring(6, 14);
 
                     tv_birth.setText(birth.substring(0,4)+"-"+birth.substring(4,6)+"-"+birth.substring(6));

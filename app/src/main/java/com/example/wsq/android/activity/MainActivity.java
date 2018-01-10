@@ -62,6 +62,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @BindView(R.id.et_search) EditText et_search;
     @BindView(R.id.view_point) View view_point;
     @BindView(R.id.rl_layout) RelativeLayout rl_layout;
+    @BindView(R.id.rl_message) RelativeLayout rl_message;
 
     public static boolean isForeground = false;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
@@ -138,16 +139,19 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                 et_search.setHint("A2变速发动机");
                 iv_setting.setVisibility(View.GONE);
                 ll_title_location.setVisibility(View.VISIBLE);
+                rl_message.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                et_search.setHint("请输入搜索设备的名称");
+                et_search.setHint("想找自己和胃口的，来搜下吧~");
                 iv_setting.setVisibility(View.GONE);
                 ll_title_location.setVisibility(View.VISIBLE);
+                rl_message.setVisibility(View.GONE);
                 break;
             case 3:
-                et_search.setHint("找的有点迷茫，来搜索下~");
+                et_search.setHint("想找自己和胃口的，来搜下吧~");
                 iv_setting.setVisibility(View.GONE);
                 ll_title_location.setVisibility(View.VISIBLE);
+                rl_message.setVisibility(View.GONE);
                 break;
             case 4:
                 iv_setting.setVisibility(View.VISIBLE);
@@ -344,4 +348,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
+
 }

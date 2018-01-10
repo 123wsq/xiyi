@@ -3,6 +3,9 @@
     android:oneshot="false" >
 
     <item
+        android:drawable="@drawable/loading_0"
+        android:duration="100"/>
+    <item
         android:drawable="@drawable/loading_1"
         android:duration="100"/>
     <item
@@ -29,14 +32,8 @@
     <item
         android:drawable="@drawable/loading_9"
         android:duration="100"/>
-    <item
-        android:drawable="@drawable/loading_10"
-        android:duration="100"/>
-    <item
-        android:drawable="@drawable/loading_11"
-        android:duration="100"/>
-     <item
-        android:drawable="@drawable/loading_12"
-        android:duration="100"/>
+
+
+
 
 </animation-list>

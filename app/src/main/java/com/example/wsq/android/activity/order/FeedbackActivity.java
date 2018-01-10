@@ -36,8 +36,6 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.tools.PictureFileUtils;
 
-import org.json.JSONArray;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,13 +107,16 @@ public class FeedbackActivity extends Activity{
 
         order_no.setText(intent.getStringExtra(ResponseKey.ORDER_NO));
         et_server_loc.setText(intent.getStringExtra(ResponseKey.DIDIAN));
-        et_contact.setText(intent.getStringExtra(ResponseKey.S_NAME));
-        et_contact_tel.setText(intent.getStringExtra(ResponseKey.S_TEL));
+//        et_contact.setText(intent.getStringExtra(ResponseKey.S_NAME));
+//        et_contact_tel.setText(intent.getStringExtra(ResponseKey.S_TEL));
         et_results_1.setText(intent.getStringExtra(ResponseKey.CONTENT));
         et_results_2.setText(intent.getStringExtra(ResponseKey.YILIU));
 
         mData = new ArrayList<>();
 
+        CameraBean bean = new CameraBean();
+        bean.setType(0);
+        mData.add(bean);
         mAdapter = new UploadAdapter(this, mData);
         gridview.setAdapter(mAdapter);
 
@@ -266,41 +267,41 @@ public class FeedbackActivity extends Activity{
         param.put(ResponseKey.YILIU, et_results_2.getText().toString());
 
         List<Map<String, Object>> listFile = new ArrayList<>();
-        String img = intent.getStringExtra(ResponseKey.R_IMGS);
+//        String img = intent.getStringExtra(ResponseKey.R_IMGS);
         int numflag = 1;
-        try {
-            JSONArray jsona = new JSONArray(img);
-
+//        try {
+//            JSONArray jsona = new JSONArray(img);
+//
                 for (int i = 0; i < mData.size(); i++) {
                     if (mData.get(i).getType() != 1) {
-
-                        if (mData.get(i).isChange()){
-                            File  f = new File(mData.get(i).getFile_path());
+//
+//                        if (mData.get(i).isChange()){
+                            File f = new File(mData.get(i).getFile_path());
                             Map<String, Object> map = new HashMap<>();
                             map.put(ResponseKey.IMGS+(i+1),f);
                             map.put("fileType", mData.get(i).getType() == 2 ?
                                     OkhttpUtil.FILE_TYPE_IMAGE : OkhttpUtil.FILE_TYPE_VIDEO);
                             listFile.add(map);
-                        }else{
-
-                            for (int m = 0 ; m < jsona.length(); m++) {
-
-                                if (mData.get(i).getFile_path().endsWith(jsona.get(m).toString())){
-                                    param.put(ResponseKey.IMGS + numflag, jsona.get(m).toString()+"");
-                                    numflag++;
-                                }
-                            }
-
-                        }
-
+//                        }else{
+//
+//                            for (int m = 0 ; m < jsona.length(); m++) {
+//
+//                                if (mData.get(i).getFile_path().endsWith(jsona.get(m).toString())){
+//                                    param.put(ResponseKey.IMGS + numflag, jsona.get(m).toString()+"");
+//                                    numflag++;
+//                                }
+//                            }
+//
+                    }
+//
                 }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 
-        param.put(ResponseKey.IMG_COUNT, (numflag-1+listFile.size())+"");
+        param.put(ResponseKey.IMG_COUNT, listFile.size()+"");
         try {
             deviceTaskService.onSubmitReport(param, listFile, new HttpResponseCallBack() {
                 @Override

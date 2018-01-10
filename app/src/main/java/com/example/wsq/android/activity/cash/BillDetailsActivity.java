@@ -28,6 +28,7 @@ import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomCalendarPopup;
+import com.example.wsq.android.view.LoddingDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,6 +64,7 @@ public class BillDetailsActivity extends Activity implements RadioGroup.OnChecke
     private UserService userService;
     private BillDetailsAdapter mAdapter;
     private List<Map<String, Object>> mData;
+    private LoddingDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class BillDetailsActivity extends Activity implements RadioGroup.OnChecke
     public void init(){
 
         tv_title.setText("账单明细");
+        dialog = new LoddingDialog(this);
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         userService = new UserServiceImpl();
 
@@ -141,6 +144,7 @@ public class BillDetailsActivity extends Activity implements RadioGroup.OnChecke
      */
     public void onGetBillInfo(){
 
+        dialog.show();
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
 
@@ -158,11 +162,15 @@ public class BillDetailsActivity extends Activity implements RadioGroup.OnChecke
                     rv_RecyclerView.setVisibility(View.GONE);
                     ll_no_Record.setVisibility(View.VISIBLE);
                 }
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure() {
 
+                if (dialog.isShowing()){
+                    dialog.dismiss();
+                }
             }
         });
     }

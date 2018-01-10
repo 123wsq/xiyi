@@ -36,6 +36,8 @@ public class BankActivity extends Activity{
     @BindView(R.id.ll_bank_info) LinearLayout ll_bank_info;
     @BindView(R.id.tv_bank) TextView tv_bank;
     @BindView(R.id.tv_card_type) TextView tv_card_type;
+    @BindView(R.id.tv_reseat_bank) TextView tv_reseat_bank;
+
 
     private String bankCode;
     private CustomDefaultDialog dialog;
@@ -67,18 +69,23 @@ public class BankActivity extends Activity{
             ll_no_bank.setVisibility(View.GONE);
             ll_bank_info.setVisibility(View.VISIBLE);
 
-            String str = "";
+            String strc = "";
 
             for (int i = 0 ;i< bankCode.length(); i ++){
 
-                if (i % 5 != 0 ){
-                    if (i < bankCode.length()-5){
-                        str += "*";
-                    }else {
-                        str += bankCode.substring(i, i + 1);
-                    }
+                if (i > bankCode.length() - 5){
+                    strc += bankCode.substring(i, i+1);
+                }else {
+                    strc += "*";
+                }
+
+            }
+            String str = "";
+            for (int i=0; i < strc.length(); i++){
+                if ((i+1) % 4 == 0 ){
+                    str += strc.substring(i, i+1)+" ";
                 }else{
-                    str +=" ";
+                    str += strc.substring(i, i+1);
                 }
             }
             tv_cardCode.setText(str);
@@ -92,7 +99,7 @@ public class BankActivity extends Activity{
                 tv_card_type.setText(str1[2]);
             }
 
-
+            tv_reseat_bank.setBackgroundResource(R.drawable.shape_disable_button);
         }
 
 

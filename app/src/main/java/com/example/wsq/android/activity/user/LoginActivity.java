@@ -22,9 +22,10 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
+import com.example.wsq.android.tools.JGIM;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.LoddingDialog;
+import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -109,7 +110,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                     }else {
                         isEyes = true;
                         im_eye.setImageResource(R.drawable.image_eye_open);
-                        //设置影藏密码
+                        //设置隐藏藏密码
                         et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     }
                     break;
@@ -145,6 +146,27 @@ public class LoginActivity extends Activity implements OnClickListener {
         map.put(ResponseKey.USERNAME,username);
         map.put(ResponseKey.PASSWORD,password);
 
+
+        //调用极光IM
+//        JGIM.JGIM_Login(username, password);
+        if(JGIM.JGIM_Login(username, password)){
+
+            Logger.d("极光IM登录成功");
+        }else{
+            if(JGIM.JGIM_Register(username, password)){
+                try {
+                    Thread.sleep(1*1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                JGIM.JGIM_Login(username, password);
+            }else{
+                Logger.d("单点登录集成异常");
+            }
+        }
+
+
+
         userService.login(this, map, new HttpResponseListener() {
             @Override
             public void onSuccess(Map<String, Object> result) {
@@ -172,6 +194,7 @@ public class LoginActivity extends Activity implements OnClickListener {
             }
         });
     }
+
 
 
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/defalut_layout_height"
+    android:orientation="horizontal"
+    >
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingLeft="@dimen/radius_popup"
+        >
+        <TextView
+            android:id="@+id/tv_integral_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="签到 +1"
+            android:textSize="@dimen/default_text_size"
+
+            />
+        <TextView
+            android:id="@+id/tv_integral_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2018-01-05"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginTop="@dimen/default_radius"
+        />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_integral_num"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="200分"
+        android:gravity="center"
+        android:layout_marginRight="@dimen/radius_popup"
+        />
+
+</LinearLayout>

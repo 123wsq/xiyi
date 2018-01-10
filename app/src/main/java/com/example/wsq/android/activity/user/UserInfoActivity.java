@@ -120,13 +120,19 @@ public class UserInfoActivity extends Activity{
 
         tv_ratio.setText("资料完整度"+ UserFragment.mUserData.get(ResponseKey.RATIO)+"%");
         String name = UserFragment.mUserData.get(ResponseKey.NAME)+"";
-        tv_name.setText( "****"+name.substring(name.length()-1));
-        tv_tel.setText(UserFragment.mUserData.get(ResponseKey.TEL)+" 已验证");
+        tv_name.setText( "**"+name.substring(name.length()-1));
+
+        String tel = UserFragment.mUserData.get(ResponseKey.TEL)+"";
+        if (!TextUtils.isEmpty(tel)){
+            tv_tel.setText(tel.substring(0, 3)+"********"+tel.substring(9)+" 已验证");
+        }
+
+
         et_bumen.setText(UserFragment.mUserData.get(ResponseKey.BUMEN)+"");
         et_company.setText(UserFragment.mUserData.get(ResponseKey.COMPANY)+"");
         et_email.setText(UserFragment.mUserData.get(ResponseKey.EMAIL)+"");
         et_jieshao.setText(UserFragment.mUserData.get(ResponseKey.JIESHAO)+"");
-        String sSex = UserFragment.mUserData.get(ResponseKey.SEX).toString();
+        String sSex = UserFragment.mUserData.get(ResponseKey.SEX)+"";
 
         if (null != sSex || sSex.length()!=0){
             sex = Integer.parseInt(sSex);

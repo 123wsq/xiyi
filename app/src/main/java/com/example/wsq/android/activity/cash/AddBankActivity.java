@@ -40,6 +40,8 @@ public class AddBankActivity extends Activity implements TextWatcher {
     @BindView(R.id.tv_tel) TextView tv_tel;
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_card_type) TextView tv_card_type;
+    @BindView(R.id.tv_cordCode_error) TextView tv_cordCode_error;
+    @BindView(R.id.tv_next) TextView tv_next;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +73,9 @@ public class AddBankActivity extends Activity implements TextWatcher {
                 }
                 if (!BankCardValidate.validateCard(et_backcode.getText().toString())){
                     Toast.makeText(AddBankActivity.this, "请输入正确的银行卡号", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                //检测是否是中国工商银行卡
 
                 Map<String, Object> map = new HashMap<>();
                 map.put(ResponseKey.BANK_CARD, et_backcode.getText().toString());
@@ -101,8 +105,25 @@ public class AddBankActivity extends Activity implements TextWatcher {
             String name = BankInfo.getNameOfBank(this, Long.parseLong(str.substring(0, 6)));
             tv_card_type.setText(name);
 
-        }else{
+            if (name.contains("工商银行")){
+                tv_cordCode_error.setVisibility(View.GONE);
+                tv_next.setClickable(true);
+                tv_next.setBackgroundResource(R.drawable.shape_button);
+            }else{
+                tv_cordCode_error.setVisibility(View.VISIBLE);
+                tv_next.setClickable(false);
+                tv_next.setBackgroundResource(R.drawable.shape_disable_button);
+            }
+
+        }else if(str.length()>0 && str.length() < 6){
             tv_card_type.setText("");
+            tv_cordCode_error.setVisibility(View.VISIBLE);
+            tv_next.setClickable(false);
+            tv_next.setBackgroundResource(R.drawable.shape_disable_button);
+        }else{
+            tv_cordCode_error.setVisibility(View.GONE);
+            tv_next.setClickable(true);
+            tv_next.setBackgroundResource(R.drawable.shape_button);
         }
     }
 }

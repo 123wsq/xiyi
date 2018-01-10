@@ -173,6 +173,7 @@
         android:layout_marginTop="1dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:gravity="center_vertical"
         >
 
         <TextView
@@ -185,7 +186,8 @@
 
         <TextView
             android:id="@+id/tv_sex"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
             android:textSize="14sp"
@@ -193,7 +195,12 @@
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
             />
-
+        <ImageView
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/image_right"
+            android:layout_marginLeft="@dimen/default_margin"
+            />
 
     </LinearLayout>
 

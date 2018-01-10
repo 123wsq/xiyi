@@ -918,9 +918,73 @@ public class UserServiceImpl implements UserService{
 
         try {
 
-            ValidateParam.validateParam(param, ResponseKey.TOKEN, ResponseKey.YEAR, ResponseKey.MONTH);
+            ValidateParam.validateParam(param, ResponseKey.TOKEN, ResponseKey.CREATE_TIME);
 
-            OkHttpRequest.sendHttpGet(Urls.SEARCH_CASH_LIST, param, new HttpResponseCallBack(){
+            OkHttpRequest.sendHttpGet(Urls.SIGN, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    listener.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            listener.onFailure();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 积分记录
+     * @param context
+     * @param param
+     * @param listener
+     */
+    @Override
+    public void onIntegralRecord(final Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+
+            ValidateParam.validateParam(param, ResponseKey.TOKEN);
+
+            OkHttpRequest.sendHttpGet(Urls.POINT_LIST, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    listener.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            listener.onFailure();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 获取签到列表
+     * @param context
+     * @param param
+     * @param listener
+     */
+    @Override
+    public void onSignList(final Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+
+            ValidateParam.validateParam(param, ResponseKey.TOKEN);
+
+            OkHttpRequest.sendHttpGet(Urls.SIGN_LIST, param, new HttpResponseCallBack(){
                 @Override
                 public void callBack(Map<String, Object> result) {
 

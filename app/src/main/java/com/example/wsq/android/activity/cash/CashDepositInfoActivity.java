@@ -16,6 +16,8 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.AppStatus;
+import com.example.wsq.android.utils.BankInfo;
+import com.example.wsq.android.utils.DateUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -146,20 +148,26 @@ public class CashDepositInfoActivity extends Activity{
         tv_money.setText(data.get(ResponseKey.MONEY)+"");
         int state = (int)data.get(ResponseKey.STATE);
         if (state ==0){
-            tv_cash_state.setText("待审核");
+            tv_cash_state.setText("处理中");
         }else if(state ==1){
             tv_cash_state.setText("审核成功");
         }else{
             tv_cash_state.setText("已驳回，请联系客服");
         }
 
-        tv_apply_time.setText(data.get(ResponseKey.CREAT_AT)+"");
-        tv_apply_time_i.setText(data.get(ResponseKey.CREAT_AT)+"");
-        String bankCode = data.get(ResponseKey.BANK_NUMBER)+"";
-//        String[] bankType = BankInfo.getNameOfBank(bankCode.toCharArray(), 0).split("_");
-//        tv_apply_name.setText(bankType[0]+" ("+bankCode.substring(bankCode.length()-4)+") "+
-//                data.get(ResponseKey.BANK_NAME_C)+"");
+        tv_apply_time.setText(DateUtil.onDateFormat(data.get(ResponseKey.CREAT_AT)+"", DateUtil.DATA_FORMAT_2));
 
+        tv_apply_time_i.setText(DateUtil.onDateFormat(data.get(ResponseKey.CREAT_AT)+"",DateUtil.DATA_FORMAT_2));
+        String bankCode = data.get(ResponseKey.BANK_NUMBER)+"";
+
+        try {
+            String str = BankInfo.getNameOfBank(this, Long.parseLong(bankCode.substring(0, 6)));
+            String[] bankType = str.split("-");
+            tv_apply_name.setText(bankType[0] + " (" + bankCode.substring(bankCode.length() - 4) + ") " +
+                    data.get(ResponseKey.BANK_NAME_C) + "");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         if (type == 1 ){
             ll_apply_content.setVisibility(View.VISIBLE);
             tv_content.setText(data.get(ResponseKey.MESSAGE)+"");

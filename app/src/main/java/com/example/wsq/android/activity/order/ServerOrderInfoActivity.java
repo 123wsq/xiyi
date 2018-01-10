@@ -66,7 +66,7 @@ public class ServerOrderInfoActivity extends Activity{
     @BindView(R.id.tv_other_fee) TextView tv_other_fee;//其他费
     @BindView(R.id.tv_all_fee) TextView tv_all_fee;//总费
     @BindView(R.id.tv_transfer) TextView tv_transfer;
-
+    @BindView(R.id.tv_finish_time) TextView tv_finish_time;
 
     private OrderTaskService orderTaskService;
     private SharedPreferences shared;
@@ -179,20 +179,20 @@ public class ServerOrderInfoActivity extends Activity{
                 public void callBack(Map<String, Object> result) {
 
                     mResultInfo.putAll(result);
-                    tv_fault_desc.setText(result.get(ResponseKey.DES).toString());
+                    tv_fault_desc.setText(result.get(ResponseKey.DES)+"");
 
                     //服务信息
-                    tv_server_loc.setText(result.get(ResponseKey.DIDIAN).toString());
-                    tv_server_content.setText(result.get(ResponseKey.CONTENT).toString());
-                    tv_server_leave.setText(result.get(ResponseKey.YILIU).toString());
+                    tv_server_loc.setText(result.get(ResponseKey.DIDIAN)+"");
+                    tv_server_content.setText(result.get(ResponseKey.CONTENT)+"");
+                    tv_server_leave.setText(result.get(ResponseKey.YILIU)+"");
 
                     //上报图片
-                    String imags1 = result.get(ResponseKey.R_IMGS).toString();
+                    String imags1 = result.get(ResponseKey.R_IMGS)+"";
                     List<String> list1 = new ArrayList<>();
                     try {
                         JSONArray jsona1 = new JSONArray(imags1);
                         for (int i = 0; i < jsona1.length(); i++) {
-                            list1.add(jsona1.get(i).toString());
+                            list1.add(jsona1.get(i)+"");
                         }
 
                     } catch (JSONException e) {
@@ -200,12 +200,12 @@ public class ServerOrderInfoActivity extends Activity{
                     }
                     showImags(mData1, list1, 1);
                     //现场图片
-                    String imags2 = result.get(ResponseKey.IMGS).toString();
+                    String imags2 = result.get(ResponseKey.IMGS)+"";
                     List<String> list2 = new ArrayList<>();
                     try {
                         JSONArray jsona2 = new JSONArray(imags2);
                         for (int i = 0; i < jsona2.length(); i++) {
-                            list2.add(jsona2.get(i).toString());
+                            list2.add(jsona2.get(i)+"");
                         }
 
                     } catch (JSONException e) {
@@ -215,15 +215,16 @@ public class ServerOrderInfoActivity extends Activity{
 
 
                     //其他信息
-                    tv_scene_contact.setText(result.get(ResponseKey.LXR).toString());
-                    tv_scene_tel.setText(result.get(ResponseKey.TEL).toString());
+                    tv_scene_contact.setText(result.get(ResponseKey.LXR)+"");
+                    tv_scene_tel.setText(result.get(ResponseKey.TEL)+"");
+                    tv_server_leave.setText(result.get(ResponseKey.YILIU)+"");
 
                     //服务费用
-                    tv_traveling_fee.setText(result.get(ResponseKey.CHAILV).toString());
-                    tv_server_fee.setText(result.get(ResponseKey.FUWU).toString());
-                    tv_spare_fee.setText(result.get(ResponseKey.BEIJIAN).toString());
-                    tv_other_fee.setText(result.get(ResponseKey.QITA).toString());
-                    tv_all_fee.setText(result.get(ResponseKey.ZONG).toString());
+                    tv_traveling_fee.setText(result.get(ResponseKey.CHAILV) +"元");
+                    tv_server_fee.setText(result.get(ResponseKey.FUWU)+"元");
+                    tv_spare_fee.setText(result.get(ResponseKey.BEIJIAN)+"元");
+                    tv_other_fee.setText(result.get(ResponseKey.QITA)+"元");
+                    tv_all_fee.setText(result.get(ResponseKey.ZONG)+"元");
                 }
 
                 @Override

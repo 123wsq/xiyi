@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:gravity="center"
     >
 
@@ -9,5 +10,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/sign_success"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_sign_integral"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="积分 +1分"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/default_text_max_size"
+        android:textColor="@color/RED"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:visibility="visible"
+        android:layout_marginTop="@dimen/defalut_layout_height"
         />
 </LinearLayout>

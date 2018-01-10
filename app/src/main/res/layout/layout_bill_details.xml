@@ -94,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="您当前没有提现记录"
+            android:textColor="@color/color_gray"
             android:gravity="center"
             android:textSize="@dimen/default_text_size"
             />

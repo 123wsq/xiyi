@@ -1,10 +1,11 @@
 package com.example.wsq.android.activity.user;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -63,6 +64,8 @@ public class ForgetPsdActivity extends Activity{
         tv_ok = this.findViewById(R.id.tv_ok);
         tv_title.setText("忘记密码");
 
+
+        onEditTextChange();
     }
 
 
@@ -74,12 +77,12 @@ public class ForgetPsdActivity extends Activity{
             if (curLen == 0){
                 curLen = 60;
                 tv_getCode.setText("获取验证码");
-                tv_getCode.setBackgroundColor(getResources().getColor(R.color.defalut_title_color));
+                tv_getCode.setBackgroundColor(R.drawable.shape_button);
                 tv_getCode.setClickable(true);
             }else{
                 tv_getCode.setText("请耐心等待 "+curLen+"s");
                 tv_getCode.setClickable(false);
-                tv_getCode.setBackgroundColor(Color.parseColor("#A8A8A8"));
+                tv_getCode.setBackgroundColor(R.drawable.shape_dialog_buttom);
                 handler.postDelayed(this, 1000);
             }
 
@@ -220,5 +223,56 @@ public class ForgetPsdActivity extends Activity{
             moveTaskToBack(false);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void onEditTextChange(){
+
+        et_validateCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                if(editable.toString().length()< Constant.PASSWORD_COUNT){
+                    tv_getCode.setBackgroundResource(R.drawable.shape_disable_button);
+                    tv_getCode.setClickable(false);
+                }else{
+                    tv_getCode.setBackgroundResource(R.drawable.shape_button);
+                    tv_getCode.setClickable(true);
+                }
+            }
+        });
+
+        et_password1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                if(editable.toString().length()< Constant.PASSWORD_COUNT){
+                    tv_ok.setBackgroundResource(R.drawable.shape_disable_button);
+                    tv_ok.setClickable(false);
+                }else{
+                    tv_ok.setBackgroundResource(R.drawable.shape_button);
+                    tv_ok.setClickable(true);
+                }
+            }
+        });
     }
 }

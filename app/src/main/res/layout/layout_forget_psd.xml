@@ -73,6 +73,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_margin="0dp"
+                android:background="@drawable/shape_disable_button"
                 android:textSize="@dimen/default_text_size"
                 android:text="获取验证码"
                 />
@@ -169,6 +170,7 @@
     <TextView
         android:id="@+id/tv_ok"
         style="@style/default_button"
+        android:background="@drawable/shape_disable_button"
         android:text="确认"
 
         />

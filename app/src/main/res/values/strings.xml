@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">蜥蜴</string>
+    <string name="app_name">蜥蜴时达</string>
 
     <string name="str_remind">蜥蜴提示：开启指纹用户登录或者提现时使用</string>
     <string name="str_account_remind">第三方账户提醒</string>

@@ -65,7 +65,6 @@
                     android:id="@+id/ll_engineer"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/default_radius"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:background="#E7E6E6"
@@ -99,7 +98,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="@dimen/default_radius"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,7 +144,6 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/default_radius"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"

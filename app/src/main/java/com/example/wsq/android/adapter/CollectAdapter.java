@@ -71,7 +71,7 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.MyViewHo
         holder.tv_time.setText(mData.get(position).get(ResponseKey.UPDATE_AT).toString()+"");
         holder.tv_content.setText(mData.get(position).get(ResponseKey.DES).toString()+"");
         holder.tv_product_title.setText(mData.get(position).get(ResponseKey.TITLE).toString()+"");
-        int num = mRandom.nextInt(mData.size());
+        int num = mRandom.nextInt(images.length-1);
         String url = mData.get(position).get(ResponseKey.THUMB).toString();
         if (!TextUtils.isEmpty(url)){
             RequestOptions options = new RequestOptions();

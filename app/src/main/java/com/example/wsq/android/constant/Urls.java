@@ -190,4 +190,20 @@ public class Urls {
      */
     public static final String  SEARCH_CASH_LIST = "/api/member/search_cachList";
 
+
+    /**
+     * 签到
+     */
+    public static final String SIGN = "/api/member/add_sign";
+
+    /**
+     * 签到列表
+     */
+    public static final String SIGN_LIST = "/api/member/sign_list";
+
+    /**
+     * 积分列表
+     */
+    public static final String  POINT_LIST= "/api/member/points_list";
+
 }

@@ -18,6 +18,7 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.AppStatus;
+import com.example.wsq.android.utils.AmountUtils;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.LoddingDialog;
 
@@ -62,7 +63,8 @@ public class BalanceActivity extends Activity{
         mData = new HashMap<>();
         userService = new UserServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-        tv_money_amount.setText(UserFragment.mUserData.get(ResponseKey.MONEY_AMOUNT)+"");
+        String amount = AmountUtils.changeY2Y(UserFragment.mUserData.get(ResponseKey.MONEY_AMOUNT)+"");
+        tv_money_amount.setText(amount);
         dialog = new LoddingDialog(this);
 
     }
@@ -113,10 +115,10 @@ public class BalanceActivity extends Activity{
 
                 if (!TextUtils.isEmpty(moneys)){
                     double money = Double.parseDouble(moneys);
-                    if (money >= 2000){
+                    if (money >= 3000){
                         IntentFormat.startActivity(this, WithdrawActivity.class);
                     }else{
-                        Toast.makeText(BalanceActivity.this, "提现金额必须大于2000", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BalanceActivity.this, "提现金额必须大于3000", Toast.LENGTH_SHORT).show();
                     }
                 }
 

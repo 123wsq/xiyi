@@ -1,6 +1,7 @@
 package com.example.wsq.android.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,7 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
             holder.iv_cur_state.setVisibility(View.VISIBLE);
             holder.iv_state.setVisibility(View.GONE);
         }else{
+            holder.tv_content.setTextColor(Color.parseColor("#b9b9b9"));
             holder.iv_cur_state.setVisibility(View.GONE);
             holder.iv_state.setVisibility(View.VISIBLE);
         }

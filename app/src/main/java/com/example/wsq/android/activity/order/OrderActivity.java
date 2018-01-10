@@ -25,6 +25,7 @@ import com.example.wsq.android.fragment.ServerProgressFragment;
 import com.example.wsq.android.fragment.UnAuditFragment;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.tools.AppStatus;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -76,30 +77,12 @@ public class OrderActivity extends FragmentActivity implements ViewPager.OnPageC
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
 
-//        mData = new ArrayList<>();
-//        if (!shared.getString(Constant.SHARED.JUESE,"").equals("1")){
-//            mData.add(UnAuditFragment.getInstance());
-//            mData.add(AuditFragment.getInstance());
-//            mData.add(DisposeFragment.getInstance());
-//            mData.add(FinishOrderFragment.getInstance());
-//        }else{
-//            mData.add(ServerFllocationFragment.getInstance());
-//            mData.add(ServerProgressFragment.getInstance());
-//            mData.add(ServerFeedbackFragment.getInstance());
-//            mData.add(ServerFinshFragment.getInstance());
-//        }
+
 
         rg_group.setOnCheckedChangeListener(this);
         rg_group_s.setOnCheckedChangeListener(this);
 
-//        mAdapter = new OrderFragmentAdapter(getSupportFragmentManager(), mData);
-//
-//        vp_viewPager.setAdapter(mAdapter);
-//
-//        vp_viewPager.addOnPageChangeListener(this);
-//
-//        vp_viewPager.setCurrentItem(0);
-
+        Logger.d("服务工程师进入   "+curPage);
         switch (curPage){
             case 1:
                 enter(UnAuditFragment.getInstance());
@@ -158,10 +141,7 @@ public class OrderActivity extends FragmentActivity implements ViewPager.OnPageC
 
     public void enter(Fragment fragment){
 
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
         getSupportFragmentManager().beginTransaction().replace(R.id.ll_order, fragment).commit();
-//        ft.replace(R.id.ll_order, fragment);
-//        ft.commit();
     }
 
 
