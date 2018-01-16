@@ -9,13 +9,14 @@ import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
@@ -82,14 +83,14 @@ public class UploadAdapter extends BaseAdapter{
             holder.iv_delete = convertView.findViewById(R.id.iv_delete);
             holder.ll_layout = convertView.findViewById(R.id.ll_layout);
             holder.iv_video = convertView.findViewById(R.id.iv_video);
-            convertView.setLayoutParams(new RecyclerView.LayoutParams(itemSize, itemSize));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(itemSize, itemSize));
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
 
 
 
-        holder.iv_pictrue.setLayoutParams(new RelativeLayout.LayoutParams(itemSize
+        holder.ll_layout.setLayoutParams(new LinearLayout.LayoutParams(itemSize
                 - DensityUtil.dp2px(mContext, 40),
                 itemSize - DensityUtil.dp2px(mContext, 40)));
         if (mData.get(position).getType() == 1){

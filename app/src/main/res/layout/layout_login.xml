@@ -50,6 +50,7 @@
                 android:paddingLeft="10dp"
                 android:singleLine="true"
                 android:textColor="@color/color_white"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
                 />
         </LinearLayout>
         <LinearLayout

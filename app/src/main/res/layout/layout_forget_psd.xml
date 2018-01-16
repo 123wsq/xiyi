@@ -65,6 +65,7 @@
                 android:singleLine="true"
                 android:textColorHint="@color/color_gray"
                 android:textSize="@dimen/default_text_size"
+                android:inputType="number"
                 />
 
             <TextView
@@ -106,6 +107,8 @@
                 android:textColorHint="@color/color_gray"
                 android:textSize="@dimen/default_text_size"
                 android:singleLine="true"
+                android:inputType="textVisiblePassword"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
                 />
         </LinearLayout>
             <LinearLayout

@@ -39,8 +39,6 @@ public class CustomDefaultDialog extends Dialog {
         private OnClickListener okListener, cancelListener;
         private OnDialogClickListener okListenerInput;
 
-
-
         private String ok, cancel, message;
         private boolean isInput = false;
         private String inputHint;

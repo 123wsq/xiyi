@@ -1,18 +1,14 @@
 package com.example.wsq.android.activity.order;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -22,15 +18,15 @@ import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.UploadAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.bean.CameraBean;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.BitmapUtils;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomPopup;
@@ -52,7 +48,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
@@ -60,7 +55,7 @@ import butterknife.OnItemClick;
  * Created by wsq on 2017/12/13.
  */
 
-public class DeviceWarrantyActivity extends Activity{
+public class DeviceWarrantyActivity extends BaseActivity {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_name) TextView tv_name;
@@ -84,15 +79,10 @@ public class DeviceWarrantyActivity extends Activity{
     public boolean isUpdate = false;
     private Intent intent;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        setContentView(R.layout.layout_device_warranty);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        init();
-        onRegister();
+    public int getByLayoutId() {
+        return R.layout.layout_device_warranty;
     }
 
 
@@ -120,6 +110,8 @@ public class DeviceWarrantyActivity extends Activity{
         tv_tel.setText(shared.getString(Constant.SHARED.TEL, ""));
         tv_company.setText(shared.getString(Constant.SHARED.COMPANY,""));
 
+
+        onRegister();
 
        initPopup();
 
@@ -269,19 +261,21 @@ public class DeviceWarrantyActivity extends Activity{
             popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 
         }else if(bean.getType() == 2){
-            int num = 0;
+
             List<LocalMedia> list = new ArrayList<>();
+            //将所有的图片添加到list中
             for (int i = 0; i< mData.size(); i ++){
                 if (mData.get(i).getType()==2) {
                     LocalMedia media = new LocalMedia();
-
-
-                    media.setPath(bean.getFile_path());
+                    media.setPath(mData.get(i).getFile_path());
                     list.add(media);
-                }else{
-                    if (i < position){
-                        num++;
-                    }
+                }
+            }
+            //计算选中的图片位置
+            int num = 0;
+            for (int i = 0; i< list.size(); i++){
+                if (bean.getFile_path().equals(list.get(i).getPath())){
+                    num = i;
                 }
             }
             PictureSelector.create(DeviceWarrantyActivity.this).externalPicturePreview(num, list);
@@ -450,8 +444,6 @@ public class DeviceWarrantyActivity extends Activity{
             param.put(ResponseKey.BIANHAO, et_num.getText().toString()+"");
             param.put(ResponseKey.DES, et_description.getText().toString());
 
-
-
             List<Map<String, Object>> listFile = new ArrayList<>();
             for (int i = 0; i < mData.size(); i++) {
                 if (mData.get(i).getType()!=1) {
@@ -471,27 +463,25 @@ public class DeviceWarrantyActivity extends Activity{
             param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
             param.put(ResponseKey.IMG_COUNT, (listFile.size())+"");
 
-            try {
-                deviceTaskService.onDeviceRepairs(param, listFile,new HttpResponseCallBack() {
-                    @Override
-                    public void callBack(Map<String, Object> result) {
-                        Toast.makeText(DeviceWarrantyActivity.this, result.get(ResponseKey.MESSAGE) +"", Toast.LENGTH_SHORT).show();
-                        finish();
+            deviceTaskService.onDeviceRepairs(this, param, listFile, new HttpResponseListener() {
+                @Override
+                public void onSuccess(Map<String, Object> result) {
+                    Toast.makeText(DeviceWarrantyActivity.this, result.get(ResponseKey.MESSAGE) +"", Toast.LENGTH_SHORT).show();
+
+                    if(dialog.isShowing()){
+                        dialog.dismiss();
                     }
-
-                    @Override
-                    public void onCallFail(String msg) {
-
-                    }
-
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }finally {
-                if(dialog.isShowing()){
-                    dialog.dismiss();
+                    finish();
                 }
-            }
+
+                @Override
+                public void onFailure() {
+                    if(dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+                }
+            });
+
         }
     }
 
@@ -542,27 +532,24 @@ public class DeviceWarrantyActivity extends Activity{
             param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
             param.put(ResponseKey.IMG_COUNT, (numflag-1+listFile.size())+"");
 
-            try {
-                deviceTaskService.onUpdateOrder(param, listFile,new HttpResponseCallBack() {
-                    @Override
-                    public void callBack(Map<String, Object> result) {
-//                        Toast.makeText(DeviceWarrantyActivity.this, param.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
-                        finish();
+            deviceTaskService.onUpdateOrder(this, param, listFile, new HttpResponseListener() {
+                @Override
+                public void onSuccess(Map<String, Object> result) {
+
+                    if(dialog.isShowing()){
+                        dialog.dismiss();
                     }
-
-                    @Override
-                    public void onCallFail(String msg) {
-
-                    }
-
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }finally {
-                if(dialog.isShowing()){
-                    dialog.dismiss();
+                    finish();
                 }
-            }
+
+                @Override
+                public void onFailure() {
+                    if(dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+                }
+            });
+
         }
     }
 

@@ -1,8 +1,5 @@
 package com.example.wsq.android.activity;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,12 +8,12 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.ProductAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.view.LoddingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -31,14 +28,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/20.
  */
 
-public class KnowledgeActivity extends Activity{
+public class KnowledgeActivity extends BaseActivity {
 
     @BindView(R.id.tv_title)
     TextView tv_title;
@@ -57,15 +53,12 @@ public class KnowledgeActivity extends Activity{
     private int total = 1;
     private int unitPage = 15;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_collect);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
 
-        init();
+    @Override
+    public int getByLayoutId() {
+        return R.layout.layout_collect;
     }
+
     public void init(){
 
         dialog = new LoddingDialog(this);

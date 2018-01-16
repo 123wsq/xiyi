@@ -1,10 +1,7 @@
 package com.example.wsq.android.activity.cash;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.BillDetailsAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
@@ -24,7 +22,6 @@ import com.example.wsq.android.inter.OnDefaultClickListener;
 import com.example.wsq.android.inter.OnWheelViewCalendarListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomCalendarPopup;
@@ -37,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -46,7 +42,7 @@ import butterknife.OnClick;
  * Created by wsq on 2017/12/26.
  */
 
-public class BillDetailsActivity extends Activity implements RadioGroup.OnCheckedChangeListener {
+public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.rv_RecyclerView)
@@ -66,14 +62,10 @@ public class BillDetailsActivity extends Activity implements RadioGroup.OnChecke
     private List<Map<String, Object>> mData;
     private LoddingDialog dialog;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.layout_bill_details);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        init();
+    @Override
+    public int getByLayoutId() {
+        return R.layout.layout_bill_details;
     }
 
 
@@ -181,6 +173,7 @@ public class BillDetailsActivity extends Activity implements RadioGroup.OnChecke
      */
     public void onGetCurBillInfo(String year, String month){
 
+        dialog.show();
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
         param.put(ResponseKey.YEAR, year);
@@ -200,11 +193,17 @@ public class BillDetailsActivity extends Activity implements RadioGroup.OnChecke
                     rv_RecyclerView.setVisibility(View.GONE);
                     ll_no_Record.setVisibility(View.VISIBLE);
                 }
+                if (dialog.isShowing()){
+                    dialog.show();
+                }
             }
 
             @Override
             public void onFailure() {
 
+                if (dialog.isShowing()){
+                    dialog.show();
+                }
             }
         });
     }

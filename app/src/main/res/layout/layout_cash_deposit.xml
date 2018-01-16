@@ -52,9 +52,10 @@
         android:layout_height="wrap_content"
         android:text="退保证金"
         android:drawableRight="@drawable/image_important"
-        android:textSize="20sp"
+        android:textSize="@dimen/default_text_size"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginLeft="@dimen/radius_popup"
+
         />
     <EditText
         android:id="@+id/et_description"
@@ -63,7 +64,7 @@
         android:minLines="5"
         android:background="#F2F2F2"
         android:hint="请告诉我们退保证金的原因"
-
+        android:textSize="@dimen/default_text_size"
         android:gravity="top"
         android:padding="@dimen/default_radius"
         android:layout_margin="@dimen/default_radius"
@@ -84,7 +85,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="友情提示：退还保证金之后账户将会注销，再次开通需要客服审核x信用程度之后确认是否开通账户"
+        android:text="友情提示：友情提示：退还可提现金额+保证金。受理成功之后账户注销，再次开通需要客服审核信用程度之后确认是否开通账户。"
         android:textSize="@dimen/default_text_min_size"
         android:layout_margin="@dimen/radius_popup"
         android:textColor="@color/RED"

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/default_backgroud_color"
+    android:id="@+id/ll_layout"
+    >
+    <include layout="@layout/layout_default_title"></include>
+
+
+    <WebView
+        android:id="@+id/wv_WebView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/default_backgroud_color"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/default_height_2"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/default_margin_4"
+            >
+            <ImageView
+                android:id="@+id/iv_add_addachment"
+                android:layout_width="@dimen/default_icon_size_2"
+                android:layout_height="@dimen/default_icon_size_2"
+                android:src="@drawable/icon_more_nor"
+                android:layout_marginRight="@dimen/default_margin_4"
+                android:visibility="visible"
+                />
+
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/default_height_3"
+                android:maxHeight="200dp"
+                android:background="@drawable/shape_edit_stroken"
+                android:padding="@dimen/default_padding_4"
+
+                />
+            <TextView
+                android:id="@+id/tv_submit"
+                style="@style/default_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送"
+                android:background="@drawable/shape_button"
+                android:textColor="@color/color_white"
+                android:layout_marginLeft="@dimen/default_margin_3"
+                android:layout_marginRight="@dimen/default_margin_3"
+                android:paddingLeft="@dimen/default_padding_3"
+                android:paddingRight="@dimen/default_padding_3"
+                android:paddingTop="@dimen/default_padding_4"
+                android:paddingBottom="@dimen/default_padding_4"
+                android:visibility="visible"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_style_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/default_margin_4"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_height_4"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/default_margin_3"
+                android:layout_marginRight="@dimen/default_margin_3"
+                android:visibility="gone"
+                >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="文字大小"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="字体颜色"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/default_margin_3"
+                android:layout_marginRight="@dimen/default_margin_3"
+                >
+
+
+                <LinearLayout
+                    android:id="@+id/ll_insert_image"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+
+                    <ImageView
+                        android:layout_width="@dimen/default_icon_size_2"
+                        android:layout_height="@dimen/default_icon_size_2"
+                        android:src="@drawable/add_image"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="插入图片"
+                        android:layout_marginTop="@dimen/default_margin_3"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_insert_addachment"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_width="@dimen/default_icon_size_2"
+                        android:layout_height="@dimen/default_icon_size_2"
+                        android:src="@drawable/image_attachment"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上传附件"
+                        android:layout_marginTop="@dimen/default_margin_4"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

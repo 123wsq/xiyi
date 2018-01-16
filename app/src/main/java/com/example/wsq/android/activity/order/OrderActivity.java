@@ -26,6 +26,7 @@ import com.example.wsq.android.fragment.UnAuditFragment;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.tools.AppStatus;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -244,5 +245,19 @@ public class OrderActivity extends FragmentActivity implements ViewPager.OnPageC
     public void onPageScrollStateChanged(int state) {
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(this.getClass().getName()); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(this.getClass().getName()); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 }

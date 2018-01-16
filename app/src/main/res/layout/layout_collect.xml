@@ -42,6 +42,7 @@
                     android:src="@drawable/image_main_massage" />
 
                 <TextView
+                    android:id="@+id/tv_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/defalut_layout_height"

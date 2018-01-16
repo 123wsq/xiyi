@@ -59,6 +59,7 @@
             android:background="@drawable/shape_text_stroken"
             android:inputType="textVisiblePassword"
             android:singleLine="true"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
             />
     </LinearLayout>
 
@@ -196,9 +197,9 @@
             android:singleLine="true"
             />
         <ImageView
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:src="@drawable/image_right"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/image_right_next"
             android:layout_marginLeft="@dimen/default_margin"
             />
 
@@ -239,6 +240,7 @@
             android:background="@drawable/shape_text_stroken"
             android:inputType="textEmailAddress"
             android:singleLine="true"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_@."
             />
     </LinearLayout>
 

@@ -1,19 +1,18 @@
 package com.example.wsq.android.activity.order;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.UploadAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.bean.CameraBean;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
@@ -21,7 +20,6 @@ import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -35,14 +33,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/18.
  */
 
-public class ServerOrderInfoActivity extends Activity{
+public class ServerOrderInfoActivity extends BaseActivity {
 
     @BindView(R.id.tv_title) TextView tv_title; //标题
     @BindView(R.id.iv_back) ImageView iv_back; //返回
@@ -67,6 +64,7 @@ public class ServerOrderInfoActivity extends Activity{
     @BindView(R.id.tv_all_fee) TextView tv_all_fee;//总费
     @BindView(R.id.tv_transfer) TextView tv_transfer;
     @BindView(R.id.tv_finish_time) TextView tv_finish_time;
+    @BindView(R.id.ll_end_time) LinearLayout ll_end_time;
 
     private OrderTaskService orderTaskService;
     private SharedPreferences shared;
@@ -75,20 +73,15 @@ public class ServerOrderInfoActivity extends Activity{
     private List<CameraBean> mData1, mData2;
     private Map<String, Object> mResultInfo;
 
+
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_feedback_order_info);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-
-        tv_title.setText("订单详情");
-
-        initView();
+    public int getByLayoutId() {
+        return R.layout.layout_feedback_order_info;
     }
 
-    public void initView(){
+    @Override
+    public void init(){
 
         mData1 = new ArrayList<>();
         mData2 = new ArrayList<>();
@@ -185,6 +178,8 @@ public class ServerOrderInfoActivity extends Activity{
                     tv_server_loc.setText(result.get(ResponseKey.DIDIAN)+"");
                     tv_server_content.setText(result.get(ResponseKey.CONTENT)+"");
                     tv_server_leave.setText(result.get(ResponseKey.YILIU)+"");
+                    //
+                    result.get(ResponseKey.YILIU);
 
                     //上报图片
                     String imags1 = result.get(ResponseKey.R_IMGS)+"";
@@ -212,7 +207,13 @@ public class ServerOrderInfoActivity extends Activity{
                         e.printStackTrace();
                     }
                     showImags(mData2, list2, 2);
-
+                    //根据状态设置时间
+                    String status = result.get(ResponseKey.STATUS)+"";
+                    if (status.equals("4")){
+                        ll_end_time.setVisibility(View.GONE);
+                        tv_finish_time.setText("完成时间");
+                        tv_order_start.setText(result.get(ResponseKey.OVER_TIME)+"");
+                    }
 
                     //其他信息
                     tv_scene_contact.setText(result.get(ResponseKey.LXR)+"");
@@ -303,32 +304,37 @@ public class ServerOrderInfoActivity extends Activity{
 
 
         if(bean.getType() == 2){
-            int num = 0;
+
             List<LocalMedia> list = new ArrayList<>();
+            int num = 0;
             if (type == 1){
+                //将所有的图片添加到list中
                 for (int i = 0; i< mData1.size(); i ++){
                     if (mData1.get(i).getType()==2) {
                         LocalMedia media = new LocalMedia();
-
-                        media.setPath(bean.getFile_path());
+                        media.setPath(mData1.get(i).getFile_path());
                         list.add(media);
-                    }else{
-                        if (i < position){
-                            num++;
-                        }
+                    }
+                }
+                //计算选中的图片位置
+                for (int i = 0; i< list.size(); i++){
+                    if (bean.getFile_path().equals(list.get(i).getPath())){
+                        num = i;
                     }
                 }
             }else{
+                //将所有的图片添加到list中
                 for (int i = 0; i< mData2.size(); i ++){
                     if (mData2.get(i).getType()==2) {
                         LocalMedia media = new LocalMedia();
-
-                        media.setPath(bean.getFile_path());
+                        media.setPath(mData2.get(i).getFile_path());
                         list.add(media);
-                    }else{
-                        if (i < position){
-                            num++;
-                        }
+                    }
+                }
+                //计算选中的图片位置
+                for (int i = 0; i< list.size(); i++){
+                    if (bean.getFile_path().equals(list.get(i).getPath())){
+                        num = i;
                     }
                 }
             }

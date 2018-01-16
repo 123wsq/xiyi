@@ -97,6 +97,15 @@ public class ServerFllocationFragment extends Fragment {
         rv_view.setAdapter(mAdapter);
 
         setRefresh();
+//        getOrderTask(null, 0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mList.clear();
+        curPage =1;
+
         getOrderTask(null, 0);
     }
 

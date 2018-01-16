@@ -1,12 +1,9 @@
 package com.example.wsq.android.activity.user;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -18,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.MainActivity;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
@@ -27,12 +25,12 @@ import com.example.wsq.android.tools.JGIM;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.LoddingDialog;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
@@ -40,7 +38,7 @@ import cn.jpush.android.api.JPushInterface;
  * Created by wsq on 2017/12/11.
  */
 
-public class LoginActivity extends Activity implements OnClickListener {
+public class LoginActivity extends BaseActivity implements OnClickListener {
 
 
     @BindView(R.id.tv_register)
@@ -71,15 +69,20 @@ public class LoginActivity extends Activity implements OnClickListener {
     private AnimationDrawable animationDrawable;
 
 
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        setContentView();
+//
+////        ButterKnife.bind(this);
+//        init();
+//
+//    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_login);
-
-        ButterKnife.bind(this);
-        init();
-        initView();
+    public int getByLayoutId() {
+        return R.layout.layout_login;
     }
 
     public void init() {
@@ -87,6 +90,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         shared.edit().putBoolean(Constant.SHARED.ISLOGIN, true).commit();
         dialog = new LoddingDialog(this);
+        initView();
     }
 
     public void initView() {
@@ -129,6 +133,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                 break;
             case R.id.btn_login:
 
+
                 onLogin();
                 break;
 
@@ -144,7 +149,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         iv_login_anim.setVisibility(View.VISIBLE);
         animationDrawable.start();
         btn_login.setVisibility(View.GONE);
-        String username = et_username.getText().toString();
+        final String username = et_username.getText().toString();
         String password = et_password.getText().toString();
         //检测复选框的状态
         if (cb_checkBox.isChecked()) {
@@ -196,6 +201,9 @@ public class LoginActivity extends Activity implements OnClickListener {
                 shared.edit().putString(Constant.SHARED.ID, data.get(ResponseKey.ID).toString()).commit();
                 IntentFormat.startActivity(LoginActivity.this, MainActivity.class);
 
+                MobclickAgent.onProfileSignIn(username);
+
+
                 /**
                  * 极光推送
                  */
@@ -212,7 +220,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                 animationDrawable.stop();
             }
         });
-    }
 
+    }
 
 }

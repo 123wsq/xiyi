@@ -300,7 +300,7 @@ public class UserServiceImpl implements UserService{
             //必填参数验证
             ValidateParam.validateParam(params,ResponseKey.TOKEN);
 
-            OkHttpRequest.sendHttpPost(Urls.UPLOAD_USER_HEADER, params, new HttpResponseCallBack(){
+            OkHttpRequest.uploadGetFile(Urls.UPLOAD_USER_HEADER, params,list,  new HttpResponseCallBack(){
                 @Override
                 public void callBack(Map<String, Object> result) {
                     if (callBack != null) {
@@ -985,6 +985,70 @@ public class UserServiceImpl implements UserService{
             ValidateParam.validateParam(param, ResponseKey.TOKEN);
 
             OkHttpRequest.sendHttpGet(Urls.SIGN_LIST, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    listener.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            listener.onFailure();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 收入列表
+     * @param context
+     * @param param
+     * @param listener
+     */
+    @Override
+    public void getReceiptsList(final Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+
+            ValidateParam.validateParam(param, ResponseKey.TOKEN);
+
+            OkHttpRequest.sendHttpGet(Urls.RECEIPTS_LIST, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    listener.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            listener.onFailure();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 月收入详情  按照时间帅选
+     * @param context
+     * @param param
+     * @param listener
+     */
+    @Override
+    public void getReceiptsInfo(final Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+
+            ValidateParam.validateParam(param, ResponseKey.TOKEN);
+
+            OkHttpRequest.sendHttpGet(Urls.SEARCH_BROKERAGE, param, new HttpResponseCallBack(){
                 @Override
                 public void callBack(Map<String, Object> result) {
 

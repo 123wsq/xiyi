@@ -1,6 +1,5 @@
 package com.example.wsq.android.activity.order;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.DeviceChildFragment;
 import com.example.wsq.android.fragment.DeviceInfoFragment;
@@ -23,20 +23,16 @@ import butterknife.OnClick;
  * Created by wsq on 2017/12/19.
  */
 
-public class DeviceInfoActivity extends Activity implements RadioGroup.OnCheckedChangeListener {
+public class DeviceInfoActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.rg_radioGroup) RadioGroup rg_radioGroup;
     @BindView(R.id.tv_device) RadioButton tv_device;
 
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.layout_device_info);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        init();
+    @Override
+    public int getByLayoutId() {
+        return R.layout.layout_device_info;
     }
 
     public void init(){

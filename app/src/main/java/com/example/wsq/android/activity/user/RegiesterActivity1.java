@@ -1,9 +1,6 @@
 package com.example.wsq.android.activity.user;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.ValidateDataFormat;
@@ -24,14 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/11.
  */
 
-public class RegiesterActivity1 extends Activity{
+public class RegiesterActivity1 extends BaseActivity {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.et_username) EditText et_username;
@@ -44,13 +41,11 @@ public class RegiesterActivity1 extends Activity{
 
     CustomPopup popup;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.layout_register);
-        ButterKnife.bind(this);
-        init();
+
+    @Override
+    public int getByLayoutId() {
+        return R.layout.layout_register;
     }
 
 
@@ -108,11 +103,7 @@ public class RegiesterActivity1 extends Activity{
 
         //用户名验证
         String userName = et_username.getText().toString();
-        //输入的字母是否正确
-        if(!userName.matches("[A-Za-z0-9_]+")){
-            Toast.makeText(RegiesterActivity1.this, "用户名只能为数字，字母，下划线", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+
         //输入的长度是否正确 6-18
         if(userName.length()>= 6 && userName.length() <= 18){
             RegisterParam.USERNAME = userName;
@@ -121,7 +112,11 @@ public class RegiesterActivity1 extends Activity{
             return false;
         }
 
-
+        //输入的字母是否正确
+        if(!userName.matches("[A-Za-z0-9_]+")){
+            Toast.makeText(RegiesterActivity1.this, "用户名只能为数字，字母，下划线", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         //验证密码是否一致
         String password1 = et_password1.getText().toString();

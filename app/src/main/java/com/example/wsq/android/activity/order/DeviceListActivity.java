@@ -1,8 +1,5 @@
 package com.example.wsq.android.activity.order;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +9,12 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.ProductAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.view.LoddingDialog;
@@ -34,14 +31,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/23.
  */
 
-public class DeviceListActivity extends Activity{
+public class DeviceListActivity extends BaseActivity {
 
     @BindView(R.id.rv_RecyclerView) RecyclerView rv_RecyclerView;
     @BindView(R.id.tv_title) TextView tv_title;
@@ -56,14 +52,10 @@ public class DeviceListActivity extends Activity{
     private int total =1;
     private int unitPage = 15;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.layout_device_search);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        init();
+    @Override
+    public int getByLayoutId() {
+        return R.layout.layout_device_search;
     }
 
     public void init(){

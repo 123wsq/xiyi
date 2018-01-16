@@ -73,6 +73,7 @@
                     android:textColor="@color/default_color"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="@dimen/default_radius"
+                    android:drawableRight="@drawable/image_important"
                     />
 
                 <EditText
@@ -105,6 +106,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginLeft="@dimen/default_radius"
                     android:textColor="@color/default_color"
+                    android:drawableRight="@drawable/image_important"
                     />
 
                 <EditText
@@ -137,6 +139,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginLeft="@dimen/default_radius"
                     android:textColor="@color/default_color"
+                    android:drawableRight="@drawable/image_important"
                     />
 
                 <EditText
@@ -150,6 +153,7 @@
                     android:gravity="center_vertical|right"
                     android:layout_marginLeft="@dimen/default_radius"
                     android:textColor="@color/default_color"
+                    android:inputType="number"
                     />
             </LinearLayout>
             <LinearLayout
@@ -171,6 +175,7 @@
                     android:layout_marginTop="@dimen/default_radius"
                     android:layout_marginLeft="@dimen/default_radius"
                     android:textColor="@color/default_color"
+                    android:drawableRight="@drawable/image_important"
                     />
 
                 <EditText
@@ -207,6 +212,7 @@
                     android:layout_marginTop="@dimen/default_radius"
                     android:layout_marginLeft="@dimen/default_radius"
                     android:textColor="@color/default_color"
+                    android:drawableRight="@drawable/image_important"
                     />
 
                 <EditText
@@ -243,6 +249,7 @@
                     android:layout_marginLeft="@dimen/default_radius"
                     android:layout_marginTop="@dimen/default_radius"
                     android:layout_marginBottom="@dimen/default_radius"
+                    android:drawableRight="@drawable/image_important"
                     />
 
                 <GridView

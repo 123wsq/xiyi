@@ -22,10 +22,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.AboutWeActivity;
+import com.example.wsq.android.activity.EditWebSettingActivity;
 import com.example.wsq.android.activity.KnowledgeActivity;
 import com.example.wsq.android.activity.cash.BalanceActivity;
 import com.example.wsq.android.activity.cash.BankActivity;
 import com.example.wsq.android.activity.cash.BillDetailsActivity;
+import com.example.wsq.android.activity.cash.ReceiptsActivity;
 import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.order.OrderActivity;
 import com.example.wsq.android.activity.user.CollectActivity;
@@ -230,7 +232,7 @@ public class UserFragment extends Fragment {
             R.id.ll_device_bank_code, R.id.ll_device_server_share, R.id.ll_server_call,
             R.id.ll_password, R.id.ll_about, R.id.ll_fault, R.id.ll_collect,R.id.ll_manager_shared,
             R.id.ll_manager_upload, R.id.ll_device_knowledge, R.id.ll_balance, R.id.ll_pay_Record,
-            R.id.tv_sign, R.id.ll_iv_integral, R.id.roundImage_header})
+            R.id.tv_sign, R.id.ll_iv_integral, R.id.roundImage_header, R.id.ll_receipts})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.roundImage_header: //点击头像查看
@@ -301,6 +303,9 @@ public class UserFragment extends Fragment {
                 orderMap.put(FLAG_ORDER_KEY, 8);
                 IntentFormat.startActivity(getActivity(), OrderActivity.class, orderMap);
                 break;
+            case R.id.ll_receipts:
+                IntentFormat.startActivity(getActivity(), ReceiptsActivity.class);
+                break;
             case R.id.ll_balance:  //余额
                 IntentFormat.startActivity(getActivity(), BalanceActivity.class);
                 break;
@@ -340,22 +345,14 @@ public class UserFragment extends Fragment {
                 IntentFormat.startActivity(getActivity(), OrderActivity.class, orderMap);
                 break;
             case R.id.ll_device_bank_code:  //银行卡
-                IntentFormat.startActivity(getActivity(), BankActivity.class);
+                Map<String, Object> map = new HashMap<>();
+                map.put(ResponseKey.BANK_CARD, mUserData.get(ResponseKey.BANK_CARD)+"");
+                IntentFormat.startActivity(getActivity(), BankActivity.class, map);
                 break;
             case R.id.ll_device_server_share:  //服务工程师   分享
 
-                CustomDefaultDialog.Builder builder1 = new CustomDefaultDialog.Builder(getActivity());
-                builder1.setTitle("提示");
-                builder1.setMessage("请至公司官网 "+getResources().getString(R.string.company_net)
-                        +" 进行操作，谢谢合作");
-                builder1.setOkBtn("好的", new OnDialogClickListener() {
-                    @Override
-                    public void onClick(CustomDefaultDialog dialog, String result) {
-                        dialog.dismiss();
-                    }
-                });
-                defaultDialog = builder1.create();
-                defaultDialog.show();
+                IntentFormat.startActivity(getActivity(), EditWebSettingActivity.class);
+
                 break;
             case R.id.ll_device_knowledge:  //圈内知识
                 IntentFormat.startActivity(getActivity(), KnowledgeActivity.class);

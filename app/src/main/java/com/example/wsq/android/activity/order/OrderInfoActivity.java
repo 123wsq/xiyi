@@ -1,12 +1,9 @@
 package com.example.wsq.android.activity.order;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.UploadAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.bean.CameraBean;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
@@ -25,7 +23,6 @@ import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.luck.picture.lib.PictureSelector;
@@ -40,14 +37,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/14.
  */
 
-public class OrderInfoActivity extends Activity implements AdapterView.OnItemClickListener {
+public class OrderInfoActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_edit) TextView tv_edit;
@@ -92,15 +88,8 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_order_info);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-
-        init();
-
-        initView();
+    public int getByLayoutId() {
+        return R.layout.layout_order_info;
     }
 
 
@@ -127,6 +116,8 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
             tv_transfer.setVisibility(View.VISIBLE);
             tv_transfer.setText("填写移交反馈报告");
         }
+
+        initView();
 
         onInitState();
     }
@@ -483,16 +474,18 @@ public class OrderInfoActivity extends Activity implements AdapterView.OnItemCli
         if(bean.getType() == 2){
             int num = 0;
             List<LocalMedia> list = new ArrayList<>();
+            //将所有的图片添加到list中
             for (int i = 0; i< mData.size(); i ++){
                 if (mData.get(i).getType()==2) {
                     LocalMedia media = new LocalMedia();
-
-                    media.setPath(bean.getFile_path());
+                    media.setPath(mData.get(i).getFile_path());
                     list.add(media);
-                }else{
-                    if (i < position){
-                        num++;
-                    }
+                }
+            }
+            //计算选中的图片位置
+            for (int i = 0; i< list.size(); i++){
+                if (bean.getFile_path().equals(list.get(i).getPath())){
+                    num = i;
                 }
             }
             PictureSelector.create(OrderInfoActivity.this).externalPicturePreview(num, list);

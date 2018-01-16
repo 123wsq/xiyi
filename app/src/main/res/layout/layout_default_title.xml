@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/defalut_layout_height"
     android:background="@drawable/image_title_background"
-
+    android:id="@+id/rl_layout"
     >
 
     <TextView
@@ -33,7 +33,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text=""
-
         android:textSize="@dimen/default_text_size"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/default_margin"

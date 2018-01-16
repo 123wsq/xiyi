@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.example.wsq.android.tools.CrashHandler;
+import com.example.wsq.plugin.umeng.UmengUtils;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
 
@@ -17,13 +20,18 @@ public class MApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        CrashHandler.getInstance().init(getApplicationContext());
+
+        //友盟初始化
+        UmengUtils.initUmeng(this);
 
 
+        CrashHandler.getInstance().init(getApplicationContext());
 
-        JPushInterface.setDebugMode(true);
+        //极光推送
+        JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
-        JMessageClient.setDebugMode(true);
+        //使用极光IM实现单点登录
+        JMessageClient.setDebugMode(false);
         JMessageClient.init(this, true);
 
     }
@@ -33,22 +41,5 @@ public class MApplication extends Application {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
-//
-//    static {
-//        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
-//            @NonNull
-//            @Override
-//            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-//                return new ClassicsHeader(context);
-//            }
-//        });
-//
-//        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
-//            @NonNull
-//            @Override
-//            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-//                return new ClassicsFooter(context);
-//            }
-//        });
-//    }
+
 }

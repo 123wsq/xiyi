@@ -1,23 +1,21 @@
 package com.example.wsq.android.activity.user;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.ProtocolsActivity;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
@@ -25,6 +23,7 @@ import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.IdentityCardValidate;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateDataFormat;
 import com.example.wsq.android.utils.ValidateParam;
 
@@ -33,14 +32,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/11.
  */
 
-public class RegisterActivity3 extends Activity {
+public class RegisterActivity3 extends BaseActivity {
 
 
     @BindView(R.id.tv_title) TextView tv_title;
@@ -58,22 +56,28 @@ public class RegisterActivity3 extends Activity {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_register3);
-        ButterKnife.bind(this);
-        init();
-        initView();
+    public int getByLayoutId() {
+        return R.layout.layout_register3;
     }
 
     public void init() {
 
         userService = new UserServiceImpl();
         tv_title.setText("会员注册");
-    }
 
-    public void initView() {
 
+        cb_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    tv_register.setBackgroundResource(R.drawable.shape_button);
+                    tv_register.setClickable(true);
+                }else{
+                    tv_register.setBackgroundResource(R.drawable.shape_disable_button);
+                    tv_register.setClickable(false);
+                }
+            }
+        });
         et_sfz.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -97,6 +101,29 @@ public class RegisterActivity3 extends Activity {
 
             }
         });
+        et_tel.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                if (editable.toString().length()==11){
+                    tv_getCode.setBackgroundResource(R.drawable.shape_button);
+                    tv_getCode.setClickable(true);
+                }else{
+                    tv_getCode.setBackgroundResource(R.drawable.shape_disable_button);
+                    tv_getCode.setClickable(false);
+                }
+            }
+        });
     }
 
     Handler handler = new Handler(){};
@@ -107,12 +134,14 @@ public class RegisterActivity3 extends Activity {
             if (curLen == 0){
                 curLen = 60;
                 tv_getCode.setText("获取验证码");
-                tv_getCode.setBackgroundColor(getResources().getColor(R.color.defalut_title_color));
+                tv_getCode.setBackgroundColor(R.drawable.shape_button);
                 tv_getCode.setClickable(true);
             }else{
                 tv_getCode.setText("请耐心等待 "+curLen+"s");
                 tv_getCode.setClickable(false);
-                tv_getCode.setBackgroundColor(Color.parseColor("#A8A8A8"));
+                
+                tv_getCode.setBackgroundColor(R.drawable.shape_disable_button);
+
                 handler.postDelayed(this, 1000);
             }
 
@@ -221,6 +250,9 @@ public class RegisterActivity3 extends Activity {
 
         //验证手机号码
         String tel = et_tel.getText().toString();
+        if (TextUtils.isEmpty(tel)){
+            ToastUtis.onToast(RegisterActivity3.this,"请输入手机号码");
+        }
         if(ValidateDataFormat.isMobile(tel)){
             RegisterParam.TEL = tel;
         }else{

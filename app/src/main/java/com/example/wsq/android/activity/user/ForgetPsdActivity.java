@@ -1,9 +1,6 @@
 package com.example.wsq.android.activity.user;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -13,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
@@ -27,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -35,7 +32,7 @@ import butterknife.OnClick;
  */
 
 
-public class ForgetPsdActivity extends Activity{
+public class ForgetPsdActivity extends BaseActivity {
 
     @BindView(R.id.tv_title)TextView tv_title;
     @BindView(R.id.et_tel) EditText et_tel;
@@ -49,17 +46,14 @@ public class ForgetPsdActivity extends Activity{
     private UserService userService;
     private int curLen = 60;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_forget_psd);
-
-        ButterKnife.bind(this);
-
-        initView();
+    public int getByLayoutId() {
+        return R.layout.layout_forget_psd;
     }
 
-    public void initView() {
+    @Override
+    public void init(){
         userService = new UserServiceImpl();
         tv_ok = this.findViewById(R.id.tv_ok);
         tv_title.setText("忘记密码");
@@ -82,7 +76,7 @@ public class ForgetPsdActivity extends Activity{
             }else{
                 tv_getCode.setText("请耐心等待 "+curLen+"s");
                 tv_getCode.setClickable(false);
-                tv_getCode.setBackgroundColor(R.drawable.shape_dialog_buttom);
+                tv_getCode.setBackgroundColor(R.drawable.shape_disable_button);
                 handler.postDelayed(this, 1000);
             }
 
@@ -227,7 +221,7 @@ public class ForgetPsdActivity extends Activity{
 
     public void onEditTextChange(){
 
-        et_validateCode.addTextChangedListener(new TextWatcher() {
+        et_tel.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -241,12 +235,12 @@ public class ForgetPsdActivity extends Activity{
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if(editable.toString().length()< Constant.PASSWORD_COUNT){
-                    tv_getCode.setBackgroundResource(R.drawable.shape_disable_button);
-                    tv_getCode.setClickable(false);
-                }else{
+                if(editable.toString().length() == 11){
                     tv_getCode.setBackgroundResource(R.drawable.shape_button);
                     tv_getCode.setClickable(true);
+                }else{
+                    tv_getCode.setBackgroundResource(R.drawable.shape_disable_button);
+                    tv_getCode.setClickable(false);
                 }
             }
         });

@@ -59,6 +59,8 @@
             android:textColorHint="@color/color_gray"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
+            android:inputType="textVisiblePassword"
+            android:digits="X0123456789"
             />
     </LinearLayout>
 
@@ -174,7 +176,7 @@
             android:layout_margin="0dp"
             android:text="获取验证码"
             android:textSize="@dimen/default_text_min_size"
-
+            android:background="@drawable/shape_disable_button"
             />
     </LinearLayout>
 
@@ -215,6 +217,7 @@
     <TextView
         android:id="@+id/tv_register"
         style="@style/default_button"
+        android:background="@drawable/shape_disable_button"
         android:text="注册"
 
         />

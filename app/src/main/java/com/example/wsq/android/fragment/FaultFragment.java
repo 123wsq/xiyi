@@ -106,6 +106,7 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
         getData(null , 0);
     }
 
+
     @OnClick({R.id.tv_refresh})
     public void onClick(){
         getData(null, 0);

@@ -1,14 +1,11 @@
 package com.example.wsq.android.activity.user;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,11 +13,11 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.cash.WithdrawPasswordActivity;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.OnDialogClickListener;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.AppUtils;
 import com.example.wsq.android.utils.CacheUtil;
 import com.example.wsq.android.utils.IntentFormat;
@@ -31,14 +28,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/13.
  */
 
-public class SettingActivity extends Activity implements SwitchView.OnStateChangedListener {
+public class SettingActivity extends BaseActivity implements SwitchView.OnStateChangedListener {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_setting_Withdraw_psd)
@@ -59,18 +55,11 @@ public class SettingActivity extends Activity implements SwitchView.OnStateChang
 
     private CustomDefaultDialog defaultDialog;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_setting);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-
-        initView();
-        onRegister();
+    public int getByLayoutId() {
+        return R.layout.layout_setting;
     }
-
 
 
     @Override
@@ -79,7 +68,7 @@ public class SettingActivity extends Activity implements SwitchView.OnStateChang
         unregisterReceiver(receiver);
     }
 
-    public void initView() {
+    public void init() {
 
         tv_title.setText("我的设置");
 
@@ -110,6 +99,8 @@ public class SettingActivity extends Activity implements SwitchView.OnStateChang
         tv_version.setText(AppUtils.getLocalVersionName(this));
         sv_switchBtn.setOnStateChangedListener(this);
 
+
+        onRegister();
     }
 
     @OnClick({R.id.iv_back, R.id.tv_setting_Withdraw_psd,

@@ -1,11 +1,8 @@
 package com.example.wsq.android.activity.cash;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -16,12 +13,12 @@ import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.user.SettingActivity;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.PasswordInputView;
 
@@ -29,14 +26,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/26.
  */
 
-public class WithdrawPasswordActivity extends Activity implements TextWatcher {
+public class WithdrawPasswordActivity extends BaseActivity implements TextWatcher {
 
     @BindView(R.id.tv_title)
     TextView tv_title;
@@ -70,15 +66,10 @@ public class WithdrawPasswordActivity extends Activity implements TextWatcher {
     private UserService userService;
     private SharedPreferences shared;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_withdraw_password);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-
-        init();
+    public int getByLayoutId() {
+        return R.layout.layout_withdraw_password;
     }
 
     public void init(){

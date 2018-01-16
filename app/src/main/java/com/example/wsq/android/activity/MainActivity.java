@@ -46,7 +46,9 @@ import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
+import com.example.wsq.android.view.CustomWebViewDialog;
 import com.orhanobut.logger.Logger;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,7 +91,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     private UserService userService;
     private CustomDefaultDialog customDefaultDialog;
-
+    private CustomWebViewDialog webViewDialog;
 
 
     @Override
@@ -133,15 +135,23 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         JMessageClient.registerEventReceiver(this);
 
         onRegister();
+        onShowWebDialog();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 //        onGetMessageCount();
+        MobclickAgent.onPageStart(this.getClass().getName()); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(this.getClass().getName()); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
+    }
 
     public void enter(int page, Fragment fragment){
 
@@ -418,5 +428,14 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         customDefaultDialog.show();
 
     }
+
+
+    public void onShowWebDialog(){
+
+        CustomWebViewDialog.Builder builder = new CustomWebViewDialog.Builder(this);
+        builder.setLoadWebView("http://xiyicontrol.com/api/xieyi");
+        builder.create().show();
+    }
+
 
 }

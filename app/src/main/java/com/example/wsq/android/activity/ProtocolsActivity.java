@@ -4,42 +4,34 @@ package com.example.wsq.android.activity;
  * Created by wsq on 2017/12/11.
  */
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.tools.AppStatus;
+import com.example.wsq.android.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * 用于在注册的时候展示用户协议
  */
-public class ProtocolsActivity extends Activity {
+public class ProtocolsActivity extends BaseActivity {
 
     @BindView(R.id.register_webView) WebView register_webView;
     @BindView(R.id.tv_title)
     TextView tv_title;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_protocols);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-
-        initView();
+    public int getByLayoutId() {
+        return R.layout.layout_protocols;
     }
 
-    public void initView() {
+    @Override
+    public void init()  {
 
 
         tv_title.setText("服务协议");

@@ -1,17 +1,14 @@
 package com.example.wsq.android.activity.order;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -20,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.UploadAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.bean.CameraBean;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
@@ -28,13 +26,14 @@ import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.tools.PictureFileUtils;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
@@ -53,7 +51,7 @@ import butterknife.OnItemClick;
  * Created by wsq on 2017/12/15.
  */
 
-public class FeedbackActivity extends Activity{
+public class FeedbackActivity extends BaseActivity {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_away_back) TextView tv_away_back;
@@ -84,13 +82,13 @@ public class FeedbackActivity extends Activity{
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        setContentView(R.layout.layout_feedback);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        initView();
+    public int getByLayoutId() {
+        return R.layout.layout_feedback;
+    }
+
+    @Override
+    public void init() {
+
         onRegister();
     }
 
@@ -115,27 +113,12 @@ public class FeedbackActivity extends Activity{
         mData = new ArrayList<>();
 
         CameraBean bean = new CameraBean();
-        bean.setType(0);
+        bean.setType(1);
         mData.add(bean);
         mAdapter = new UploadAdapter(this, mData);
         gridview.setAdapter(mAdapter);
 
-//        String str = intent.getStringExtra(ResponseKey.R_IMGS);
-//        List<String> list0 = new ArrayList<>();
-//        if (str!= null || str.length()!=0 ){
-//            try {
-//                JSONArray jsona = new JSONArray(str);
-//                for (int i = 0; i < jsona.length(); i++) {
-//                    String s = jsona.get(i).toString();
-//                    list0.add(s);
-//                }
-//                updateImags(list0, false);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }else{
-//            onSetData(0, null);
-//        }
+
 
         initPopup();
     }
@@ -219,7 +202,9 @@ public class FeedbackActivity extends Activity{
                 finish();
                 break;
             case R.id.tv_away_back:
-                onSubmit();
+                if (onValidateParam()) {
+                    onSubmit();
+                }
                 break;
         }
     }
@@ -237,11 +222,19 @@ public class FeedbackActivity extends Activity{
 //                            InputMethodManager.HIDE_NOT_ALWAYS);
         }else if(bean.getType() == 2){
             List<LocalMedia> list = new ArrayList<>();
+            //将所有的图片添加到list中
             for (int i = 0; i< mData.size(); i ++){
                 if (mData.get(i).getType()==2) {
                     LocalMedia media = new LocalMedia();
-                    media.setPath(bean.getFile_path());
+                    media.setPath(mData.get(i).getFile_path());
                     list.add(media);
+                }
+            }
+            //计算选中的图片位置
+            int num = 0;
+            for (int i = 0; i< list.size(); i++){
+                if (bean.getFile_path().equals(list.get(i).getPath())){
+                    num = i;
                 }
             }
             PictureSelector.create(FeedbackActivity.this).externalPicturePreview(position, list);
@@ -267,38 +260,17 @@ public class FeedbackActivity extends Activity{
         param.put(ResponseKey.YILIU, et_results_2.getText().toString());
 
         List<Map<String, Object>> listFile = new ArrayList<>();
-//        String img = intent.getStringExtra(ResponseKey.R_IMGS);
         int numflag = 1;
-//        try {
-//            JSONArray jsona = new JSONArray(img);
-//
                 for (int i = 0; i < mData.size(); i++) {
                     if (mData.get(i).getType() != 1) {
-//
-//                        if (mData.get(i).isChange()){
                             File f = new File(mData.get(i).getFile_path());
                             Map<String, Object> map = new HashMap<>();
                             map.put(ResponseKey.IMGS+(i+1),f);
                             map.put("fileType", mData.get(i).getType() == 2 ?
                                     OkhttpUtil.FILE_TYPE_IMAGE : OkhttpUtil.FILE_TYPE_VIDEO);
                             listFile.add(map);
-//                        }else{
-//
-//                            for (int m = 0 ; m < jsona.length(); m++) {
-//
-//                                if (mData.get(i).getFile_path().endsWith(jsona.get(m).toString())){
-//                                    param.put(ResponseKey.IMGS + numflag, jsona.get(m).toString()+"");
-//                                    numflag++;
-//                                }
-//                            }
-//
                     }
-//
                 }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
 
         param.put(ResponseKey.IMG_COUNT, listFile.size()+"");
@@ -326,7 +298,7 @@ public class FeedbackActivity extends Activity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE && data != null) {
+
 
             if (resultCode == RESULT_OK) {
                 List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
@@ -341,7 +313,6 @@ public class FeedbackActivity extends Activity{
                 }
             }
 
-        }
     }
 
     /**
@@ -351,6 +322,7 @@ public class FeedbackActivity extends Activity{
      */
     public void onSetData(int type, List<LocalMedia> list){
 
+        Logger.d("选择的图片"+list.size());
 
         if (list.size()==0){
             CameraBean bean = new CameraBean();
@@ -504,5 +476,43 @@ public class FeedbackActivity extends Activity{
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
+    }
+
+    public boolean onValidateParam(){
+
+            String serverLoc = et_server_loc.getText().toString();
+            if (TextUtils.isEmpty(serverLoc)){
+                ToastUtis.onToast(FeedbackActivity.this, "服务地点不能为空");
+                return false;
+            }
+            String contact = et_contact.getText().toString();
+            if (TextUtils.isEmpty(contact)){
+                ToastUtis.onToast(FeedbackActivity.this, "现场联系人不能为空");
+                return false;
+            }
+            String contact_tel = et_contact_tel.getText().toString();
+            if (TextUtils.isEmpty(contact_tel)){
+                ToastUtis.onToast(FeedbackActivity.this, "现场联系人电话不能为空");
+                return false;
+            }
+            String serContent = et_results_1.getText().toString();
+            if (TextUtils.isEmpty(serContent)){
+                ToastUtis.onToast(FeedbackActivity.this, "现场处理结果不能为空");
+                return false;
+            }
+
+            String ylContent = et_results_2.getText().toString();
+            if (TextUtils.isEmpty(ylContent)){
+                ToastUtis.onToast(FeedbackActivity.this, "遗留问题不能为空");
+                return false;
+            }
+
+            if (mData.size() <= 1){
+                ToastUtis.onToast(FeedbackActivity.this, "现场资料不能为空");
+                return false;
+            }
+
+
+        return true;
     }
 }

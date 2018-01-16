@@ -1,11 +1,8 @@
 package com.example.wsq.android.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -16,10 +13,10 @@ import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.user.CollectActivity;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.IntentFormat;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -31,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -39,7 +35,7 @@ import butterknife.OnClick;
  * Created by wsq on 2017/12/18.
  */
 
-public class ProductInfoActivity extends Activity {
+public class ProductInfoActivity extends BaseActivity {
 
     @BindView(R.id.register_webView) WebView register_webView;
     @BindView(R.id.tv_title) TextView tv_title;
@@ -49,24 +45,18 @@ public class ProductInfoActivity extends Activity {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_protocols);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-
-        initView();
-
+    public int getByLayoutId() {
+        return R.layout.layout_protocols;
     }
 
-    public void initView() {
+    @Override
+    public void init() {
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         int type = getIntent().getIntExtra(Constant.INFO_TYPE, 0);
         if (type == 1){
             tv_title.setText("新闻中心");
         }else if(type ==2){
-            tv_title.setText("设备列表");
+            tv_title.setText("设备详情");
         }else if(type ==3){
             tv_title.setText("资料详情");
         }else if(type ==4){

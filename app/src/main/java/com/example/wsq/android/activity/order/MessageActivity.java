@@ -1,9 +1,7 @@
 package com.example.wsq.android.activity.order;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +11,12 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.MessageAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.view.LoddingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -34,14 +32,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/20.
  */
 
-public class MessageActivity extends Activity{
+public class MessageActivity extends BaseActivity {
 
     @BindView(R.id.rv_RecyclerView)
     RecyclerView rv_RecyclerView;
@@ -60,15 +57,10 @@ public class MessageActivity extends Activity{
     private List<Map<String, Object>> mData;
     private LoddingDialog dialog;
 
+
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_message);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-
-        init();
-
+    public int getByLayoutId() {
+        return R.layout.layout_message;
     }
 
 

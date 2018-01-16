@@ -1,16 +1,12 @@
 package com.example.wsq.android.activity.user;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
@@ -29,7 +26,6 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.android.view.RoundImageView;
@@ -45,14 +41,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/13.
  */
 
-public class UserInfoActivity extends Activity{
+public class UserInfoActivity extends BaseActivity {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_username) TextView tv_username;
@@ -84,17 +79,12 @@ public class UserInfoActivity extends Activity{
 
     private String headerImage = "";
     private LoddingDialog dialog;
+    private RequestOptions options;
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        setContentView(R.layout.layout_user_info);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-
-        init();
+    public int getByLayoutId() {
+        return R.layout.layout_user_info;
     }
 
     public void init() {
@@ -109,7 +99,7 @@ public class UserInfoActivity extends Activity{
         tv_username.setText(UserFragment.mUserData.get(ResponseKey.USERNAME)+"");
         //设置头像
 //        Glide.with(this).load(Urls.HOST+UserFragment.mUserData.get(ResponseKey.USER_PIC)).into(image_header);
-        RequestOptions options = new RequestOptions();
+        options = new RequestOptions();
         options.error(R.drawable.image_header_bg);
         options.fallback(R.drawable.image_header_bg);
         options.placeholder(R.drawable.image_header_bg);
@@ -267,9 +257,7 @@ public class UserInfoActivity extends Activity{
 
                 updateUserInfo();
 
-                if (!TextUtils.isEmpty(headerImage)){
-                    uploadHeader();
-                }
+
 
                 break;
         }
@@ -288,6 +276,10 @@ public class UserInfoActivity extends Activity{
                     for (int i = 0; i < selectList.size(); i++) {
                         headerImage = selectList.get(i).getCompressPath();
                     }
+                    if (!TextUtils.isEmpty(headerImage)){
+                        uploadHeader();
+                    }
+
                     break;
 
             }
@@ -347,6 +339,13 @@ public class UserInfoActivity extends Activity{
         map.put(ResponseKey.FILE, f);
         list.add(map);
         userService.uploadHeader(this, param, list, null);
+
+        Glide.with(this)
+                .load(headerImage)
+                .apply(options)
+                .into(image_header);
+
+
 
     }
 }

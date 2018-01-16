@@ -1,11 +1,8 @@
 package com.example.wsq.android.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,9 +19,9 @@ import com.example.tag.androidtagview.TagView;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.order.DeviceListActivity;
 import com.example.wsq.android.adapter.SearchRecordAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.IntentFormat;
 
@@ -35,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 
@@ -43,7 +39,7 @@ import butterknife.OnEditorAction;
  * Created by wsq on 2017/12/23.
  */
 
-public class SearchActivity extends Activity implements TagView.OnTagClickListener {
+public class SearchActivity extends BaseActivity implements TagView.OnTagClickListener {
 
     @BindView(R.id.et_search) EditText et_search;
     @BindView(R.id.rv_search_Record) RecyclerView rv_search_Record;
@@ -56,14 +52,10 @@ public class SearchActivity extends Activity implements TagView.OnTagClickListen
     private SearchRecordAdapter mAdapter;
     private List<Map<String, String>> mData;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.layout_search);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        init();
+    @Override
+    public int getByLayoutId() {
+        return R.layout.layout_search;
     }
 
     public void init(){

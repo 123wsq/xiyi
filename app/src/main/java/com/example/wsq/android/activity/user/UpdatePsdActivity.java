@@ -1,9 +1,7 @@
 package com.example.wsq.android.activity.user;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
@@ -23,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -31,7 +29,7 @@ import butterknife.OnClick;
  * Created by wsq on 2017/12/19.
  */
 
-public class UpdatePsdActivity extends Activity{
+public class UpdatePsdActivity extends BaseActivity {
 
     @BindView(R.id.et_new_password1) EditText et_new_password1;
     @BindView(R.id.et_new_password2) EditText et_new_password2;
@@ -43,12 +41,8 @@ public class UpdatePsdActivity extends Activity{
     private SharedPreferences shared;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_update_password);
-        ButterKnife.bind(this);
-        init();
+    public int getByLayoutId() {
+        return R.layout.layout_update_password;
     }
 
     public void init(){
@@ -57,7 +51,7 @@ public class UpdatePsdActivity extends Activity{
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
         tv_title.setText("修改密码");
-        tv_submit_password.setBackgroundResource(R.drawable.shape_button);
+        tv_submit_password.setBackgroundResource(R.drawable.shape_disable_button);
 
         onEditChangeListener();
     }

@@ -30,6 +30,45 @@
     <dimen name="l_gridItemImageWidth">56dp</dimen>
     <dimen name="l_gridItemImageHeight">56dp</dimen>
 
+    <dimen name="default_height_1">60dp</dimen>
+    <dimen name="default_height_2">50dp</dimen>
+    <dimen name="default_height_3">40dp</dimen>
+    <dimen name="default_height_4">30dp</dimen>
+
+    <dimen name="default_height_line">1dp</dimen>
+
+    <dimen name="default_text_size_1">18sp</dimen>
+    <dimen name="default_text_size_2">16sp</dimen>
+    <dimen name="default_text_size_3">14sp</dimen>
+    <dimen name="default_text_size_4">12sp</dimen>
+
+    <dimen name="default_margin_1">20dp</dimen>
+    <dimen name="default_margin_2">15dp</dimen>
+    <dimen name="default_margin_3">10dp</dimen>
+    <dimen name="default_margin_4">5dp</dimen>
+
+    <dimen name="default_padding_1">20dp</dimen>
+    <dimen name="default_padding_2">15dp</dimen>
+    <dimen name="default_padding_3">10dp</dimen>
+    <dimen name="default_padding_4">5dp</dimen>
+
+    <dimen name="default_radius_1">20dp</dimen>
+    <dimen name="default_radius_2">15dp</dimen>
+    <dimen name="default_radius_3">10dp</dimen>
+    <dimen name="default_radius_4">5dp</dimen>
+
+    <dimen name="default_icon_size_1">50dp</dimen>
+    <dimen name="default_icon_size_2">40dp</dimen>
+    <dimen name="default_icon_size_3">30dp</dimen>
+    <dimen name="default_icon_size_4">25dp</dimen>
+    <dimen name="default_icon_size_5">20dp</dimen>
+
+    <dimen name="default_image_size_1">90dp</dimen>
+    <dimen name="default_image_size_2">80dp</dimen>
+    <dimen name="default_image_size_3">70dp</dimen>
+    <dimen name="default_image_size_4">60dp</dimen>
+
+    <dimen name="default_line_height_1">1dp</dimen>
 
 
 </resources>

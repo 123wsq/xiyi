@@ -170,6 +170,8 @@ public class ResponseKey {
 
     public static final String MONEY = "money";
 
+    public static final String MOENY = "moeny";
+
     public static final String BANK_CARD = "bankcard";
 
     public static final String BANK_NAME = "bankname";
@@ -230,6 +232,10 @@ public class ResponseKey {
     public static final String CHECK_TIME = "checktime";
 
     public static final String SUM_POINTS = "sum_points";
+
+    public static final String BROKERAGE_LIST = "brokerage_list";
+
+    public static final String BROKERAGE_MOENY = "brokerage_moeny";
 
 
 }

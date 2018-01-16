@@ -1,10 +1,8 @@
 package com.example.wsq.android.base;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.WindowManager;
@@ -13,14 +11,7 @@ import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.LoddingDialog;
-import com.example.wsq.android.view.refresh.ClassicsCustomFooter;
-import com.example.wsq.android.view.refresh.ClassicsCustomHeader;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 
@@ -54,23 +45,6 @@ public abstract  class BaseActivity extends Activity{
     public abstract int getByLayoutId();
 
     public abstract void init();
-
-    static {
-        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
-            @NonNull
-            @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                return new ClassicsCustomHeader(context);
-            }
-        });
-        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
-            @NonNull
-            @Override
-            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                return new ClassicsCustomFooter(context);
-            }
-        });
-    }
 
     /**
      * 显示加载进度
@@ -152,4 +126,18 @@ public abstract  class BaseActivity extends Activity{
         this.dialogTitle = title;
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(this.getClass().getName()); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(this.getClass().getName()); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
+    }
 }

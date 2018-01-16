@@ -67,7 +67,7 @@ dependencies {
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.github.bumptech.glide:glide:4.0.0'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+//    compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     implementation files('libs/AMap_Location_V3.6.1_20171012.jar')
     compile 'com.jakewharton:butterknife:8.6.0'
@@ -76,7 +76,7 @@ dependencies {
     implementation files('libs/jpush-android-3.1.0.jar')
     //    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.7'
     implementation project(':picture')
-    implementation 'com.android.support:support-v4:27.0.2'
+//    implementation 'com.android.support:support-v4:27.0.2'
     //    implementation project(':log')
     compile 'com.orhanobut:logger:1.15'
     implementation project(':tag')
@@ -87,21 +87,21 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     implementation files('libs/jmessage-android_v2.4.1.jar')
     compile 'com.lidong.pdf:android_pdf:1.0.1'
-    compile 'com.github.delight-im:git -AdvancedWebView:v3.0.0'
+    compile 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
     implementation project(':ball')
+
+    //友盟统计
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:analytics:latest.integration'
 }
 //
-//configurations.all {
-//    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-//        def requested = details.requested
-//        if (requested.group == 'com.android.support') {
-//            if (!requested.name.startsWith("support-v4")) {
-//                details.useVersion '27.0.2'
-//            }
-//
-//
-//        }
-//
-//
-//    }
-//}
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '25.3.0'
+            }
+        }
+    }
+}

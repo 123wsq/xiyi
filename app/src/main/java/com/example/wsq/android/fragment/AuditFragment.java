@@ -110,9 +110,16 @@ public class AuditFragment extends Fragment implements RadioGroup.OnCheckedChang
         rv_view.setAdapter(mAdapter);
 
         setRefresh();
-        getOrderTask(null, 0);
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mList.clear();
+        curPage =1;
+        getOrderTask(null, 0);
+    }
 
     public void setRefresh(){
 

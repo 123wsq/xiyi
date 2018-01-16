@@ -206,4 +206,14 @@ public class Urls {
      */
     public static final String  POINT_LIST= "/api/member/points_list";
 
+    /**
+     * 收入列表
+     */
+    public static final String RECEIPTS_LIST = "/api/member/brokerage";
+
+    /**
+     * 收入搜索列表
+     */
+    public static final String SEARCH_BROKERAGE = "/api/member/serch_brokerage";
+
 }

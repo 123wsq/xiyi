@@ -1,9 +1,6 @@
 package com.example.wsq.android.activity.cash;
 
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,23 +8,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.OnDialogClickListener;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.BankInfo;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/26.
  */
 
-public class BankActivity extends Activity{
+public class BankActivity extends BaseActivity {
 
     @BindView(R.id.ll_no_bank) LinearLayout ll_no_bank;
     @BindView(R.id.tv_title) TextView tv_title;
@@ -44,19 +40,17 @@ public class BankActivity extends Activity{
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_bank);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        init();
+    public int getByLayoutId() {
+        return R.layout.layout_bank;
     }
 
     public void init(){
 
         tv_title.setText("银行卡管理");
-        bankCode = UserFragment.mUserData.get(ResponseKey.BANK_CARD)+"";
+        bankCode = getIntent().getStringExtra(ResponseKey.BANK_CARD);
+        if (TextUtils.isEmpty(bankCode)){
+            bankCode = UserFragment.mUserData.get(ResponseKey.BANK_CARD)+"";
+        }
 
 
         if (TextUtils.isEmpty(bankCode)){
@@ -138,6 +132,7 @@ public class BankActivity extends Activity{
                 break;
             case R.id.iv_add:
                 IntentFormat.startActivity(this, AddBankActivity.class);
+                finish();
                 break;
             case R.id.tv_reseat_bank:
 

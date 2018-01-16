@@ -3,6 +3,7 @@ package com.example.wsq.android.activity;
 import android.graphics.Canvas;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class PdfReadActivity extends BaseActivity implements OnDrawListener, OnL
     @BindView(R.id.pdvView) PDFView pdvView;
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_page) TextView tv_page;
+    @BindView(R.id.rl_layout) RelativeLayout rl_layout;
 
     private LoddingDialog dialog;
 
@@ -41,6 +43,7 @@ public class PdfReadActivity extends BaseActivity implements OnDrawListener, OnL
         tv_title.setText(getIntent().getStringExtra("name")+"");
 
         dialog = new LoddingDialog(this);
+
 
         openPdf(getIntent().getStringExtra("url"), getIntent().getStringExtra("name"));
     }
@@ -79,6 +82,7 @@ public class PdfReadActivity extends BaseActivity implements OnDrawListener, OnL
     public void loadComplete(int nbPages) {
 
         if (dialog.isShowing()){
+//            rl_layout.setBackgroundColor(Color.parseColor("#00000000"));
             dialog.dismiss();
         }
     }

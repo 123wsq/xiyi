@@ -97,9 +97,9 @@
 
             />
         <ImageView
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:src="@drawable/image_right"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/image_right_next"
             android:layout_marginLeft="@dimen/default_margin"
             />
     </LinearLayout>
@@ -139,9 +139,9 @@
             android:singleLine="true"
             />
         <ImageView
-            android:layout_width="17dp"
-            android:layout_height="17dp"
-            android:src="@drawable/image_right"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/image_right_next"
             android:layout_marginLeft="@dimen/default_margin"
             />
     </LinearLayout>

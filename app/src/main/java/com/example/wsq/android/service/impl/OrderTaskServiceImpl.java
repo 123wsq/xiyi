@@ -27,14 +27,34 @@ public class OrderTaskServiceImpl implements OrderTaskService {
      * @throws Exception
      */
     @Override
-    public void onDeviceRepairs(Map<String, String> params, List<Map<String, Object>> list,  HttpResponseCallBack callBack) throws Exception {
+    public void onDeviceRepairs(final Context context, Map<String, String> params, List<Map<String, Object>> list,  final HttpResponseListener callBack){
 
-        //验证必填参数
-        ValidateParam.validateParam(params, ResponseKey.XINGHAO, ResponseKey.BIANHAO,
-                ResponseKey.DES, ResponseKey.TOKEN, ResponseKey.IMG_COUNT);
 
-//        OkHttpRequest.sendPost(Urls.TOREPAIR, params, callBack);
-        OkHttpRequest.uploadPostFile(Urls.TOREPAIR, params,list, callBack);
+
+
+        try {
+
+            //验证必填参数
+            ValidateParam.validateParam(params, ResponseKey.XINGHAO, ResponseKey.BIANHAO,
+                    ResponseKey.DES, ResponseKey.TOKEN, ResponseKey.IMG_COUNT);
+
+            OkHttpRequest.onPostUploadFile(Urls.TOREPAIR, params,list, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -334,14 +354,32 @@ public class OrderTaskServiceImpl implements OrderTaskService {
      * @throws Exception
      */
     @Override
-    public void onUpdateOrder(Map<String, String> params, List<Map<String, Object>> list, HttpResponseCallBack callBack) throws Exception {
+    public void onUpdateOrder(final Context context, Map<String, String> params, List<Map<String, Object>> list, final HttpResponseListener callBack){
 
-        //验证必填参数
-        ValidateParam.validateParam(params, ResponseKey.XINGHAO, ResponseKey.BIANHAO,
-                ResponseKey.DES, ResponseKey.TOKEN, ResponseKey.IMG_COUNT);
 
-//        OkHttpRequest.sendPost(Urls.TOREPAIR, params, callBack);
-        OkHttpRequest.uploadPostFile(Urls.ORDER_UPDATE, params,list, callBack);
+        try {
+
+            //验证必填参数
+            ValidateParam.validateParam(params, ResponseKey.XINGHAO, ResponseKey.BIANHAO,
+                    ResponseKey.DES, ResponseKey.TOKEN, ResponseKey.IMG_COUNT);
+
+            OkHttpRequest.onPostUploadFile(Urls.ORDER_UPDATE, params, list, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

@@ -1,39 +1,36 @@
 package com.example.wsq.android.activity;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Urls;
-import com.example.wsq.android.tools.AppStatus;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/19.
  */
 
-public class AboutActivity extends Activity{
+public class AboutActivity extends BaseActivity {
 
     @BindView(R.id.tv_title)
     TextView tv_title;
     @BindView(R.id.register_webView)
     WebView register_webView;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.layout_protocols);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
+    @Override
+    public int getByLayoutId() {
+        return R.layout.layout_protocols;
+    }
+
+    @Override
+    public void init() {
 
         tv_title.setText("关于蜥蜴");
 
@@ -64,9 +61,8 @@ public class AboutActivity extends Activity{
 
 
         register_webView.loadUrl(Urls.HOST+Urls.ABOUT);
-
-
     }
+
     @OnClick({R.id.iv_back})
     public void onClick(View view){
         switch (view.getId()){

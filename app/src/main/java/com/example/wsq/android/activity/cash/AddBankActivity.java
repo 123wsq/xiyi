@@ -1,8 +1,5 @@
 package com.example.wsq.android.activity.cash;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -12,9 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.UserFragment;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.utils.BankCardValidate;
 import com.example.wsq.android.utils.BankInfo;
 import com.example.wsq.android.utils.IntentFormat;
@@ -23,14 +20,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/26.
  */
 
-public class AddBankActivity extends Activity implements TextWatcher {
+public class AddBankActivity extends BaseActivity implements TextWatcher {
 
 
     @BindView(R.id.et_backcode)
@@ -44,13 +40,8 @@ public class AddBankActivity extends Activity implements TextWatcher {
     @BindView(R.id.tv_next) TextView tv_next;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_add_bank);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        init();
+    public int getByLayoutId() {
+        return R.layout.layout_add_bank;
     }
 
     public void init(){

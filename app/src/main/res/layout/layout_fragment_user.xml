@@ -36,7 +36,7 @@
                         android:id="@+id/roundImage_header"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_marginLeft="@dimen/defalut_layout_height"
+                        android:layout_marginLeft="@dimen/default_height_min"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/image_header_bg"
                         imagecontrol:border_inside_color="#FFFFFF"
@@ -55,7 +55,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/default_margin"
+                            android:layout_marginLeft="@dimen/radius_popup"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -100,10 +100,11 @@
                                 android:id="@+id/ll_sign_integral"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/default_radius"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 android:visibility="gone"
+                                android:layout_marginTop="@dimen/radius_popup"
+
                                 >
 
                                 <LinearLayout
@@ -112,7 +113,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:gravity="center"
-                                    android:layout_margin="@dimen/default_radius"
+
                                     >
 
                                     <ImageView
@@ -126,7 +127,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/default_radius"
-                                        android:text="积分 10分"
+                                        android:text="积分 0分"
                                         android:textColor="@color/color_white"
                                         android:textSize="@dimen/default_text_size" />
                                 </LinearLayout>
@@ -154,7 +155,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/default_margin"
+                                android:layout_marginRight="@dimen/radius_popup"
                                 android:src="@drawable/image_left" />
                         </LinearLayout>
 
@@ -499,6 +500,53 @@
                 android:background="@color/color_white">
 
                 <LinearLayout
+                    android:id="@+id/ll_receipts"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_money_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textSize="@dimen/default_text_max_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_radius"
+                        android:text="收入" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_pay_Record"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_pay_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textSize="@dimen/default_text_max_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_radius"
+                        android:text="提现" />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:id="@+id/ll_balance"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -521,50 +569,8 @@
                         android:text="余额" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_pay_Record"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_pay_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="@dimen/default_text_max_size"
-                        android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_radius"
-                        android:text="账单" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_money_amount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0.00"
-                        android:textSize="@dimen/default_text_max_size"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_radius"
-                        android:text="收入" />
-                </LinearLayout>
 
             </LinearLayout>
 

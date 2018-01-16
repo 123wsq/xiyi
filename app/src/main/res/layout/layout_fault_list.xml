@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/defalut_layout_height"
                     android:gravity="center"
-                    android:text="您还没有订单~"
+                    android:text="您还没有资料~"
                     android:textColor="@color/color_gray"
                     android:textSize="@dimen/default_text_title_size"
 

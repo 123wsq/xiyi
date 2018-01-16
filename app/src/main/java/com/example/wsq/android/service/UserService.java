@@ -259,4 +259,22 @@ public interface UserService {
      */
     void onSignList(final Context context, Map<String, String> param, final HttpResponseListener listener);
 
+
+    /**
+     * 收入列表
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void getReceiptsList(final Context context, Map<String, String> param, final HttpResponseListener listener);
+
+
+    /**
+     * 收入明细
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void getReceiptsInfo(final  Context context, Map<String, String> param, final HttpResponseListener listener);
+
 }

@@ -1,10 +1,7 @@
 package com.example.wsq.android.activity.order;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +10,12 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.OrderMessageAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 
 import java.util.ArrayList;
@@ -27,14 +24,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/20.
  */
 
-public class OrderMessageInfoActivity extends Activity{
+public class OrderMessageInfoActivity extends BaseActivity {
 
     @BindView(R.id.tv_title)TextView tv_title;
     @BindView(R.id.rv_RecyclerView) RecyclerView rv_RecyclerView;
@@ -49,13 +45,8 @@ public class OrderMessageInfoActivity extends Activity{
     private OrderMessageAdapter mAdapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_order_message_info);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        init();
+    public int getByLayoutId() {
+        return R.layout.layout_order_message_info;
     }
 
     public void init(){

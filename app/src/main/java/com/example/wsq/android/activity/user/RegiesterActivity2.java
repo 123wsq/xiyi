@@ -1,9 +1,6 @@
 package com.example.wsq.android.activity.user;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.ValidateParam;
@@ -22,14 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/11.
  */
 
-public class RegiesterActivity2 extends Activity {
+public class RegiesterActivity2 extends BaseActivity {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_xueli) TextView tv_xueli;
@@ -43,15 +40,9 @@ public class RegiesterActivity2 extends Activity {
     private CustomPopup popup;
 
 
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.layout_regiester2);
-        ButterKnife.bind(this);
-        init();
-
+    public int getByLayoutId() {
+        return R.layout.layout_regiester2;
     }
 
 

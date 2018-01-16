@@ -1,10 +1,7 @@
 package com.example.wsq.android.activity.cash;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +11,13 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.CashDepositAdapter;
+import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.OnDefaultClickListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
-import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.IntentFormat;
 
@@ -30,14 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wsq on 2017/12/26.
  */
 
-public class CashDepositListActivity extends Activity{
+public class CashDepositListActivity extends BaseActivity {
 
     @BindView(R.id.rv_RecyclerView)
     RecyclerView rv_RecyclerView;
@@ -51,14 +47,10 @@ public class CashDepositListActivity extends Activity{
     private List<Map<String, Object>> mData;
     private SharedPreferences shared;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.layout_cash_deposit_list);
-        AppStatus.onSetStates(this);
-        ButterKnife.bind(this);
-        init();
+    @Override
+    public int getByLayoutId() {
+        return R.layout.layout_cash_deposit_list;
     }
 
     public void init(){
