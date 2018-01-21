@@ -237,5 +237,19 @@ public class ResponseKey {
 
     public static final String BROKERAGE_MOENY = "brokerage_moeny";
 
+    public static final String BAOZHENGJIN = "baozhengjin";
+
+    public static final String AUDIT_MESSAGE = "audit_message";
+
+    public static final String DEVICE_TYPE = "device_type";
+
+    public static final String DEVICE_ID = "device_id";
+
+    public static final String POINT = "point";
+
+    public static final String CID = "cid";
+
+    public static final String ARTICLES_LIST = "article_list";
+
 
 }

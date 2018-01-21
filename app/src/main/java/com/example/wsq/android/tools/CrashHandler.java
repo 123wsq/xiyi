@@ -8,7 +8,6 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -163,7 +162,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         sb.append(result);
 
 
-        MobclickAgent.reportError(mContext, sb.toString());
+//        MobclickAgent.reportError(mContext, sb.toString());
 //        try {
 //            long timestamp = System.currentTimeMillis();
 //            String time = formatter.format(new Date());

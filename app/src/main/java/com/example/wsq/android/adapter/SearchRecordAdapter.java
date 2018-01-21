@@ -1,7 +1,6 @@
 package com.example.wsq.android.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.activity.order.DeviceListActivity;
 import com.example.wsq.android.activity.FaultActivity;
 import com.example.wsq.android.activity.SearchActivity;
-import com.example.wsq.android.constant.Constant;
+import com.example.wsq.android.activity.order.DeviceListActivity;
 import com.example.wsq.android.constant.ResponseKey;
+import com.example.wsq.android.db.dao.DbKeys;
+import com.example.wsq.android.db.dao.impl.SearchDbImpl;
+import com.example.wsq.android.db.dao.inter.SearchDbInter;
 import com.example.wsq.android.utils.IntentFormat;
 
 import java.util.HashMap;
@@ -30,11 +31,11 @@ public class SearchRecordAdapter extends RecyclerView.Adapter<SearchRecordAdapte
 
     private Context mContext;
     private List<Map<String, String>> mData;
-    SharedPreferences shared;
+    private SearchDbInter searchDbInter;
     public SearchRecordAdapter(Context context, List<Map<String, String>> list){
         this.mContext = context;
         this.mData = list;
-        shared = mContext.getSharedPreferences(Constant.SHARED_RECORD, Context.MODE_PRIVATE);
+        searchDbInter = new SearchDbImpl();
     }
 
     @Override
@@ -48,7 +49,7 @@ public class SearchRecordAdapter extends RecyclerView.Adapter<SearchRecordAdapte
     @Override
     public void onBindViewHolder(SearchRecordAdapter.MyViewHolder holder, int position) {
 
-        holder.tv_search_name.setText(mData.get(position).get("content"));
+        holder.tv_search_name.setText(mData.get(position).get(DbKeys.CONTENT));
     }
 
 
@@ -73,18 +74,18 @@ public class SearchRecordAdapter extends RecyclerView.Adapter<SearchRecordAdapte
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.ll_search_delete:
-                    shared.edit().remove(mData.get(getPosition()).get("key")).commit();
+                    searchDbInter.removeData(mContext, mData.get(getPosition()).get(DbKeys.CONTENT));
                     mData.remove(getPosition());
                     notifyDataSetChanged();
                     break;
                 case R.id.tv_search_name:
                     if (SearchActivity.curPage==1 || SearchActivity.curPage==2) {
                         Map<String, Object> param = new HashMap<>();
-                        param.put(ResponseKey.KEYWORDS, mData.get(getPosition()).get("content"));
+                        param.put(ResponseKey.KEYWORDS, mData.get(getPosition()).get(DbKeys.CONTENT));
                         IntentFormat.startActivity(mContext, DeviceListActivity.class, param);
                     }else {
                         Map<String, Object> param = new HashMap<>();
-                        param.put(ResponseKey.KEYWORDS, mData.get(getPosition()).get("content"));
+                        param.put(ResponseKey.KEYWORDS, mData.get(getPosition()).get(DbKeys.CONTENT));
                         IntentFormat.startActivity(mContext, FaultActivity.class, param);
                     }
                     break;

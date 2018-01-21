@@ -12,7 +12,6 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.utils.IntentFormat;
-import com.example.wsq.plugin.umeng.UmengEventUtils;
 
 
 /**
@@ -28,7 +27,6 @@ public class StartActivity extends Activity {
 
         setContentView(R.layout.layout_start);
         initView();
-        UmengEventUtils.toInstallClick(this);
     }
 
 

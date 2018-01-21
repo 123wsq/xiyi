@@ -10,6 +10,7 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.tools.OkHttpRequest;
 import com.example.wsq.android.tools.RegisterParam;
+import com.example.wsq.android.utils.SystemUtils;
 import com.example.wsq.android.utils.ValidateParam;
 import com.orhanobut.logger.Logger;
 
@@ -69,6 +70,35 @@ public class UserServiceImpl implements UserService{
     }
 
     /**
+     * 验证手机  获取积分
+     * @param context
+     * @param param
+     */
+    @Override
+    public void validatePhone(final Context context, Map<String, String> param) {
+
+        try {
+
+            ValidateParam.validateParam(param, ResponseKey.DEVICE_TYPE, ResponseKey.DEVICE_ID);
+
+            OkHttpRequest.sendHttpPost(Urls.DEVICE_DESC, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    RegisterParam.POINT = result.get(ResponseKey.POINT)+"";
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
      * 用户注册
      * @param params
      * @throws Exception
@@ -94,7 +124,9 @@ public class UserServiceImpl implements UserService{
         params.put(ResponseKey.SFZ1, RegisterParam.SFZ1);
         params.put(ResponseKey.SFZ2, RegisterParam.SFZ2);
         params.put(ResponseKey.DIQU, RegisterParam.DIQU);
-
+        params.put(ResponseKey.DEVICE_TYPE, "1"); //设备类型   1 android 2 ios
+        params.put(ResponseKey.DEVICE_ID, SystemUtils.getIMEI(context));
+        params.put(ResponseKey.POINT, RegisterParam.POINT);
 
         try {
 
@@ -175,7 +207,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
-                    callBack.onFailure();
+//                    callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -1064,6 +1096,192 @@ public class UserServiceImpl implements UserService{
         } catch (Exception e) {
             listener.onFailure();
             Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 获取上传资料记录
+     * @param context
+     * @param param
+     */
+    @Override
+    public void onGetShareRecordList(Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+            ValidateParam.validateParam(param, ResponseKey.TOKEN);
+
+            OkHttpRequest.sendHttpGet(Urls.MY_ARTICLES, param, new HttpResponseCallBack() {
+                @Override
+                public void callBack(Map<String, Object> result) {
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    listener.onFailure();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 创建资料
+     * @param context
+     * @param param
+     */
+    @Override
+    public void onCreateShare(Context context, Map<String, String> param,List<Map<String, Object>> fileList, final HttpResponseListener listener) {
+
+        try {
+            ValidateParam.validateParam(param, ResponseKey.TOKEN, ResponseKey.TITLE, ResponseKey.CID,
+                    ResponseKey.CAT, ResponseKey.DES, ResponseKey.CONTENT);
+
+            OkHttpRequest.uploadPostFile(Urls.ADD_ARTICLES, param, fileList,new HttpResponseCallBack() {
+                @Override
+                public void callBack(Map<String, Object> result) {
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    listener.onFailure();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 删除资料
+     * @param context
+     * @param param
+     */
+    @Override
+    public void onRemoveShare(Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+            ValidateParam.validateParam(param, "");
+
+            OkHttpRequest.sendHttpGet("", param, new HttpResponseCallBack() {
+                @Override
+                public void callBack(Map<String, Object> result) {
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    listener.onFailure();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 提交编辑信息
+     * @param context
+     * @param param
+     */
+    @Override
+    public void onSubmitShare(Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+            ValidateParam.validateParam(param, "");
+
+            OkHttpRequest.sendHttpGet("", param, new HttpResponseCallBack() {
+                @Override
+                public void callBack(Map<String, Object> result) {
+                    listener.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    listener.onFailure();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 上传文件
+     * @param context
+     * @param param
+     * @param listener
+     */
+    @Override
+    public void onUploadFile(final Context context, Map<String, String> param, List<Map<String, Object>> list, final HttpResponseListener listener) {
+
+        try {
+            //必填参数验证
+            ValidateParam.validateParam(param,ResponseKey.TOKEN);
+
+            OkHttpRequest.uploadPostFile(Urls.UPLOAD_FILE, param,list,  new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+                    if (listener != null) {
+                        listener.onSuccess(result);
+                    }
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    if (listener != null) {
+                        listener.onFailure();
+                    }
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+            if (listener != null) {
+                listener.onFailure();
+            }
+
+        }
+    }
+
+    /**
+     * 删除文件
+     * @param context
+     * @param param
+     * @param listener
+     */
+    @Override
+    public void onRemoveFile(final Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+            //必填参数验证
+            ValidateParam.validateParam(param,ResponseKey.TOKEN);
+
+            OkHttpRequest.sendHttpGet(Urls.UPLOAD_USER_HEADER, param,  new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    if (listener != null) {
+                        listener.onSuccess(result);
+                    }
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    if (listener != null) {
+                        listener.onFailure();
+                    }
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+            if (listener != null) {
+                listener.onFailure();
+            }
+
         }
     }
 }

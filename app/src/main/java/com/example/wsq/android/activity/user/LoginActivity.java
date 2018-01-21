@@ -25,7 +25,6 @@ import com.example.wsq.android.tools.JGIM;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.LoddingDialog;
 import com.orhanobut.logger.Logger;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -201,7 +200,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 shared.edit().putString(Constant.SHARED.ID, data.get(ResponseKey.ID).toString()).commit();
                 IntentFormat.startActivity(LoginActivity.this, MainActivity.class);
 
-                MobclickAgent.onProfileSignIn(username);
 
 
                 /**

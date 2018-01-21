@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.example.wsq.android.tools.CrashHandler;
-import com.example.wsq.plugin.umeng.UmengUtils;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
@@ -20,10 +19,7 @@ public class MApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        //友盟初始化
-        UmengUtils.initUmeng(this);
-
+        
 
         CrashHandler.getInstance().init(getApplicationContext());
 

@@ -64,6 +64,7 @@
             android:minHeight="70dp"
             android:text="nnnnn"
             android:textSize="@dimen/default_text_size"
+            android:textColor="@android:color/black"
             android:visibility="gone" />
 
         <LinearLayout

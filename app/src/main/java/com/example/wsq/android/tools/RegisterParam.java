@@ -42,4 +42,6 @@ public class RegisterParam {
     public static String SFZ2 = "";
 
     public static String DIQU = "";
+
+    public static String POINT = "";
 }

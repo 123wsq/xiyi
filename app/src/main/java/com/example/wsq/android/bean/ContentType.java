@@ -8,7 +8,7 @@ package com.example.wsq.android.bean;
 public enum ContentType {
 
     TITLE("标题",1), CREATE_TIME("创建时间",2), CONTENT_FONT("文字内容", 3), CONTENT_IMG("内容图片", 4),
-    ICON("图标",5), INTRODUCTION("简介", 6), ADDACHMENT("附件", 7);
+    ICON("图标",5), INTRODUCTION("简介", 6), ADDACHMENT("附件", 7), ARTICLES("分类", 8);
 
     private String name;
 
@@ -31,6 +31,21 @@ public enum ContentType {
         }
         return null;
     }
+
+    /**
+     * 通过index获取对象
+     * @param index
+     * @return
+     */
+    public static ContentType getType(int index){
+        for (ContentType c : ContentType.values()) {
+            if (c.getIndex() == index) {
+                return c;
+            }
+        }
+        return null;
+    }
+
     // get set 方法
     public String getName() {
         return name;

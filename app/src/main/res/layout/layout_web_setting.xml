@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/default_backgroud_color"
+    android:fitsSystemWindows="true"
     android:id="@+id/ll_layout"
     >
     <include layout="@layout/layout_default_title"></include>
@@ -14,37 +15,40 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_margin="@dimen/default_margin_3"
-            android:gravity="center_horizontal"
             >
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/default_height_4"
                 android:text="标题"
                 android:gravity="center_vertical"
+                android:drawableRight="@drawable/image_important"
                 />
+
             <EditText
                 android:id="@+id/tv_web_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/default_height_3"
-                android:background="@drawable/shape_edit_stroken"
+                android:background="@drawable/shape_edit_backgroud"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/default_padding_3"
                 android:paddingRight="@dimen/default_padding_3"
+                android:singleLine="true"
                 />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/default_height_4"
                 android:text="介绍"
                 android:gravity="center_vertical"
+                android:drawableRight="@drawable/image_important"
                 />
             <EditText
                 android:id="@+id/tv_web_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="100dp"
-                android:background="@drawable/shape_edit_stroken"
+                android:background="@drawable/shape_edit_backgroud"
                 android:padding="@dimen/default_padding_3"
                 android:gravity="top"
                 />
@@ -55,6 +59,37 @@
                 android:gravity="right"
                 android:text="0 / 50"
                 />
+
+            <LinearLayout
+                android:id="@+id/ll_layout_class"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_height_3"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/default_height_4"
+                    android:text="分类"
+                    android:gravity="center_vertical"
+                    android:drawableRight="@drawable/image_important"
+                    />
+                <TextView
+                    android:id="@+id/tv_class"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center_vertical"
+                    android:paddingRight="@dimen/default_padding_3"
+                    />
+                <ImageView
+                    android:layout_width="@dimen/default_icon_size_5"
+                    android:layout_height="@dimen/default_icon_size_5"
+                    android:src="@drawable/image_right_next"
+                    />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_upload_icon"
@@ -69,14 +104,16 @@
                     android:layout_height="@dimen/default_height_4"
                     android:text="上传图标"
                     android:gravity="center_vertical"
+                    android:drawableRight="@drawable/image_important"
                     />
                 <TextView
                     android:id="@+id/tv_icon_name"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-
-
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="@dimen/default_padding_3"
+                    android:singleLine="true"
                     />
                 <ImageView
                     android:layout_width="@dimen/default_icon_size_5"
@@ -85,12 +122,20 @@
                     />
 
             </LinearLayout>
-            <ImageView
-                android:id="@+id/iv_icon"
-                android:layout_width="@dimen/default_image_size_3"
-                android:layout_height="@dimen/default_image_size_3"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                >
 
-                />
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="@dimen/default_image_size_3"
+                    android:layout_height="@dimen/default_image_size_3"
+
+                    />
+            </LinearLayout>
+
 
 
             <TextView

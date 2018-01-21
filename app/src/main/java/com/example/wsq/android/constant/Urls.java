@@ -16,6 +16,9 @@ public class Urls {
     //注册
     public static final String REGISTER = "/api/doRegister";
 
+    //验证识别号
+    public static final String DEVICE_DESC = "/api/detection_uid";
+
     //获取验证码
     public static final String GET_VALIDATE_CODE = "/api/yanzheng";
 
@@ -215,5 +218,20 @@ public class Urls {
      * 收入搜索列表
      */
     public static final String SEARCH_BROKERAGE = "/api/member/serch_brokerage";
+
+    /**
+     * 上传文件
+     */
+    public static final String UPLOAD_FILE = "/api/member/add_img";
+
+    /**
+     * 创建资料
+     */
+    public static final String ADD_ARTICLES = "/api/member/add_articles";
+
+    /**
+     * 我的资料
+     */
+    public static final String MY_ARTICLES = "/api/member/member_articles";
 
 }

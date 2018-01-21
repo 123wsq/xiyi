@@ -1,1 +1,1 @@
-include ':app', ':ucrop', ':picture', ':log', ':tag', ':refresh', ':nicevideoplayer', ':vitamio', ':android-pdf-viewer', ':ball'
+include ':app', ':picture', ':tag', ':vitamio', ':ucrop', ':refresh'

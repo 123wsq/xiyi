@@ -13,7 +13,6 @@
         android:allowBackup="true"
         android:icon="@drawable/image_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".base.MApplication"
@@ -70,9 +69,11 @@
         <activity android:name=".activity.cash.CashDepositInfoActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.PdfReadActivity" android:configChanges="orientation|screenSize" ></activity>
         <activity android:name=".activity.WordReadActivity" android:configChanges="orientation|screenSize"></activity>
-        <activity android:name=".activity.EditWebSettingActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.EditWebActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.share.EditWebSettingActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.share.ShareRecordActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.share.EditWebActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
         <activity android:name=".activity.cash.ReceiptsActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.share.EditRecordActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.order.VideoPlayActivity"
             android:process=":vitamio"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -238,10 +239,6 @@
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <meta-data android:name="JPUSH_APPKEY" android:value="a83e1f9b8f79b4a95052249b" /> <!--  </>值来自开发者平台取得的AppKey-->
 
-
-        <!--友盟统计-->
-        <meta-data android:value="5a3ca74c8f4a9d72fd000322" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="wandoujia" android:name="UMENG_CHANNEL"/>
 
     </application>
 

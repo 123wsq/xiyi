@@ -5,16 +5,37 @@
     android:orientation="vertical"
     android:background="@color/default_backgroud_color"
     android:id="@+id/ll_layout"
+    android:fitsSystemWindows="true"
     >
     <include layout="@layout/layout_default_title"></include>
 
-
-    <WebView
-        android:id="@+id/wv_WebView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        />
+        >
+        <WebView
+            android:id="@+id/wv_WebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <LinearLayout
+            android:id="@+id/ll_insert_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_height_4"
+            android:background="#33000000"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="请选择插入的内容"
+                android:textSize="@dimen/default_text_size_3"
+                android:gravity="center"
+                android:textColor="@color/color_white"
+                />
+        </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout

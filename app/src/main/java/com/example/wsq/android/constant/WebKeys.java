@@ -30,4 +30,6 @@ public class WebKeys {
     public static final String ICON = "icon";
 
     public static final String ADDACHMENT = "addachment";
+
+    public static final String ARTICLES = "articles";
 }

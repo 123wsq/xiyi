@@ -198,11 +198,13 @@ public class OkHttpRequest {
 
                 String result = UnicodeUtil.unicodeToString(response);
 
-                Logger.json(result);
+                Logger.d(response);
+//                Logger.json(result);
                 try {
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
                     callBack.callBack(map);
                 } catch (Exception e) {
+                    callBack.onCallFail("数据解析异常");
                     e.printStackTrace();
                 }
             }
@@ -249,7 +251,9 @@ public class OkHttpRequest {
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
                     callBack.callBack(map);
                 } catch (Exception e) {
+                    callBack.onCallFail("JSON解析异常");
                     e.printStackTrace();
+
                 }
             }
 

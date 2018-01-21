@@ -186,16 +186,19 @@ public class CustomDefaultDialog extends Dialog {
 
             //判断显示按钮  1.当两个按钮都存在的情况下    并且不需要返回值的时候
             if (okListener!=null && cancelListener!= null){
+                dialog_ok.setBackgroundResource(R.drawable.shape_dialog_left);
+                dialog_cancel.setBackgroundResource(R.drawable.shape_dialog_right);
                 dialog_cancel.setVisibility(View.VISIBLE);
                 dialog_ok.setVisibility(View.VISIBLE);
-                dialog_ok.setVisibility(View.VISIBLE);
+                dialig_view.setVisibility(View.VISIBLE);
             }
             // 2 当两个按钮都存在  并且需要返回值的情况
             if (okListenerInput !=null && cancelListener!= null){
-
+                dialog_ok.setBackgroundResource(R.drawable.shape_dialog_left);
+                dialog_cancel.setBackgroundResource(R.drawable.shape_dialog_right);
                 dialog_cancel.setVisibility(View.VISIBLE);
                 dialog_ok.setVisibility(View.VISIBLE);
-                dialog_ok.setVisibility(View.VISIBLE);
+                dialig_view.setVisibility(View.VISIBLE);
             }
 
             /**
@@ -203,14 +206,14 @@ public class CustomDefaultDialog extends Dialog {
              * 1 只需要确定按钮
              */
 
-             if (okListener != null || okListenerInput != null &&  cancelListener == null) {
+             if ((okListener != null || okListenerInput != null) &&  cancelListener == null) {
                 dialog_ok.setBackgroundResource(R.drawable.shape_dialog_buttom);
                 dialog_ok.setVisibility(View.VISIBLE);
                 dialog_cancel.setVisibility(View.GONE);
                 dialig_view.setVisibility(View.GONE);
              }
             //只需要取消按钮
-            if (okListener == null && okListenerInput == null &&  cancelListener != null) {
+            if ((okListener == null && okListenerInput == null) &&  cancelListener != null) {
                 dialog_cancel.setBackgroundResource(R.drawable.shape_dialog_buttom);
                 dialog_cancel.setVisibility(View.VISIBLE);
                 dialog_ok.setVisibility(View.GONE);

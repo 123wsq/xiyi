@@ -6,8 +6,10 @@ package com.example.wsq.android.bean;
 
 public enum FileType {
 
-    PDF(".pdf",1), DOCX(".docx",2), EXCEL(".excel", 3), TXT(".txt", 4),
-    JPG(".jpg",5), PNG(".png",6), DOC(".doc",7);
+    PDF(".pdf",1), DOCX(".docx",2), EXCEL(".xls", 3), TXT(".txt", 4),
+    JPG(".jpg",5), PNG(".png",6), DOC(".doc",7), PPT(".ppt",8), ZIP(".zip",9),
+    RAR(".rar",10), PSD(".psd", 11), MP3(".mp3", 12), EXE(".exe",13),
+    MP4(".mp4",14), CHM(".chm",15);
 
     private String name;
 

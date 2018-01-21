@@ -4,14 +4,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="@color/default_backgroud_color"
     >
     <include layout="@layout/layout_default_title"></include>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/defalut_layout_height"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="可退金额"
+            android:layout_marginLeft="@dimen/default_margin_3"
+            android:gravity="center_vertical"
+            />
+        <TextView
+            android:id="@+id/tv_deposit_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="0"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_margin_3"
+            />
+
+
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
+        android:layout_marginTop="@dimen/default_margin_3"
         />
 
 

@@ -265,6 +265,9 @@ class RequestUtil {
                             builder.addFormDataPart(entry.getKey(),f.getName(), RequestBody.create(MediaType.parse(fileType), f));
                         }
 
+                    }else if(entry.getKey().equals(ResponseKey.THUMB)){
+                        File f = (File) map.get(ResponseKey.THUMB);
+                        builder.addFormDataPart(ResponseKey.THUMB,f.getName(), RequestBody.create(MediaType.parse(fileType), f));
                     }
 
                 }

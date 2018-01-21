@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.AboutWeActivity;
-import com.example.wsq.android.activity.EditWebSettingActivity;
 import com.example.wsq.android.activity.KnowledgeActivity;
 import com.example.wsq.android.activity.cash.BalanceActivity;
 import com.example.wsq.android.activity.cash.BankActivity;
@@ -30,6 +29,7 @@ import com.example.wsq.android.activity.cash.BillDetailsActivity;
 import com.example.wsq.android.activity.cash.ReceiptsActivity;
 import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.order.OrderActivity;
+import com.example.wsq.android.activity.share.ShareRecordActivity;
 import com.example.wsq.android.activity.user.CollectActivity;
 import com.example.wsq.android.activity.user.IntegralActivity;
 import com.example.wsq.android.activity.user.LoginActivity;
@@ -351,7 +351,7 @@ public class UserFragment extends Fragment {
                 break;
             case R.id.ll_device_server_share:  //服务工程师   分享
 
-                IntentFormat.startActivity(getActivity(), EditWebSettingActivity.class);
+                IntentFormat.startActivity(getActivity(), ShareRecordActivity.class);
 
                 break;
             case R.id.ll_device_knowledge:  //圈内知识

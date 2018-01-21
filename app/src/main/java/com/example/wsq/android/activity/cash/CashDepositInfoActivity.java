@@ -42,6 +42,8 @@ public class CashDepositInfoActivity extends BaseActivity {
     @BindView(R.id.tv_create_time) TextView tv_create_time;
     @BindView(R.id.tv_apply_success) TextView tv_apply_success;
     @BindView(R.id.tv_progress) TextView tv_progress;
+    @BindView(R.id.tv_reject) TextView tv_reject;
+    @BindView(R.id.ll_reject_content) LinearLayout ll_reject_content;
 
     SharedPreferences shared;
     private UserService userService;
@@ -143,9 +145,12 @@ public class CashDepositInfoActivity extends BaseActivity {
             tv_cash_state.setText("处理中");
         }else if(state ==1){
             tv_cash_state.setText("审核成功");
-        }else{
+        }else if(state == 2){
             tv_cash_state.setText("已驳回，请联系客服");
+            ll_reject_content.setVisibility(View.VISIBLE);
+            tv_reject.setText(data.get(ResponseKey.AUDIT_MESSAGE)+"");
         }
+
 
         tv_apply_time.setText(DateUtil.onDateFormat(data.get(ResponseKey.CREAT_AT)+"", DateUtil.DATA_FORMAT_2));
 

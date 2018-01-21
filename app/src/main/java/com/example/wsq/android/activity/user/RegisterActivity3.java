@@ -17,12 +17,14 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.activity.ProtocolsActivity;
 import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
+import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.IdentityCardValidate;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.SystemUtils;
 import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateDataFormat;
 import com.example.wsq.android.utils.ValidateParam;
@@ -65,6 +67,58 @@ public class RegisterActivity3 extends BaseActivity {
         userService = new UserServiceImpl();
         tv_title.setText("会员注册");
 
+        onTextChange();
+        onValidatePhone();
+    }
+
+    Handler handler = new Handler(){};
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            curLen--;
+            if (curLen == 0){
+                curLen = 60;
+                tv_getCode.setText("获取验证码");
+                tv_getCode.setBackgroundColor(R.drawable.shape_button);
+                tv_getCode.setClickable(true);
+            }else{
+                tv_getCode.setText("请耐心等待 "+curLen+"s");
+                tv_getCode.setClickable(false);
+                
+                tv_getCode.setBackgroundColor(R.drawable.shape_disable_button);
+
+                handler.postDelayed(this, 1000);
+            }
+
+        }
+    };
+    @OnClick({R.id.tv_protocols, R.id.iv_back, R.id.tv_register, R.id.tv_getCode})
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_protocols:  //点击阅读协议
+
+                    startActivity(new Intent(RegisterActivity3.this, ProtocolsActivity.class));
+
+                break;
+            case  R.id.iv_back:
+                moveTaskToBack(false);
+//                finish();
+                break;
+            case R.id.tv_register:  //注册
+
+                onRegister();
+                break;
+            case R.id.tv_getCode: //获取验证码
+                getValidateCode();
+
+                break;
+        }
+    }
+
+    /**
+     * 文本输入监听
+     */
+    public void onTextChange(){
 
         cb_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -126,85 +180,6 @@ public class RegisterActivity3 extends BaseActivity {
         });
     }
 
-    Handler handler = new Handler(){};
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            curLen--;
-            if (curLen == 0){
-                curLen = 60;
-                tv_getCode.setText("获取验证码");
-                tv_getCode.setBackgroundColor(R.drawable.shape_button);
-                tv_getCode.setClickable(true);
-            }else{
-                tv_getCode.setText("请耐心等待 "+curLen+"s");
-                tv_getCode.setClickable(false);
-                
-                tv_getCode.setBackgroundColor(R.drawable.shape_disable_button);
-
-                handler.postDelayed(this, 1000);
-            }
-
-        }
-    };
-    @OnClick({R.id.tv_protocols, R.id.iv_back, R.id.tv_register, R.id.tv_getCode})
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_protocols:  //点击阅读协议
-
-                    startActivity(new Intent(RegisterActivity3.this, ProtocolsActivity.class));
-
-                break;
-            case  R.id.iv_back:
-                moveTaskToBack(false);
-//                finish();
-                break;
-            case R.id.tv_register:  //注册
-                if (validateParam(0)){
-                    if (cb_checkBox.isChecked()) {
-                        Map<String, String> map = new HashMap<>();
-                        userService.register(this, map, new HttpResponseListener() {
-                            @Override
-                            public void onSuccess(Map<String, Object> result) {
-                                IntentFormat.startActivity(RegisterActivity3.this, LoginActivity.class);
-                            }
-
-                            @Override
-                            public void onFailure() {
-
-                            }
-                        });
-
-                    }else{
-                        Toast.makeText(RegisterActivity3.this, "请选择阅读协议", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(RegisterActivity3.this, "输入参数格式错误", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.tv_getCode: //获取验证码
-                if(validateParam(1)){
-                    Map<String, String> map = new HashMap<>();
-                    userService.getValidateCode(this, map, new HttpResponseListener() {
-                        @Override
-                        public void onSuccess(Map<String, Object> result) {
-                            handler.postDelayed(runnable, 1000);
-                        }
-
-                        @Override
-                        public void onFailure() {
-
-                        }
-                    });
-
-                }else{
-                    Toast.makeText(RegisterActivity3.this, "输入参数格式错误", Toast.LENGTH_SHORT).show();
-                }
-
-
-                break;
-        }
-    }
 
     /**
      *
@@ -264,6 +239,73 @@ public class RegisterActivity3 extends BaseActivity {
 
         return true;
     }
+
+    /**
+     * 用户注册
+     */
+    public void onRegister(){
+
+        if (validateParam(0)){
+            if (cb_checkBox.isChecked()) {
+                Map<String, String> map = new HashMap<>();
+                userService.register(this, map, new HttpResponseListener() {
+                    @Override
+                    public void onSuccess(Map<String, Object> result) {
+                        IntentFormat.startActivity(RegisterActivity3.this, LoginActivity.class);
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
+                });
+
+            }else{
+                Toast.makeText(RegisterActivity3.this, "请选择阅读协议", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(RegisterActivity3.this, "输入参数格式错误", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 验证手机  获取积分
+     */
+    public void onValidatePhone(){
+
+        Map<String, String> param = new HashMap<>();
+        param.put(ResponseKey.DEVICE_TYPE, "1");
+        param.put(ResponseKey.DEVICE_ID, SystemUtils.getIMEI(this));
+
+        userService.validatePhone(this, param);
+    }
+
+
+    /**
+     * 获取验证码
+     */
+    public void getValidateCode(){
+
+        if(validateParam(1)){
+            Map<String, String> map = new HashMap<>();
+            userService.getValidateCode(this, map, new HttpResponseListener() {
+                @Override
+                public void onSuccess(Map<String, Object> result) {
+                    handler.postDelayed(runnable, 1000);
+                }
+
+                @Override
+                public void onFailure() {
+
+                }
+            });
+
+        }else{
+            Toast.makeText(RegisterActivity3.this, "输入参数格式错误", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

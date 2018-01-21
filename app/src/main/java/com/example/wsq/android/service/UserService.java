@@ -28,6 +28,14 @@ public interface UserService {
      */
     void loginOut(Map<String, String> params) throws Exception;
 
+
+    /**
+     * 验证手机
+     * @param context
+     * @param params
+     * @param callBack
+     */
+    void validatePhone(Context context, Map<String, String> params);
     /**
      * 用户注册
      * @param params
@@ -277,4 +285,51 @@ public interface UserService {
      */
     void getReceiptsInfo(final  Context context, Map<String, String> param, final HttpResponseListener listener);
 
+
+    /**
+     * 获取自己上传资料的记录
+     * @param context
+     * @param param
+     */
+    void onGetShareRecordList(final Context context, Map<String, String> param, final HttpResponseListener listener);
+
+    /**
+     * 创建资料分享
+     * @param context
+     * @param param
+     */
+    void onCreateShare(final Context context, Map<String, String> param, List<Map<String, Object>> fileList, final HttpResponseListener listener);
+
+
+    /**
+     * 删除资料分享
+     * @param context
+     * @param param
+     */
+    void onRemoveShare(final Context context, Map<String, String> param, final HttpResponseListener listener);
+
+
+    /**
+     * 提交编辑的资料信息
+     * @param context
+     * @param param
+     */
+    void onSubmitShare(final Context context, Map<String, String> param, final HttpResponseListener listener);
+
+    /**
+     * 上传文件
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void onUploadFile(final Context context, Map<String, String> param, List<Map<String, Object>> list, final HttpResponseListener listener);
+
+
+    /**
+     * 删除文件
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void onRemoveFile(final Context context, Map<String, String> param, final HttpResponseListener listener);
 }

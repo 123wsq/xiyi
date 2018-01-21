@@ -126,4 +126,20 @@ public final class DateUtil {
         return formatter.format(calendar.getTime())+"";
     }
 
+    /**
+     *将秒转换成日期时间
+     * @param second
+     * @param format
+     * @return
+     */
+    public static String OnSecondForDate(String second, String format){
+
+        DateFormat formatter = new SimpleDateFormat(format);
+        long now = Long.parseLong(second+"000");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(now);
+
+        return formatter.format(calendar.getTime())+"";
+    }
+
 }

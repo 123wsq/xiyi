@@ -37,6 +37,11 @@ public class Constant {
     //表示显示的图片多少
     public static final int IMAGE_COUNT = 3;
 
+    public static final int TITLE_SIZE = 20;
+    public static final int CONTENT_SIZE = 14;
+    public static final String TITLE_COLOR = "#000000";
+    public static final String CONTENT_COLOR = "#000000";
+
     public static class ACTION{
         public static final String USER_PAGE = "com.example.wsq.android.fragment.UserFragment";
         public static final String USER_PAGE_FAULT = "page_fault";

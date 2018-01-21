@@ -43,8 +43,8 @@ public class ReceiptsAdapter extends RecyclerView.Adapter<ReceiptsAdapter.ViewHo
 
         holder.tv_order_num.setText(mData.get(position).get(ResponseKey.ORDER_NO)+"");
         holder.tv_device_model.setText(mData.get(position).get(ResponseKey.XINGHAO)+"");
-        String time = DateUtil.onMillisForDate(
-                mData.get(position).get(ResponseKey.CREAT_AT)+"000", DateUtil.DATA_FORMAT_1);
+        String time = DateUtil.OnSecondForDate(
+                mData.get(position).get(ResponseKey.CREAT_AT)+"", DateUtil.DATA_FORMAT_1);
         holder.tv_finish_time.setText(time);
         holder.tv_money.setText(mData.get(position).get(ResponseKey.MOENY)+"");
     }
