@@ -88,13 +88,16 @@ dependencies {
     implementation files('libs/jmessage-android_v2.4.1.jar')
     compile 'com.lidong.pdf:android_pdf:1.0.1'
     compile 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
-
+    //富文本
+    //    compile 'com.github.sendtion:XRichText:1.1'
+    //刷新等
+    compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     //文件选择器
     compile 'com.leon:lfilepickerlibrary:1.6.0'
-
     //友盟统计
     //    compile 'com.umeng.sdk:common:latest.integration'
     //    compile 'com.umeng.sdk:analytics:latest.integration'
+    implementation project(':richtextlibrary')
 }
 //
 configurations.all {

@@ -2,9 +2,10 @@ package com.example.wsq.android.db.dao.inter;
 
 import android.content.Context;
 
+import com.example.wsq.android.bean.ArticleBean;
 import com.example.wsq.android.bean.AuthType;
-import com.example.wsq.android.bean.WebContentBean;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,38 +18,61 @@ public interface DbConInter {
      * 查询所有的数据
      * @return
      */
-    Map<String, WebContentBean> selectAll(Context context, AuthType type) throws Exception;
+    List<ArticleBean> selectAll(Context context, AuthType type);
 
     /**
      * 删除数据
-     * @param key
+     * @param context
      */
-    void removeData(Context context, String key,  AuthType type);
+    void removeData(Context context,  AuthType type);
 
     /**
      * 更新数据
-     * @param bean
+     * @param context
+     * @param key
+     * @param content
      */
-    void updateData(Context context, String key,  WebContentBean bean);
+    void updateData(Context context, String key,  String content, AuthType authType);
 
     /**
      * 插入数据
      * @param bean
      */
-    void insertData(Context context, String key, WebContentBean bean);
+    void insertData(Context context, ArticleBean bean);
 
 
     /**
-     * 删除所有的数据
+     * 获取资料个数
      * @param context
-     */
-    void removeAll(Context context,  AuthType type);
-
-    /**
-     * 查询个数
-     * @param context
+     * @param authType
      * @return
      */
-    int selectCount(Context context,  AuthType type);
+    int selectCount(Context context, AuthType authType);
+
+
+
+
+    /**
+     * 查询所有的数据
+     * @return
+     */
+    List<Map<String, Object>> selectAllAttachment(Context context, AuthType type);
+
+    /**
+     * 删除数据
+     * @param context
+     */
+    void removeAttachment(Context context, String name,  AuthType type);
+
+    /**
+     * 清空附件表
+     */
+    void onClearAttachment(Context context, AuthType type);
+    /**
+     * 插入数据
+     * @param context
+     */
+    void insertAttachmentData(Context context, String fileName, String path, AuthType type);
+
 
 }

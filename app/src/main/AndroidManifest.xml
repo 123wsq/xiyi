@@ -71,9 +71,8 @@
         <activity android:name=".activity.WordReadActivity" android:configChanges="orientation|screenSize"></activity>
         <activity android:name=".activity.share.EditWebSettingActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.share.ShareRecordActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.share.EditWebActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
         <activity android:name=".activity.cash.ReceiptsActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.share.EditRecordActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.share.WebEditActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.order.VideoPlayActivity"
             android:process=":vitamio"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"

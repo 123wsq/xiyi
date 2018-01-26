@@ -26,6 +26,8 @@ public class ResponseKey {
 
     public static final String NAME = "name";
 
+    public static final String PATH = "path";
+
     public static final String SEX = "sex";
 
     public static final String TEL = "tel";

@@ -3,10 +3,11 @@ package com.example.wsq.android.activity.share;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +29,12 @@ import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.LoddingDialog;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,8 +51,9 @@ import butterknife.OnClick;
 public class ShareRecordActivity extends BaseActivity{
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.iv_add) ImageView iv_add;
-    @BindView(R.id.rv_RecyclerView) RecyclerView rv_RecyclerView;
+    @BindView(R.id.rv_RecyclerView) SwipeMenuRecyclerView rv_RecyclerView;
     @BindView(R.id.ll_nodata) LinearLayout ll_nodata;
+    @BindView(R.id.tv_content)TextView tv_content;
 
     private DbConInter conInter;
     private ProductAdapter mAdapter;
@@ -63,6 +71,7 @@ public class ShareRecordActivity extends BaseActivity{
     public void init() {
 
         tv_title.setText("我的资料");
+        tv_content.setText("您还没有编辑过资料呢~");
         mData = new ArrayList<>();
         dialog = new LoddingDialog(this);
         userService = new UserServiceImpl();
@@ -79,8 +88,12 @@ public class ShareRecordActivity extends BaseActivity{
 
         mAdapter = new ProductAdapter(this, mData, Constant.INFO_3);
 
-        rv_RecyclerView.setAdapter(mAdapter);
 
+        rv_RecyclerView.setItemViewSwipeEnabled(false);
+        rv_RecyclerView.setSwipeMenuCreator(swipeMenuCreator);
+        rv_RecyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
+//        rv_RecyclerView.set
+        rv_RecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -111,6 +124,81 @@ public class ShareRecordActivity extends BaseActivity{
         }
     }
 
+
+
+    public void onAlertDialog(){
+
+        CustomDefaultDialog.Builder builder = new CustomDefaultDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("您还有未编辑完的资料，是否继续编辑");
+        builder.setOkBtn("继续", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                IntentFormat.startActivity(ShareRecordActivity.this, WebEditActivity.class);
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setCancelBtn("重新编辑", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                conInter.removeData(ShareRecordActivity.this, AuthType.ARTICLES);
+                conInter.onClearAttachment(ShareRecordActivity.this, AuthType.ARTICLES);
+                IntentFormat.startActivity(ShareRecordActivity.this, EditWebSettingActivity.class);
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    private SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
+        @Override
+        public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
+
+            int width = getResources().getDimensionPixelSize(R.dimen.dp_70);
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+
+            SwipeMenuItem deleteItem = new SwipeMenuItem(ShareRecordActivity.this)
+                    .setBackgroundColor(Color.RED)
+//                    .setImage(R.mipmap.ic_action_delete)
+                    .setText("删除")
+                    .setTextColor(Color.WHITE)
+                    .setWidth(width)
+                    .setHeight(height);
+            swipeRightMenu.addMenuItem(deleteItem);// 添加菜单到左侧。
+        }
+    };
+
+    /**
+     * 点击事件
+     */
+    private SwipeMenuItemClickListener mMenuItemClickListener = new SwipeMenuItemClickListener(){
+        @Override
+        public void onItemClick(SwipeMenuBridge menuBridge) {
+
+            // 任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱。
+            menuBridge.closeMenu();
+
+            int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
+            int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
+            int menuPosition = menuBridge.getPosition(); // 菜单在RecyclerView的Item中的Position。
+
+            if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
+                onRemove(adapterPosition);
+//                Toast.makeText(ShareRecordActivity.this, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
+            } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
+                //
+//                Toast.makeText(ShareRecordActivity.this, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    };
+
+    /**
+     * 获取自定义资料列表
+     */
     public void onGetShareRecord(){
 
         dialog.show();
@@ -122,9 +210,9 @@ public class ShareRecordActivity extends BaseActivity{
 
                 List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.ARTICLES_LIST);
                 mData.clear();
-                if (list.size() > 0){
+                mData.addAll(list);
 
-                    mData.addAll(list);
+                if (mData.size() > 0){
                     rv_RecyclerView.setVisibility(View.VISIBLE);
                     ll_nodata.setVisibility(View.GONE);
                 }else{
@@ -137,34 +225,32 @@ public class ShareRecordActivity extends BaseActivity{
 
             @Override
             public void onFailure() {
-                ToastUtis.onToast(ShareRecordActivity.this, "请求失败");
+                ToastUtis.onToast("请求失败");
                 if(dialog.isShowing() ) dialog.dismiss();
             }
         });
     }
 
-    public void onAlertDialog(){
-
-        CustomDefaultDialog.Builder builder = new CustomDefaultDialog.Builder(this);
-        builder.setTitle("提示");
-        builder.setMessage("您还有未编辑完的资料，是否继续编辑");
-        builder.setOkBtn("继续", new DialogInterface.OnClickListener() {
+    /**
+     * 删除资料
+     * @param position
+     */
+    public void onRemove( final int position){
+        final Map<String, String> param = new HashMap<>();
+        param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
+        param.put(ResponseKey.ID, mData.get(position).get(ResponseKey.ID)+"");
+        userService.onRemoveShare(this, param, new HttpResponseListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onSuccess(Map<String, Object> result) {
 
-                IntentFormat.startActivity(ShareRecordActivity.this, EditWebActivity.class);
-                dialogInterface.dismiss();
+                mData.remove(position);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure() {
+
             }
         });
-        builder.setCancelBtn("重新编辑", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                conInter.removeAll(ShareRecordActivity.this, AuthType.ARTICLES);
-                IntentFormat.startActivity(ShareRecordActivity.this, EditWebSettingActivity.class);
-                dialogInterface.dismiss();
-            }
-        });
-        builder.create().show();
     }
 }

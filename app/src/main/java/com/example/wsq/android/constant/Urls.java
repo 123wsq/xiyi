@@ -1,5 +1,7 @@
 package com.example.wsq.android.constant;
 
+import com.example.wsq.android.BuildConfig;
+
 /**
  * Created by wsq on 2017/12/11.
  */
@@ -7,7 +9,7 @@ package com.example.wsq.android.constant;
 public class Urls {
 
     //协议
-    public static final String HOST = "http://xiyicontrol.com";
+    public static final String HOST = BuildConfig.DEBUG ? "http://www.lizardcontrol.com/": "http://xiyicontrol.com";
 
 
     //登录
@@ -233,5 +235,16 @@ public class Urls {
      * 我的资料
      */
     public static final String MY_ARTICLES = "/api/member/member_articles";
+
+    /**
+     * 删除资料
+     */
+    public static final String  DELETE_ARTUCLES = "/api/member/delete_articles";
+
+
+    /**
+     * 删除文件
+     */
+    public static final String DELETE_FILE = "/api/member/delete_file";
 
 }

@@ -23,7 +23,6 @@ import com.example.wsq.android.utils.BitmapUtils;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomPopup;
-import com.example.wsq.android.view.LoddingDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -58,7 +57,6 @@ public class EditWebSettingActivity extends BaseActivity{
     public static final int RESULT_IMAGE = 0x00000012;
     private String iconPath;
     private UserService userService;
-    private LoddingDialog dialog;
     private int articlesType = -1;
 
     @Override
@@ -71,7 +69,6 @@ public class EditWebSettingActivity extends BaseActivity{
 
         tv_title.setText("创建资料");
         userService = new UserServiceImpl();
-        dialog = new LoddingDialog(this);
 
         onTextChange();
     }
@@ -184,7 +181,7 @@ public class EditWebSettingActivity extends BaseActivity{
             return;
         }
         if (articlesType ==-1){
-            ToastUtis.onToast(this, "请选择资料类型");
+            ToastUtis.onToast("请选择资料类型");
             return;
         }
 
@@ -200,8 +197,8 @@ public class EditWebSettingActivity extends BaseActivity{
             map.put(WebKeys.ARTICLES, 28);
         }
 
-        IntentFormat.startActivity(EditWebSettingActivity.this, EditWebActivity.class, map);
-        dialog.dismiss();
+//        IntentFormat.startActivity(EditWebSettingActivity.this, EditWebActivity.class, map);
+        IntentFormat.startActivity(EditWebSettingActivity.this, WebEditActivity.class, map);
         finish();
 
         Map<String, String> param = new HashMap<>();
@@ -266,13 +263,13 @@ public class EditWebSettingActivity extends BaseActivity{
         String web_title = tv_web_title.getText().toString();
 
         if (TextUtils.isEmpty(web_title)){
-            ToastUtis.onToast(this, "标题不能为空");
+            ToastUtis.onToast( "标题不能为空");
             return false;
         }
 
         String web_info = tv_web_info.getText().toString();
         if (TextUtils.isEmpty(web_info)){
-            ToastUtis.onToast(this, "资料简介不能为空");
+            ToastUtis.onToast("资料简介不能为空");
             return false;
         }
 

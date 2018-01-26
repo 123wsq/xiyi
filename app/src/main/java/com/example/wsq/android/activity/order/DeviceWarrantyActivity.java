@@ -299,28 +299,28 @@ public class DeviceWarrantyActivity extends BaseActivity {
     public boolean validate(){
         //验证型号数据是否为空
         String model = et_model.getText().toString();
-        if (null == model || model.length()==0){
+        if (TextUtils.isEmpty(model)){
             Toast.makeText(this, "设备型号不能为空", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         //验证编号数据是否为空
         String num = et_num.getText().toString();
-        if (null == num || num.length()==0){
-            Toast.makeText(this, "设备编号不能为空", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(num)){
+            Toast.makeText(this, "出厂编号不能为空", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         //验证编号数据是否为空
         String description = et_description.getText().toString();
-        if (null == description || description.length()==0){
-            Toast.makeText(this, "设备编号不能为空", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(description)){
+            Toast.makeText(this, "故障描述不能为空", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         //验证选择的图片大小
         if (mData.size()==1){
-            Toast.makeText(this, "资源文件不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "故障资源不能为空", Toast.LENGTH_SHORT).show();
             return false;
         }
 

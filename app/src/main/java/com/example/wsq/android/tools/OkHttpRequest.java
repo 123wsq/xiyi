@@ -300,7 +300,6 @@ public class OkHttpRequest {
                 try {
 
                     Map<String, Object> map = ParamFormat.onAllJsonToMap(result);
-                    Logger.d("code = ");
                     if(!map.containsKey(ResponseKey.CODE)){
                         callBack.callBack(map);
                     }else {

@@ -162,15 +162,33 @@ public class OrderTaskServiceImpl implements OrderTaskService {
      * @throws Exception
      */
     @Override
-    public void onSubmitReport(Map<String, String> params, List<Map<String, Object>> list, HttpResponseCallBack callBack) throws Exception {
+    public void onSubmitReport(final Context context, Map<String, String> params, List<Map<String, Object>> list, final HttpResponseListener callBack) {
 
 
         //验证必填参数
-        ValidateParam.validateParam(params, ResponseKey.TOKEN, ResponseKey.ID,
-                ResponseKey.DIDIAN, ResponseKey.LXR, ResponseKey.TEL, ResponseKey.CONTENT,
-                ResponseKey.YILIU, ResponseKey.IMG_COUNT);
+        try {
+            ValidateParam.validateParam(params, ResponseKey.TOKEN, ResponseKey.ID,
+                    ResponseKey.DIDIAN, ResponseKey.LXR, ResponseKey.TEL, ResponseKey.CONTENT,
+                    ResponseKey.YILIU, ResponseKey.IMG_COUNT);
 
-        OkHttpRequest.uploadPostFile(Urls.SUBMIT_REPORT, params,list, callBack);
+            OkHttpRequest.uploadPostFile(Urls.SUBMIT_REPORT, params, list, new HttpResponseCallBack() {
+                @Override
+                public void callBack(Map<String, Object> result) {
+                    callBack.onSuccess(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    callBack.onFailure();
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onFailure();
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override

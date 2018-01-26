@@ -11,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.ProtocolsActivity;
@@ -79,7 +78,7 @@ public class RegisterActivity3 extends BaseActivity {
             if (curLen == 0){
                 curLen = 60;
                 tv_getCode.setText("获取验证码");
-                tv_getCode.setBackgroundColor(R.drawable.shape_button);
+                    tv_getCode.setBackgroundColor(R.drawable.shape_button);
                 tv_getCode.setClickable(true);
             }else{
                 tv_getCode.setText("请耐心等待 "+curLen+"s");
@@ -97,7 +96,7 @@ public class RegisterActivity3 extends BaseActivity {
         switch (v.getId()){
             case R.id.tv_protocols:  //点击阅读协议
 
-                    startActivity(new Intent(RegisterActivity3.this, ProtocolsActivity.class));
+                    startActivity(new Intent(RegisterActivity3.this,  ProtocolsActivity.class));
 
                 break;
             case  R.id.iv_back:
@@ -192,17 +191,17 @@ public class RegisterActivity3 extends BaseActivity {
             String sfz = et_sfz.getText().toString();
 
             if (TextUtils.isEmpty(sfz)){
-                Toast.makeText(RegisterActivity3.this, "身份证号码不能为空", Toast.LENGTH_SHORT).show();
+                ToastUtis.onToast("身份证号码不能为空");
                 return false;
             }
 
             try {
                 if (!TextUtils.isEmpty(IdentityCardValidate.IDCard.IDCardValidate(sfz))){
-                    Toast.makeText(RegisterActivity3.this, "请输入正确的身份证号码", Toast.LENGTH_SHORT).show();
+                    ToastUtis.onToast( "请输入正确的身份证号码");
                 }
 
             } catch (ParseException e) {
-                Toast.makeText(RegisterActivity3.this, "请输入正确的身份证号码", Toast.LENGTH_SHORT).show();
+                ToastUtis.onToast( "请输入正确的身份证号码");
                 e.printStackTrace();
                 return false;
             }
@@ -212,26 +211,26 @@ public class RegisterActivity3 extends BaseActivity {
             //验证验证码
             String validateCode = et_validateCode.getText().toString();
             if(ValidateParam.validateParamIsNull(validateCode)){
-                Toast.makeText(RegisterActivity3.this, "验证码不能为空", Toast.LENGTH_SHORT).show();
+                ToastUtis.onToast( "验证码不能为空");
                 return false;
             }else{
                 RegisterParam.YZM = validateCode;
             }
 
             if(validateCode.length()!= Constant.CODE_LENGTH){
-                Toast.makeText(RegisterActivity3.this, "验证码必须为"+Constant.CODE_LENGTH+"位", Toast.LENGTH_SHORT).show();
+                ToastUtis.onToast( "验证码必须为"+Constant.CODE_LENGTH+"位");
             }
         }
 
         //验证手机号码
         String tel = et_tel.getText().toString();
         if (TextUtils.isEmpty(tel)){
-            ToastUtis.onToast(RegisterActivity3.this,"请输入手机号码");
+            ToastUtis.onToast("请输入手机号码");
         }
         if(ValidateDataFormat.isMobile(tel)){
             RegisterParam.TEL = tel;
         }else{
-            Toast.makeText(RegisterActivity3.this, "输入的手机号有误", Toast.LENGTH_SHORT).show();
+            ToastUtis.onToast( "输入的手机号有误");
             return false;
         }
 
@@ -251,7 +250,7 @@ public class RegisterActivity3 extends BaseActivity {
                 userService.register(this, map, new HttpResponseListener() {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
-                        IntentFormat.startActivity(RegisterActivity3.this, LoginActivity.class);
+                        IntentFormat.startActivity(RegisterActivity3.this,  LoginActivity.class);
                     }
 
                     @Override
@@ -261,10 +260,10 @@ public class RegisterActivity3 extends BaseActivity {
                 });
 
             }else{
-                Toast.makeText(RegisterActivity3.this, "请选择阅读协议", Toast.LENGTH_SHORT).show();
+                ToastUtis.onToast( "请选择阅读协议");
             }
         }else{
-            Toast.makeText(RegisterActivity3.this, "输入参数格式错误", Toast.LENGTH_SHORT).show();
+            ToastUtis.onToast( "输入参数格式错误");
         }
     }
 
@@ -301,7 +300,7 @@ public class RegisterActivity3 extends BaseActivity {
             });
 
         }else{
-            Toast.makeText(RegisterActivity3.this, "输入参数格式错误", Toast.LENGTH_SHORT).show();
+            ToastUtis.onToast( "输入参数格式错误");
         }
     }
 

@@ -25,6 +25,7 @@ import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
+import com.example.wsq.android.view.CustomStartOrderDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -83,7 +84,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
     private String status = "";
     private SharedPreferences shared;
     private CustomDefaultDialog defaultDialog;
-
+    private CustomStartOrderDialog startOrderDialog;
     public static final String UPDATE = "isUpdate";
 
 
@@ -155,7 +156,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
                 if (role.equals("1")
                         && status.equals("2")){ //服务工程师
 
-                    onStartTask("chuli");
+                    onShowDialogServer();
 
                 }else if (role.equals("1")
                         && status.equals("3")){ //服务工程师
@@ -498,5 +499,19 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
             IntentFormat.startActivity(OrderInfoActivity.this, VideoPlayActivity.class, param);
 
         }
+    }
+
+
+    private void onShowDialogServer(){
+        CustomStartOrderDialog.Builder builder = new CustomStartOrderDialog.Builder(this);
+        builder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onStartTask("chuli");
+                startOrderDialog.dismiss();
+            }
+        });
+        startOrderDialog = builder.create();
+        startOrderDialog.show();
     }
 }

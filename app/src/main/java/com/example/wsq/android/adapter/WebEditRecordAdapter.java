@@ -61,7 +61,7 @@ public class WebEditRecordAdapter extends RecyclerView.Adapter<WebEditRecordAdap
             @Override
             public boolean onLongClick(View view) {
                 if(bean.getType() == ContentType.TITLE || bean.getType()== ContentType.CREATE_TIME){
-                    ToastUtis.onToast(mContext, "该项不可编辑");
+                    ToastUtis.onToast("该项不可编辑");
                 }else {
                     clicklistener.onLongClickListener(mData.get(position).getKey(), position, bean.getAddTime());
                 }
@@ -74,9 +74,9 @@ public class WebEditRecordAdapter extends RecyclerView.Adapter<WebEditRecordAdap
             public void onClick(View view) {
 
                 if(bean.getType() == ContentType.TITLE || bean.getType()== ContentType.CREATE_TIME){
-                    ToastUtis.onToast(mContext, "该项不可编辑");
+                    ToastUtis.onToast("该项不可编辑");
                 }else {
-                    ToastUtis.onToast(mContext, "长按对此项编辑");
+                    ToastUtis.onToast("长按对此项编辑");
                 }
             }
         });

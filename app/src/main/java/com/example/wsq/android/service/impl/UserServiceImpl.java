@@ -1163,9 +1163,9 @@ public class UserServiceImpl implements UserService{
     public void onRemoveShare(Context context, Map<String, String> param, final HttpResponseListener listener) {
 
         try {
-            ValidateParam.validateParam(param, "");
+            ValidateParam.validateParam(param, ResponseKey.TOKEN);
 
-            OkHttpRequest.sendHttpGet("", param, new HttpResponseCallBack() {
+            OkHttpRequest.sendHttpGet(Urls.DELETE_ARTUCLES, param, new HttpResponseCallBack() {
                 @Override
                 public void callBack(Map<String, Object> result) {
                     listener.onSuccess(result);
@@ -1259,7 +1259,7 @@ public class UserServiceImpl implements UserService{
             //必填参数验证
             ValidateParam.validateParam(param,ResponseKey.TOKEN);
 
-            OkHttpRequest.sendHttpGet(Urls.UPLOAD_USER_HEADER, param,  new HttpResponseCallBack(){
+            OkHttpRequest.sendHttpGet(Urls.DELETE_FILE, param,  new HttpResponseCallBack(){
                 @Override
                 public void callBack(Map<String, Object> result) {
 

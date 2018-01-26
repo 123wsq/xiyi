@@ -8,6 +8,7 @@
     <string name="str_version">版本</string>
     <string name="str_version_code">版本号</string>
     <string name="str_clear_canche">清理缓存</string>
+    <string name="str_order_p">1、穿好防护服。\n2、戴好防护手套。\n3、注意周边环境\n4、根据人体大小，摄片部位，合理选择参数。\n5、随时观察照片质量，出现异常应检查摄片机是否正常，如果异常应立即报告维修人员</string>
 
 
     <string name="image">图片</string>

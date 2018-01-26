@@ -65,7 +65,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onSubmitReport(Map<String, String> params, List<Map<String, Object>> list, HttpResponseCallBack callBack) throws Exception;
+    void onSubmitReport(Context context, Map<String, String> params, List<Map<String, Object>> list, HttpResponseListener callBack);
 
 
     /**

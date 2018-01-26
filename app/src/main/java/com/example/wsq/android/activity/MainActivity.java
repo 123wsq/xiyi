@@ -73,6 +73,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @BindView(R.id.view_point) View view_point;
     @BindView(R.id.rl_layout) RelativeLayout rl_layout;
     @BindView(R.id.rl_message) RelativeLayout rl_message;
+    @BindView(R.id.ll_layout) RelativeLayout ll_layout;
 
     public static boolean isForeground = false;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
@@ -135,7 +136,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         JMessageClient.registerEventReceiver(this);
 
         onRegister();
-        onShowWebDialog();
+
+
     }
 
 
@@ -417,12 +419,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
 
-    public void onShowWebDialog(){
 
-        CustomWebViewDialog.Builder builder = new CustomWebViewDialog.Builder(this);
-        builder.setLoadWebView("http://xiyicontrol.com/api/xieyi");
-        builder.create().show();
-    }
 
 
 }

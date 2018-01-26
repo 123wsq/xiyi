@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,12 +23,14 @@ import com.example.wsq.android.bean.CameraBean;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
-import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.utils.ToastUtis;
+import com.example.wsq.android.utils.ValidateDataFormat;
 import com.example.wsq.android.view.CustomPopup;
+import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -53,17 +56,28 @@ import butterknife.OnItemClick;
 
 public class FeedbackActivity extends BaseActivity {
 
-    @BindView(R.id.tv_title) TextView tv_title;
-    @BindView(R.id.tv_away_back) TextView tv_away_back;
-    @BindView(R.id.et_server_loc) TextView et_server_loc;
-    @BindView(R.id.et_contact) TextView et_contact;
-    @BindView(R.id.et_contact_tel) TextView et_contact_tel;
-    @BindView(R.id.et_results_1) TextView et_results_1;
-    @BindView(R.id.et_results_2) TextView et_results_2;
-    @BindView(R.id.iv_back) LinearLayout iv_back;
-    @BindView(R.id.gridview) GridView gridview;
-    @BindView(R.id.ll_layout) LinearLayout ll_layout;
-    @BindView(R.id.order_no) TextView order_no;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
+    @BindView(R.id.tv_away_back)
+    TextView tv_away_back;
+    @BindView(R.id.et_server_loc)
+    TextView et_server_loc;
+    @BindView(R.id.et_contact)
+    TextView et_contact;
+    @BindView(R.id.et_contact_tel)
+    TextView et_contact_tel;
+    @BindView(R.id.et_results_1)
+    EditText et_results_1;
+    @BindView(R.id.et_results_2)
+    EditText et_results_2;
+    @BindView(R.id.iv_back)
+    LinearLayout iv_back;
+    @BindView(R.id.gridview)
+    GridView gridview;
+    @BindView(R.id.ll_layout)
+    LinearLayout ll_layout;
+    @BindView(R.id.order_no)
+    TextView order_no;
 
 
     private OrderTaskService deviceTaskService;
@@ -79,6 +93,7 @@ public class FeedbackActivity extends BaseActivity {
     private static final int REQUEST_CODE = 0x00000011;
 
     private UploadAdapter mAdapter;
+    private LoddingDialog dialog;
 
 
     @Override
@@ -87,26 +102,18 @@ public class FeedbackActivity extends BaseActivity {
     }
 
     @Override
-    public void init() {
-
-        onRegister();
-    }
-
-
-    public void initView() {
+    public void init(){
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         deviceTaskService = new OrderTaskServiceImpl();
-        id = getIntent().getIntExtra(ResponseKey.ID,0);
+        id = getIntent().getIntExtra(ResponseKey.ID, 0);
 
         tv_title.setText("反馈报告");
-
+        dialog = new LoddingDialog(this);
 
         intent = getIntent();
 
         order_no.setText(intent.getStringExtra(ResponseKey.ORDER_NO));
         et_server_loc.setText(intent.getStringExtra(ResponseKey.DIDIAN));
-//        et_contact.setText(intent.getStringExtra(ResponseKey.S_NAME));
-//        et_contact_tel.setText(intent.getStringExtra(ResponseKey.S_TEL));
         et_results_1.setText(intent.getStringExtra(ResponseKey.CONTENT));
         et_results_2.setText(intent.getStringExtra(ResponseKey.YILIU));
 
@@ -114,18 +121,18 @@ public class FeedbackActivity extends BaseActivity {
 
         CameraBean bean = new CameraBean();
         bean.setType(1);
+        bean.setShow(false);
         mData.add(bean);
         mAdapter = new UploadAdapter(this, mData);
         gridview.setAdapter(mAdapter);
 
-
-
+       onRegister();
         initPopup();
     }
 
 
-    public void initPopup(){
-        View view = LayoutInflater.from(this).inflate(R.layout.layout_default_popup,null);
+    public void initPopup() {
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_default_popup, null);
         List<String> list = new ArrayList<>();
         String[] arrys = Constant.ACTION_CAMERA;
         for (int i = 0; i < arrys.length; i++) {
@@ -142,13 +149,13 @@ public class FeedbackActivity extends BaseActivity {
                 //包括裁剪和压缩后的缓存，要在上传成功后调用，注意：需要系统sd卡权限
                 PictureFileUtils.deleteCacheDirFile(FeedbackActivity.this);
 //                FunctionOptions.Builder builder = new FunctionOptions.Builder();
-                switch (position){
+                switch (position) {
                     case 0: //相册
 
                         PictureSelector.create(FeedbackActivity.this)
                                 .openGallery(PictureMimeType.ofImage())
 //                                .theme(R.sty)
-                                .maxSelectNum(Constant.IMAGE_COUNT-(mData.size()-1))
+                                .maxSelectNum(Constant.IMAGE_COUNT - (mData.size() - 1))
                                 .isZoomAnim(true)
                                 .imageSpanCount(3)
                                 .isCamera(false)
@@ -181,7 +188,7 @@ public class FeedbackActivity extends BaseActivity {
 
                         PictureSelector.create(FeedbackActivity.this)
                                 .openGallery(PictureMimeType.ofVideo())
-                                .maxSelectNum(Constant.IMAGE_COUNT-(mData.size()-1))
+                                .maxSelectNum(Constant.IMAGE_COUNT - (mData.size() - 1))
                                 .imageSpanCount(3)
                                 .isCamera(false)
                                 .compress(true)// 是否压缩 true or false
@@ -197,7 +204,7 @@ public class FeedbackActivity extends BaseActivity {
 
     @OnClick({R.id.iv_back, R.id.tv_away_back})
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
@@ -210,21 +217,20 @@ public class FeedbackActivity extends BaseActivity {
     }
 
 
-
     @OnItemClick({R.id.gridview})
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         CameraBean bean = mData.get(position);
-        if (bean.getType() == 1){
-            popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        if (bean.getType() == 1) {
+            popup.showAtLocation(ll_layout, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 //            ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
 //                    .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
 //                            InputMethodManager.HIDE_NOT_ALWAYS);
-        }else if(bean.getType() == 2){
+        } else if (bean.getType() == 2) {
             List<LocalMedia> list = new ArrayList<>();
             //将所有的图片添加到list中
-            for (int i = 0; i< mData.size(); i ++){
-                if (mData.get(i).getType()==2) {
+            for (int i = 0; i < mData.size(); i++) {
+                if (mData.get(i).getType() == 2) {
                     LocalMedia media = new LocalMedia();
                     media.setPath(mData.get(i).getFile_path());
                     list.add(media);
@@ -232,13 +238,13 @@ public class FeedbackActivity extends BaseActivity {
             }
             //计算选中的图片位置
             int num = 0;
-            for (int i = 0; i< list.size(); i++){
-                if (bean.getFile_path().equals(list.get(i).getPath())){
+            for (int i = 0; i < list.size(); i++) {
+                if (bean.getFile_path().equals(list.get(i).getPath())) {
                     num = i;
                 }
             }
             PictureSelector.create(FeedbackActivity.this).externalPicturePreview(position, list);
-        }else if(bean.getType() == 3){
+        } else if (bean.getType() == 3) {
             PictureSelector.create(FeedbackActivity.this)
                     .externalPictureVideo(bean.getFile_path());
 
@@ -249,11 +255,13 @@ public class FeedbackActivity extends BaseActivity {
     /**
      * 提交反馈信息
      */
-    public void onSubmit(){
+    public void onSubmit() {
+
+        dialog.show();
         Map<String, String> param = new HashMap<>();
-        param.put(ResponseKey.ID, id+"");
-        param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, "")+"");
-        param.put(ResponseKey.DIDIAN,et_server_loc.getText().toString());
+        param.put(ResponseKey.ID, id + "");
+        param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, "") + "");
+        param.put(ResponseKey.DIDIAN, et_server_loc.getText().toString());
         param.put(ResponseKey.LXR, et_contact.getText().toString());
         param.put(ResponseKey.TEL, et_contact_tel.getText().toString());
         param.put(ResponseKey.CONTENT, et_results_1.getText().toString());
@@ -261,37 +269,34 @@ public class FeedbackActivity extends BaseActivity {
 
         List<Map<String, Object>> listFile = new ArrayList<>();
         int numflag = 1;
-                for (int i = 0; i < mData.size(); i++) {
-                    if (mData.get(i).getType() != 1) {
-                            File f = new File(mData.get(i).getFile_path());
-                            Map<String, Object> map = new HashMap<>();
-                            map.put(ResponseKey.IMGS+(i+1),f);
-                            map.put("fileType", mData.get(i).getType() == 2 ?
-                                    OkhttpUtil.FILE_TYPE_IMAGE : OkhttpUtil.FILE_TYPE_VIDEO);
-                            listFile.add(map);
-                    }
-                }
-
-
-        param.put(ResponseKey.IMG_COUNT, listFile.size()+"");
-        try {
-            deviceTaskService.onSubmitReport(param, listFile, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
-
-                    Toast.makeText(FeedbackActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-
-                @Override
-                public void onCallFail(String msg) {
-
-                }
-            });
-        } catch (Exception e) {
-            Toast.makeText(FeedbackActivity.this, "必要参数不能为空", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+        for (int i = 0; i < mData.size(); i++) {
+            if (mData.get(i).getType() != 1) {
+                File f = new File(mData.get(i).getFile_path());
+                Map<String, Object> map = new HashMap<>();
+                map.put(ResponseKey.IMGS + (i + 1), f);
+                map.put("fileType", mData.get(i).getType() == 2 ?
+                        OkhttpUtil.FILE_TYPE_IMAGE : OkhttpUtil.FILE_TYPE_VIDEO);
+                listFile.add(map);
+            }
         }
+
+
+        param.put(ResponseKey.IMG_COUNT, listFile.size() + "");
+        deviceTaskService.onSubmitReport(this, param, listFile, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Toast.makeText(FeedbackActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                finish();
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure() {
+
+                if (dialog.isShowing())dialog.dismiss();
+            }
+        });
+
     }
 
 
@@ -300,45 +305,46 @@ public class FeedbackActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-            if (resultCode == RESULT_OK) {
-                List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                switch (requestCode) {
-                    case RESULT_IMAGE:
-                        // 图片选择结果回调
-                        onSetData(2, selectList);
-                        break;
-                    case RESULT_VIDEO:
-                        onSetData(3, selectList);
-                        break;
-                }
+        if (resultCode == RESULT_OK) {
+            List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+            switch (requestCode) {
+                case RESULT_IMAGE:
+                    // 图片选择结果回调
+                    onSetData(2, selectList);
+                    break;
+                case RESULT_VIDEO:
+                    onSetData(3, selectList);
+                    break;
             }
+        }
 
     }
 
     /**
      * 设置数据
-     * @param type  1 表示相册返回  2 表示拍照返回  3 表示录像  4 视频
-     * @param list  多媒体
+     *
+     * @param type 1 表示相册返回  2 表示拍照返回  3 表示录像  4 视频
+     * @param list 多媒体
      */
-    public void onSetData(int type, List<LocalMedia> list){
+    public void onSetData(int type, List<LocalMedia> list) {
 
-        Logger.d("选择的图片"+list.size());
+        Logger.d("选择的图片" + list.size());
 
-        if (list.size()==0){
+        if (list.size() == 0) {
             CameraBean bean = new CameraBean();
             bean.setType(1);
             bean.setShow(false);
-             bean.setChange(false);
+            bean.setChange(false);
             mData.add(bean);
 
-        }else if(list.size()+(mData.size()-1)==3){
+        } else if (list.size() + (mData.size() - 1) == 3) {
 //            mData.clear();
-            mData.remove(mData.size()-1);
-            for (int i =0 ; i< list.size(); i ++){
+            mData.remove(mData.size() - 1);
+            for (int i = 0; i < list.size(); i++) {
                 CameraBean bean = new CameraBean();
-                if (list.get(i).isCompressed()){
+                if (list.get(i).isCompressed()) {
                     bean.setFile_path(list.get(i).getCompressPath());
-                }else{
+                } else {
                     bean.setFile_path(list.get(i).getPath());
                 }
 
@@ -347,13 +353,13 @@ public class FeedbackActivity extends BaseActivity {
                 bean.setShow(true);
                 mData.add(bean);
             }
-        }else{
-            mData.remove(mData.size()-1);
-            for (int i =0 ; i< list.size(); i ++){
+        } else {
+            mData.remove(mData.size() - 1);
+            for (int i = 0; i < list.size(); i++) {
                 CameraBean bean = new CameraBean();
-                if (list.get(i).isCompressed()){
+                if (list.get(i).isCompressed()) {
                     bean.setFile_path(list.get(i).getCompressPath());
-                }else{
+                } else {
                     bean.setFile_path(list.get(i).getPath());
                 }
                 bean.setType(type);
@@ -370,42 +376,40 @@ public class FeedbackActivity extends BaseActivity {
     }
 
 
-
     /**
-     *
      * @param array
-     * @param isChange   文件是否发生变化
+     * @param isChange 文件是否发生变化
      */
-    public void updateImags(List<String>  array, boolean isChange){
+    public void updateImags(List<String> array, boolean isChange) {
 
-        if (array.size()==0){
+        if (array.size() == 0) {
 
-        }else if(array.size()==3){
+        } else if (array.size() == 3) {
             mData.clear();
-            for (int i =0 ; i< array.size(); i ++){
+            for (int i = 0; i < array.size(); i++) {
                 CameraBean bean = new CameraBean();
-                bean.setFile_path(Urls.HOST+Urls.GET_IMAGES+array.get(i));
+                bean.setFile_path(Urls.HOST + Urls.GET_IMAGES + array.get(i));
                 if (array.get(i).toLowerCase().endsWith(".mp4")) {
                     bean.setType(3);
 
-                }else{
+                } else {
                     bean.setType(2);
                 }
                 bean.setChange(isChange);
                 bean.setShow(true);
                 mData.add(bean);
             }
-        }else{
-            if (mData.size()!=0){
-                mData.remove(mData.size()-1);
+        } else {
+            if (mData.size() != 0) {
+                mData.remove(mData.size() - 1);
             }
 
-            for (int i =0 ; i< array.size(); i ++){
+            for (int i = 0; i < array.size(); i++) {
                 CameraBean bean = new CameraBean();
-                bean.setFile_path(Urls.HOST+Urls.GET_IMAGES+array.get(i));
+                bean.setFile_path(Urls.HOST + Urls.GET_IMAGES + array.get(i));
                 if (array.get(i).toLowerCase().endsWith(".mp4")) {
                     bean.setType(3);
-                }else{
+                } else {
                     bean.setType(2);
                 }
                 bean.setChange(isChange);
@@ -422,17 +426,18 @@ public class FeedbackActivity extends BaseActivity {
     }
 
 
-    public void onRegister(){
+    public void onRegister() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.ACTION.IMAGE_DELETE);
         registerReceiver(broadcastReceiver, filter);
 
     }
+
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if (intent.getAction().equals(Constant.ACTION.IMAGE_DELETE)){
+            if (intent.getAction().equals(Constant.ACTION.IMAGE_DELETE)) {
                 onDeleteData(intent.getStringExtra("filePath"));
             }
 
@@ -441,28 +446,29 @@ public class FeedbackActivity extends BaseActivity {
 
     /**
      * 删除数据
+     *
      * @param path
      */
-    public void onDeleteData(String path){
+    public void onDeleteData(String path) {
 
 
         for (int i = 0; i < mData.size(); i++) {
-            if (mData.get(i).getFile_path().equals(path)){
+            if (mData.get(i).getFile_path().equals(path)) {
                 mData.remove(i);
             }
         }
 
         //检测最后一个是否是点击添加的按钮
-        if (mData.size()!= 0){
-            CameraBean bean = mData.get(mData.size()-1);
-            if (bean.getType() != 1){  //如果最后一个不是按钮  则添加一个
+        if (mData.size() != 0) {
+            CameraBean bean = mData.get(mData.size() - 1);
+            if (bean.getType() != 1) {  //如果最后一个不是按钮  则添加一个
                 CameraBean b = new CameraBean();
                 b.setType(1);
                 b.setShow(false);
                 b.setChange(false);
                 mData.add(b);
             }
-        }else {
+        } else {
             CameraBean b = new CameraBean();
             b.setType(1);
             b.setShow(false);
@@ -478,40 +484,46 @@ public class FeedbackActivity extends BaseActivity {
         unregisterReceiver(broadcastReceiver);
     }
 
-    public boolean onValidateParam(){
+    public boolean onValidateParam() {
 
-            String serverLoc = et_server_loc.getText().toString();
-            if (TextUtils.isEmpty(serverLoc)){
-                ToastUtis.onToast(FeedbackActivity.this, "服务地点不能为空");
-                return false;
-            }
-            String contact = et_contact.getText().toString();
-            if (TextUtils.isEmpty(contact)){
-                ToastUtis.onToast(FeedbackActivity.this, "现场联系人不能为空");
-                return false;
-            }
-            String contact_tel = et_contact_tel.getText().toString();
-            if (TextUtils.isEmpty(contact_tel)){
-                ToastUtis.onToast(FeedbackActivity.this, "现场联系人电话不能为空");
-                return false;
-            }
-            String serContent = et_results_1.getText().toString();
-            if (TextUtils.isEmpty(serContent)){
-                ToastUtis.onToast(FeedbackActivity.this, "现场处理结果不能为空");
-                return false;
-            }
+        String serverLoc = et_server_loc.getText().toString();
+        if (TextUtils.isEmpty(serverLoc)) {
+            ToastUtis.onToast("服务地点不能为空");
+            return false;
+        }
+        String contact = et_contact.getText().toString();
+        if (TextUtils.isEmpty(contact)) {
+            ToastUtis.onToast("现场联系人不能为空");
+            return false;
+        }
+        String contact_tel = et_contact_tel.getText().toString();
+        if (TextUtils.isEmpty(contact_tel)) {
+            ToastUtis.onToast("现场联系人电话不能为空");
+            return false;
+        }
 
-            String ylContent = et_results_2.getText().toString();
-            if (TextUtils.isEmpty(ylContent)){
-                ToastUtis.onToast(FeedbackActivity.this, "遗留问题不能为空");
-                return false;
-            }
+        if (!ValidateDataFormat.isMobile(contact_tel)) {
+            ToastUtis.onToast("输入的手机号有误");
+            return false;
+        }
+        String serContent = et_results_1.getText().toString();
+        if (TextUtils.isEmpty(serContent)) {
+            ToastUtis.onToast("现场处理结果不能为空");
+            return false;
+        }
 
-            if (mData.size() <= 1){
-                ToastUtis.onToast(FeedbackActivity.this, "现场资料不能为空");
-                return false;
-            }
+        String ylContent = et_results_2.getText().toString();
+        if (TextUtils.isEmpty(ylContent)) {
+            ToastUtis.onToast("遗留问题不能为空");
+            return false;
+        }
 
+
+
+        if (mData!=null && mData.size() <= 1) {
+            ToastUtis.onToast("现场资料不能为空");
+            return false;
+        }
 
         return true;
     }

@@ -1,1 +1,1 @@
-include ':app', ':picture', ':tag', ':vitamio', ':ucrop', ':refresh'
+include ':app', ':picture', ':tag', ':vitamio', ':ucrop', ':refresh', ':richtextlibrary'

@@ -9,13 +9,34 @@ import android.widget.Toast;
 
 public class ToastUtis {
 
+
+    public static ToastUtis toast;
+    private static Context mContext;
+
+    public ToastUtis(){
+
+    }
+
+    public static ToastUtis getInstance(Context context){
+
+        if (toast == null) {
+            synchronized (context) {
+                mContext = context;
+                toast = new ToastUtis();
+            }
+        }
+        return toast;
+    }
+
     /**
      * 显示Toast
-     * @param context
      * @param msg
      */
-    public static void onToast(Context context, String msg){
+    public static void onToast( String msg){
 
-        Toast.makeText(context, msg , Toast.LENGTH_SHORT).show();
+        if (mContext!=null){
+            Toast.makeText(mContext, msg , Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

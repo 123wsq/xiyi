@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.example.wsq.android.tools.CrashHandler;
+import com.example.wsq.android.utils.ToastUtis;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
@@ -21,7 +21,6 @@ public class MApplication extends Application {
         super.onCreate();
         
 
-        CrashHandler.getInstance().init(getApplicationContext());
 
         //极光推送
         JPushInterface.setDebugMode(false);
@@ -30,6 +29,7 @@ public class MApplication extends Application {
         JMessageClient.setDebugMode(false);
         JMessageClient.init(this, true);
 
+        ToastUtis.getInstance(this);
     }
 
     @Override

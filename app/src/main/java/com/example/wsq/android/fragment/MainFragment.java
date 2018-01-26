@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,15 +17,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
-import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.KnowledgeActivity;
 import com.example.wsq.android.activity.NewsActivity;
+import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.order.OrderActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.loader.GlideImageLoader;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomPopup;
+import com.example.wsq.android.view.SpreadPopup;
 import com.example.wsq.plugin.banner.Banner;
 import com.example.wsq.plugin.banner.BannerConfig;
 import com.example.wsq.plugin.banner.Transformer;
@@ -49,6 +53,7 @@ public class MainFragment extends Fragment {
 
     private List<String> mImages;
     private List<String> mTitles;
+
     private SharedPreferences shared;
     private CustomPopup popup;
 
@@ -69,6 +74,8 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         init();
         initView();
+
+
     }
 
 
@@ -108,6 +115,8 @@ public class MainFragment extends Fragment {
         banner.start();
 
 
+        handler.sendMessageDelayed(new Message(), 1000);
+//        showSpread();
     }
 
     @OnClick({R.id.ll_device, R.id.ll_engineer, R.id.ll_news, R.id.ll_server, R.id.ll_knowledge})
@@ -164,4 +173,27 @@ public class MainFragment extends Fragment {
                 break;
         }
     }
+
+    Handler handler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            showSpread();
+        }
+    };
+
+    public void showSpread(){
+
+        SpreadPopup spreadPopup = new SpreadPopup(getActivity(), R.layout.layout_spread_main, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ToastUtis.onToast("开始拆红包了^^");
+            }
+        });
+
+        spreadPopup.showAtLocation(getActivity().findViewById(R.id.ll_layout), Gravity.CENTER, 0 , 0);
+    }
+
 }

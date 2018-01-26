@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.wsq.android.constant.ResponseKey;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -261,12 +262,14 @@ class RequestUtil {
                         Log.d("文件 key", entry.getKey());
                         File f  = (File) map.get(entry.getKey());
                         Log.d("上传文件名   ", f.getName()+"");
+                        Logger.d(f.getName()+"大小： "+ f.length());
                         if (f != null){
                             builder.addFormDataPart(entry.getKey(),f.getName(), RequestBody.create(MediaType.parse(fileType), f));
                         }
 
                     }else if(entry.getKey().equals(ResponseKey.THUMB)){
                         File f = (File) map.get(ResponseKey.THUMB);
+                        Logger.d(f.getName()+"大小： "+ f.length());
                         builder.addFormDataPart(ResponseKey.THUMB,f.getName(), RequestBody.create(MediaType.parse(fileType), f));
                     }
 
