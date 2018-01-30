@@ -109,7 +109,6 @@ public class ShareRecordActivity extends BaseActivity{
             case R.id.iv_back:
                 finish();
                 break;
-
             case R.id.iv_add:
 
                 if (conInter.selectCount(this, AuthType.ARTICLES) > 0){

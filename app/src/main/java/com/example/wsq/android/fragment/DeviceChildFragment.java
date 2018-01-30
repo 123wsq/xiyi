@@ -17,6 +17,7 @@ import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.loader.GlideImageLoader;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
@@ -132,42 +133,37 @@ public class DeviceChildFragment extends Fragment{
         param.put(ResponseKey.ID, getArguments().getString(ResponseKey.ID));
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN,""));
 
-        try {
-            orderTaskService.onGetDeviceInfo(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
-
-
-                    tv_name.setText(result.get(ResponseKey.TITLE).toString());
-                    tv_device.setText(result.get(ResponseKey.PINPAI).toString());
-                    tv_train.setText(result.get(ResponseKey.XILIE).toString());
-                    tv_content.setText(Html.fromHtml(result.get(ResponseKey.CONTENT).toString()));
+        orderTaskService.onGetDeviceInfo(getActivity(), param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                tv_name.setText(result.get(ResponseKey.TITLE).toString());
+                tv_device.setText(result.get(ResponseKey.PINPAI).toString());
+                tv_train.setText(result.get(ResponseKey.XILIE).toString());
+                tv_content.setText(Html.fromHtml(result.get(ResponseKey.CONTENT).toString()));
 //                    tv_content.loadData(result.get(ResponseKey.CONTENT).toString(),"text/html; charset=UTF-8", null);
-                    try {
-                        JSONArray jsona = new JSONArray(result.get(ResponseKey.IMGS).toString());
-                        for (int i=0; i < jsona.length(); i++){
-                            mImages.add(Urls.HOST+Urls.GET_IMAGES+jsona.get(i).toString());
-                            mTitles.add("");
-                        }
-                        if (mImages.size()!= 0 && mTitles.size() == mImages.size()){
-                            //设置图片集合
-                            banner.setImages(mImages);
-                            //设置标题集合（当banner样式有显示title时）
-                            banner.setBannerTitles(mTitles);
-                            banner.start();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                try {
+                    JSONArray jsona = new JSONArray(result.get(ResponseKey.IMGS).toString());
+                    for (int i=0; i < jsona.length(); i++){
+                        mImages.add(Urls.HOST+Urls.GET_IMAGES+jsona.get(i).toString());
+                        mTitles.add("");
                     }
+                    if (mImages.size()!= 0 && mTitles.size() == mImages.size()){
+                        //设置图片集合
+                        banner.setImages(mImages);
+                        //设置标题集合（当banner样式有显示title时）
+                        banner.setBannerTitles(mTitles);
+                        banner.start();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
 
-                @Override
-                public void onCallFail(String msg) {
-                    Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
     }
 }

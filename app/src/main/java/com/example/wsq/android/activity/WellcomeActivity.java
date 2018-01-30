@@ -2,19 +2,26 @@ package com.example.wsq.android.activity;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.adapter.WellcomeAdapter;
+import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.utils.DensityUtil;
 
 import java.util.ArrayList;
@@ -22,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -34,10 +42,15 @@ public class WellcomeActivity  extends Activity {
     @BindView(R.id.viewPager) ViewPager viewPager;
 
     @BindView(R.id.layout_Indicator) LinearLayout layout_Indicator;
+    @BindView(R.id.rl_layout_page)
+    RelativeLayout rl_layout_page;
+    @BindView(R.id.rl_layout_new_year) RelativeLayout rl_layout_new_year;
+    @BindView(R.id.tv_break) TextView tv_break;
 
     private WellcomeAdapter mAdapter;
     private List<View> mDate;
-
+    private SharedPreferences shared;
+    private int curLen = 5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,13 +63,21 @@ public class WellcomeActivity  extends Activity {
 
     public void initView() {
 
-        viewPager = this.findViewById(R.id.viewPager);
-        layout_Indicator = this.findViewById(R.id.layout_Indicator);
+        shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
-        getImages();
-        drawIndicator();
-        mAdapter = new WellcomeAdapter(this, mDate);
-        viewPager.setAdapter(mAdapter);
+
+        if (shared.getBoolean(Constant.SHARED.ISLOGIN, false)){
+
+            rl_layout_new_year.setVisibility(View.VISIBLE);
+            handler.postDelayed(runnable, 1000);
+        }else {
+            rl_layout_page.setVisibility(View.VISIBLE);
+            getImages();
+            drawIndicator();
+            mAdapter = new WellcomeAdapter(this, mDate);
+            viewPager.setAdapter(mAdapter);
+        }
+
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -126,4 +147,36 @@ public class WellcomeActivity  extends Activity {
 
     }
 
+    @OnClick({R.id.tv_break})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.tv_break:
+                startActivity(new Intent(WellcomeActivity.this, LoginActivity.class));
+                finish();
+                break;
+        }
+    }
+    Handler handler = new Handler(){};
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            curLen--;
+            if (curLen == 0){
+                startActivity(new Intent(WellcomeActivity.this, LoginActivity.class));
+                finish();
+            }else{
+                tv_break.setText("跳过 "+curLen+"s");
+                handler.postDelayed(this, 1000);
+            }
+
+        }
+    };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            return  true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

@@ -72,6 +72,8 @@ public class Constant {
         public static final String ID = "uId";
 
         public static final String MESSAGE = "message";
+
+        public static final String CUR_DAY = "cur_day";
     }
 
 

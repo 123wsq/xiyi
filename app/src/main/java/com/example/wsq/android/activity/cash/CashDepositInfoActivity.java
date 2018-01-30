@@ -2,21 +2,29 @@ package com.example.wsq.android.activity.cash;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.adapter.CashProgressAdapter;
 import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.BankInfo;
 import com.example.wsq.android.utils.DateUtil;
+import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -32,22 +40,22 @@ public class CashDepositInfoActivity extends BaseActivity {
     TextView tv_title;
     @BindView(R.id.tv_money) TextView tv_money;
     @BindView(R.id.tv_cash_state) TextView tv_cash_state;
-    @BindView(R.id.tv_apply_time) TextView tv_apply_time;
-    @BindView(R.id.tv_apply_time_i) TextView tv_apply_time_i;
     @BindView(R.id.tv_apply_name) TextView tv_apply_name;
     @BindView(R.id.tv_content) TextView tv_content;
+    @BindView(R.id.tv_create_time) TextView tv_create_time;
     @BindView(R.id.ll_apply_content) LinearLayout ll_apply_content;
     @BindView(R.id.ll_Details_info) LinearLayout ll_Details_info;
     @BindView(R.id.tv_apply_num) TextView tv_apply_num;
-    @BindView(R.id.tv_create_time) TextView tv_create_time;
-    @BindView(R.id.tv_apply_success) TextView tv_apply_success;
-    @BindView(R.id.tv_progress) TextView tv_progress;
     @BindView(R.id.tv_reject) TextView tv_reject;
     @BindView(R.id.ll_reject_content) LinearLayout ll_reject_content;
+    @BindView(R.id.rv_RecyclerView)
+    RecyclerView rv_RecyclerView;
 
     SharedPreferences shared;
     private UserService userService;
     private int payId = 0;
+    private CashProgressAdapter mAdapter;
+    private List<Map<String, Object>> mData;
 
     @Override
     public int getByLayoutId() {
@@ -58,7 +66,14 @@ public class CashDepositInfoActivity extends BaseActivity {
 
 
         userService = new UserServiceImpl();
+        mData = new ArrayList<>();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
+//        rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
+//                this, LinearLayoutManager.HORIZONTAL, 0,
+//                ContextCompat.getColor(this, R.color.color_white)));
+        rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        rv_RecyclerView.setHasFixedSize(true);
+
 
 
         payId = getIntent().getIntExtra(ResponseKey.PAY_ID, 0);
@@ -69,6 +84,9 @@ public class CashDepositInfoActivity extends BaseActivity {
             tv_title.setText("账单详情");
             onGetBillDetailsInfo();
         }
+
+        mAdapter = new CashProgressAdapter(this, mData);
+        rv_RecyclerView.setAdapter(mAdapter);
     }
 
     @OnClick({R.id.iv_back})
@@ -95,7 +113,6 @@ public class CashDepositInfoActivity extends BaseActivity {
                 Map<String, Object> data = (Map<String, Object>) result.get(ResponseKey.CASH_LIST);
 
                 setViewData(data, 1);
-
             }
 
             @Override
@@ -138,23 +155,11 @@ public class CashDepositInfoActivity extends BaseActivity {
      * @param type  1 表示申请保证金   2 表示提现
      */
     public void setViewData(Map<String, Object> data, int type){
+        mData.clear();
+
 
         tv_money.setText(data.get(ResponseKey.MONEY)+"");
-        int state = (int)data.get(ResponseKey.STATE);
-        if (state ==0){
-            tv_cash_state.setText("处理中");
-        }else if(state ==1){
-            tv_cash_state.setText("审核成功");
-        }else if(state == 2){
-            tv_cash_state.setText("已驳回，请联系客服");
-            ll_reject_content.setVisibility(View.VISIBLE);
-            tv_reject.setText(data.get(ResponseKey.AUDIT_MESSAGE)+"");
-        }
 
-
-        tv_apply_time.setText(DateUtil.onDateFormat(data.get(ResponseKey.CREAT_AT)+"", DateUtil.DATA_FORMAT_2));
-
-        tv_apply_time_i.setText(DateUtil.onDateFormat(data.get(ResponseKey.CREAT_AT)+"",DateUtil.DATA_FORMAT_2));
         String bankCode = data.get(ResponseKey.BANK_NUMBER)+"";
 
         try {
@@ -165,17 +170,72 @@ public class CashDepositInfoActivity extends BaseActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        int state = (int)data.get(ResponseKey.STATE);
+        if (state ==0){
+            tv_cash_state.setText("处理中");
+        }else if(state ==1){
+            tv_cash_state.setText("审核成功");
+        }else if(state == 2){
+            tv_cash_state.setText("已驳回，请联系客服");
+            ll_reject_content.setVisibility(View.VISIBLE);
+            if (type ==1){
+                Logger.d(data.get(ResponseKey.AUDIT_MESSAGE)+"    =======1");
+                tv_reject.setText(data.get(ResponseKey.AUDIT_MESSAGE)+"");
+            }else if(type ==2){
+                //refuse_txt
+                tv_reject.setText(data.get(ResponseKey.REFUSE_TXT)+"");
+            }
+
+        }else if(state ==3 ){
+            tv_cash_state.setText("已到账");
+
+        }
+
+
+        tv_create_time.setText(data.get(ResponseKey.CREAT_AT)+"");
         if (type == 1 ){
             ll_apply_content.setVisibility(View.VISIBLE);
             tv_content.setText(data.get(ResponseKey.MESSAGE)+"");
-            tv_apply_success.setText("申请成功");
-            tv_progress.setText("业务处理中");
+
+            onSetData(true, true, "申请成功",data.get(ResponseKey.CREAT_AT)+"", true);
+            onSetData(true, false, "业务处理中",data.get(ResponseKey.CREAT_AT)+"", true);
         }else if(type == 2){
             ll_Details_info.setVisibility(View.VISIBLE);
-            tv_create_time.setText(data.get(ResponseKey.CREAT_AT)+"");
+//            tv_create_time.setText(data.get(ResponseKey.CREAT_AT)+"");
             tv_apply_num.setText(data.get(ResponseKey.PAY_SN)+"");
-            tv_apply_success.setText("提现成功");
-            tv_progress.setText("银行处理中");
+            onSetData(true, true, "提现成功",data.get(ResponseKey.CREAT_AT)+"", true);
+            onSetData(true, false, "银行处理中",data.get(ResponseKey.CREAT_AT)+"", true);
         }
+        if (state == 1 || state ==0){
+            onSetData(false, false, "审核通过", "预计1-7个工作日内到账", false);
+            onSetData(false, false, "已到账", "", false);
+        }else if(state == 2){
+            onSetData(true, false, "审核未通过", "预计1-7个工作日内到账", true);
+            onSetData(false, false, "已到账", "", false);
+        }else if(state == 3){
+            onSetData(true, true, "审核通过", "预计1-7个工作日内到账", true);
+            onSetData(true, false, "已到账", data.get(ResponseKey.PLAY_MONEY_TIME)+"", true);
+        }
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 设置状态显示
+     * @param upState
+     * @param downState
+     * @param msg
+     * @param time
+     */
+    public void onSetData(boolean upState, boolean downState, String msg, String time, boolean state){
+        Map<String, Object> map = new HashMap<>();
+        map.put("up", upState);
+        map.put("down", downState);
+        map.put("msg", msg);
+        map.put("time", time);
+        map.put("state", state);
+
+        mData.add(map);
     }
 }

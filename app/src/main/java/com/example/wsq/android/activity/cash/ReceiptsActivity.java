@@ -67,7 +67,7 @@ public class ReceiptsActivity extends BaseActivity {
 
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 2,
-                ContextCompat.getColor(this, R.color.color_line)));
+                ContextCompat.getColor(this, R.color.default_backgroud_color)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
         mData = new ArrayList<>();

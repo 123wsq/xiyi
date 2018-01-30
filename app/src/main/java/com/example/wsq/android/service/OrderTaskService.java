@@ -38,7 +38,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void ongetOrderInfo(Map<String, String> params, HttpResponseCallBack callBack) throws  Exception;
+    void ongetOrderInfo(Context context, Map<String, String> params, HttpResponseListener callBack);
 
     /**
      * 审核
@@ -46,7 +46,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onAudit(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onAudit(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -55,7 +55,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onOrderStatus(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onOrderStatus(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -83,7 +83,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onGetProductInfo(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onGetProductInfo(Context context, Map<String, String> params, HttpResponseListener callBack);
 
     /**
      * 获取设备列表
@@ -100,7 +100,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onGetDeviceInfo(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onGetDeviceInfo(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -117,7 +117,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onGetKnowledgeList(Map<String, String> params, HttpResponseCallBack callBack) throws Exception;
+    void onGetKnowledgeList(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**
@@ -135,7 +135,7 @@ public interface OrderTaskService {
      * @param callBack
      * @throws Exception
      */
-    void onGetOrderCount(Map<String, String> params, HttpResponseCallBack callBack)throws  Exception;
+    void onGetOrderCount(Context context, Map<String, String> params, HttpResponseListener callBack);
 
 
     /**

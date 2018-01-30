@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/defalut_layout_height"
+    android:orientation="horizontal"
+    android:background="@color/color_white"
+    >
+
+        <RelativeLayout
+            android:layout_width="@dimen/defalut_layout_height"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
+
+            <LinearLayout
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/view_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/defalut_title_color"
+                    android:visibility="visible"
+                    android:layout_marginBottom="5dp"
+                    />
+
+                <View
+                    android:id="@+id/view_down"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/color_gray"
+                    android:layout_marginTop="15dp"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_progress"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/image_cash_progress"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:gravity="center"
+            android:text="体现成功"
+            android:textSize="@dimen/default_text_size" />
+
+        <TextView
+            android:id="@+id/tv_apply_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:text="2017-01-01 13:00:01"
+            android:textColor="@color/color_gray"
+            android:textSize="@dimen/default_text_size" />
+</LinearLayout>

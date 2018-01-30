@@ -132,6 +132,8 @@ public class ResponseKey {
 
     public static final String CREATE_TIME = "create_time";
 
+    public static final String  PLAY_MONEY_TIME = "play_money_time";
+
     public static final String  THUMB = "thumb";
 
     public static final String TITLE = "title";
@@ -242,6 +244,8 @@ public class ResponseKey {
     public static final String BAOZHENGJIN = "baozhengjin";
 
     public static final String AUDIT_MESSAGE = "audit_message";
+
+    public static final String  REFUSE_TXT = "refuse_txt";
 
     public static final String DEVICE_TYPE = "device_type";
 

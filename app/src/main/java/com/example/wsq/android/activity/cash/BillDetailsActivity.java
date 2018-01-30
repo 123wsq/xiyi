@@ -78,7 +78,7 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
 
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 2,
-                ContextCompat.getColor(this, R.color.color_line)));
+                ContextCompat.getColor(this, R.color.default_backgroud_color)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
         mData = new ArrayList<>();
@@ -194,7 +194,7 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
                     ll_no_Record.setVisibility(View.VISIBLE);
                 }
                 if (dialog.isShowing()){
-                    dialog.show();
+                    dialog.dismiss();
                 }
             }
 
@@ -202,7 +202,7 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
             public void onFailure() {
 
                 if (dialog.isShowing()){
-                    dialog.show();
+                    dialog.dismiss();
                 }
             }
         });

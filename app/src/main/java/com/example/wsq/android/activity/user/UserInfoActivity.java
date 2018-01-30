@@ -314,6 +314,7 @@ public class UserInfoActivity extends BaseActivity {
                         result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
 
                 dialog.dismiss();
+                finish();
             }
             @Override
             public void onFailure() {

@@ -18,6 +18,7 @@ import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
@@ -166,76 +167,72 @@ public class ServerOrderInfoActivity extends BaseActivity {
         param.put(ResponseKey.JUESE, shared.getString(Constant.SHARED.JUESE, "0"));
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN,""));
 
-        try {
-            orderTaskService.ongetOrderInfo(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
+        orderTaskService.ongetOrderInfo(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                mResultInfo.putAll(result);
+                tv_fault_desc.setText(result.get(ResponseKey.DES)+"");
 
-                    mResultInfo.putAll(result);
-                    tv_fault_desc.setText(result.get(ResponseKey.DES)+"");
+                //服务信息
+                tv_server_loc.setText(result.get(ResponseKey.DIDIAN)+"");
+                tv_server_content.setText(result.get(ResponseKey.CONTENT)+"");
+                tv_server_leave.setText(result.get(ResponseKey.YILIU)+"");
+                //
+                result.get(ResponseKey.YILIU);
 
-                    //服务信息
-                    tv_server_loc.setText(result.get(ResponseKey.DIDIAN)+"");
-                    tv_server_content.setText(result.get(ResponseKey.CONTENT)+"");
-                    tv_server_leave.setText(result.get(ResponseKey.YILIU)+"");
-                    //
-                    result.get(ResponseKey.YILIU);
-
-                    //上报图片
-                    String imags1 = result.get(ResponseKey.R_IMGS)+"";
-                    List<String> list1 = new ArrayList<>();
-                    try {
-                        JSONArray jsona1 = new JSONArray(imags1);
-                        for (int i = 0; i < jsona1.length(); i++) {
-                            list1.add(jsona1.get(i)+"");
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    showImags(mData1, list1, 1);
-                    //现场图片
-                    String imags2 = result.get(ResponseKey.IMGS)+"";
-                    List<String> list2 = new ArrayList<>();
-                    try {
-                        JSONArray jsona2 = new JSONArray(imags2);
-                        for (int i = 0; i < jsona2.length(); i++) {
-                            list2.add(jsona2.get(i)+"");
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    showImags(mData2, list2, 2);
-                    //根据状态设置时间
-                    String status = result.get(ResponseKey.STATUS)+"";
-                    if (status.equals("4")){
-                        ll_end_time.setVisibility(View.GONE);
-                        tv_finish_time.setText("完成时间");
-                        tv_order_start.setText(result.get(ResponseKey.OVER_TIME)+"");
+                //上报图片
+                String imags1 = result.get(ResponseKey.R_IMGS)+"";
+                List<String> list1 = new ArrayList<>();
+                try {
+                    JSONArray jsona1 = new JSONArray(imags1);
+                    for (int i = 0; i < jsona1.length(); i++) {
+                        list1.add(jsona1.get(i)+"");
                     }
 
-                    //其他信息
-                    tv_scene_contact.setText(result.get(ResponseKey.LXR)+"");
-                    tv_scene_tel.setText(result.get(ResponseKey.TEL)+"");
-                    tv_server_leave.setText(result.get(ResponseKey.YILIU)+"");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                showImags(mData1, list1, 1);
+                //现场图片
+                String imags2 = result.get(ResponseKey.IMGS)+"";
+                List<String> list2 = new ArrayList<>();
+                try {
+                    JSONArray jsona2 = new JSONArray(imags2);
+                    for (int i = 0; i < jsona2.length(); i++) {
+                        list2.add(jsona2.get(i)+"");
+                    }
 
-                    //服务费用
-                    tv_traveling_fee.setText(result.get(ResponseKey.CHAILV) +"元");
-                    tv_server_fee.setText(result.get(ResponseKey.FUWU)+"元");
-                    tv_spare_fee.setText(result.get(ResponseKey.BEIJIAN)+"元");
-                    tv_other_fee.setText(result.get(ResponseKey.QITA)+"元");
-                    tv_all_fee.setText(result.get(ResponseKey.ZONG)+"元");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                showImags(mData2, list2, 2);
+                //根据状态设置时间
+                String status = result.get(ResponseKey.STATUS)+"";
+                if (status.equals("4")){
+                    ll_end_time.setVisibility(View.GONE);
+                    tv_finish_time.setText("完成时间");
+                    tv_order_start.setText(result.get(ResponseKey.OVER_TIME)+"");
                 }
 
-                @Override
-                public void onCallFail(String msg) {
+                //其他信息
+                tv_scene_contact.setText(result.get(ResponseKey.LXR)+"");
+                tv_scene_tel.setText(result.get(ResponseKey.TEL)+"");
+                tv_server_leave.setText(result.get(ResponseKey.YILIU)+"");
 
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                //服务费用
+                tv_traveling_fee.setText(result.get(ResponseKey.CHAILV) +"元");
+                tv_server_fee.setText(result.get(ResponseKey.FUWU)+"元");
+                tv_spare_fee.setText(result.get(ResponseKey.BEIJIAN)+"元");
+                tv_other_fee.setText(result.get(ResponseKey.QITA)+"元");
+                tv_all_fee.setText(result.get(ResponseKey.ZONG)+"元");
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
     }
 
     public void showImags(List<CameraBean> list, List<String>  array, int type){

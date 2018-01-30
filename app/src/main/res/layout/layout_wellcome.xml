@@ -3,14 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+    <RelativeLayout
+        android:id="@+id/rl_layout_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
     <android.support.v4.view.ViewPager
 
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-
 
     <LinearLayout
         android:id="@+id/layout_Indicator"
@@ -21,5 +27,35 @@
         android:gravity="center"
         android:layout_marginBottom="@dimen/defalut_layout_Indicator"
         />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_layout_new_year"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/im_new_year"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_new_year"
+            />
+
+        <TextView
+            android:id="@+id/tv_break"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跳过"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/default_margin_4"
+            android:textSize="@dimen/default_text_size_3"
+            android:background="@drawable/shape_break"
+            android:padding="@dimen/default_padding_4"
+            android:textColor="@color/color_white"
+            />
+    </RelativeLayout>
+
 
 </RelativeLayout>

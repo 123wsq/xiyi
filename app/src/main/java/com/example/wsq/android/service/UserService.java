@@ -58,6 +58,14 @@ public interface UserService {
      */
     void getValidateCode(Context context, Map<String, String> params, HttpResponseListener callBack);
 
+
+    /**
+     * 获取主页轮播图片
+     * @param context
+     * @param param
+     * @param callBack
+     */
+    void getMainBannerImages(Context context, Map<String, String> param , HttpResponseCallBack callBack);
     /**
      * 获取用户信息
      * @param params

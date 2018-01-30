@@ -20,6 +20,7 @@ import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
@@ -271,24 +272,20 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
         param.put(ResponseKey.TOKEN, token);
         param.put(ResponseKey.ID, id);
         param.put(ResponseKey.ACTION, action);
-        try {
-            orderTaskService.onOrderStatus(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
 
+        orderTaskService.onOrderStatus(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Toast.makeText(OrderInfoActivity.this, result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
+                finish();
+            }
 
-                    Toast.makeText(OrderInfoActivity.this, result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+            @Override
+            public void onFailure() {
 
-                @Override
-                public void onCallFail(String msg) {
+            }
+        });
 
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -305,24 +302,20 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
         if (type == 2){
             param.put(ResponseKey.NOPASS, result);
         }
-        try {
-            orderTaskService.onAudit(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
+        orderTaskService.onAudit(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                Toast.makeText(OrderInfoActivity.this, result.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(OrderInfoActivity.this, result.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
+                finish();
+            }
 
-                    finish();
-                }
+            @Override
+            public void onFailure() {
 
-                @Override
-                public void onCallFail(String msg) {
+            }
+        });
 
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -334,110 +327,104 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
         param.put(ResponseKey.TOKEN, token);
         param.put(ResponseKey.ID, id);
         param.put(ResponseKey.JUESE, role);
+        orderTaskService.ongetOrderInfo(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                mResultInfo.putAll(result);
+                tv_ordernum.setText(result.get(ResponseKey.ORDER_NO)+"");
+                tv_companyName.setText(result.get(ResponseKey.COMPANY)+"");
+                tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
 
-        try {
-            orderTaskService.ongetOrderInfo(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
+                tv_device.setText(result.get(ResponseKey.XINGHAO)+"");
+                tv_outnum.setText(result.get(ResponseKey.BIANHAO)+"");
+                tv_fault_desc.setText(result.get(ResponseKey.DES)+"");
 
-                    mResultInfo.putAll(result);
-                    tv_ordernum.setText(result.get(ResponseKey.ORDER_NO)+"");
-                    tv_companyName.setText(result.get(ResponseKey.COMPANY)+"");
-                    tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
+                if (role.equals("1")){
 
-                    tv_device.setText(result.get(ResponseKey.XINGHAO)+"");
-                    tv_outnum.setText(result.get(ResponseKey.BIANHAO)+"");
-                    tv_fault_desc.setText(result.get(ResponseKey.DES)+"");
+                    tv_upName.setText(result.get(ResponseKey.S_NAME) + "");
+                    tv_upTel.setText(result.get(ResponseKey.S_TEL) + "");
+                }else {
+                    tv_upName.setText(result.get(ResponseKey.NAME) + "");
+                    tv_upTel.setText(result.get(ResponseKey.TEL) + "");
+                }
 
-                    if (role.equals("1")){
+                //设置结束、审核时间
+                if (!role.equals("1") && !status.equals("8")){
+                    tv_audit_time.setText(result.get(ResponseKey.CHECK_TIME)+"");
+                }
 
-                        tv_upName.setText(result.get(ResponseKey.S_NAME) + "");
-                        tv_upTel.setText(result.get(ResponseKey.S_TEL) + "");
-                    }else {
-                        tv_upName.setText(result.get(ResponseKey.NAME) + "");
-                        tv_upTel.setText(result.get(ResponseKey.TEL) + "");
-                    }
-
-                    //设置结束、审核时间
-                    if (!role.equals("1") && !status.equals("8")){
-                        tv_audit_time.setText(result.get(ResponseKey.CHECK_TIME)+"");
-                    }
-
-                    if (!role.equals("1")){
-                        if (status.equals("2")){
-                            tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
-                        }else if(status.equals("8")){
-                            tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
-                            tv_audit_time.setText(result.get(ResponseKey.DONE_TIME)+"");
-                        }
-                    }
-
-
-
-                    //设置图片
-                    String imags = result.get(ResponseKey.IMGS)+"";
-                    if (TextUtils.isEmpty(imags) || imags.equals("null")) {
-                        imags = result.get(ResponseKey.R_IMGS)+"";
-                    }
-
-                    try {
-                        JSONArray jsona = new JSONArray(imags);
-
-                        List<String> list = new ArrayList<>();
-
-                        for (int i = 0; i < jsona.length(); i++) {
-
-                            list.add(jsona.get(i).toString());
-                        }
-                             showImags( list);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (mData.size() !=0 ){
-                        mAdapter.notifyDataSetChanged();
-                    }
-
-                    tv_traveling_fee.setText(result.get(ResponseKey.CHAILV)+"元");
-                    tv_server_fee.setText(result.get(ResponseKey.FUWU)+"元");
-                    tv_spare_fee.setText(result.get(ResponseKey.BEIJIAN)+"元");
-                    tv_other_fee.setText(result.get(ResponseKey.QITA)+"元");
-                    tv_all_fee.setText(result.get(ResponseKey.ZONG)+"元");
-
-
-                    //判断当前角色
-                    if (role.equals("3")
-                            && result.get(ResponseKey.STATUS).toString().equals("0")){
-                        ll_submit.setVisibility(View.VISIBLE);
-                        tv_affirm.setText("通过");
-                        tv_negation.setText("不通过");
-                    }else if(role.equals("1")
-                            && result.get(ResponseKey.STATUS).toString().equals("2")){
-                        ll_submit.setVisibility(View.VISIBLE);
-                        tv_affirm.setText("开始任务");
-                        tv_negation.setText("总计:  " + result.get(ResponseKey.ZONG)+"元");
-                        tv_negation.setBackgroundColor(Color.parseColor("#676565"));
-                        tv_negation.setClickable(false);
-                    }else if(role.equals("1")
-                            && result.get(ResponseKey.STATUS).toString().equals("3")){
-                        ll_submit.setVisibility(View.VISIBLE);
-                        tv_affirm.setText("完成任务");
-                        tv_negation.setText("移交订单");
-                    }else {
-                        ll_submit.setVisibility(View.INVISIBLE);
+                if (!role.equals("1")){
+                    if (status.equals("2")){
+                        tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
+                    }else if(status.equals("8")){
+                        tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
+                        tv_audit_time.setText(result.get(ResponseKey.DONE_TIME)+"");
                     }
                 }
 
 
-                @Override
-                public void onCallFail(String msg) {
 
+                //设置图片
+                String imags = result.get(ResponseKey.IMGS)+"";
+                if (TextUtils.isEmpty(imags) || imags.equals("null")) {
+                    imags = result.get(ResponseKey.R_IMGS)+"";
                 }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+                try {
+                    JSONArray jsona = new JSONArray(imags);
+
+                    List<String> list = new ArrayList<>();
+
+                    for (int i = 0; i < jsona.length(); i++) {
+
+                        list.add(jsona.get(i).toString());
+                    }
+                    showImags( list);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if (mData.size() !=0 ){
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                tv_traveling_fee.setText(result.get(ResponseKey.CHAILV)+"元");
+                tv_server_fee.setText(result.get(ResponseKey.FUWU)+"元");
+                tv_spare_fee.setText(result.get(ResponseKey.BEIJIAN)+"元");
+                tv_other_fee.setText(result.get(ResponseKey.QITA)+"元");
+                tv_all_fee.setText(result.get(ResponseKey.ZONG)+"元");
+
+
+                //判断当前角色
+                if (role.equals("3")
+                        && result.get(ResponseKey.STATUS).toString().equals("0")){
+                    ll_submit.setVisibility(View.VISIBLE);
+                    tv_affirm.setText("通过");
+                    tv_negation.setText("不通过");
+                }else if(role.equals("1")
+                        && result.get(ResponseKey.STATUS).toString().equals("2")){
+                    ll_submit.setVisibility(View.VISIBLE);
+                    tv_affirm.setText("开始任务");
+                    tv_negation.setText("总计:  " + result.get(ResponseKey.ZONG)+"元");
+                    tv_negation.setBackgroundColor(Color.parseColor("#676565"));
+                    tv_negation.setClickable(false);
+                }else if(role.equals("1")
+                        && result.get(ResponseKey.STATUS).toString().equals("3")){
+                    ll_submit.setVisibility(View.VISIBLE);
+                    tv_affirm.setText("完成任务");
+                    tv_negation.setText("移交订单");
+                }else {
+                    ll_submit.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+        
     }
 
 

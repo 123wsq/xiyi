@@ -24,6 +24,7 @@ import com.example.wsq.android.activity.order.OrderActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.loader.GlideImageLoader;
+import com.example.wsq.android.utils.DateUtil;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomPopup;
@@ -185,6 +186,12 @@ public class MainFragment extends Fragment {
 
     public void showSpread(){
 
+        String day= shared.getString(Constant.SHARED.CUR_DAY, "");
+        String cur_day =  DateUtil.onDateFormat(DateUtil.DATA_FORMAT_5);
+        if (cur_day.equals(day)){
+            return;
+        }
+        shared.edit().putString(Constant.SHARED.CUR_DAY, cur_day).commit();
         SpreadPopup spreadPopup = new SpreadPopup(getActivity(), R.layout.layout_spread_main, new View.OnClickListener() {
             @Override
             public void onClick(View view) {

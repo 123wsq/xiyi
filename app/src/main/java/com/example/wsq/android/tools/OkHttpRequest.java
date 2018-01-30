@@ -6,6 +6,7 @@ import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
+import com.example.wsq.android.inter.OnDownloadListener;
 import com.example.wsq.android.utils.MD5Util;
 import com.example.wsq.android.utils.ParamFormat;
 import com.example.wsq.android.utils.UnicodeUtil;
@@ -15,6 +16,7 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -308,6 +310,8 @@ public class OkHttpRequest {
 
                             callBack.callBack(map);
 
+                        }else if((int) map.get(ResponseKey.CODE) == 2004){ //账号已注销
+                            callBack.onCallFail("2004");
                         } else {
                             Logger.d(map);
                             callBack.onCallFail(map.get(ResponseKey.MESSAGE).toString());
@@ -364,6 +368,8 @@ public class OkHttpRequest {
 
                             callBack.callBack(map);
 
+                        }else if((int) map.get(ResponseKey.CODE) == 2004){ //账号已注销
+                            callBack.onCallFail("2004");
                         } else { //用户名或密码错误
 //                            map.putAll(ParamFormat.onJsonToMap(result));
 //                            callBack.callBack(map);
@@ -474,5 +480,34 @@ public class OkHttpRequest {
             }
         });
 
+    }
+
+
+    public void onDownloadFile(String url, Map<String, String> param, String dir, String fileName, final OnDownloadListener listener){
+
+
+        OkhttpUtil.okHttpDownloadFile(url, param, new CallBackUtil.CallBackFile(dir, fileName) {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                listener.onFail();
+            }
+
+            @Override
+            public void onResponse(File response) {
+                if (response.exists()){
+                    Logger.d("文件名称： "+response.getName()+"\n保存路径："+response.getAbsolutePath());
+                    listener.onSuccess(response);
+                }else{
+                    listener.onFail();
+                }
+            }
+
+            @Override
+            public void onProgress(float progress, long total) {
+                super.onProgress(progress, total);
+
+                listener.onProgress(progress, total);
+            }
+        });
     }
 }

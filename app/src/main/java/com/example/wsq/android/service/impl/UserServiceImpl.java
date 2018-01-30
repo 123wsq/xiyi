@@ -3,6 +3,7 @@ package com.example.wsq.android.service.impl;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
@@ -10,6 +11,7 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.tools.OkHttpRequest;
 import com.example.wsq.android.tools.RegisterParam;
+import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.SystemUtils;
 import com.example.wsq.android.utils.ValidateParam;
 import com.orhanobut.logger.Logger;
@@ -47,6 +49,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -90,6 +93,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -139,6 +143,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -171,6 +176,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -207,6 +213,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
 //                    callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -217,6 +224,39 @@ public class UserServiceImpl implements UserService{
         }
 
 
+    }
+
+    /**
+     * 获取主页面的轮播图
+     * @param context
+     * @param param
+     * @param callBack
+     */
+    @Override
+    public void getMainBannerImages(final Context context, Map<String, String> param, final HttpResponseCallBack callBack) {
+
+        //必填参数验证
+        try {
+
+//            ValidateParam.validateParam(param, ResponseKey.TEL);
+
+            OkHttpRequest.sendHttpPost(Urls.GET_VALIDATE_CODE, param, new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    callBack.callBack(result);
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    onExitApp(context, msg);
+                    callBack.onCallFail("请求失败");
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            callBack.onCallFail("必要参数未填写");
+        }
     }
 
     /**
@@ -240,6 +280,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -275,6 +316,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -308,6 +350,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -342,6 +385,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     if (callBack != null) {
                         callBack.onFailure();
                     }
@@ -382,6 +426,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -415,6 +460,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -449,6 +495,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -480,6 +527,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -514,7 +562,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
-
+                    onExitApp(context, msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     callBack.onFailure();
                 }
@@ -551,7 +599,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
-
+                    onExitApp(context, msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     callBack.onFailure();
                 }
@@ -588,8 +636,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
-
-                    Logger.d(msg);
+                    onExitApp(context, msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     callBack.onFailure();
                 }
@@ -623,8 +670,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
-
-                    Logger.d(msg);
+                    onExitApp(context, msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     callBack.onFailure();
                 }
@@ -659,8 +705,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
-
-                    Logger.d(msg);
+                    onExitApp(context, msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     callBack.onFailure();
                 }
@@ -695,8 +740,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
-
-                    Logger.d(msg);
+                    onExitApp(context, msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     callBack.onFailure();
                 }
@@ -730,6 +774,8 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+
+                    onExitApp(context, msg);
 
                     Logger.d(msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
@@ -765,6 +811,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -798,6 +845,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -832,6 +880,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -864,6 +913,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -896,6 +946,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -928,6 +979,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     callBack.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -961,6 +1013,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     listener.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -993,6 +1046,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     listener.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -1025,6 +1079,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     listener.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -1057,6 +1112,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     listener.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -1089,6 +1145,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     listener.onFailure();
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
@@ -1105,7 +1162,7 @@ public class UserServiceImpl implements UserService{
      * @param param
      */
     @Override
-    public void onGetShareRecordList(Context context, Map<String, String> param, final HttpResponseListener listener) {
+    public void onGetShareRecordList(final Context context, Map<String, String> param, final HttpResponseListener listener) {
 
         try {
             ValidateParam.validateParam(param, ResponseKey.TOKEN);
@@ -1118,6 +1175,8 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+
+                    onExitApp(context, msg);
                     listener.onFailure();
                 }
             });
@@ -1132,7 +1191,7 @@ public class UserServiceImpl implements UserService{
      * @param param
      */
     @Override
-    public void onCreateShare(Context context, Map<String, String> param,List<Map<String, Object>> fileList, final HttpResponseListener listener) {
+    public void onCreateShare(final Context context, Map<String, String> param,List<Map<String, Object>> fileList, final HttpResponseListener listener) {
 
         try {
             ValidateParam.validateParam(param, ResponseKey.TOKEN, ResponseKey.TITLE, ResponseKey.CID,
@@ -1146,6 +1205,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     listener.onFailure();
                 }
             });
@@ -1160,7 +1220,7 @@ public class UserServiceImpl implements UserService{
      * @param param
      */
     @Override
-    public void onRemoveShare(Context context, Map<String, String> param, final HttpResponseListener listener) {
+    public void onRemoveShare(final Context context, Map<String, String> param, final HttpResponseListener listener) {
 
         try {
             ValidateParam.validateParam(param, ResponseKey.TOKEN);
@@ -1173,6 +1233,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     listener.onFailure();
                 }
             });
@@ -1187,7 +1248,7 @@ public class UserServiceImpl implements UserService{
      * @param param
      */
     @Override
-    public void onSubmitShare(Context context, Map<String, String> param, final HttpResponseListener listener) {
+    public void onSubmitShare(final Context context, Map<String, String> param, final HttpResponseListener listener) {
 
         try {
             ValidateParam.validateParam(param, "");
@@ -1200,6 +1261,8 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+
+                    onExitApp(context, msg);
                     listener.onFailure();
                 }
             });
@@ -1231,6 +1294,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     if (listener != null) {
                         listener.onFailure();
                     }
@@ -1270,6 +1334,7 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    onExitApp(context, msg);
                     if (listener != null) {
                         listener.onFailure();
                     }
@@ -1282,6 +1347,11 @@ public class UserServiceImpl implements UserService{
                 listener.onFailure();
             }
 
+        }
+    }
+    public void onExitApp(Context context, String msg){
+        if (msg.equals("2004")) {
+            IntentFormat.startActivity(context, LoginActivity.class);
         }
     }
 }

@@ -431,78 +431,74 @@ public class UserFragment extends Fragment {
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
         param.put(ResponseKey.CAT, shared.getString(Constant.SHARED.JUESE,"0"));
 
-        try {
-            orderTaskService.onGetOrderCount(param, new HttpResponseCallBack() {
-                @Override
-                public void callBack(Map<String, Object> result) {
+        orderTaskService.onGetOrderCount(getActivity(), param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                if (!shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
 
-                    if (!shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
-
-                        if (result.get(ResponseKey.UNCHECK).toString().equals("0")){
-                            tv_uncheck.setVisibility(View.GONE);
-                        }else{
-                            tv_uncheck.setVisibility(View.VISIBLE);
-                            tv_uncheck.setText(result.get(ResponseKey.UNCHECK).toString());
-                        }
-
-                        if (result.get(ResponseKey.HASCHECK).toString().equals("0")){
-                            tv_hascheck.setVisibility(View.GONE);
-                        }else{
-                            tv_hascheck.setVisibility(View.VISIBLE);
-                            tv_hascheck.setText(result.get(ResponseKey.HASCHECK).toString());
-                        }
-
-                        if (result.get(ResponseKey.PROCESSED).toString().equals("0")){
-                            tv_processed.setVisibility(View.GONE);
-                        }else{
-                            tv_processed.setVisibility(View.VISIBLE);
-                            tv_processed.setText(result.get(ResponseKey.PROCESSED).toString());
-                        }
-                        if (result.get(ResponseKey.DONE).toString().equals("0")){
-                            tv_done.setVisibility(View.GONE);
-                        }else{
-                            tv_done.setVisibility(View.VISIBLE);
-                            tv_done.setText(result.get(ResponseKey.DONE).toString());
-                        }
+                    if (result.get(ResponseKey.UNCHECK).toString().equals("0")){
+                        tv_uncheck.setVisibility(View.GONE);
                     }else{
-
-                        if (result.get(ResponseKey.ASSIGNED).toString().equals("0")){
-                            tv_assigned.setVisibility(View.GONE);
-                        }else{
-                            tv_assigned.setVisibility(View.VISIBLE);
-                            tv_assigned.setText(result.get(ResponseKey.ASSIGNED).toString());
-                        }
-
-                        if (result.get(ResponseKey.PROCESSED).toString().equals("0")){
-                            tv_server_processed.setVisibility(View.GONE);
-                        }else{
-                            tv_server_processed.setVisibility(View.VISIBLE);
-                            tv_server_processed.setText(result.get(ResponseKey.PROCESSED).toString());
-                        }
-
-                        if (result.get(ResponseKey.FEEDBACK).toString().equals("0")){
-                            tv_feedback.setVisibility(View.GONE);
-                        }else{
-                            tv_feedback.setVisibility(View.VISIBLE);
-                            tv_feedback.setText(result.get(ResponseKey.FEEDBACK).toString());
-                        }
-                        if (result.get(ResponseKey.DONE).toString().equals("0")){
-                            tv_server_done.setVisibility(View.GONE);
-                        }else{
-                            tv_server_done.setVisibility(View.VISIBLE);
-                            tv_server_done.setText(result.get(ResponseKey.DONE).toString());
-                        }
-
+                        tv_uncheck.setVisibility(View.VISIBLE);
+                        tv_uncheck.setText(result.get(ResponseKey.UNCHECK).toString());
                     }
-                }
 
-                @Override
-                public void onCallFail(String msg) {
+                    if (result.get(ResponseKey.HASCHECK).toString().equals("0")){
+                        tv_hascheck.setVisibility(View.GONE);
+                    }else{
+                        tv_hascheck.setVisibility(View.VISIBLE);
+                        tv_hascheck.setText(result.get(ResponseKey.HASCHECK).toString());
+                    }
+
+                    if (result.get(ResponseKey.PROCESSED).toString().equals("0")){
+                        tv_processed.setVisibility(View.GONE);
+                    }else{
+                        tv_processed.setVisibility(View.VISIBLE);
+                        tv_processed.setText(result.get(ResponseKey.PROCESSED).toString());
+                    }
+                    if (result.get(ResponseKey.DONE).toString().equals("0")){
+                        tv_done.setVisibility(View.GONE);
+                    }else{
+                        tv_done.setVisibility(View.VISIBLE);
+                        tv_done.setText(result.get(ResponseKey.DONE).toString());
+                    }
+                }else{
+
+                    if (result.get(ResponseKey.ASSIGNED).toString().equals("0")){
+                        tv_assigned.setVisibility(View.GONE);
+                    }else{
+                        tv_assigned.setVisibility(View.VISIBLE);
+                        tv_assigned.setText(result.get(ResponseKey.ASSIGNED).toString());
+                    }
+
+                    if (result.get(ResponseKey.PROCESSED).toString().equals("0")){
+                        tv_server_processed.setVisibility(View.GONE);
+                    }else{
+                        tv_server_processed.setVisibility(View.VISIBLE);
+                        tv_server_processed.setText(result.get(ResponseKey.PROCESSED).toString());
+                    }
+
+                    if (result.get(ResponseKey.FEEDBACK).toString().equals("0")){
+                        tv_feedback.setVisibility(View.GONE);
+                    }else{
+                        tv_feedback.setVisibility(View.VISIBLE);
+                        tv_feedback.setText(result.get(ResponseKey.FEEDBACK).toString());
+                    }
+                    if (result.get(ResponseKey.DONE).toString().equals("0")){
+                        tv_server_done.setVisibility(View.GONE);
+                    }else{
+                        tv_server_done.setVisibility(View.VISIBLE);
+                        tv_server_done.setText(result.get(ResponseKey.DONE).toString());
+                    }
 
                 }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
     }
 }

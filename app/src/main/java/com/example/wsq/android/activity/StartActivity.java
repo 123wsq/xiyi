@@ -40,12 +40,12 @@ public class StartActivity extends Activity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            SharedPreferences shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-            if(shared.getBoolean(Constant.SHARED.ISLOGIN, false)){
-                IntentFormat.startActivity(StartActivity.this, LoginActivity.class);
-            }else{
+//            SharedPreferences shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
+//            if(shared.getBoolean(Constant.SHARED.ISLOGIN, false)){
+//                IntentFormat.startActivity(StartActivity.this, LoginActivity.class);
+//            }else{
                 IntentFormat.startActivity(StartActivity.this, WellcomeActivity.class);
-            }
+//            }
             finish();
         }
     };

@@ -80,202 +80,11 @@
                     android:layout_marginTop="@dimen/radius_popup"
                     android:text="处理进度"
                     android:textSize="@dimen/default_text_size" />
-
-                <LinearLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_RecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/defalut_layout_height"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"/>
 
-                    <LinearLayout
-                        android:layout_width="@dimen/defalut_layout_height"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:layout_width="@dimen/defalut_layout_height"
-                            android:layout_height="match_parent"
-                            >
-                            <LinearLayout
-                                android:layout_width="2dp"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:layout_centerInParent="true"
-                                >
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:background="@color/defalut_title_color"
-                                    android:visibility="invisible" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:background="@color/defalut_title_color"
-                                    android:layout_marginTop="17dp"
-                                    />
-                            </LinearLayout>
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/image_cash_progress"
-                                android:layout_centerInParent="true"
-                                />
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_apply_success"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/default_margin"
-                        android:gravity="center"
-                        android:text=""
-                        android:textColor="@color/defalut_title_color"
-                        android:textSize="@dimen/default_text_size" />
-
-                    <TextView
-                        android:id="@+id/tv_apply_time"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/default_margin"
-                        android:layout_marginRight="@dimen/default_margin"
-                        android:layout_weight="1"
-                        android:gravity="center|right"
-                        android:text=""
-                        android:textColor="@color/color_gray"
-                        android:textSize="@dimen/default_text_size" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/defalut_layout_height"
-                    android:orientation="horizontal">
-                    <RelativeLayout
-                        android:layout_width="@dimen/defalut_layout_height"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        >
-
-                        <LinearLayout
-                            android:layout_width="2dp"
-                            android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:orientation="vertical">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:background="@color/defalut_title_color"
-                                android:visibility="visible"
-                                android:layout_marginBottom="5dp"
-                                />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:background="@color/color_gray"
-                                android:layout_marginTop="15dp"
-                                />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/image_cash_progress"
-                            android:layout_centerInParent="true"
-                            />
-                    </RelativeLayout>
-
-
-                    <TextView
-                        android:id="@+id/tv_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/default_margin"
-                        android:gravity="center"
-                        android:text=""
-                        android:textColor="@color/defalut_title_color"
-                        android:textSize="@dimen/default_text_size" />
-
-                    <TextView
-                        android:id="@+id/tv_apply_time_i"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/default_margin"
-                        android:layout_marginRight="@dimen/default_margin"
-                        android:layout_weight="1"
-                        android:gravity="center|right"
-                        android:text=""
-                        android:textColor="@color/color_gray"
-                        android:textSize="@dimen/default_text_size" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/defalut_layout_height"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="@dimen/defalut_layout_height"
-                        android:layout_height="match_parent">
-                        <LinearLayout
-                            android:layout_width="2dp"
-                            android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:orientation="vertical">
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:background="@color/color_gray"
-                                android:visibility="visible"
-                                android:layout_marginBottom="17dp"
-                                />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:background="@color/color_gray"
-                                android:visibility="invisible" />
-                        </LinearLayout>
-
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/image_chsh_unchecked"
-                            android:layout_centerInParent="true"
-                            />
-                    </RelativeLayout>
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/default_margin"
-                        android:gravity="center"
-                        android:text="审核通过"
-                        android:textSize="@dimen/default_text_size" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/default_margin"
-                        android:layout_marginRight="@dimen/default_margin"
-                        android:layout_weight="1"
-                        android:gravity="center|right"
-                        android:text="预计1-7个工作日内到账"
-                        android:textColor="@color/color_gray"
-                        android:textSize="@dimen/default_text_size" />
-                </LinearLayout>
             </LinearLayout>
 
 
@@ -336,36 +145,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_reject_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@color/color_white"
-                android:orientation="vertical"
-                android:visibility="gone">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:gravity="center"
-                    android:text="驳回理由:"
-                    android:textSize="@dimen/default_text_min_size" />
-
-                <TextView
-                    android:id="@+id/tv_reject"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_marginTop="@dimen/default_radius"
-                    android:gravity="top"
-                    android:minLines="3"
-                    android:text=""
-                    android:textSize="@dimen/default_text_min_size" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_Details_info"
@@ -429,7 +209,36 @@
 
 
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_reject_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:visibility="gone">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:gravity="center"
+                    android:text="驳回理由:"
+                    android:textSize="@dimen/default_text_min_size" />
+
+                <TextView
+                    android:id="@+id/tv_reject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_radius"
+                    android:gravity="top"
+                    android:minLines="3"
+                    android:text=""
+                    android:textSize="@dimen/default_text_min_size" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

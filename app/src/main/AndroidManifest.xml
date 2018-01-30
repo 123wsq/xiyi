@@ -29,7 +29,7 @@
         <activity android:name=".activity.WellcomeActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             />
         <activity android:name=".activity.user.LoginActivity"  android:screenOrientation="portrait" android:launchMode="singleTask"></activity>
         <activity android:name=".activity.user.RegiesterActivity1" android:screenOrientation="portrait"></activity>
