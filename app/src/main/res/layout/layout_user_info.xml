@@ -138,8 +138,7 @@
         android:gravity="center_vertical"
         >
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="性别"
             android:gravity="center_vertical"
@@ -147,10 +146,10 @@
             />
         <TextView
             android:id="@+id/tv_sex"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="男"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:textSize="@dimen/default_text_size"
 
             />
@@ -204,8 +203,7 @@
         android:gravity="center_vertical"
         >
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="学历"
             android:gravity="center_vertical"
@@ -213,10 +211,11 @@
             />
         <TextView
             android:id="@+id/tv_xueli"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="高中及以下"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:textSize="@dimen/default_text_size"
             />
         <ImageView
@@ -239,8 +238,7 @@
             android:visibility="visible"
             >
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="期望服务地区"
                 android:gravity="center_vertical"
@@ -274,8 +272,7 @@
         android:paddingRight="@dimen/default_margin"
         >
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="公司"
             android:gravity="center_vertical"
@@ -373,24 +370,32 @@
             android:paddingRight="@dimen/default_margin"
             android:visibility="visible"
             >
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="技能:"
+                android:layout_height="@dimen/default_height_2"
+                android:layout_marginTop="@dimen/default_margin_4"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/default_text_size"
-                />
-            <EditText
-                android:id="@+id/et_skill"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="技能:"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/default_text_size"
+                    />
+                <ImageView
+                    android:id="@+id/iv_skill_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/image_skill_add"
+                    />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_RecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:hint="所掌握哪些技能"
-                android:textColorHint="@color/color_gray"
-                android:textSize="@dimen/default_text_min_size"
-                android:background="@drawable/shape_edit_stoken"
-                android:padding="@dimen/default_radius"
-                android:gravity="top"
-                />
+                android:layout_height="wrap_content"/>
+
 
 
         </LinearLayout>

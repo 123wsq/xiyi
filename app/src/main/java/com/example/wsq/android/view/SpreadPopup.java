@@ -1,6 +1,7 @@
 package com.example.wsq.android.view;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -27,7 +28,8 @@ public class SpreadPopup extends PopupWindow{
     private List<String> mData;
     private String textColor = "#000000";
     private View.OnClickListener onClickListener;
-
+    private ImageView iv_open;
+    AnimationDrawable animation;
 
     private PopupItemListener listener;
     public SpreadPopup(Activity context,int resource,  View.OnClickListener clickListener){
@@ -39,7 +41,7 @@ public class SpreadPopup extends PopupWindow{
         this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         ImageView iv_close = popupView.findViewById(R.id.iv_close);
-        ImageView iv_open = popupView.findViewById(R.id.iv_open);
+        iv_open = popupView.findViewById(R.id.iv_open);
         iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +81,8 @@ public class SpreadPopup extends PopupWindow{
         this.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
 
 //        this.setOnDismissListener(new PoponDismissListener());
-
+        iv_open.setBackgroundResource(R.drawable.anim_red_packet_open);
+        animation = (AnimationDrawable) iv_open.getBackground();
         popupView.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -118,4 +121,14 @@ public class SpreadPopup extends PopupWindow{
     }
 
 
+    public void onShowAnim(){
+        iv_open.setImageDrawable(null);
+//        iv_open.setVisibility(View.GONE);
+        animation.start();
+    }
+
+    public void onHideAnim(){
+        iv_open.setVisibility(View.GONE);
+        animation.stop();
+    }
 }

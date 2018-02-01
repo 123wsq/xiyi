@@ -2,10 +2,16 @@ package com.example.wsq.android.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * Created by wsq on 2017/12/28.
@@ -189,13 +195,13 @@ public class ImageUtil {
      * @param paddingBottom
      * @return
      */
-    public static Bitmap drawTextToLeftBottom(Context context, Bitmap bitmap, String text,
+    public static Bitmap drawTextToLeftBottom(Context context, Bitmap bitmap, String[] text,
                                               int size, int color, int paddingLeft, int paddingBottom) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(color);
         paint.setTextSize(dp2px(context, size));
         Rect bounds = new Rect();
-        paint.getTextBounds(text, 0, text.length(), bounds);
+//        paint.getTextBounds(text, 0, text.length(), bounds);
         return drawTextToBitmap(context, bitmap, text, paint, bounds,
                 dp2px(context, paddingLeft),
                 bitmap.getHeight() - dp2px(context, paddingBottom));
@@ -239,30 +245,92 @@ public class ImageUtil {
         return bitmap;
     }
 
+    //图片上绘制文字数组
+    private static Bitmap drawTextToBitmap(Context context, Bitmap bitmap, String[] text,
+                                           Paint paint, Rect bounds, int paddingLeft, int paddingTop) {
+        android.graphics.Bitmap.Config bitmapConfig = bitmap.getConfig();
+
+        paint.setDither(true); // 获取跟清晰的图像采样
+        paint.setFilterBitmap(true);// 过滤一些
+        if (bitmapConfig == null) {
+            bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
+        }
+        bitmap = bitmap.copy(bitmapConfig, true);
+        Canvas canvas = new Canvas(bitmap);
+
+        for (int i =0; i< text.length; i ++){
+            canvas.drawText(text[i], paddingLeft, paddingTop-i * 80, paint);
+        }
+
+        return bitmap;
+    }
+
+
     /**
-     * 缩放图片
-     * @param src
-     * @param w
-     * @param h
+     * 质量压缩
+     * @param image
+     * @param maxSize
+     */
+    public static Bitmap compressImage(Bitmap image, int maxSize){
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        // scale
+        int options = 50;
+        // Store the bitmap into output stream(no compress)
+        image.compress(Bitmap.CompressFormat.JPEG, options, os);
+        // Compress by loop
+        while ( os.toByteArray().length / 1024 > maxSize) {
+            // Clean up os
+            os.reset();
+            // interval 10
+            options -= 10;
+            image.compress(Bitmap.CompressFormat.JPEG, options, os);
+        }
+
+        Bitmap bitmap = null;
+        byte[] b = os.toByteArray();
+        if (b.length != 0) {
+            bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+        }
+        return bitmap;
+    }
+
+
+    /**
+     * 对图片进行缩放
+     * @param bgimage
+     * @param newWidth
+     * @param newHeight
      * @return
      */
-    public static Bitmap scaleWithWH(Bitmap src, double w, double h) {
-        if (w == 0 || h == 0 || src == null) {
-            return src;
-        } else {
-            // 记录src的宽高
-            int width = src.getWidth();
-            int height = src.getHeight();
-            // 创建一个matrix容器
-            Matrix matrix = new Matrix();
-            // 计算缩放比例
-            float scaleWidth = (float) (w / width);
-            float scaleHeight = (float) (h / height);
-            // 开始缩放
-            matrix.postScale(scaleWidth, scaleHeight);
-            // 创建缩放后的图片
-            return Bitmap.createBitmap(src, 0, 0, width, height, matrix, true);
+    public static Bitmap zoomImage(Bitmap bgimage, double newWidth, double newHeight, int maxSize) {
+//        //使用方式
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.default_img);
+//        int paddingLeft = getPaddingLeft();
+//        int paddingRight = getPaddingRight();
+//        int bmWidth = bitmap.getWidth();//图片高度
+//        int bmHeight = bitmap.getHeight();//图片宽度
+//        int zoomWidth = getWidth() - (paddingLeft + paddingRight);
+//        int zoomHeight = (int) (((float)zoomWidth / (float)bmWidth) * bmHeight);
+//        Bitmap newBitmap = zoomImage(bitmap, zoomWidth,zoomHeight);
+        // 获取这个图片的宽和高
+        float width = bgimage.getWidth();
+        float height = bgimage.getHeight();
+        //如果宽度为0 保持原图
+        if(newWidth == 0){
+            newWidth = width;
+            newHeight = height;
         }
+        // 创建操作图片用的matrix对象
+        Matrix matrix = new Matrix();
+        // 计算宽高缩放率
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 缩放图片动作
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width,
+                (int) height, matrix, true);
+        bitmap = compressImage(bitmap, maxSize);//质量压缩
+        return bitmap;
     }
 
     /**
@@ -275,4 +343,6 @@ public class ImageUtil {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }
+
+
 }

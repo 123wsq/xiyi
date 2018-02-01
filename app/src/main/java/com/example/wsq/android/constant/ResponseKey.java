@@ -74,6 +74,8 @@ public class ResponseKey {
 
     public static final String IMG_COUNT = "img_count";
 
+    public static final String COMPANY_ADDRESS= "company_address";
+
     public static final String PAGE = "page";
 
     public static final String STATUS = "status";

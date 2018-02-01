@@ -86,7 +86,7 @@ public class ShareRecordActivity extends BaseActivity{
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
-        mAdapter = new ProductAdapter(this, mData, Constant.INFO_3);
+        mAdapter = new ProductAdapter(this, mData, Constant.INFO_5);
 
 
         rv_RecyclerView.setItemViewSwipeEnabled(false);

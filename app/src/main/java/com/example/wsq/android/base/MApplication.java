@@ -4,7 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.example.wsq.android.tools.AppImageLoad;
 import com.example.wsq.android.utils.ToastUtis;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
@@ -16,12 +20,13 @@ import cn.jpush.im.android.api.JMessageClient;
 public class MApplication extends Application {
 
     private String TAG = "XIYI";
+    private List<String> mImages;
     @Override
     public void onCreate() {
         super.onCreate();
-        
 
 
+        mImages = new ArrayList<>();
         //极光推送
         JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
@@ -30,6 +35,7 @@ public class MApplication extends Application {
         JMessageClient.init(this, true);
 
         ToastUtis.getInstance(this);
+        mImages.addAll(AppImageLoad.getLoadImages(this));
     }
 
     @Override

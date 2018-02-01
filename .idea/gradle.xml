@@ -10,12 +10,12 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lfilepickerlibrary" />
+            <option value="$PROJECT_DIR$/medialib" />
             <option value="$PROJECT_DIR$/picture" />
             <option value="$PROJECT_DIR$/refresh" />
             <option value="$PROJECT_DIR$/richtextlibrary" />
             <option value="$PROJECT_DIR$/tag" />
             <option value="$PROJECT_DIR$/ucrop" />
-            <option value="$PROJECT_DIR$/vitamio" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

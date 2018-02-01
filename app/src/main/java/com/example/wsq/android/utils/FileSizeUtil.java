@@ -86,7 +86,7 @@ public class FileSizeUtil {
      * @return
      * @throws Exception
      */
-    private static long getFileSizes(File f) throws Exception
+    public static long getFileSizes(File f) throws Exception
     {
         long size = 0;
         File flist[] = f.listFiles();
@@ -105,7 +105,7 @@ public class FileSizeUtil {
      * @param fileS
      * @return
      */
-    private static String FormetFileSize(long fileS)
+    public static String FormetFileSize(long fileS)
     {
         DecimalFormat df = new DecimalFormat("#.00");
         String fileSizeString = "";
@@ -133,7 +133,7 @@ public class FileSizeUtil {
      * @param sizeType
      * @return
      */
-    private static double FormetFileSize(long fileS,int sizeType)
+    public static double FormetFileSize(long fileS,int sizeType)
     {
         DecimalFormat df = new DecimalFormat("#.00");
         double fileSizeLong = 0;

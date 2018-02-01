@@ -22,7 +22,9 @@ import com.example.wsq.android.R;
 import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.adapter.WellcomeAdapter;
 import com.example.wsq.android.constant.Constant;
+import com.example.wsq.android.tools.AppImageLoad;
 import com.example.wsq.android.utils.DensityUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +118,9 @@ public class WellcomeActivity  extends Activity {
             }
         });
 
+
+        List<String> fileList = AppImageLoad.getLoadImages(this);
+        Logger.d("所有的文件：  "+ fileList);
     }
 
     public void getImages(){
@@ -151,8 +156,8 @@ public class WellcomeActivity  extends Activity {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.tv_break:
-                startActivity(new Intent(WellcomeActivity.this, LoginActivity.class));
-                finish();
+//                startActivity(new Intent(WellcomeActivity.this, LoginActivity.class));
+//                finish();
                 break;
         }
     }

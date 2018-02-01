@@ -1,10 +1,12 @@
 package com.example.wsq.android.activity.user;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,8 @@ public class RegiesterActivity2 extends BaseActivity {
     @BindView(R.id.et_location) EditText et_location;
     @BindView(R.id.ll_location) LinearLayout ll_location;
     @BindView(R.id.layout_company) LinearLayout layout_company;
+    @BindView(R.id.iv_important_1) ImageView iv_important_1;
+    @BindView(R.id.iv_important_2) ImageView iv_important_2;
     private CustomPopup popup;
 
 
@@ -60,17 +64,15 @@ public class RegiesterActivity2 extends BaseActivity {
                 //判断当选择企业工程师的时候必须要填写公司
 
                 if (RegisterParam.JUESE != 1){
-                    if(ValidateParam.validateParamIsNull(et_company.getText().toString())){
-                        Toast.makeText(RegiesterActivity2.this, "公司必填参数", Toast.LENGTH_SHORT).show();
+                    if(TextUtils.isEmpty(et_company.getText().toString())){
+                        Toast.makeText(RegiesterActivity2.this, "公司名称不能为空", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(TextUtils.isEmpty(et_bumen.getText().toString())){
+                        Toast.makeText(RegiesterActivity2.this, "部门职务不能为空", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-//                if (RegisterParam.JUESE == 1){
-//                    if(ValidateParam.validateParamIsNull(et_location.getText().toString())){
-//                        Toast.makeText(RegiesterActivity2.this, "工作地点必须要填写", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//                }
                 RegisterParam.BUMEN = et_bumen.getText().toString();
                 RegisterParam.COMPANY = et_company.getText().toString();
                 RegisterParam.DIQU = et_location.getText().toString();
@@ -123,9 +125,9 @@ public class RegiesterActivity2 extends BaseActivity {
                     public void onClickItemListener(int position, String result) {
                         tv_juese.setText(result);
                         RegisterParam.JUESE = position+1;
+                        iv_important_1.setVisibility(position ==0 ? View.GONE : View.VISIBLE);
+                        iv_important_2.setVisibility(position ==0 ? View.GONE : View.VISIBLE);
                         popup.dismiss();
-                        layout_company.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
-//                        ll_location.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
                     }
                 });
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);

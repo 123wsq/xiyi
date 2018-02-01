@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.medialib.video.VideoPlayActivity;
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.UploadAdapter;
 import com.example.wsq.android.base.BaseActivity;
@@ -45,6 +46,7 @@ public class ServerOrderInfoActivity extends BaseActivity {
     @BindView(R.id.tv_title) TextView tv_title; //标题
     @BindView(R.id.iv_back) ImageView iv_back; //返回
     @BindView(R.id.tv_companyName) TextView tv_companyName; //公司名称
+    @BindView(R.id.tv_companyAddress) TextView tv_companyAddress;
     @BindView(R.id.tv_ordernum) TextView tv_ordernum;  //订单编号
     @BindView(R.id.tv_order_start) TextView tv_order_start;  //订单开始时间
     @BindView(R.id.tv_order_end) TextView tv_order_end;  //订单结束时间
@@ -84,6 +86,8 @@ public class ServerOrderInfoActivity extends BaseActivity {
     @Override
     public void init(){
 
+
+        tv_title.setText("订单详情");
         mData1 = new ArrayList<>();
         mData2 = new ArrayList<>();
         mResultInfo = new HashMap<>();
@@ -119,7 +123,8 @@ public class ServerOrderInfoActivity extends BaseActivity {
         rv_gridview_scene.setAdapter(mAdapter2);
 
 
-       if(intent.getStringExtra(ResponseKey.STATUS).equals("7.1")) {
+       if(intent.getStringExtra(ResponseKey.STATUS).equals("6.1")
+               || intent.getStringExtra(ResponseKey.STATUS).equals("7.1")) {
             tv_transfer.setVisibility(View.VISIBLE);
             tv_transfer.setText("重写反馈报告");
         }
@@ -173,10 +178,12 @@ public class ServerOrderInfoActivity extends BaseActivity {
                 mResultInfo.putAll(result);
                 tv_fault_desc.setText(result.get(ResponseKey.DES)+"");
 
+
                 //服务信息
                 tv_server_loc.setText(result.get(ResponseKey.DIDIAN)+"");
                 tv_server_content.setText(result.get(ResponseKey.CONTENT)+"");
                 tv_server_leave.setText(result.get(ResponseKey.YILIU)+"");
+                tv_companyAddress.setText(result.get(ResponseKey.COMPANY_ADDRESS)+"");
                 //
                 result.get(ResponseKey.YILIU);
 

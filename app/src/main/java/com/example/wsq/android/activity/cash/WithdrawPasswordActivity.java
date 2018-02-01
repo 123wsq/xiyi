@@ -1,11 +1,13 @@
 package com.example.wsq.android.activity.cash;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -88,6 +90,18 @@ public class WithdrawPasswordActivity extends BaseActivity implements TextWatche
             ll_inputPassword.setVisibility(View.VISIBLE);
             ll_bankInfo.setVisibility(View.GONE);
         }
+
+        showSoftInputFromWindow(this, et_psdInput);
+    }
+
+    /**
+     * EditText获取焦点并显示软键盘
+     */
+    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
     public void setTitle(){
 

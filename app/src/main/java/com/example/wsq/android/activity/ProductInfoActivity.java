@@ -57,7 +57,7 @@ public class ProductInfoActivity extends BaseActivity {
             tv_title.setText("新闻中心");
         }else if(type ==2){
             tv_title.setText("设备详情");
-        }else if(type ==3){
+        }else if(type ==3 || type == 5){
             tv_title.setText("资料详情");
         }else if(type ==4){
             tv_title.setText("知识详情");

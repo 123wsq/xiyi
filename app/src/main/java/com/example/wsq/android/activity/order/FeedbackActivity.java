@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +29,10 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.utils.BitmapUtils;
+import com.example.wsq.android.utils.DateUtil;
+import com.example.wsq.android.utils.ImageUtil;
+import com.example.wsq.android.utils.ScreenUtils;
 import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateDataFormat;
 import com.example.wsq.android.view.CustomPopup;
@@ -342,12 +348,17 @@ public class FeedbackActivity extends BaseActivity {
             mData.remove(mData.size() - 1);
             for (int i = 0; i < list.size(); i++) {
                 CameraBean bean = new CameraBean();
+                String path = "";
                 if (list.get(i).isCompressed()) {
-                    bean.setFile_path(list.get(i).getCompressPath());
+                    path = list.get(i).getCompressPath();
                 } else {
-                    bean.setFile_path(list.get(i).getPath());
+                   path = list.get(i).getPath();
                 }
-
+                if (type ==2){
+                    bean.setFile_path(onBitmapCompress(path));
+                }else {
+                    bean.setFile_path(path);
+                }
 
                 bean.setType(type);
                 bean.setShow(true);
@@ -357,10 +368,16 @@ public class FeedbackActivity extends BaseActivity {
             mData.remove(mData.size() - 1);
             for (int i = 0; i < list.size(); i++) {
                 CameraBean bean = new CameraBean();
+                String path = "";
                 if (list.get(i).isCompressed()) {
-                    bean.setFile_path(list.get(i).getCompressPath());
+                    path = list.get(i).getCompressPath();
                 } else {
-                    bean.setFile_path(list.get(i).getPath());
+                    path = list.get(i).getPath();
+                }
+                if (type ==2){
+                    bean.setFile_path(onBitmapCompress(path));
+                }else {
+                    bean.setFile_path(path);
                 }
                 bean.setType(type);
                 bean.setShow(true);
@@ -375,6 +392,25 @@ public class FeedbackActivity extends BaseActivity {
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 图片添加水印和质量压缩
+     * @param path
+     * @return
+     */
+    public  String onBitmapCompress(String path){
+        //得到该路径下的图片bitmap
+        Bitmap bitmap = BitmapUtils.getLocalImage(path);
+        Bitmap newBitmap = ImageUtil.drawTextToLeftBottom(FeedbackActivity.this, bitmap,
+                new String[]{ shared.getString(Constant.SHARED.LOCATION, ""), DateUtil.onDateFormat(DateUtil.DATA_FORMAT)},
+                20, Color.RED, 20, 10);
+        //只对图片进行质量压缩
+//        Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 200);
+        //对图片进行大小 质量压缩
+        Bitmap commBitmap = ImageUtil.zoomImage(newBitmap, ScreenUtils.getScreenWidth(this),ScreenUtils.getScreenHeight(this), 200);
+        File file = BitmapUtils.saveImage(commBitmap);
+//                        String savePath = BitmapUtils.addBitmapWatermark(DeviceWarrantyActivity.this, path);
+        return file.getAbsolutePath();
+    }
 
     /**
      * @param array

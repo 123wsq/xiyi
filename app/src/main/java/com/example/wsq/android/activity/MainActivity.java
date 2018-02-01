@@ -63,11 +63,11 @@ import cn.jpush.im.android.api.model.UserInfo;
 
 public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener, AMapLocationListener {
 
-    @BindView(R.id.ll_title_location) LinearLayout ll_title_location;
+    @BindView(R.id.ll_title_search) LinearLayout ll_title_search;
+    @BindView(R.id.ll_setting) LinearLayout ll_setting;
     @BindView(R.id.rl_title_back) RelativeLayout rl_title_back;
     @BindView(R.id.iv_setting) ImageView iv_setting;
     @BindView(R.id.rg_menu) RadioGroup rg_menu;
-    @BindView(R.id.tv_location) TextView tv_location;
     @BindView(R.id.rb_fault)  RadioButton rb_fault;
     @BindView(R.id.et_search) EditText et_search;
     @BindView(R.id.view_point) View view_point;
@@ -105,15 +105,13 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         init();
 
         enter(1, fragments[0]);
-//        addFragment();
-//        showFragment(0);
+
 
     }
 
     public void init(){
 
-        ll_title_location.setVisibility(View.VISIBLE);
-        rl_title_back.setVisibility(View.GONE);
+        onSettingTitle(false, true,true, true,false, false);
         rg_menu.setOnCheckedChangeListener(this);
 
         userService = new UserServiceImpl();
@@ -149,28 +147,21 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         switch (curShowPage){
             case 1:
                 et_search.setHint("变频器");
-                iv_setting.setVisibility(View.GONE);
-                ll_title_location.setVisibility(View.VISIBLE);
-                rl_message.setVisibility(View.VISIBLE);
+                onSettingTitle(false, true, true, true, false, false);
                 break;
             case 2:
                 et_search.setHint("想找自己和胃口的，来搜下吧~");
-                iv_setting.setVisibility(View.GONE);
-                ll_title_location.setVisibility(View.VISIBLE);
-                rl_message.setVisibility(View.GONE);
+                onSettingTitle(false, true, false, false, false, false);
                 break;
             case 3:
                 et_search.setHint("想找自己和胃口的，来搜下吧~");
-                iv_setting.setVisibility(View.GONE);
-                ll_title_location.setVisibility(View.VISIBLE);
-                rl_message.setVisibility(View.GONE);
+                onSettingTitle(false, true, false, false, false, false);
+
                 break;
             case 4:
-                iv_setting.setVisibility(View.VISIBLE);
-                ll_title_location.setVisibility(View.GONE);
+                onSettingTitle(false, false, true, true, false, true);
                 break;
         }
-        rl_title_back.setVisibility(View.GONE);
     }
 
 
@@ -196,19 +187,15 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.rb_main:
-//                showFragment(0);
                 enter(1,fragments[0]);
                 break;
             case R.id.rb_device:
-//                showFragment(1);
                 enter(2, fragments[1]);
                 break;
             case R.id.rb_fault:
-//               showFragment(2);
                 enter(3, fragments[2]);
                 break;
             case R.id.rb_user:
-//                showFragment(3);
                 enter(4, fragments[3]);
                 break;
 
@@ -231,8 +218,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         if (location.getAddress().length()!= 0) {
 
-            shared.edit().putString(Constant.SHARED.LOCATION, location.getAddress());
-            tv_location.setText(location.getAddress());
+            String address = location.getProvince()+location.getCity()+location.getDistrict()
+                    +location.getStreet()+location.getStreetNum();
+            shared.edit().putString(Constant.SHARED.LOCATION, address).commit();
+
+
             locationClient.onDestroy();
         }
     }
@@ -240,7 +230,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     public void onRegister(){
 
         IntentFilter filter = new IntentFilter();
-//        filter.addAction(Constant.ACTION.USER_PAGE);
         filter.addAction(Constant.ACTION.USER_PAGE_FAULT);
         filter.addAction(Constant.ACTION.USER_MAIN);
         filter.addAction(MESSAGE_RECEIVED_ACTION);
@@ -256,10 +245,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
              if(action.equals(Constant.ACTION.USER_PAGE_FAULT)){
                 enter(3, fragments[2]);
                 rb_fault.setChecked(true);
-            }else if(action.equals(Constant.ACTION.USER_MAIN)){
-                rl_title_back.setVisibility(View.GONE);
-                iv_setting.setVisibility(View.GONE);
-                ll_title_location.setVisibility(View.VISIBLE);
             }else if(action.equals(MESSAGE_RECEIVED_ACTION)){  //推送过来的消息
                 Log.d("接收到的消息", intent.getStringExtra(KEY_MESSAGE));
                 shared.edit().putBoolean(Constant.SHARED.MESSAGE, true).commit();
@@ -301,39 +286,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
 
-    /**
-     * 获取消息个数
-     */
-//    public void onGetMessageCount(){
-//
-//        Map<String, String> param = new HashMap<>();
-//        param.put(ResponseKey.PAGE, "1");
-//        param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
-//
-//
-//        userService.onMessageList(this, param, new HttpResponseListener() {
-//            @Override
-//            public void onSuccess(Map<String, Object> result) {
-//                List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.DATA);
-//
-//                boolean isState = shared.getBoolean(Constant.SHARED.MESSAGE, false);
-//
-//                if (!shared.contains(Constant.SHARED.MESSAGE)){
-//                    isState = true;
-//                }
-//                if (isState){
-//                    view_point.setVisibility(View.VISIBLE);
-//                }else{
-//                    view_point.setVisibility(View.GONE);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure() {
-//
-//            }
-//        });
-//    }
+
 
 
     @Override
@@ -418,6 +371,23 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     }
 
+    /**
+     *
+     * @param isShowBackOrTtitle  显示返回按钮和标题
+     * @param isShowSearch   显示搜索框
+     * @param isShowSettingLayout  显示设置的layout
+     * @param isShowMessageBtn  显示消息layout
+     * @param isShowNewMessage 显示新消息
+     * @param isShowSettingBtn  显示设置按钮
+     */
+    public void onSettingTitle(boolean isShowBackOrTtitle, boolean isShowSearch, boolean isShowSettingLayout, boolean isShowMessageBtn, boolean isShowNewMessage, boolean isShowSettingBtn){
+        rl_title_back.setVisibility(isShowBackOrTtitle ? View.VISIBLE : View.GONE);
+        ll_title_search.setVisibility(isShowSearch ? View.VISIBLE : View.INVISIBLE);
+        ll_setting.setVisibility(isShowSettingLayout ? View.VISIBLE : View.GONE);
+        rl_message.setVisibility(isShowMessageBtn? View.VISIBLE : View.GONE);
+        view_point.setVisibility(isShowNewMessage ? View.VISIBLE: View.GONE);
+        iv_setting.setVisibility(isShowSettingBtn ? View.VISIBLE : View.GONE);
+    }
 
 
 

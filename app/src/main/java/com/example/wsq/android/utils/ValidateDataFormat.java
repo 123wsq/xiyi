@@ -62,4 +62,39 @@ public class ValidateDataFormat {
         return true;
 
     }
+
+
+    /**
+     * 查询字符串中的手机号码
+     * @param str
+     */
+    public static void checkCellphone(String str){
+        // 将给定的正则表达式编译到模式中
+        //String num = "((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}";
+        String num = "[1][345789]\\d{9}";
+        Pattern pattern = Pattern.compile(num);
+        // 创建匹配给定输入与此模式的匹配器。
+        Matcher matcher = pattern.matcher(str);
+        //查找字符串中是否有符合的子字符串
+        while(matcher.find()){
+            //查找到符合的即输出
+            System.out.println("查询到一个符合的手机号码："+matcher.group());
+        }
+    }
+
+    /**
+     * 查询字符串中的固定电话
+     * @param str
+     */
+    public static void checkTelephone(String str){
+        // 将给定的正则表达式编译到模式中
+        Pattern pattern = Pattern.compile("(0\\d{2}-\\d{8}(-\\d{1,4})?)|(0\\d{3}-\\d{7,8}(-\\d{1,4})?)");
+        // 创建匹配给定输入与此模式的匹配器。
+        Matcher matcher = pattern.matcher(str);
+        //查找字符串中是否有符合的子字符串
+        while(matcher.find()){
+            //查找到符合的即输出
+            System.out.println("查询到一个符合的固定号码："+matcher.group());
+        }
+    }
 }

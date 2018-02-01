@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.medialib.video.VideoPlayActivity;
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.UploadAdapter;
 import com.example.wsq.android.base.BaseActivity;
@@ -28,7 +31,13 @@ import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.utils.BitmapUtils;
+import com.example.wsq.android.utils.DateUtil;
+import com.example.wsq.android.utils.DensityUtil;
+import com.example.wsq.android.utils.FileSizeUtil;
+import com.example.wsq.android.utils.ImageUtil;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.ScreenUtils;
+import com.example.wsq.android.utils.ToastUtils;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
@@ -51,6 +60,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
+
 /**
  * Created by wsq on 2017/12/13.
  */
@@ -66,6 +76,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
     @BindView(R.id.et_model) EditText et_model;
     @BindView(R.id.et_num) EditText et_num;
     @BindView(R.id.et_description) EditText et_description;
+    @BindView(R.id.et_location) EditText et_location;
 
     private UploadAdapter mAdapter;
     private List<CameraBean> mData;
@@ -93,7 +104,6 @@ public class DeviceWarrantyActivity extends BaseActivity {
 
 
         tv_title.setText("设备维修");
-
 
         dialog = new LoddingDialog(this);
         mData = new ArrayList<>();
@@ -123,6 +133,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
 
         intent = getIntent();
         isUpdate = intent.getBooleanExtra(OrderInfoActivity.UPDATE, false);
+        et_location.setText(shared.getString(isUpdate ? "" : Constant.SHARED.LOCATION, ""));
         if (!isUpdate){
             tv_title.setText("设备维修");
             return;
@@ -135,7 +146,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
         // 清空所有数据
         if (!TextUtils.isEmpty(imags)) {
             try {
-
+                //["5a7182a345789.jpg","5a7182a354408.mp4"]
                 JSONArray jsona = new JSONArray(imags);
                 for (int i = 0; i < jsona.length(); i++) {
                     List<LocalMedia> list = new ArrayList<>();
@@ -144,7 +155,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
                     media.setCompressed(true);
 
                     list.add(media);
-                    if (jsona.get(i).toString().endsWith(".mp4")) {
+                    if (jsona.get(i).toString().toLowerCase().endsWith(".mp4") || jsona.get(i).toString().toLowerCase().endsWith(".mov")) {
                         onSetData(3, list);
                     } else {
                         onSetData(2, list);
@@ -155,6 +166,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
+        et_location.setText(intent.getStringExtra(ResponseKey.COMPANY_ADDRESS));
         et_model.setText(intent.getStringExtra(ResponseKey.XINGHAO));
         et_num.setText(intent.getStringExtra(ResponseKey.BIANHAO));
         et_description.setText(intent.getStringExtra(ResponseKey.DES));
@@ -189,15 +201,16 @@ public class DeviceWarrantyActivity extends BaseActivity {
                                 .imageSpanCount(3)
                                 .isCamera(false)
                                 .previewImage(true)
+
                                 .compress(true)// 是否压缩 true or false
-                                .minimumCompressSize(100)// 小于100kb的图片不压缩
+                                .minimumCompressSize(70)// 小于100kb的图片不压缩
                                 .forResult(RESULT_IMAGE);
                         break;
                     case 1: //相机
 
                         PictureSelector.create(DeviceWarrantyActivity.this)
                                 .openCamera(PictureMimeType.ofImage())
-                                .imageFormat(PictureMimeType.PNG)
+                                .imageFormat(PictureMimeType.JPEG)
                                 .compress(true)// 是否压缩 true or false
                                 .minimumCompressSize(100)// 小于100kb的图片不压缩
                                 .forResult(RESULT_IMAGE);
@@ -210,7 +223,8 @@ public class DeviceWarrantyActivity extends BaseActivity {
                                 .compress(true)// 是否压缩 true or false
                                 .recordVideoSecond(10)//视频秒数录制 默认60s int
                                 .videoQuality(0)
-                                .cropCompressQuality(90)
+                                .rotateEnabled(false)
+                                .cropCompressQuality(70)
                                 .forResult(RESULT_VIDEO);
 
                         break;
@@ -223,7 +237,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
                                 .compress(true)
                                 .isCamera(false)
                                 .videoQuality(0)
-                                .cropCompressQuality(50)
+                                .cropCompressQuality(70)
                                 .compress(true)// 是否压缩 true or false
                                 .forResult(RESULT_VIDEO);
                         break;
@@ -281,8 +295,6 @@ public class DeviceWarrantyActivity extends BaseActivity {
             PictureSelector.create(DeviceWarrantyActivity.this).externalPicturePreview(num, list);
         }else if(bean.getType() == 3){
 
-//        PictureSelector.create(DeviceWarrantyActivity.this)
-//                .externalPictureVideo(bean.getFile_path());
             Map<String, Object> param = new HashMap<>();
             param.put("URL", bean.getFile_path());
             IntentFormat.startActivity(DeviceWarrantyActivity.this, VideoPlayActivity.class, param);
@@ -310,7 +322,11 @@ public class DeviceWarrantyActivity extends BaseActivity {
             Toast.makeText(this, "出厂编号不能为空", Toast.LENGTH_SHORT).show();
             return false;
         }
-
+        String location =et_location.getText().toString();
+        if (TextUtils.isEmpty(location)){
+            ToastUtils.onToast(this, "服务地址不能为空");
+            return  false;
+        }
         //验证编号数据是否为空
         String description = et_description.getText().toString();
         if (TextUtils.isEmpty(description)){
@@ -360,74 +376,55 @@ public class DeviceWarrantyActivity extends BaseActivity {
      */
     public void onSetData(int type, List<LocalMedia> list){
 
-        if (list.size()==0){
+        if (list.size() != 0){
 
-        }else if(list.size()+(mData.size()-1)==3){
-//            mData.clear();
             mData.remove(mData.size()-1);
-            for (int i =0 ; i< list.size(); i ++){
+            for (int i =0 ; i< list.size(); i ++) {
                 CameraBean bean = new CameraBean();
-                String path = "";
-                if (list.get(i).isCompressed()){
-                    path = list.get(i).getCompressPath();
-                }else{
-                    path = list.get(i).getPath();
-                }
+                String path = list.get(i).isCompressed() ? list.get(i).getCompressPath() : list.get(i).getPath();
                 File f = new File(path);
-
-                if (f.exists() && type != 3){
-                    String savePath = BitmapUtils.addBitmapWatermark(DeviceWarrantyActivity.this, path);
-                    Logger.d("保存路径： "+savePath);
-                    bean.setFile_path(savePath);
-                }else{
+                if (f.exists() && type == 2) {
+                    bean.setFile_path(onBitmapCompress(path));
+                } else {
                     bean.setFile_path(path);
                 }
 
+                Logger.d("文件路径：  " + path);
                 bean.setChange(false);
                 bean.setType(type);
                 bean.setShow(true);
                 mData.add(bean);
             }
-        }else{
-            mData.remove(mData.size()-1);
-            for (int i =0 ; i< list.size(); i ++){
+            if (list.size() != 3){
                 CameraBean bean = new CameraBean();
-                if (list.get(i).isCompressed()){
-                    String path = list.get(i).getCompressPath();
-                    File f = new File(path);
-
-                    if (f.exists() && type != 3){
-                        String savePath = BitmapUtils.addBitmapWatermark(DeviceWarrantyActivity.this, path);
-                        Logger.d("保存路径： "+savePath);
-                        bean.setFile_path(savePath);
-                    }else{
-                        bean.setFile_path(path);
-                    }
-
-                }else{
-                    String path = list.get(i).getPath();
-                    File f = new File(path);
-                    if (f.exists() && type != 3){  //如果这个文件是存在的，则表示是本地获取的图片，这时是需要添加水印
-                        String savePath = BitmapUtils.addBitmapWatermark(DeviceWarrantyActivity.this, path);
-                        Logger.d("保存路径： "+savePath);
-                        bean.setFile_path(savePath);
-                    }else{
-                        bean.setFile_path(list.get(i).getPath());
-                    }
-
-                }
-                bean.setChange(false);
-                bean.setType(type);
-                bean.setShow(true);
+                bean.setType(1);
+                bean.setShow(false);
                 mData.add(bean);
             }
-            CameraBean bean = new CameraBean();
-            bean.setType(1);
-            bean.setShow(false);
-            mData.add(bean);
+
         }
 
         mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 图片添加水印和质量压缩
+     * @param path
+     * @return
+     */
+    public  String onBitmapCompress(String path){
+        //得到该路径下的图片bitmap
+        Bitmap bitmap = BitmapUtils.getLocalImage(path);
+        Bitmap newBitmap = ImageUtil.drawTextToLeftBottom(DeviceWarrantyActivity.this, bitmap,
+                new String[]{ shared.getString(Constant.SHARED.LOCATION, ""), DateUtil.onDateFormat(DateUtil.DATA_FORMAT)},
+                20, Color.RED, 20, 10);
+        //只对图片进行质量压缩
+//        Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 200);
+        //对图片进行大小 质量压缩
+        Bitmap commBitmap = ImageUtil.zoomImage(newBitmap, ScreenUtils.getScreenWidth(this),ScreenUtils.getScreenHeight(this), 200);
+        File file = BitmapUtils.saveImage(commBitmap);
+//                        String savePath = BitmapUtils.addBitmapWatermark(DeviceWarrantyActivity.this, path);
+        return file.getAbsolutePath();
     }
 
     /**
@@ -443,7 +440,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
             param.put(ResponseKey.XINGHAO, et_model.getText().toString()+"");
             param.put(ResponseKey.BIANHAO, et_num.getText().toString()+"");
             param.put(ResponseKey.DES, et_description.getText().toString());
-
+            param.put(ResponseKey.COMPANY_ADDRESS, et_location.getText().toString());
             List<Map<String, Object>> listFile = new ArrayList<>();
             for (int i = 0; i < mData.size(); i++) {
                 if (mData.get(i).getType()!=1) {
@@ -499,7 +496,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
             param.put(ResponseKey.XINGHAO, et_model.getText().toString()+"");
             param.put(ResponseKey.BIANHAO, et_num.getText().toString()+"");
             param.put(ResponseKey.DES, et_description.getText().toString());
-
+            param.put(ResponseKey.COMPANY_ADDRESS, et_location.getText().toString());
             param.put(ResponseKey.ID, intent.getIntExtra(ResponseKey.ID, 0)+"");
 
             List<Map<String, Object>> listFile = new ArrayList<>();

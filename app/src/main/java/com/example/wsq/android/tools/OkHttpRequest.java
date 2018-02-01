@@ -463,7 +463,7 @@ public class OkHttpRequest {
             @Override
             public void onResponse(String response) {
                 String result = UnicodeUtil.unicodeToString(response);
-                Logger.json(result);
+                Logger.d(result);
                 try {
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
                     callBack.callBack(map);

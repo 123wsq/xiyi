@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ import com.example.wsq.android.activity.order.OrderActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.loader.GlideImageLoader;
+import com.example.wsq.android.tools.AppImageLoad;
+import com.example.wsq.android.tools.AppImageView;
 import com.example.wsq.android.utils.DateUtil;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtis;
@@ -50,13 +53,15 @@ public class MainFragment extends Fragment {
 
 
     @BindView(R.id.banner) Banner banner;
-
+    @BindView(R.id.image_sbwx) ImageView image_sbwx;
+    @BindView(R.id.image_gcs) ImageView image_gcs;
 
     private List<String> mImages;
     private List<String> mTitles;
 
     private SharedPreferences shared;
     private CustomPopup popup;
+    private SpreadPopup spreadPopup;
 
     public static MainFragment getInstance(){
         return new MainFragment();
@@ -76,7 +81,9 @@ public class MainFragment extends Fragment {
         init();
         initView();
 
-
+        AppImageView.onImageView(getActivity(), image_sbwx, "image_sbwh_m.png");
+        AppImageView.onImageView(getActivity(), image_gcs, "image_gcs.png");
+//        AppImageView.onImageSelect(getActivity(), image_sbwx, "image_sbwh_m.png","image_gcs.png");
     }
 
 
@@ -189,12 +196,13 @@ public class MainFragment extends Fragment {
         String day= shared.getString(Constant.SHARED.CUR_DAY, "");
         String cur_day =  DateUtil.onDateFormat(DateUtil.DATA_FORMAT_5);
         if (cur_day.equals(day)){
-            return;
+//            return;
         }
         shared.edit().putString(Constant.SHARED.CUR_DAY, cur_day).commit();
-        SpreadPopup spreadPopup = new SpreadPopup(getActivity(), R.layout.layout_spread_main, new View.OnClickListener() {
+        spreadPopup = new SpreadPopup(getActivity(), R.layout.layout_spread_main, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                spreadPopup.onShowAnim();
 
                 ToastUtis.onToast("开始拆红包了^^");
             }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/ll_skill_remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        >
+        <View
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="1dp"></View>
+        <ImageView
+            android:id="@+id/iv_skill_remove"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/image_skill_remove"
+            android:layout_marginRight="@dimen/default_margin_4"/>
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cb_skill"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_height_4"
+        android:button="@null"
+        android:gravity="center"
+        android:text="111"
+        android:background="@drawable/selector_skill"
+        android:textColor="#393939"
+        android:textSize="15sp"
+        />
+</LinearLayout>

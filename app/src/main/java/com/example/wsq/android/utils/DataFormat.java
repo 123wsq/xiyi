@@ -19,10 +19,9 @@ public class DataFormat {
             return -1;
         }
 
-        if (!ValidateDataFormat.isNumber(str)){
-
-            return -1;
-        }
+//        if (!ValidateDataFormat.isNumber(str)){
+//            return -1;
+//        }
         double d = Double.parseDouble(str);
         return (int)d;
     }

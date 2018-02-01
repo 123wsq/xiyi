@@ -24,9 +24,11 @@ import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.IdentityCardValidate;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.SystemUtils;
+import com.example.wsq.android.utils.ToastUtils;
 import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateDataFormat;
 import com.example.wsq.android.utils.ValidateParam;
+import com.example.wsq.android.view.LoddingDialog;
 
 import java.text.ParseException;
 import java.util.HashMap;
@@ -54,6 +56,7 @@ public class RegisterActivity3 extends BaseActivity {
 
     private UserService userService;
     private int curLen = 60;
+    private LoddingDialog dialog;
 
 
     @Override
@@ -65,7 +68,7 @@ public class RegisterActivity3 extends BaseActivity {
 
         userService = new UserServiceImpl();
         tv_title.setText("会员注册");
-
+        dialog = new LoddingDialog(this);
         onTextChange();
         onValidatePhone();
     }
@@ -198,8 +201,8 @@ public class RegisterActivity3 extends BaseActivity {
             try {
                 if (!TextUtils.isEmpty(IdentityCardValidate.IDCard.IDCardValidate(sfz))){
                     ToastUtis.onToast( "请输入正确的身份证号码");
+                    return false;
                 }
-
             } catch (ParseException e) {
                 ToastUtis.onToast( "请输入正确的身份证号码");
                 e.printStackTrace();
@@ -207,6 +210,19 @@ public class RegisterActivity3 extends BaseActivity {
             }
             RegisterParam.SFZ = sfz;
             RegisterParam.BIRTH = tv_birth.getText().toString();
+
+            //验证手机号码
+            String tel = et_tel.getText().toString();
+            if (TextUtils.isEmpty(tel)){
+                ToastUtis.onToast("请输入手机号码");
+                return false;
+            }
+            if(ValidateDataFormat.isMobile(tel)){
+                RegisterParam.TEL = tel;
+            }else{
+                ToastUtis.onToast( "输入的手机号有误");
+                return false;
+            }
 
             //验证验证码
             String validateCode = et_validateCode.getText().toString();
@@ -219,20 +235,11 @@ public class RegisterActivity3 extends BaseActivity {
 
             if(validateCode.length()!= Constant.CODE_LENGTH){
                 ToastUtis.onToast( "验证码必须为"+Constant.CODE_LENGTH+"位");
+                return false;
             }
         }
 
-        //验证手机号码
-        String tel = et_tel.getText().toString();
-        if (TextUtils.isEmpty(tel)){
-            ToastUtis.onToast("请输入手机号码");
-        }
-        if(ValidateDataFormat.isMobile(tel)){
-            RegisterParam.TEL = tel;
-        }else{
-            ToastUtis.onToast( "输入的手机号有误");
-            return false;
-        }
+
 
 
 
@@ -246,24 +253,27 @@ public class RegisterActivity3 extends BaseActivity {
 
         if (validateParam(0)){
             if (cb_checkBox.isChecked()) {
+                dialog.show();
                 Map<String, String> map = new HashMap<>();
                 userService.register(this, map, new HttpResponseListener() {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
+
+                        ToastUtils.onToast(RegisterActivity3.this, result.get(ResponseKey.MESSAGE)+"");
                         IntentFormat.startActivity(RegisterActivity3.this,  LoginActivity.class);
+                        finish();
+                        if(dialog.isShowing())dialog.dismiss();
                     }
 
                     @Override
                     public void onFailure() {
-
+                        if(dialog.isShowing())dialog.dismiss();
                     }
                 });
 
             }else{
                 ToastUtis.onToast( "请选择阅读协议");
             }
-        }else{
-            ToastUtis.onToast( "输入参数格式错误");
         }
     }
 

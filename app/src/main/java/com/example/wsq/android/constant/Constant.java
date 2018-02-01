@@ -25,7 +25,7 @@ public class Constant {
     public static final int INFO_2 = 2;  //搜索列表
     public static final int INFO_3 = 3;  //资料列表进入
     public static final int INFO_4 = 4;  //圈内知识
-
+    public static final int INFO_5 = 5;  //本地资料列表进入
 
 
     public static final String BITMAP_PATH = Environment.getExternalStorageDirectory()+"/image/xiyi/";
@@ -36,6 +36,7 @@ public class Constant {
 
     //表示显示的图片多少
     public static final int IMAGE_COUNT = 3;
+    public static final int SKILL_COUNT = 5;
 
     public static final int TITLE_SIZE = 20;
     public static final int CONTENT_SIZE = 14;
@@ -74,6 +75,8 @@ public class Constant {
         public static final String MESSAGE = "message";
 
         public static final String CUR_DAY = "cur_day";
+
+        public static final String IMAGE_PATH = "IMAGE_path";
     }
 
 

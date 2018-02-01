@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.medialib.video.VideoPlayActivity;
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.UploadAdapter;
 import com.example.wsq.android.base.BaseActivity;
@@ -51,6 +52,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
     @BindView(R.id.tv_edit) TextView tv_edit;
     @BindView(R.id.tv_ordernum) TextView tv_ordernum;
     @BindView(R.id.tv_companyName) TextView tv_companyName;
+    @BindView(R.id.tv_companyAddress) TextView tv_companyAddress;
     @BindView(R.id.tv_repairs_time)TextView tv_repairs_time;
     @BindView(R.id.tv_device) TextView tv_device;
     @BindView(R.id.tv_outnum) TextView tv_outnum;
@@ -106,7 +108,6 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
         token = shared.getString(Constant.SHARED.TOKEN, "");
         role = shared.getString(Constant.SHARED.JUESE,"");
         status = getIntent().getStringExtra(ResponseKey.STATUS);
-
         tv_edit.setVisibility(status.equals("-1") ? View.VISIBLE : View.GONE);
 
         rv_gridview.setOnItemClickListener(this);
@@ -198,7 +199,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
                 IntentFormat.startActivity(this, FeedbackActivity.class, mResultInfo);
                 finish();
                 break;
-            case R.id.tv_edit:
+            case R.id.tv_edit:  //订单修改
                 mResultInfo.put(UPDATE, true);
                 IntentFormat.startActivity(this, DeviceWarrantyActivity.class, mResultInfo);
                 break;
@@ -333,6 +334,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
                 mResultInfo.putAll(result);
                 tv_ordernum.setText(result.get(ResponseKey.ORDER_NO)+"");
                 tv_companyName.setText(result.get(ResponseKey.COMPANY)+"");
+                tv_companyAddress.setText(result.get(ResponseKey.COMPANY_ADDRESS)+"");
                 tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
 
                 tv_device.setText(result.get(ResponseKey.XINGHAO)+"");

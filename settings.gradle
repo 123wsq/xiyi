@@ -1,1 +1,1 @@
-include ':app', ':picture', ':tag', ':vitamio', ':ucrop', ':refresh', ':richtextlibrary', ':lfilepickerlibrary'
+include ':app', ':picture', ':tag',  ':ucrop', ':refresh', ':richtextlibrary', ':lfilepickerlibrary', ':medialib'

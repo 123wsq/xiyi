@@ -3,6 +3,11 @@ package com.example.wsq.android.activity.user;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,15 +22,23 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
+import com.example.wsq.android.adapter.SkillAdapter;
 import com.example.wsq.android.base.BaseActivity;
+import com.example.wsq.android.bean.SkillBean;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.HttpResponseListener;
+import com.example.wsq.android.inter.OnDefaultClickListener;
+import com.example.wsq.android.inter.OnRecycCheckListener;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.DensityUtil;
+import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.ToastUtils;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.android.view.RoundImageView;
@@ -33,8 +46,13 @@ import com.example.wsq.plugin.okhttp.OkhttpUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.orhanobut.logger.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +79,6 @@ public class UserInfoActivity extends BaseActivity {
     @BindView(R.id.et_email) EditText et_email;
     @BindView(R.id.et_jieshao) EditText et_jieshao;
     @BindView(R.id.et_hope) EditText et_hope;
-    @BindView(R.id.et_skill) EditText et_skill;
     @BindView(R.id.ll_layout) LinearLayout ll_layout;
     @BindView(R.id.ll_hope) LinearLayout ll_hope;
     @BindView(R.id.ll_skill) LinearLayout ll_skill;
@@ -69,7 +86,10 @@ public class UserInfoActivity extends BaseActivity {
     @BindView(R.id.ll_bumen ) LinearLayout ll_bumen;
     @BindView(R.id.btn_save) Button btn_save;
     @BindView(R.id.tv_ratio) TextView tv_ratio;
+    @BindView(R.id.rv_RecyclerView)
+    RecyclerView rv_RecyclerView;
 
+    public static final int DEFAULT_SKILL_RESULT = 0x000001;  //数据返回
 
     private UserService userService;
     private SharedPreferences shared;
@@ -80,6 +100,8 @@ public class UserInfoActivity extends BaseActivity {
     private String headerImage = "";
     private LoddingDialog dialog;
     private RequestOptions options;
+    private SkillAdapter mAdapter;
+    private List<SkillBean> mData;
 
 
     @Override
@@ -90,6 +112,7 @@ public class UserInfoActivity extends BaseActivity {
     public void init() {
 
         userService = new UserServiceImpl();
+        mData = new ArrayList<>();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
         tv_title.setText("个人资料");
@@ -103,11 +126,13 @@ public class UserInfoActivity extends BaseActivity {
         options.error(R.drawable.image_header_bg);
         options.fallback(R.drawable.image_header_bg);
         options.placeholder(R.drawable.image_header_bg);
-        Glide.with(this)
-                .load(Urls.HOST+UserFragment.mUserData.get(ResponseKey.USER_PIC))
-                .apply(options)
-                .into(image_header);
-
+        String pic = UserFragment.mUserData.get(ResponseKey.USER_PIC)+"";
+        if (!TextUtils.isEmpty(pic)) {
+            Glide.with(this)
+                    .load(Urls.HOST + pic)
+                    .apply(options)
+                    .into(image_header);
+        }
         tv_ratio.setText("资料完整度"+ UserFragment.mUserData.get(ResponseKey.RATIO)+"%");
         String name = UserFragment.mUserData.get(ResponseKey.NAME)+"";
         tv_name.setText( "**"+name.substring(name.length()-1));
@@ -135,13 +160,36 @@ public class UserInfoActivity extends BaseActivity {
             tv_xueli.setText(Constant.EDUCATION[Integer.parseInt(sEduc)-1]+"");
         }
         et_hope.setText(UserFragment.mUserData.get(ResponseKey.DIQU)+"");
-        et_skill.setText(UserFragment.mUserData.get(ResponseKey.JINENG)+"");
+
+
+
+
+
         //判断角色  角色为服务工程师的时候  是需要期望地区和技能  别的时候是需要部门和介绍
         if(shared.getString(Constant.SHARED.JUESE,"0").equals("1")){
             ll_hope.setVisibility(View.VISIBLE);
             ll_bumen.setVisibility(View.GONE);
             ll_jieshao.setVisibility(View.GONE);
             ll_skill.setVisibility(View.VISIBLE);
+            String skill = UserFragment.mUserData.get(ResponseKey.JINENG)+"";
+
+            try {
+                JSONArray json = new JSONArray(skill);
+
+                for (int i = 0; i < json.length(); i++) {
+                    mData.add(new SkillBean(json.get(i)+""));
+                }
+            } catch (JSONException e) {
+                ToastUtils.onToast(UserInfoActivity.this, "请重新完善您的技能");
+                e.printStackTrace();
+            }
+//            rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
+//                    this, LinearLayoutManager.HORIZONTAL, DensityUtil.dp2px(this, 10),
+//                    ContextCompat.getColor(this, R.color.default_backgroud_color)));
+            rv_RecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+            rv_RecyclerView.setHasFixedSize(true);
+            mAdapter = new SkillAdapter(this, mData, null, listener, 1);
+            rv_RecyclerView.setAdapter(mAdapter);
         }else {
             ll_hope.setVisibility(View.GONE);
             ll_bumen.setVisibility(View.VISIBLE);
@@ -150,11 +198,28 @@ public class UserInfoActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.iv_back,R.id.tv_sex, R.id.tv_xueli, R.id.btn_save, R.id.image_header})
+    OnDefaultClickListener listener = new OnDefaultClickListener() {
+        @Override
+        public void onClickListener(int position) {
+
+            mData.remove(position);
+            mAdapter.notifyDataSetChanged();
+        }
+    };
+
+
+    @OnClick({R.id.iv_back,R.id.tv_sex, R.id.tv_xueli, R.id.btn_save, R.id.image_header, R.id.iv_skill_add})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.iv_skill_add:
+                Intent intent = new Intent(UserInfoActivity.this, SkillServiceActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("skill", (Serializable) mData);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 200);
                 break;
             case R.id.image_header:
 
@@ -254,11 +319,7 @@ public class UserInfoActivity extends BaseActivity {
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.btn_save:
-
                 updateUserInfo();
-
-
-
                 break;
         }
     }
@@ -283,6 +344,11 @@ public class UserInfoActivity extends BaseActivity {
                     break;
 
             }
+        }else if(resultCode == DEFAULT_SKILL_RESULT){
+            List<SkillBean> arrays = (List<SkillBean>) data.getSerializableExtra("skill");
+            mData.clear();
+            mData.addAll(arrays);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -301,7 +367,11 @@ public class UserInfoActivity extends BaseActivity {
         param.put(ResponseKey.EMAIL, et_email.getText().toString());
 
         param.put(ResponseKey.COMPANY, et_company.getText().toString());
-        param.put(ResponseKey.JINENG, et_skill.getText().toString());
+        JSONArray jsona = new JSONArray();
+        for (int i = 0; i < mData.size(); i++) {
+            jsona.put(mData.get(i).getSkillName());
+        }
+        param.put(ResponseKey.JINENG, jsona.toString());
         param.put(ResponseKey.DIQU, et_hope.getText().toString());
         param.put(ResponseKey.BUMEN, et_bumen.getText().toString());
         param.put(ResponseKey.JIESHAO, et_jieshao.getText().toString());

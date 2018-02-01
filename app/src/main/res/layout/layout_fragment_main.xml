@@ -39,9 +39,10 @@
                         >
 
                         <ImageView
+                            android:id="@+id/image_sbwx"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
-                            android:src="@drawable/image_sbwh_m" />
+                             />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -72,9 +73,10 @@
                     >
 
                     <ImageView
+                        android:id="@+id/image_gcs"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/image_gcs" />
+                         />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

@@ -68,16 +68,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     private AnimationDrawable animationDrawable;
 
 
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        setContentView();
-//
-////        ButterKnife.bind(this);
-//        init();
-//
-//    }
+
 
     @Override
     public int getByLayoutId() {

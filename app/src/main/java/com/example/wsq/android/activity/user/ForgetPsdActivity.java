@@ -20,6 +20,7 @@ import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ValidateDataFormat;
 import com.example.wsq.android.utils.ValidateParam;
+import com.example.wsq.android.view.LoddingDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class ForgetPsdActivity extends BaseActivity {
 
     private UserService userService;
     private int curLen = 60;
+    private LoddingDialog dialog;
 
 
     @Override
@@ -57,7 +59,7 @@ public class ForgetPsdActivity extends BaseActivity {
         userService = new UserServiceImpl();
         tv_ok = this.findViewById(R.id.tv_ok);
         tv_title.setText("忘记密码");
-
+        dialog = new LoddingDialog(this);
 
         onEditTextChange();
     }
@@ -104,16 +106,17 @@ public class ForgetPsdActivity extends BaseActivity {
                 RegisterParam.TEL = tel;
                 Map<String, String> map = new HashMap<>();
                 map.put(ResponseKey.TEL, tel);
-
+                dialog.show();
                 userService.getValidateCode(this, map, new HttpResponseListener() {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
                         handler.postDelayed(runnable, 1000);
+                        dialog.dismiss();
                     }
 
                     @Override
                     public void onFailure() {
-
+                        if (dialog.isShowing())dialog.dismiss();
                     }
                 });
 

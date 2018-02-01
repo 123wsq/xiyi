@@ -17,6 +17,7 @@ import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.utils.AmountUtils;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.ToastUtils;
 import com.example.wsq.android.view.LoddingDialog;
 
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class BalanceActivity extends BaseActivity {
     private String bailState = "";
     private String depositMoeny = "";  //保证金金额
     private String cashMoney = ""; //可提现金额
-
+    private String bankCode;
 
     @Override
     public int getByLayoutId() {
@@ -58,7 +59,7 @@ public class BalanceActivity extends BaseActivity {
         String amount = AmountUtils.changeY2Y(UserFragment.mUserData.get(ResponseKey.MONEY_AMOUNT)+"");
         tv_money_amount.setText(amount);
         dialog = new LoddingDialog(this);
-
+        bankCode = UserFragment.mUserData.get(ResponseKey.BANK_CARD)+"";
     }
 
     @Override
@@ -69,6 +70,13 @@ public class BalanceActivity extends BaseActivity {
 
     @OnClick({R.id.iv_back, R.id.tv_bill_Details, R.id.ll_bank_manager, R.id.ll_deposit, R.id.ll_withdraw})
     public void onClick(View v){
+        if (v.getId() == R.id.ll_withdraw || v.getId() == R.id.ll_deposit){
+            if (TextUtils.isEmpty(bankCode)){
+                ToastUtils.onToast(this,"请绑定先银行卡");
+                return;
+            }
+        }
+
         switch (v.getId()){
             case R.id.iv_back:
                 finish();
@@ -81,13 +89,7 @@ public class BalanceActivity extends BaseActivity {
                 break;
             case R.id.ll_deposit:// 保证金
 
-//                if (!TextUtils.isEmpty(depositMoeny)){
-//                    double deposit = Double.parseDouble(depositMoeny);
-//                    if (deposit == 0){
-//                        Toast.makeText(BalanceActivity.this, "您没有可用的保证金", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//                }
+
                 if (TextUtils.isEmpty(bailState) || bailState.equals("null")) {
                     IntentFormat.startActivity(this, CashDepositActivity.class);
                 }else{
@@ -95,7 +97,15 @@ public class BalanceActivity extends BaseActivity {
                 }
                 break;
             case R.id.ll_withdraw:   //提现
+
+                //有没有设置提现密码
+                String payPassword = UserFragment.mUserData.get(ResponseKey.PAY_PASSWORD)+"";
+                if (TextUtils.isEmpty(payPassword)){
+                    ToastUtils.onToast(this, "请先设置提现密码");
+                    return;
+                }
                 String moneys = mData.get(ResponseKey.MY_MONEY)+"";
+                //有没有提现金额
                 if (!TextUtils.isEmpty(cashMoney)){
 
                     double cashM = Double.parseDouble(cashMoney);
@@ -104,7 +114,7 @@ public class BalanceActivity extends BaseActivity {
                         return;
                     }
                 }
-
+                //提现金额必须大于2000
                 if (!TextUtils.isEmpty(moneys)){
                     double money = Double.parseDouble(moneys);
                     if (money >= 2000){

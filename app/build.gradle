@@ -12,8 +12,8 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.wsq.android"
-        minSdkVersion 15
-        targetSdkVersion 21
+        minSdkVersion 16
+        targetSdkVersion 26
         versionCode 1
         versionName '1.0.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -59,7 +59,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    //        compile 'com.android.support:appcompat-v7:23.4.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
@@ -76,29 +75,29 @@ dependencies {
     implementation files('libs/jpush-android-3.1.0.jar')
     //    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.7'
     implementation project(':picture')
-    //    implementation 'com.android.support:support-v4:27.0.2'
-    //    implementation project(':log')
     compile 'com.orhanobut:logger:1.15'
     implementation project(':tag')
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-5'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-5'
+//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-5'
+//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-5'
     //没有使用特殊Header，可以不加这行
-    implementation project(':vitamio')
+    //    compile 'com.github.xiaoyanger0825:NiceVieoPlayer:v2.2'
+    //    implementation project(':vitamio')
+    //Android视频录制与压缩
+//    compile 'com.mabeijianxi:small-video-record:1.2.2'
     compile 'com.android.support:multidex:1.0.1'
     implementation files('libs/jmessage-android_v2.4.1.jar')
     compile 'com.lidong.pdf:android_pdf:1.0.1'
     compile 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
     //富文本
-    //    compile 'com.github.sendtion:XRichText:1.1'
     //刷新等
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
-    //文件选择器
-    //    compile 'com.leon:lfilepickerlibrary:1.6.0'
     //友盟统计
     //    compile 'com.umeng.sdk:common:latest.integration'
     //    compile 'com.umeng.sdk:analytics:latest.integration'
     implementation project(':richtextlibrary')
+    //文件选择器
     implementation project(':lfilepickerlibrary')
+    implementation project(':medialib')
 }
 //
 configurations.all {

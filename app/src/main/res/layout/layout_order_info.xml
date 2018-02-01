@@ -133,6 +133,30 @@
                     android:paddingTop="@dimen/radius_popup"
                     android:text="" />
             </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:paddingTop="@dimen/radius_popup"
+                        android:text="服务地址:" />
+
+                    <TextView
+                        android:id="@+id/tv_companyAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/default_margin"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:paddingTop="@dimen/radius_popup"
+                        android:text="" />
+                </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -268,6 +292,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
                 android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:paddingBottom="@dimen/default_margin">
 
                 <TextView
@@ -364,6 +389,7 @@
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
                         android:paddingTop="@dimen/radius_popup"
+                        android:autoLink="phone"
                         android:text="" />
                 </LinearLayout>
 
@@ -372,7 +398,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/default_height_min"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:background="@color/color_white"
                     android:orientation="horizontal"
                     android:visibility="visible">
@@ -389,11 +415,12 @@
                     <TextView
                         android:id="@+id/tv_serverName"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:minHeight="@dimen/default_height_min"
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
+                        android:autoLink="phone"
                         android:text="" />
                 </LinearLayout>
             </LinearLayout>

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/ll_layout"
+    android:fitsSystemWindows="true"
     >
 
     <include layout="@layout/layout_default_title"></include>
@@ -38,7 +39,8 @@
         android:layout_marginTop="1dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:gravity="center_vertical"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -46,7 +48,13 @@
             android:text="公司"
             android:gravity="center_vertical"
             android:textSize="@dimen/default_text_size"
-            android:drawableRight="@drawable/image_important"
+            />
+        <ImageView
+            android:id="@+id/iv_important_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_important"
+            android:visibility="gone"
             />
 
         <EditText
@@ -188,6 +196,7 @@
         android:layout_marginTop="1dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:gravity="center_vertical"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -195,7 +204,13 @@
             android:text="部门及职务"
             android:gravity="center_vertical"
             android:textSize="@dimen/default_text_size"
-            android:drawableRight="@drawable/image_important"
+            />
+        <ImageView
+            android:id="@+id/iv_important_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_important"
+            android:visibility="gone"
             />
 
         <EditText
