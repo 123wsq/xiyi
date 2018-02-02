@@ -43,6 +43,7 @@ import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppImageView;
 import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.JGIM;
 import com.example.wsq.android.utils.IntentFormat;
@@ -68,7 +69,10 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @BindView(R.id.rl_title_back) RelativeLayout rl_title_back;
     @BindView(R.id.iv_setting) ImageView iv_setting;
     @BindView(R.id.rg_menu) RadioGroup rg_menu;
+    @BindView(R.id.rb_main) RadioButton rb_main;
+    @BindView(R.id.rb_device) RadioButton rb_device;
     @BindView(R.id.rb_fault)  RadioButton rb_fault;
+    @BindView(R.id.rb_user) RadioButton rb_user;
     @BindView(R.id.et_search) EditText et_search;
     @BindView(R.id.view_point) View view_point;
     @BindView(R.id.rl_layout) RelativeLayout rl_layout;
@@ -106,6 +110,10 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         enter(1, fragments[0]);
 
+        AppImageView.onRadioButtonSelect(this, rb_main, "image_sy_default.png","image_sy_press.png");
+        AppImageView.onRadioButtonSelect(this, rb_device, "image_device_default.png","image_device_press.png");
+        AppImageView.onRadioButtonSelect(this, rb_fault, "image_gz_default.png","image_gz_press.png");
+        AppImageView.onRadioButtonSelect(this, rb_user, "image_user_default.png","image_user_press.png");
 
     }
 

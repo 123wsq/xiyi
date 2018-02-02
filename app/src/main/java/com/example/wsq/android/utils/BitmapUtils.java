@@ -68,26 +68,6 @@ public class BitmapUtils {
     }
 
 
-//    /**
-//     * 给一个Bitmap添加水印
-//     * @param context
-//     * @param path
-//     * @return
-//     */
-//    public static String addBitmapWatermark(Context context, String path){
-//
-//        Bitmap bitmap = ImageUtil.drawTextToLeftBottom(
-//                context,
-//                BitmapUtils.getLocalImage(path),
-//                DateUtil.onDateFormat(DateUtil.DATA_FORMAT),
-//                Color.WHITE,
-//                15,
-//                0,
-//                0);
-//
-//        File file = saveImage(bitmap);
-//        return file.getAbsolutePath();
-//    }
 
 
     /**

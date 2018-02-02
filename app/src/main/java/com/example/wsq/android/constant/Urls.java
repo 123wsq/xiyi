@@ -1,6 +1,7 @@
 package com.example.wsq.android.constant;
 
 import com.example.wsq.android.BuildConfig;
+import com.example.wsq.android.base.MApplication;
 
 /**
  * Created by wsq on 2017/12/11.
@@ -10,7 +11,7 @@ public class Urls {
 
     //协议
     public static final String HOST = BuildConfig.DEBUG ? "http://www.lizardcontrol.com/": "http://xiyicontrol.com";
-
+//    public static final String HOST = MApplication.DEBUG ? "http://www.lizardcontrol.com/": "http://xiyicontrol.com";
 
     //登录
     public static final String LOGIN = "/api/doLogin";

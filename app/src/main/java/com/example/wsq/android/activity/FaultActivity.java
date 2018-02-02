@@ -73,23 +73,6 @@ public class FaultActivity extends BaseActivity {
         mAdapter = new ProductAdapter(this, mData, Constant.INFO_3);
         rv_RecyclerView.setAdapter(mAdapter);
 
-        rv_RecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-                Logger.d("点击资料");
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
         dialog = new LoddingDialog(this);
 
         setRefresh();
@@ -184,29 +167,6 @@ public class FaultActivity extends BaseActivity {
                 dialog.dismiss();
             }
         });
-//        try {
-//            orderTaskService.onSearchDeviceList(param, new HttpResponseCallBack() {
-//                @Override
-//                public void callBack(Map<String, Object> result) {
-//
-//
-//                }
-//
-//                @Override
-//                public void onCallFail(String msg) {
-//                    if (type == 1){
-//                        refreshLayout.finishRefresh();
-//                    }else if(type ==2 ){
-//                        refreshLayout.finishLoadmore();
-//                    }
-//                    dialog.dismiss();
-//                }
-//            });
-//        } catch (Exception e) {
-//            dialog.dismiss();
-//            e.printStackTrace();
-//
-//        }
 
     }
 }

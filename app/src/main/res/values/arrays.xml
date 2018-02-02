@@ -27,4 +27,19 @@
         <item>其他</item>
 
     </string-array>
+
+    <array name="animation_open">
+        <item>@drawable/image_red_packet_open_1</item>
+        <item>@drawable/image_red_packet_open_2</item>
+        <item>@drawable/image_red_packet_open_3</item>
+        <item>@drawable/image_red_packet_open_4</item>
+        <item>@drawable/image_red_packet_open_5</item>
+        <item>@drawable/image_red_packet_open_6</item>
+        <item>@drawable/image_red_packet_open_7</item>
+        <item>@drawable/image_red_packet_open_8</item>
+        <item>@drawable/image_red_packet_open_9</item>
+        <item>@drawable/image_red_packet_open_4</item>
+        <item>@drawable/image_red_packet_open_10</item>
+        <item>@drawable/image_red_packet_open_11</item>
+    </array>
 </resources>

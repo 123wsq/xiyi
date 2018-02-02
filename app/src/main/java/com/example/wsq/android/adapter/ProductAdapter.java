@@ -63,10 +63,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.tv_content.setText(mData.get(position).get(ResponseKey.DES).toString()+"");
         holder.tv_product_title.setText(mData.get(position).get(ResponseKey.TITLE).toString()+"");
 
-        Logger.d("STATE = "+mData.get(position).get(ResponseKey.STATE));
-        int state = DataFormat.onStringForInteger(mData.get(position).get(ResponseKey.STATE)+"");
-        Logger.d("资料状态：  "+state);
+
+
         if (mType == Constant.INFO_5){
+            int state = DataFormat.onStringForInteger(mData.get(position).get(ResponseKey.STATE)+"");
             switch (state){
                 case 0:
                     holder.tv_state.setText("● 待审核");

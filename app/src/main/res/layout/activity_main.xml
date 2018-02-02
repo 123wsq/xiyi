@@ -25,8 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         >
-        <include layout="@layout/layout_menu"
-            />
+        <include layout="@layout/layout_menu" />
     </LinearLayout>
 
 

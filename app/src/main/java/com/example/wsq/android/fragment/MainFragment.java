@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.example.wsq.android.activity.NewsActivity;
 import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
 import com.example.wsq.android.activity.order.OrderActivity;
 import com.example.wsq.android.constant.Constant;
+import com.example.wsq.android.inter.OnPopupListener;
 import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.loader.GlideImageLoader;
 import com.example.wsq.android.tools.AppImageLoad;
@@ -55,6 +57,9 @@ public class MainFragment extends Fragment {
     @BindView(R.id.banner) Banner banner;
     @BindView(R.id.image_sbwx) ImageView image_sbwx;
     @BindView(R.id.image_gcs) ImageView image_gcs;
+    @BindView(R.id.iv_image_news) ImageView iv_image_news;
+    @BindView(R.id.image_kefu) ImageView image_kefu;
+    @BindView(R.id.image_main_qnzs)ImageView image_main_qnzs;
 
     private List<String> mImages;
     private List<String> mTitles;
@@ -83,6 +88,9 @@ public class MainFragment extends Fragment {
 
         AppImageView.onImageView(getActivity(), image_sbwx, "image_sbwh_m.png");
         AppImageView.onImageView(getActivity(), image_gcs, "image_gcs.png");
+        AppImageView.onImageView(getActivity(), iv_image_news, "image_news.png");
+        AppImageView.onImageView(getActivity(), image_kefu, "image_kefu.png");
+        AppImageView.onImageView(getActivity(), image_main_qnzs, "image_main_qnzs.png");
 //        AppImageView.onImageSelect(getActivity(), image_sbwx, "image_sbwh_m.png","image_gcs.png");
     }
 
@@ -204,10 +212,33 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 spreadPopup.onShowAnim();
 
-                ToastUtis.onToast("开始拆红包了^^");
+//                ToastUtis.onToast("开始拆红包了^^");
             }
-        });
+        }, new OnPopupListener() {
+            @Override
+            public void onStatePopupListner(PopupWindow popupWindow, boolean state) {
+                popupWindow.dismiss();
+//                openRePack();
+            }
+        }, 0);
+        spreadPopup.showAtLocation(getActivity().findViewById(R.id.ll_layout), Gravity.CENTER, 0 , 0);
+    }
 
+    public void openRePack(){
+
+        spreadPopup = new SpreadPopup(getActivity(), R.layout.layout_spread_main, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spreadPopup.onShowAnim();
+
+//                ToastUtis.onToast("开始拆红包了^^");
+            }
+        }, new OnPopupListener() {
+            @Override
+            public void onStatePopupListner(PopupWindow popupWindow, boolean state) {
+                popupWindow.dismiss();
+            }
+        }, 1);
         spreadPopup.showAtLocation(getActivity().findViewById(R.id.ll_layout), Gravity.CENTER, 0 , 0);
     }
 

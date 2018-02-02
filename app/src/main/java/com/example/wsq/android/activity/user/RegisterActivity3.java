@@ -111,6 +111,7 @@ public class RegisterActivity3 extends BaseActivity {
                 onRegister();
                 break;
             case R.id.tv_getCode: //获取验证码
+                tv_getCode.setClickable(false);
                 getValidateCode();
 
                 break;
@@ -189,40 +190,27 @@ public class RegisterActivity3 extends BaseActivity {
      * @return
      */
     public boolean validateParam(int flag){
-        if(flag ==0){
+        if (flag == 0) {
             //验证身份证
             String sfz = et_sfz.getText().toString();
 
-            if (TextUtils.isEmpty(sfz)){
+            if (TextUtils.isEmpty(sfz)) {
                 ToastUtis.onToast("身份证号码不能为空");
                 return false;
             }
 
             try {
-                if (!TextUtils.isEmpty(IdentityCardValidate.IDCard.IDCardValidate(sfz))){
-                    ToastUtis.onToast( "请输入正确的身份证号码");
+                if (!TextUtils.isEmpty(IdentityCardValidate.IDCard.IDCardValidate(sfz))) {
+                    ToastUtis.onToast("请输入正确的身份证号码");
                     return false;
                 }
             } catch (ParseException e) {
-                ToastUtis.onToast( "请输入正确的身份证号码");
+                ToastUtis.onToast("请输入正确的身份证号码");
                 e.printStackTrace();
                 return false;
             }
             RegisterParam.SFZ = sfz;
             RegisterParam.BIRTH = tv_birth.getText().toString();
-
-            //验证手机号码
-            String tel = et_tel.getText().toString();
-            if (TextUtils.isEmpty(tel)){
-                ToastUtis.onToast("请输入手机号码");
-                return false;
-            }
-            if(ValidateDataFormat.isMobile(tel)){
-                RegisterParam.TEL = tel;
-            }else{
-                ToastUtis.onToast( "输入的手机号有误");
-                return false;
-            }
 
             //验证验证码
             String validateCode = et_validateCode.getText().toString();
@@ -238,6 +226,20 @@ public class RegisterActivity3 extends BaseActivity {
                 return false;
             }
         }
+            //验证手机号码
+            String tel = et_tel.getText().toString();
+            if (TextUtils.isEmpty(tel)){
+                ToastUtis.onToast("请输入手机号码");
+                return false;
+            }
+            if(ValidateDataFormat.isMobile(tel)){
+                RegisterParam.TEL = tel;
+            }else{
+                ToastUtis.onToast( "输入的手机号有误");
+                return false;
+            }
+
+
 
 
 
@@ -305,12 +307,12 @@ public class RegisterActivity3 extends BaseActivity {
 
                 @Override
                 public void onFailure() {
-
+                    tv_getCode.setClickable(true);
                 }
             });
 
         }else{
-            ToastUtis.onToast( "输入参数格式错误");
+            tv_getCode.setClickable(true);
         }
     }
 

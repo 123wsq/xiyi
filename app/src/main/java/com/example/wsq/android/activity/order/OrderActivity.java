@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,6 +25,7 @@ import com.example.wsq.android.fragment.ServerFllocationFragment;
 import com.example.wsq.android.fragment.ServerProgressFragment;
 import com.example.wsq.android.fragment.UnAuditFragment;
 import com.example.wsq.android.fragment.UserFragment;
+import com.example.wsq.android.tools.AppImageView;
 import com.example.wsq.android.tools.AppStatus;
 import com.orhanobut.logger.Logger;
 
@@ -67,7 +69,7 @@ public class OrderActivity extends FragmentActivity implements ViewPager.OnPageC
         ButterKnife.bind(this);
         init();
         initView();
-
+        setIcon();
     }
 
     public void init(){
@@ -246,5 +248,22 @@ public class OrderActivity extends FragmentActivity implements ViewPager.OnPageC
 
     }
 
+
+    public void setIcon(){
+        if (shared.getString(Constant.SHARED.JUESE, "").equals("1")) {
+
+            AppImageView.onRadioButton(this, rb_fllocation, "image_my_approved.png",22, 22);
+            AppImageView.onRadioButton(this, rb_progress, "image_clz.png",22, 22);
+            AppImageView.onRadioButton(this, rb_feedback, "image_feedback.png",22, 22);
+            AppImageView.onRadioButton(this, rb_finish_s, "image_tab_finish.png",22, 22);
+        }else {
+            //企业-管理工程师
+            AppImageView.onRadioButton(this, rb_unfinsh, "image_tab_untreated.png",22, 22);
+            AppImageView.onRadioButton(this, rb_finish, "image_tab_treated.png",22, 22);
+            AppImageView.onRadioButton(this, rb_dispose, "image_clz.png",22, 22);
+            AppImageView.onRadioButton(this, rb_order, "image_tab_finish.png",22, 22);
+
+        }
+    }
 
 }

@@ -149,6 +149,7 @@ public class UserServiceImpl implements UserService{
                 }
             });
         } catch (Exception e) {
+            e.printStackTrace();
             Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
             callBack.onFailure();
 
@@ -219,6 +220,7 @@ public class UserServiceImpl implements UserService{
                 }
             });
         } catch (Exception e) {
+            e.printStackTrace();
             callBack.onFailure();
             Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
         }

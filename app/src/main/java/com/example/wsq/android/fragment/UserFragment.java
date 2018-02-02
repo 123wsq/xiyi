@@ -1,19 +1,23 @@
 package com.example.wsq.android.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +51,8 @@ import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppImageLoad;
+import com.example.wsq.android.tools.AppImageView;
 import com.example.wsq.android.tools.JGIM;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ValidateParam;
@@ -75,6 +81,7 @@ public class UserFragment extends Fragment {
     @BindView(R.id.tv_username) TextView tv_username;
     @BindView(R.id.tv_sex) TextView tv_sex;
     @BindView(R.id.tv_role) TextView tv_role;
+    @BindView(R.id.ll_user_background) LinearLayout ll_user_background;
     @BindView(R.id.ll_company_order) LinearLayout ll_company_order;
     @BindView(R.id.ll_server_order) LinearLayout ll_server_order;
     @BindView(R.id.ll_manager) LinearLayout ll_manager;
@@ -95,6 +102,7 @@ public class UserFragment extends Fragment {
     @BindView(R.id.ll_iv_integral) LinearLayout ll_iv_integral;
     @BindView(R.id.ll_sign_integral) LinearLayout ll_sign_integral;
     @BindView(R.id.tv_integral) TextView tv_integral;
+    @BindView(R.id.tv_quit) TextView tv_quit;
 
     public static final String FLAG_ORDER_KEY = "flag_order";
     private Map<String, Object> orderMap;
@@ -127,6 +135,7 @@ public class UserFragment extends Fragment {
 
         init();
         initView();
+        setIcon();
     }
 
     @Override
@@ -176,6 +185,7 @@ public class UserFragment extends Fragment {
         }
     }
 
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -192,11 +202,15 @@ public class UserFragment extends Fragment {
                     options.error(R.drawable.image_header_bg);
                     options.fallback(R.drawable.image_header_bg);
                     options.placeholder(R.drawable.image_header_bg);
-                    if (null != getActivity()) {
+                    if (TextUtils.isEmpty(result.get(ResponseKey.USER_PIC)+"")) {
+                        try{
                         Glide.with(getActivity())
                                 .load(Urls.HOST + result.get(ResponseKey.USER_PIC))
                                 .apply(options)
                                 .into(roundImage_header);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
 
                     //判断性别是否为空
@@ -500,5 +514,45 @@ public class UserFragment extends Fragment {
             }
         });
 
+    }
+
+    public void setIcon(){
+        if (shared.getString(Constant.SHARED.JUESE, "").equals("1")) {
+            //服务工程师订单
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_fllocation), "image_my_approved.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_progress), "image_clz.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_feedback), "image_feedback.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_server_finish), "image_tab_finish.png");
+
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_report), "image_write.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_bank_code), "image_tab_bank.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_server_share), "image_tab_share.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_knowledge), "image_tab_knowledge.png");
+        }else {
+            //企业-管理工程师
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_unfinish), "image_tab_untreated.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_finish), "image_tab_treated.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_handler), "image_clz.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order), "image_tab_finish.png");
+
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_assert), "image_sbwh.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_fault), "image_material.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_manager_shared), "image_tab_share.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_manager_upload), "image_tab_repair.png");
+        }
+        AppImageView.onImageView(getActivity(), (ImageView)getActivity().findViewById(R.id.iv_collect), "image_my_sc.png");
+        AppImageView.onImageView(getActivity(), (ImageView)getActivity().findViewById(R.id.iv_server_call), "image_kf.png");
+        AppImageView.onImageView(getActivity(), (ImageView)getActivity().findViewById(R.id.iv_password), "chang_password.png");
+        AppImageView.onImageView(getActivity(), (ImageView)getActivity().findViewById(R.id.iv_about), "tab_about.png");
+
+        //个人信息layout的背景色
+        AppImageView.onLayoutBackgroundImage(getActivity(), ll_user_background, "image_title_background.png");
+
+        if (AppImageLoad.getPath(getActivity()).equals(AppImageLoad.defaultPath)){
+            tv_quit.setBackgroundResource(R.drawable.shape_button);
+        }else {
+//            tv_quit.setBackgroundColorr(Color.parseColor("#D52E2E"));
+            AppImageView.onLayoutBackgroundImage(getActivity(), tv_quit, "#D52E2E");
+        }
     }
 }

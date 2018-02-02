@@ -118,9 +118,6 @@ public class WellcomeActivity  extends Activity {
             }
         });
 
-
-        List<String> fileList = AppImageLoad.getLoadImages(this);
-        Logger.d("所有的文件：  "+ fileList);
     }
 
     public void getImages(){

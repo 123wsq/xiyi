@@ -34,6 +34,11 @@
         <item name="android:windowExitAnimation">@anim/spread_popup_out</item>
     </style>
 
+    <style name="spread_red_pack" parent="android:Animation" mce_bogus="1">
+        <item name="android:windowEnterAnimation">@anim/red_pack_open</item>
+        <item name="android:windowExitAnimation">@anim/red_pack_close</item>
+    </style>
+
 
     <style name="default_text_style">
         <item name="android:layout_width">0dp</item>

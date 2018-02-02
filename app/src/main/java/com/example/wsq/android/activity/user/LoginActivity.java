@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -13,20 +16,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.medialib.video.VideoPlayListActvity;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.MainActivity;
 import com.example.wsq.android.base.BaseActivity;
+import com.example.wsq.android.base.MApplication;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
+import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.JGIM;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -66,7 +75,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
     private LoddingDialog dialog;
     private AnimationDrawable animationDrawable;
-
+    private CustomPopup popup;
 
 
 
@@ -98,9 +107,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
 
-    @OnClick({R.id.tv_register, R.id.tv_forget_pwd, R.id.im_eye, R.id.btn_login})
+    @OnClick({R.id.im_app_icon, R.id.tv_register, R.id.tv_forget_pwd, R.id.im_eye, R.id.btn_login})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.im_app_icon:
+//                onPopup();
+//                IntentFormat.startActivity(LoginActivity.this, VideoPlayListActvity.class);
+                break;
             case R.id.tv_register:
 
                 startActivity(new Intent(LoginActivity.this, RegiesterActivity1.class));
@@ -122,8 +135,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 }
                 break;
             case R.id.btn_login:
-
-
                 onLogin();
                 break;
 
@@ -212,4 +223,30 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
     }
 
+    public void onPopup(){
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_default_popup,null);
+        TextView popup_title = view.findViewById(R.id.tv_title);
+        popup_title.setText("平台切换");
+
+        List<String> list = new ArrayList<>();
+        list.add("正式");
+        list.add("测试");
+        popup = new CustomPopup(LoginActivity.this, view, list, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        }, new PopupItemListener() {
+            @Override
+            public void onClickItemListener(int position, String result) {
+
+                MApplication.DEBUG = position ==0 ? false : true;
+
+                Logger.d(MApplication.DEBUG);
+                popup.dismiss();
+            }
+        });
+        popup.setTextColor("#3F51B5");
+        popup.showAtLocation(findViewById(R.id.ll_layout), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
 }

@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         >
     <ImageView
+        android:id="@+id/iv_background"
         android:layout_width="300dp"
         android:layout_height="350dp"
         android:src="@drawable/image_spread_red_background"
@@ -19,12 +20,46 @@
 
     <ImageView
         android:id="@+id/iv_open"
-        android:layout_width="@dimen/default_image_size_3"
+        android:layout_width="wrap_content"
+        android:adjustViewBounds="true"
+        android:maxWidth="@dimen/default_image_size_3"
         android:layout_height="@dimen/default_image_size_3"
+        android:maxHeight="@dimen/default_image_size_3"
         android:layout_marginTop="190dp"
-        android:src="@drawable/image_chai"
         android:layout_centerHorizontal="true"
+        android:src="@drawable/image_red_packet_open_1"
+        android:visibility="gone"
+
         />
+
+        <TextView
+            android:id="@+id/tv_integral"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_open"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="119dp"
+            android:text="+1 积分"
+            android:textColor="@color/color_white"
+            android:textSize="36sp"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/default_height_4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="220dp"
+            android:text="确定"
+            android:textColor="#B27A0D"
+            android:gravity="center"
+            android:background="@drawable/shape_red_package_open"
+            android:paddingLeft="@dimen/default_height_2"
+            android:paddingRight="@dimen/default_height_2"
+            android:visibility="gone"
+            />
+
 
 
     <ImageView

@@ -20,7 +20,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="首页"
-            android:drawableTop="@drawable/selector_main_start"
             android:button="@null"
             android:gravity="center"
             android:checked="true"
@@ -33,7 +32,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="设备"
-            android:drawableTop="@drawable/selector_main_device"
             android:button="@null"
             android:gravity="center"
             android:textColor="@drawable/selector_menu_color"
@@ -45,7 +43,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="资料"
-            android:drawableTop="@drawable/selector_main_gz"
             android:button="@null"
             android:gravity="center"
             android:textSize="@dimen/default_text_min_size"
@@ -57,7 +54,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="我的"
-            android:drawableTop="@drawable/selector_main_user"
             android:button="@null"
             android:gravity="center"
             android:textSize="@dimen/default_text_min_size"
@@ -78,7 +74,6 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/selector_main_start"
             />
         <TextView
             android:id="@+id/tv_main"
