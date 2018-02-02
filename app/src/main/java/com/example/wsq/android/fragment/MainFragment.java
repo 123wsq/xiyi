@@ -91,7 +91,6 @@ public class MainFragment extends Fragment {
         AppImageView.onImageView(getActivity(), iv_image_news, "image_news.png");
         AppImageView.onImageView(getActivity(), image_kefu, "image_kefu.png");
         AppImageView.onImageView(getActivity(), image_main_qnzs, "image_main_qnzs.png");
-//        AppImageView.onImageSelect(getActivity(), image_sbwx, "image_sbwh_m.png","image_gcs.png");
     }
 
 
@@ -131,7 +130,7 @@ public class MainFragment extends Fragment {
         banner.start();
 
 
-        handler.sendMessageDelayed(new Message(), 1000);
+//        handler.sendMessageDelayed(new Message(), 1000);
 //        showSpread();
     }
 
