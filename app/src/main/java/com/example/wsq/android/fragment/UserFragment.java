@@ -546,7 +546,7 @@ public class UserFragment extends Fragment {
         AppImageView.onImageView(getActivity(), (ImageView)getActivity().findViewById(R.id.iv_about), "tab_about.png");
 
         //个人信息layout的背景色
-        AppImageView.onLayoutBackgroundImage(getActivity(), ll_user_background, "image_title_background.png");
+        AppImageView.onLayoutBackgroundImage(getActivity(), ll_user_background, "image_default_user.png");
 
         if (AppImageLoad.getPath(getActivity()).equals(AppImageLoad.defaultPath)){
             tv_quit.setBackgroundResource(R.drawable.shape_button);

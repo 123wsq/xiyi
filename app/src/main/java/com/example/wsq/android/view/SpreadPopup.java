@@ -150,7 +150,7 @@ public class SpreadPopup extends PopupWindow{
 
     public void onShowAnim(){
         animation = new FrameAnimation(iv_open, mImgResIds, 150, true);
-        handler.postDelayed(runnable, 1000);
+//        handler.postDelayed(runnable, 1000);
     }
 
     public void onHideAnim(){

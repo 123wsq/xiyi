@@ -114,7 +114,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         AppImageView.onRadioButtonSelect(this, rb_device, "image_device_default.png","image_device_press.png");
         AppImageView.onRadioButtonSelect(this, rb_fault, "image_gz_default.png","image_gz_press.png");
         AppImageView.onRadioButtonSelect(this, rb_user, "image_user_default.png","image_user_press.png");
-
+        AppImageView.onLayoutBackgroundImage(this, rl_layout, "image_title_background.png");
     }
 
     public void init(){

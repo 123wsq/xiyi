@@ -11,6 +11,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.wsq.android.utils.BitmapUtils;
@@ -65,6 +66,16 @@ public class AppImageView {
      * @param fileName
      */
     public static void onLayoutBackgroundImage (Context context, LinearLayout layout, String fileName){
+
+        layout.setBackground(new BitmapDrawable(BitmapUtils.onAssetsImages(context, fileName)));
+    }
+    /**
+     * 动态设置layout的背景色
+     * @param context
+     * @param layout
+     * @param fileName
+     */
+    public static void onLayoutBackgroundImage (Context context, RelativeLayout layout, String fileName){
 
         layout.setBackground(new BitmapDrawable(BitmapUtils.onAssetsImages(context, fileName)));
     }
