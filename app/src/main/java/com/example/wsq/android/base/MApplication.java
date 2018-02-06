@@ -48,8 +48,13 @@ public class MApplication extends Application {
         mImages.addAll(AppImageLoad.getLoadImages(this));
 
         SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString(Constant.SHARED.IMAGE_PATH, "image/20180215/").commit();
-//        sharedPreferences.edit().putString(Constant.SHARED.IMAGE_PATH, "").commit();
+//        if (System.currentTimeMillis() / 1000< endTime && System.currentTimeMillis() /1000 > startTime) {
+        if (System.currentTimeMillis() / 1000 < Constant.endTime) {
+            sharedPreferences.edit().putString(Constant.SHARED.IMAGE_PATH, "image/20180215/").commit();
+        }else{
+            sharedPreferences.edit().putString(Constant.SHARED.IMAGE_PATH, "").commit();
+        }
+
 
 
     }

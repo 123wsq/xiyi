@@ -89,8 +89,8 @@
             android:layout_marginTop="1dp"
             >
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:src="@drawable/image_money_black"
 
                 />
@@ -98,7 +98,8 @@
                 android:id="@+id/et_money"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="0"
+                android:text="011111111"
+                android:textSize="30sp"
                 android:inputType="number"
                 android:gravity="center_vertical|left"
                 android:layout_marginLeft="@dimen/default_margin"

@@ -248,4 +248,14 @@ public class Urls {
      */
     public static final String DELETE_FILE = "/api/member/delete_file";
 
+    /**
+     * 积分红包
+     */
+    public static final String REWARD_POINTS = "/api/member/reward_points";
+
+    /**
+     * 轮播图
+     */
+    public static final String  BANNER_PLAY= "/api/imgConfig";
+
 }

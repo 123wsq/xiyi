@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +19,27 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.adapter.WellcomeAdapter;
 import com.example.wsq.android.constant.Constant;
+import com.example.wsq.android.constant.ResponseKey;
+import com.example.wsq.android.constant.Urls;
+import com.example.wsq.android.inter.HttpResponseListener;
+import com.example.wsq.android.service.UserService;
+import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.AppImageLoad;
 import com.example.wsq.android.utils.DensityUtil;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,11 +60,13 @@ public class WellcomeActivity  extends Activity {
     RelativeLayout rl_layout_page;
     @BindView(R.id.rl_layout_new_year) RelativeLayout rl_layout_new_year;
     @BindView(R.id.tv_break) TextView tv_break;
+    @BindView(R.id.im_new_year) ImageView im_new_year;
 
     private WellcomeAdapter mAdapter;
     private List<View> mDate;
     private SharedPreferences shared;
     private int curLen = 5;
+    private UserService userService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,14 +80,21 @@ public class WellcomeActivity  extends Activity {
     public void initView() {
 
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-
+        userService = new UserServiceImpl();
 
         if (shared.getBoolean(Constant.SHARED.ISLOGIN, false)){
 
             rl_layout_new_year.setVisibility(View.VISIBLE);
             handler.postDelayed(runnable, 1000);
+            String path = shared.getString(Constant.SHARED.WELCOME_PATH, "");
+            if (!TextUtils.isEmpty(path)){
+                Glide.with(WellcomeActivity.this).load(Urls.HOST+Urls.GET_IMAGES+path).into(im_new_year);
+            }
+
+            getImage();
         }else {
             rl_layout_page.setVisibility(View.VISIBLE);
+
             getImages();
             drawIndicator();
             mAdapter = new WellcomeAdapter(this, mDate);
@@ -180,5 +201,30 @@ public class WellcomeActivity  extends Activity {
             return  true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void getImage(){
+        Map<String, String> param = new HashMap<>();
+        param.put(ResponseKey.TOKEN, "");
+        param.put(ResponseKey.IMG_TYPE, "2");
+        userService.onBannerImage(this, param, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+
+                try{
+                    JSONObject json = new JSONObject(result.get("data")+"");
+                    JSONObject jsona =json.optJSONObject(ResponseKey.LIST);
+                    shared.edit().putString(Constant.SHARED.WELCOME_PATH, jsona.optString(ResponseKey.IMG_PATH)).commit();
+                    Glide.with(WellcomeActivity.this).load(Urls.HOST+Urls.GET_IMAGES+jsona.optString(ResponseKey.IMG_PATH)).into(im_new_year);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 }

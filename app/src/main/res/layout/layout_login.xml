@@ -158,12 +158,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/defalut_layout_height"
+        android:layout_marginRight="@dimen/defalut_layout_height"
+        android:layout_marginTop="@dimen/default_height_2"
         >
 
         <ImageView
             android:id="@+id/iv_login_anim"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/default_height_small"
             android:visibility="gone"
             android:src="@drawable/anim_login_loadding"
             android:layout_centerInParent="true"
@@ -178,9 +181,6 @@
             android:text="登录"
             android:textColor="@color/color_white"
             android:textSize="20sp"
-            android:layout_marginLeft="@dimen/defalut_layout_height"
-            android:layout_marginRight="@dimen/defalut_layout_height"
-            android:layout_marginTop="@dimen/default_height_2"
             android:visibility="visible"
         />
 

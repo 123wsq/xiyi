@@ -77,7 +77,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @BindView(R.id.view_point) View view_point;
     @BindView(R.id.rl_layout) RelativeLayout rl_layout;
     @BindView(R.id.rl_message) RelativeLayout rl_message;
-    @BindView(R.id.ll_layout) RelativeLayout ll_layout;
+    @BindView(R.id.ll_layout) LinearLayout ll_layout;
 
     public static boolean isForeground = false;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
@@ -141,6 +141,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         JMessageClient.registerEventReceiver(this);
 
+        view_point.setVisibility(shared.getBoolean(Constant.SHARED.MESSAGE, false) ? View.VISIBLE : View.GONE);
+
         onRegister();
 
 
@@ -152,9 +154,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         curShowPage = page;
         getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment).commit();
 
+        rl_layout.setVisibility(curShowPage == 4? View.GONE : View.VISIBLE);
         switch (curShowPage){
             case 1:
                 et_search.setHint("变频器");
+
                 onSettingTitle(false, true, true, true, false, false);
                 break;
             case 2:
@@ -164,10 +168,10 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             case 3:
                 et_search.setHint("想找自己和胃口的，来搜下吧~");
                 onSettingTitle(false, true, false, false, false, false);
-
                 break;
             case 4:
                 onSettingTitle(false, false, true, true, false, true);
+//                AppImageView.onLayoutBackgroundImage(this, rl_layout, "image_default_user.png");
                 break;
         }
     }
@@ -257,6 +261,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                 Log.d("接收到的消息", intent.getStringExtra(KEY_MESSAGE));
                 shared.edit().putBoolean(Constant.SHARED.MESSAGE, true).commit();
                  view_point.setVisibility(View.VISIBLE);
+                 UserFragment fragment = (UserFragment) fragments[3];
+                 fragment.onSetShowPoint();
                 setNotification(intent.getStringExtra(KEY_MESSAGE));
 
             }

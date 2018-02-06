@@ -87,7 +87,6 @@ public class SignActivity extends BaseActivity{
         rv_calendar.setLayoutManager(new GridLayoutManager(this, 7));
         rv_calendar.setHasFixedSize(true);
 
-        ;
 
         mAdapter = new SignCalendarAdapter(this, calendar, mData);
         rv_calendar.setAdapter(mAdapter);

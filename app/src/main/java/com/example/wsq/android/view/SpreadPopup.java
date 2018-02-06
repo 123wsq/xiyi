@@ -60,8 +60,8 @@ public class SpreadPopup extends PopupWindow{
     private  ImageView iv_close;
     private int curType;
     private FrameAnimation animation;
-    private int curLen = 5;
-
+    private int curLen = 2;
+    private String reward_point;
 
     public SpreadPopup(Activity context,int resource,  View.OnClickListener clickListener, OnPopupListener listener, int type){
 
@@ -82,8 +82,11 @@ public class SpreadPopup extends PopupWindow{
                 dismiss();
             }
         });
-        iv_open.setOnClickListener(onClickListener);
-
+        if (curType==FLAG_TYPE_PACKAGE) {
+            iv_open.setOnClickListener(onClickListener);
+        }else if(curType == FLAG_TYPE_OPEN_PACKAGE){
+            tv_ok.setOnClickListener(onClickListener);
+        }
         initPopup();
         initView(curType);
     }
@@ -106,7 +109,8 @@ public class SpreadPopup extends PopupWindow{
         this.setFocusable(true);
         // 设置SelectPicPopupWindow弹出窗体动画效果
 
-        this.setAnimationStyle(curType==0 ? R.style.spread_PopupAnimation : R.style.spread_red_pack);
+//        this.setAnimationStyle(curType==0 ? R.style.spread_PopupAnimation : R.style.spread_red_pack);
+        this.setAnimationStyle(R.style.spread_red_pack);
         // 实例化一个ColorDrawable颜色为半透明
         ColorDrawable dw = new ColorDrawable(0x00000000);
         // 设置SelectPicPopupWindow弹出窗体的背景
@@ -120,10 +124,6 @@ public class SpreadPopup extends PopupWindow{
     @Override
     public void showAtLocation(View parent, int gravity, int x, int y) {
 
-
-        if (curType == FLAG_TYPE_OPEN_PACKAGE){
-            iv_background.setBackgroundResource(R.drawable.image_red_package);
-        }
 
         super.showAtLocation(parent, gravity, x, y);
         backgroundAlpha(0.5f);
@@ -147,9 +147,13 @@ public class SpreadPopup extends PopupWindow{
         mContext.getWindow().setAttributes(lp);
     }
 
+    public void setReardPoint(String point){
+
+        tv_integral.setText("+"+point+" 积分");
+    }
 
     public void onShowAnim(){
-        animation = new FrameAnimation(iv_open, mImgResIds, 150, true);
+        animation = new FrameAnimation(iv_open, mImgResIds, 80, true);
 //        handler.postDelayed(runnable, 1000);
     }
 
@@ -171,8 +175,9 @@ public class SpreadPopup extends PopupWindow{
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            Logger.d("进度   "+curLen);
             curLen--;
-            if (curLen == 5){
+            if (curLen == 0){
 
                 if (onStatePopupListner != null){
                     onStatePopupListner.onStatePopupListner(SpreadPopup.this, false);

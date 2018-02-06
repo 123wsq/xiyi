@@ -40,8 +40,8 @@
 
                         <ImageView
                             android:id="@+id/image_sbwx"
-                            android:layout_width="wrap_content"
-                            android:layout_height="60dp"
+                            android:layout_width="110dp"
+                            android:layout_height="65dp"
                              />
                         <TextView
                             android:layout_width="wrap_content"
@@ -74,8 +74,8 @@
 
                     <ImageView
                         android:id="@+id/image_gcs"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                          />
                         <TextView
                             android:layout_width="wrap_content"
@@ -119,8 +119,8 @@
 
                     <ImageView
                         android:id="@+id/iv_image_news"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -184,7 +184,7 @@
                                 android:textColor="@color/black2"
                                 />
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="解答疑难问题"
                                 android:textSize="@dimen/default_text_min_size"

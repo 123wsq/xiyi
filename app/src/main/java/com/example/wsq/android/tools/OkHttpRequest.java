@@ -18,6 +18,7 @@ import org.json.JSONArray;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -510,4 +511,44 @@ public class OkHttpRequest {
             }
         });
     }
+
+
+
+    /**
+     *
+     * @param url
+     * @param params
+     * @param callBack
+     */
+    public static void sendDefaultHttpPost(String url, Map<String, String> params, final HttpResponseCallBack callBack){
+
+
+        long timeMillis = System.currentTimeMillis();
+        params.put("timestamp", timeMillis+"");
+        String sign = MD5Util.encrypt(Constant.SECRET+timeMillis+Constant.SECRET);
+        params.put("sign", sign);
+
+        String path = Urls.HOST + url;
+        Logger.d("url="+path +"\nparam="+params.toString());
+
+
+        OkhttpUtil.okHttpPost(path, params, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                callBack.onCallFail("请求失败");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(String response) {
+
+                String result = UnicodeUtil.unicodeToString(response);
+                Logger.d(result);
+                Map<String, Object> data = new HashMap<>();
+                data.put("data", result);
+                callBack.callBack(data);
+            }
+        });
+    }
+
 }

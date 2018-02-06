@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.wsq.android.R;
 import com.example.wsq.android.utils.BitmapUtils;
 import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.utils.SelectorUtils;
@@ -41,6 +42,15 @@ public class AppImageView {
 
     public static void onRadioButton(Context context, RadioButton radioButton, String fileName, int width, int height){
         Drawable drawable = new BitmapDrawable(BitmapUtils.onAssetsImages(context, fileName));
+        drawable.setBounds(0, 0, DensityUtil.dp2px(context, width), DensityUtil.dp2px(context, height));
+        if (drawable != null){
+            radioButton.setCompoundDrawables(null, drawable, null, null);
+        }
+
+    }
+
+    public static void onRadioButton(Context context, RadioButton radioButton, int drawableID, int width, int height){
+       Drawable drawable =  context.getResources().getDrawable(drawableID);
         drawable.setBounds(0, 0, DensityUtil.dp2px(context, width), DensityUtil.dp2px(context, height));
         if (drawable != null){
             radioButton.setCompoundDrawables(null, drawable, null, null);

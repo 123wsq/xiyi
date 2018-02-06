@@ -36,6 +36,7 @@ import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
@@ -151,7 +152,9 @@ public class WebEditActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.iv_insertImage, R.id.iv_insert_attachment, R.id.tv_Details})
+    @OnClick({R.id.iv_back, R.id.iv_insertImage, R.id.iv_insert_attachment, R.id.tv_Details,
+            R.id.iv_font_bold, R.id.iv_font_incline, R.id.iv_font_underline, R.id.iv_font_lineation,
+            R.id.iv_font_link})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -159,6 +162,7 @@ public class WebEditActivity extends BaseActivity {
                     conInter.updateData(WebEditActivity.this, DbKeys.CONTENT,
                             edit_richtext.buildHtml(edit_richtext), AuthType.ARTICLES);
                 }
+                finish();
                 break;
             case R.id.iv_insertImage:  //插入图片
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -174,6 +178,9 @@ public class WebEditActivity extends BaseActivity {
 
                 onCreateAlertDialog();
                 break;
+                default:
+                    ToastUtis.onToast("正在努力完善中。。");
+                    break;
         }
     }
 

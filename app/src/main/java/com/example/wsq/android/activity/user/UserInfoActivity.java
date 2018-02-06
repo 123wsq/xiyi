@@ -121,7 +121,6 @@ public class UserInfoActivity extends BaseActivity {
 
         tv_username.setText(UserFragment.mUserData.get(ResponseKey.USERNAME)+"");
         //设置头像
-//        Glide.with(this).load(Urls.HOST+UserFragment.mUserData.get(ResponseKey.USER_PIC)).into(image_header);
         options = new RequestOptions();
         options.error(R.drawable.image_header_bg);
         options.fallback(R.drawable.image_header_bg);

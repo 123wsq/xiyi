@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtils;
 import com.example.wsq.android.view.CustomPasswordDialog;
 import com.example.wsq.android.view.LoddingDialog;
+import com.orhanobut.logger.Logger;
 
 
 import java.util.HashMap;
@@ -51,10 +53,10 @@ public class WithdrawActivity extends BaseActivity {
     @BindView(R.id.tv_card_type) TextView tv_card_type;
 
     private LoddingDialog dialog;
-    private CustomPasswordDialog customPasswordDialog;
     private UserService userService;
     private SharedPreferences shared;
     private double enabledMoney = 0;
+    private CustomPasswordDialog passwordDialog;
 
 
     @Override
@@ -83,7 +85,7 @@ public class WithdrawActivity extends BaseActivity {
             }
 
         }
-
+        onTextChangeListener();
 
     }
 
@@ -181,6 +183,7 @@ public class WithdrawActivity extends BaseActivity {
 
                 double amountNew = DataFormat.onStringForFloat(editable.toString());
                 double amountOld = DataFormat.onStringForFloat(BalanceActivity.mData.get(ResponseKey.CASH_MONEY)+"");
+                Logger.d(amountNew+"=============="+ amountOld);
                 if (amountNew > amountOld){
                     tv_withdraw_enabled.setText("金额已超过可提现余额");
                     tv_withdraw_enabled.setTextColor(Color.RED);
@@ -202,6 +205,17 @@ public class WithdrawActivity extends BaseActivity {
                 onValidatePayPassword(result);
             }
         });
-        builder.create().show();
+        passwordDialog = builder.create();
+        passwordDialog.show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            if (passwordDialog != null && passwordDialog.isShowing())
+            passwordDialog.dismiss();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

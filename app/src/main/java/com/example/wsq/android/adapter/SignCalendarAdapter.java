@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.ResponseKey;
+import com.example.wsq.android.utils.CalendarUtils;
+import com.example.wsq.android.utils.DataFormat;
 import com.example.wsq.android.utils.DateUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -47,10 +50,13 @@ public class SignCalendarAdapter extends RecyclerView.Adapter<SignCalendarAdapte
             String create_time = mData.get(i).get(ResponseKey.CREATE_TIME)+"000";
 
             String sDay = DateUtil.onMillisForDay(create_time);
+            int startDay = CalendarUtils.getMonthFirstWeek();
+
 //            Logger.d(sDay);
             int day = Integer.parseInt(sDay);
-//            Logger.d(day +"====="+Integer.parseInt(mCander.get(position)));
-            if (day == Integer.parseInt(mCander.get(position))){
+
+            Logger.d(day+"============"+mCander.get(position)+"============="+DataFormat.onStringForInteger(mCander.get(position)));
+            if (day == (DataFormat.onStringForInteger(mCander.get(position)))){
                 holder.tv_day.setBackgroundResource(R.drawable.shape_sign);
                 holder.tv_day.setTextColor(Color.WHITE);
             }

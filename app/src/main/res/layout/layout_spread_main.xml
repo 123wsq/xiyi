@@ -13,7 +13,7 @@
     <ImageView
         android:id="@+id/iv_background"
         android:layout_width="300dp"
-        android:layout_height="350dp"
+        android:layout_height="400dp"
         android:src="@drawable/image_spread_red_background"
 
         />
@@ -25,10 +25,10 @@
         android:maxWidth="@dimen/default_image_size_3"
         android:layout_height="@dimen/default_image_size_3"
         android:maxHeight="@dimen/default_image_size_3"
-        android:layout_marginTop="190dp"
+        android:layout_marginTop="270dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/image_red_packet_open_1"
-        android:visibility="gone"
+        android:background="@drawable/image_red_packet_open_1"
+        android:visibility="visible"
 
         />
 
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_open"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="119dp"
+            android:layout_marginTop="150dp"
             android:text="+1 积分"
             android:textColor="@color/color_white"
             android:textSize="36sp"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/default_height_4"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="220dp"
+            android:layout_marginTop="280dp"
             android:text="确定"
             android:textColor="#B27A0D"
             android:gravity="center"
@@ -67,7 +67,7 @@
         android:layout_width="@dimen/default_icon_size_2"
         android:layout_height="@dimen/default_icon_size_3"
         android:src="@drawable/image_spread_close"
-        android:layout_marginTop="370dp"
+        android:layout_marginTop="450dp"
         android:layout_centerHorizontal="true"
         />
     </RelativeLayout>

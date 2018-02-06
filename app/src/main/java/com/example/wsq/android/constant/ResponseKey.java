@@ -54,6 +54,8 @@ public class ResponseKey {
 
     public static final String  TOKEN = "token";
 
+    public static final String IMG_TYPE = "img_type";
+
     public static final String DIQU = "diqu";
 
     public static final String JIESHAO = "jieshao";
@@ -255,9 +257,14 @@ public class ResponseKey {
 
     public static final String POINT = "point";
 
+    public static final String POINTS = "points";
+
     public static final String CID = "cid";
 
     public static final String ARTICLES_LIST = "article_list";
 
+    public static final String LIST = "list";
+
+    public static final String IMG_PATH = "img_path";
 
 }

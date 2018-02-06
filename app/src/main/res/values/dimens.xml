@@ -10,8 +10,8 @@
     <dimen name="defalut_radiogroup_height">60dp</dimen>
     <dimen name="default_text_title_size">18sp</dimen>
     <dimen name="default_text_max_size">16sp</dimen>
-    <dimen name="default_text_size">14sp</dimen>
-    <dimen name="default_text_min_size">12sp</dimen>
+    <dimen name="default_text_size">13sp</dimen>
+    <dimen name="default_text_min_size">11sp</dimen>
     <dimen name="default_btn_text_size">@dimen/default_text_max_size</dimen>
 
 

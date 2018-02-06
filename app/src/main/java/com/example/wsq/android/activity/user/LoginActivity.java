@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.medialib.picture.ImageSelectorActvity;
+import com.example.medialib.tools.MediaSelector;
 import com.example.medialib.video.VideoPlayListActvity;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.MainActivity;
@@ -29,6 +32,7 @@ import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.JGIM;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.orhanobut.logger.Logger;
@@ -96,7 +100,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
         et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-
         cb_checkBox.setChecked(true);
         et_username.setText(shared.getString(Constant.SHARED.USERNAME, ""));
         et_password.setText(shared.getString(Constant.SHARED.PASSWORD, ""));
@@ -111,6 +114,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.im_app_icon:
+//                MediaSelector.Builder builder = new MediaSelector.Builder(this);
+//                builder.create().openPhotoAlbum();
+//                IntentFormat.startActivity(LoginActivity.this, ImageSelectorActvity.class);
 //                onPopup();
 //                IntentFormat.startActivity(LoginActivity.this, VideoPlayListActvity.class);
                 break;
@@ -148,10 +154,21 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 //        dialog.show();
         btn_login.setVisibility(View.GONE);
         iv_login_anim.setVisibility(View.VISIBLE);
-        animationDrawable.start();
+
         btn_login.setVisibility(View.GONE);
         final String username = et_username.getText().toString();
         String password = et_password.getText().toString();
+        if (TextUtils.isEmpty(username)){
+            ToastUtis.onToast("用户名不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(password)){
+            ToastUtis.onToast("密码不能为空");
+            return;
+        }
+
+
+
         //检测复选框的状态
         if (cb_checkBox.isChecked()) {
             shared.edit()
@@ -169,7 +186,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         map.put(ResponseKey.USERNAME, username);
         map.put(ResponseKey.PASSWORD, password);
 
-
+        animationDrawable.start();
         //调用极光IM
 //        JGIM.JGIM_Login(username, password);
         if (JGIM.JGIM_Login(username, password)) {

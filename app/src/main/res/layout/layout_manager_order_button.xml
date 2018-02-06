@@ -28,6 +28,7 @@
             android:textSize="@dimen/default_text_min_size"
             android:textColor="@drawable/selector_menu_color"
             android:background="@drawable/selector_radiobutton"
+
             />
 
         <RadioButton

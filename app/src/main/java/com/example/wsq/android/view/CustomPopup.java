@@ -49,6 +49,7 @@ public class CustomPopup extends PopupWindow{
 
         tv_cancel.setOnClickListener(onClickListener);
         ListView listview = popupView.findViewById(R.id.listview);
+        listview.setDividerHeight(0);
         MyAdapter adapter = new MyAdapter();
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

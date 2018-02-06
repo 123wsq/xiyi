@@ -2,9 +2,11 @@ package com.example.wsq.android.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
@@ -32,11 +34,13 @@ import com.example.wsq.android.activity.cash.BankActivity;
 import com.example.wsq.android.activity.cash.BillDetailsActivity;
 import com.example.wsq.android.activity.cash.ReceiptsActivity;
 import com.example.wsq.android.activity.order.DeviceWarrantyActivity;
+import com.example.wsq.android.activity.order.MessageActivity;
 import com.example.wsq.android.activity.order.OrderActivity;
 import com.example.wsq.android.activity.share.ShareRecordActivity;
 import com.example.wsq.android.activity.user.CollectActivity;
 import com.example.wsq.android.activity.user.IntegralActivity;
 import com.example.wsq.android.activity.user.LoginActivity;
+import com.example.wsq.android.activity.user.SettingActivity;
 import com.example.wsq.android.activity.user.SignActivity;
 import com.example.wsq.android.activity.user.UpdatePsdActivity;
 import com.example.wsq.android.activity.user.UserInfoActivity;
@@ -55,12 +59,14 @@ import com.example.wsq.android.tools.AppImageLoad;
 import com.example.wsq.android.tools.AppImageView;
 import com.example.wsq.android.tools.JGIM;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateParam;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.RoundImageView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,7 +109,7 @@ public class UserFragment extends Fragment {
     @BindView(R.id.ll_sign_integral) LinearLayout ll_sign_integral;
     @BindView(R.id.tv_integral) TextView tv_integral;
     @BindView(R.id.tv_quit) TextView tv_quit;
-
+    @BindView(R.id.view_point) View view_point;
     public static final String FLAG_ORDER_KEY = "flag_order";
     private Map<String, Object> orderMap;
     private UserService userService;
@@ -159,8 +165,7 @@ public class UserFragment extends Fragment {
         if (sRole.equals("1")){
             ll_sign_integral.setVisibility(View.VISIBLE);
         }
-//        getUserInfo();
-//        getOrderNum();
+        view_point.setVisibility(shared.getBoolean(Constant.SHARED.MESSAGE, false) ? View.VISIBLE : View.GONE);
     }
 
 
@@ -202,7 +207,7 @@ public class UserFragment extends Fragment {
                     options.error(R.drawable.image_header_bg);
                     options.fallback(R.drawable.image_header_bg);
                     options.placeholder(R.drawable.image_header_bg);
-                    if (TextUtils.isEmpty(result.get(ResponseKey.USER_PIC)+"")) {
+                    if (!TextUtils.isEmpty(result.get(ResponseKey.USER_PIC)+"")) {
                         try{
                         Glide.with(getActivity())
                                 .load(Urls.HOST + result.get(ResponseKey.USER_PIC))
@@ -227,7 +232,6 @@ public class UserFragment extends Fragment {
                         int role = Integer.parseInt(strRole);
                         tv_role.setText(Constant.ROLE[role-1]);
                     }
-
                     //设置积分
                     tv_integral.setText("积分 "+result.get(ResponseKey.MEMBER_POINTS)+" 分");
                     //账单
@@ -246,13 +250,24 @@ public class UserFragment extends Fragment {
             R.id.ll_device_bank_code, R.id.ll_device_server_share, R.id.ll_server_call,
             R.id.ll_password, R.id.ll_about, R.id.ll_fault, R.id.ll_collect,R.id.ll_manager_shared,
             R.id.ll_manager_upload, R.id.ll_device_knowledge, R.id.ll_balance, R.id.ll_pay_Record,
-            R.id.tv_sign, R.id.ll_iv_integral, R.id.roundImage_header, R.id.ll_receipts})
+            R.id.tv_sign, R.id.ll_iv_integral, R.id.roundImage_header, R.id.ll_receipts, R.id.iv_message,
+            R.id.iv_setting})
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.iv_setting:
+                IntentFormat.startActivity(getActivity(), SettingActivity.class);
+                break;
+            case R.id.iv_message:
+                IntentFormat.startActivity(getActivity(), MessageActivity.class);
+                break;
             case R.id.roundImage_header: //点击头像查看
                 //Urls.HOST+result.get(ResponseKey.USER_PIC)
                 List<LocalMedia> listMedia = new ArrayList<>();
                 LocalMedia media = new LocalMedia();
+                if (TextUtils.isEmpty(mUserData.get(ResponseKey.USER_PIC)+"")){
+                    ToastUtis.onToast("请先上传头像");
+                    return;
+                }
                 media.setPath(Urls.HOST+mUserData.get(ResponseKey.USER_PIC));
                 listMedia.add(media);
                 PictureSelector.create(getActivity()).externalPicturePreview(0, listMedia);
@@ -376,6 +391,8 @@ public class UserFragment extends Fragment {
                 break;
             case R.id.ll_server_call:  //客服中心
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_default_popup,null);
+                TextView popup_title = view.findViewById(R.id.tv_title);
+                popup_title.setText("联系电话");
                 List<String> list = new ArrayList<>();
                 list.add(getResources().getString(R.string.server_tel));
                 popup = new CustomPopup(getActivity(), view, list, new View.OnClickListener() {
@@ -391,6 +408,7 @@ public class UserFragment extends Fragment {
                         popup.dismiss();
                     }
                 });
+
                 popup.setTextColor("#3F51B5");
                 popup.showAtLocation(getActivity().findViewById(R.id.ll_layout), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
@@ -408,6 +426,16 @@ public class UserFragment extends Fragment {
                 IntentFormat.startActivity(getActivity(), IntegralActivity.class);
                 break;
 
+        }
+    }
+
+    /**
+     * 设置标题信息
+     */
+    public void onSetShowPoint(){
+
+        if (view_point != null) {
+            view_point.setVisibility(View.VISIBLE);
         }
     }
 
@@ -520,7 +548,7 @@ public class UserFragment extends Fragment {
         if (shared.getString(Constant.SHARED.JUESE, "").equals("1")) {
             //服务工程师订单
             AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_fllocation), "image_my_approved.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_progress), "image_clz.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_progress), "image_clz_s.png");
             AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_feedback), "image_feedback.png");
             AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_server_finish), "image_tab_finish.png");
 
@@ -551,7 +579,6 @@ public class UserFragment extends Fragment {
         if (AppImageLoad.getPath(getActivity()).equals(AppImageLoad.defaultPath)){
             tv_quit.setBackgroundResource(R.drawable.shape_button);
         }else {
-//            tv_quit.setBackgroundColorr(Color.parseColor("#D52E2E"));
             AppImageView.onLayoutBackgroundImage(getActivity(), tv_quit, "#D52E2E");
         }
     }

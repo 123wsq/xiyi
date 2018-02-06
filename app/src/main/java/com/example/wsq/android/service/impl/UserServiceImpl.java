@@ -13,6 +13,7 @@ import com.example.wsq.android.tools.OkHttpRequest;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.SystemUtils;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateParam;
 import com.orhanobut.logger.Logger;
 
@@ -1351,6 +1352,87 @@ public class UserServiceImpl implements UserService{
 
         }
     }
+
+    /**
+     * 打开红包
+     * @param context
+     * @param param
+     * @param listener
+     */
+    @Override
+    public void onOpenRedPacket(final  Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+            //必填参数验证
+            ValidateParam.validateParam(param,ResponseKey.TOKEN);
+
+            OkHttpRequest.sendHttpGet(Urls.REWARD_POINTS, param,  new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    if (listener != null) {
+                        listener.onSuccess(result);
+                    }
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    onExitApp(context, msg);
+                    if (listener != null) {
+                        listener.onFailure();
+                    }
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+            if (listener != null) {
+                listener.onFailure();
+            }
+
+        }
+    }
+
+    /**
+     * 获取首页轮播图
+     * @param context
+     * @param param
+     * @param listener
+     */
+    @Override
+    public void onBannerImage(final Context context, Map<String, String> param, final HttpResponseListener listener) {
+
+        try {
+            //必填参数验证
+            ValidateParam.validateParam(param, ResponseKey.IMG_TYPE);
+
+            OkHttpRequest.sendDefaultHttpPost(Urls.BANNER_PLAY, param,  new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    if (listener != null) {
+                        listener.onSuccess(result);
+                    }
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    onExitApp(context, msg);
+                    if (listener != null) {
+                        listener.onFailure();
+                    }
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+            if (listener != null) {
+                listener.onFailure();
+            }
+
+        }
+    }
+
     public void onExitApp(Context context, String msg){
         if (msg.equals("2004")) {
             IntentFormat.startActivity(context, LoginActivity.class);

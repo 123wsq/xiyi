@@ -2,6 +2,8 @@ package com.example.wsq.android.utils;
 
 import android.text.TextUtils;
 
+import com.orhanobut.logger.Logger;
+
 /**
  * Created by wsq on 2018/1/10.
  */
@@ -15,15 +17,13 @@ public class DataFormat {
      */
     public static int onStringForInteger(String str){
 
-        if (TextUtils.isEmpty(str)){
-            return -1;
-        }
-
-        if (!ValidateDataFormat.isNumber(str)){
-            return -1;
-        }
-        double d = Double.parseDouble(str);
-        return (int)d;
+       try {
+           double d = Double.parseDouble(str);
+           return (int) d;
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+       return -1;
     }
 
     /**
@@ -53,14 +53,20 @@ public class DataFormat {
     public static double onStringForFloat(String str){
 
         if (TextUtils.isEmpty(str)){
+            Logger.d(str);
             return -1.0f;
         }
 
-        if (!ValidateDataFormat.isNumber(str)){
-
-            return -1.0f;
+//        if (!ValidateDataFormat.isNumber(str)){
+//            Logger.d(str);
+//            return -1.0f;
+//        }
+        try {
+            double d = Double.parseDouble(str);
+            return d;
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        double d = Double.parseDouble(str);
-        return d;
+        return 1.0f;
     }
 }

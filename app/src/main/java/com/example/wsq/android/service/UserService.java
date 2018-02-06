@@ -340,4 +340,21 @@ public interface UserService {
      * @param listener
      */
     void onRemoveFile(final Context context, Map<String, String> param, final HttpResponseListener listener);
+
+    /**
+     * 打开红包
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void onOpenRedPacket(final Context context, Map<String, String> param, final HttpResponseListener listener);
+
+
+    /**
+     * 获取首页轮播图
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void onBannerImage(final Context context, Map<String, String> param, final HttpResponseListener listener);
 }

@@ -54,7 +54,7 @@ public class ValidateDataFormat {
      * @return
      */
     public static boolean isNumber(String str){
-        Pattern pattern = Pattern.compile("^[+-]?(0|([1-9]\\\\d*))(\\\\.\\\\d+)?$");
+        Pattern pattern = Pattern.compile("^[+-]?(([0-9]\\\\d*))(\\\\.\\\\d+)?$");
         Matcher isNum = pattern.matcher(str);
         if( !isNum.matches() ){
             return false;

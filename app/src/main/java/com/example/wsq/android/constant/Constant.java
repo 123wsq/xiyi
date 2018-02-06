@@ -9,6 +9,8 @@ import android.os.Environment;
 public class Constant {
 
     public static final String SECRET  = "sadofjasodfkf45sdf54";
+    public static final long startTime = 1518624000; //2018-02-15 00:00:00
+    public static final long endTime =1519401600;     //2018-02-24 00:00:00
 
     public static final String SHARED_NAME = "XIYI";
     public static final String SHARED_RECORD = "search_Record";
@@ -77,6 +79,10 @@ public class Constant {
         public static final String CUR_DAY = "cur_day";
 
         public static final String IMAGE_PATH = "IMAGE_path";
+
+        public static final String BANNER_PATH = "banner_path";
+
+        public static final String WELCOME_PATH = "WELCOME";
     }
 
 
