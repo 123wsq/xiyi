@@ -44,7 +44,7 @@ import butterknife.OnClick;
 public class ServerOrderInfoActivity extends BaseActivity {
 
     @BindView(R.id.tv_title) TextView tv_title; //标题
-    @BindView(R.id.iv_back) ImageView iv_back; //返回
+    @BindView(R.id.iv_back) LinearLayout iv_back; //返回
     @BindView(R.id.tv_companyName) TextView tv_companyName; //公司名称
     @BindView(R.id.tv_companyAddress) TextView tv_companyAddress;
     @BindView(R.id.tv_ordernum) TextView tv_ordernum;  //订单编号
@@ -75,6 +75,7 @@ public class ServerOrderInfoActivity extends BaseActivity {
     private UploadAdapter mAdapter1, mAdapter2;
     private List<CameraBean> mData1, mData2;
     private Map<String, Object> mResultInfo;
+    private double dState;
 
 
 
@@ -100,8 +101,8 @@ public class ServerOrderInfoActivity extends BaseActivity {
         tv_ordernum.setText(intent.getStringExtra(ResponseKey.ORDER_NO));
         tv_order_start.setText(intent.getStringExtra(ResponseKey.BEGIN_TIME));
 
-        double d = Double.parseDouble(intent.getStringExtra(ResponseKey.STATUS));
-        if (d >= 8){
+        dState = Double.parseDouble(intent.getStringExtra(ResponseKey.STATUS));
+        if (dState >= 8){
             tv_order_end.setText(intent.getStringExtra(ResponseKey.ETIME));
         }else{
             tv_order_end.setText(intent.getStringExtra(ResponseKey.OVER_TIME));
@@ -157,12 +158,19 @@ public class ServerOrderInfoActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_transfer:
-//                Map<String, Object> map = new HashMap<>();
-//                map.put(ResponseKey.ID, id);
+
 
                 IntentFormat.startActivity(this, FeedbackActivity.class, mResultInfo);
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mData1.clear();
+        mData2.clear();
+        getServerOrderInfo();
     }
 
     public void getServerOrderInfo(){
@@ -215,12 +223,12 @@ public class ServerOrderInfoActivity extends BaseActivity {
                 showImags(mData2, list2, 2);
                 //根据状态设置时间
                 String status = result.get(ResponseKey.STATUS)+"";
-                if (status.equals("4")){
-                    ll_end_time.setVisibility(View.GONE);
-                    tv_finish_time.setText("完成时间");
-                    tv_order_start.setText(result.get(ResponseKey.OVER_TIME)+"");
+                tv_order_start.setText(result.get(ResponseKey.BEGIN_TIME)+"");
+                if (dState >= 8){
+                    tv_order_end.setText(result.get(ResponseKey.ETIME) + "");
+                }else {
+                    tv_order_end.setText(result.get(ResponseKey.OVER_TIME) + "");
                 }
-
                 //其他信息
                 tv_scene_contact.setText(result.get(ResponseKey.LXR)+"");
                 tv_scene_tel.setText(result.get(ResponseKey.TEL)+"");

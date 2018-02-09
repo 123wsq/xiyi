@@ -43,6 +43,7 @@ import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.AppImageLoad;
 import com.example.wsq.android.tools.AppImageView;
 import com.example.wsq.android.tools.AppStatus;
 import com.example.wsq.android.tools.JGIM;
@@ -67,6 +68,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @BindView(R.id.ll_title_search) LinearLayout ll_title_search;
     @BindView(R.id.ll_setting) LinearLayout ll_setting;
     @BindView(R.id.rl_title_back) RelativeLayout rl_title_back;
+    @BindView(R.id.ll_location) LinearLayout ll_location;
+    @BindView(R.id.tv_location) TextView tv_location;
     @BindView(R.id.iv_setting) ImageView iv_setting;
     @BindView(R.id.rg_menu) RadioGroup rg_menu;
     @BindView(R.id.rb_main) RadioButton rb_main;
@@ -103,7 +106,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppStatus.onSetStates(this);
+        AppStatus.onSetStates(this, 1);
         ButterKnife.bind(this);
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         init();
@@ -115,6 +118,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         AppImageView.onRadioButtonSelect(this, rb_fault, "image_gz_default.png","image_gz_press.png");
         AppImageView.onRadioButtonSelect(this, rb_user, "image_user_default.png","image_user_press.png");
         AppImageView.onLayoutBackgroundImage(this, rl_layout, "image_title_background.png");
+
     }
 
     public void init(){
@@ -155,6 +159,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment).commit();
 
         rl_layout.setVisibility(curShowPage == 4? View.GONE : View.VISIBLE);
+
+        ll_location.setVisibility(curShowPage ==1 ? View.VISIBLE: View.GONE);
+
         switch (curShowPage){
             case 1:
                 et_search.setHint("变频器");
@@ -234,7 +241,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                     +location.getStreet()+location.getStreetNum();
             shared.edit().putString(Constant.SHARED.LOCATION, address).commit();
 
-
+            tv_location.setText(location.getCity());
             locationClient.onDestroy();
         }
     }

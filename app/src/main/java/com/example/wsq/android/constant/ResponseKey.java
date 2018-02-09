@@ -168,6 +168,8 @@ public class ResponseKey {
 
     public static final String  FEEDBACK = "feedback";
 
+    public static final String FENPEI_TIME = "fenpeitime";
+
     public static final String DONE  = "done";
 
     public static final String PAY_PASSWORD = "paypasswd";

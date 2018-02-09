@@ -73,7 +73,7 @@ public class MessageActivity extends BaseActivity {
 
         userService = new UserServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-        shared.edit().putBoolean(Constant.SHARED.MESSAGE, true).commit();
+        shared.edit().putBoolean(Constant.SHARED.MESSAGE, false).commit();
 
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 2,
@@ -127,7 +127,6 @@ public class MessageActivity extends BaseActivity {
                     curPage++;
                     getMessageList(refreshlayout, 2);
                 }
-
             }
         });
     }

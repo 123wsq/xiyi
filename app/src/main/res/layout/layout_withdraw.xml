@@ -98,7 +98,7 @@
                 android:id="@+id/et_money"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="011111111"
+                android:text="0"
                 android:textSize="30sp"
                 android:inputType="number"
                 android:gravity="center_vertical|left"

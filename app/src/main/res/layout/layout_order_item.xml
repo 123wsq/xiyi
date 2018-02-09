@@ -57,7 +57,7 @@
             android:id="@+id/tv_ordernum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="201712141450"
+            android:text=""
             android:textSize="@dimen/default_text_size"
             android:gravity="right"
             />
@@ -82,7 +82,7 @@
             android:id="@+id/tv_model"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="集成"
+            android:text=""
             android:textSize="@dimen/default_text_size"
             android:gravity="right"
             />
@@ -108,7 +108,7 @@
             android:id="@+id/tv_outnum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="m5688"
+            android:text=""
             android:textSize="@dimen/default_text_size"
             android:gravity="right"
             />
@@ -136,7 +136,7 @@
             android:id="@+id/tv_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2017-12-14 12:09:46"
+            android:text=""
             android:textSize="@dimen/default_text_size"
             android:gravity="right"
             />

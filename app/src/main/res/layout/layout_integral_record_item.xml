@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="签到 +1"
-            android:textSize="@dimen/default_text_size"
-
+            android:textSize="14sp"
+            android:textColor="#3E3E3E"
             />
         <TextView
             android:id="@+id/tv_integral_time"
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:text="2018-01-05"
             android:textSize="@dimen/default_text_size"
+            android:textColor="#727272"
             android:layout_marginTop="@dimen/default_radius"
         />
     </LinearLayout>
@@ -36,6 +37,8 @@
         android:text="200分"
         android:gravity="center"
         android:layout_marginRight="@dimen/radius_popup"
+        android:textSize="14sp"
+        android:textColor="#3E3E3E"
         />
 
 </LinearLayout>

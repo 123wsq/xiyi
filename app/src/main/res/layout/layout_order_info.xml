@@ -171,6 +171,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/tv_time_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -193,7 +194,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     >
 
                     <TextView
@@ -406,22 +407,24 @@
                     <TextView
                         android:id="@+id/tv_server_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
                         android:paddingTop="@dimen/radius_popup"
-                        android:text="服务人员:" />
+                        android:text="服务人员:"
+
+                        />
 
                     <TextView
                         android:id="@+id/tv_serverName"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:minHeight="@dimen/default_height_min"
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
                         android:autoLink="phone"
-                        android:text="" />
+                        android:text="ww" />
                 </LinearLayout>
             </LinearLayout>
 

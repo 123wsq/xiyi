@@ -2,11 +2,15 @@ package com.example.wsq.android.tools;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.utils.BitmapUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -18,13 +22,45 @@ import java.lang.reflect.Method;
 public class AppStatus {
 
 
+    /**
+     * 0 正常
+     * @param context
+     * @param num
+     */
     public static void onSetStates(Activity context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {            //系统版本大于19
             setTranslucentStatus(context, true);
         }
         SystemBarTintManager tintManager = new SystemBarTintManager(context);
         tintManager.setStatusBarTintEnabled(true);
+
         tintManager.setStatusBarTintResource(R.drawable.image_title_background);
+//        tintManager.setStatusBarTintResource(R.drawable.shape_color_status);
+        Class clazz = context.getWindow().getClass();
+        try {
+            int darkModeFlag = 0;
+            Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+            Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+            darkModeFlag = field.getInt(layoutParams);
+            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+            if (true) {
+                extraFlagField.invoke(context.getWindow(), darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
+            } else {
+                extraFlagField.invoke(context.getWindow(), 0, darkModeFlag);//清除黑色字体
+            }
+        } catch (Exception e) {
+
+        }
+    }
+    public static void onSetStates(Activity context, int num) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {            //系统版本大于19
+            setTranslucentStatus(context, true);
+        }
+        SystemBarTintManager tintManager = new SystemBarTintManager(context);
+        tintManager.setStatusBarTintEnabled(true);
+        Drawable drawable = new BitmapDrawable(BitmapUtils.onAssetsImages(context, "image_title_background.png"));
+        tintManager.setStatusBarTintDrawable(drawable);
+//        tintManager.setStatusBarTintResource(R.drawable.image_title_background);
 //        tintManager.setStatusBarTintResource(R.drawable.shape_color_status);
         Class clazz = context.getWindow().getClass();
         try {

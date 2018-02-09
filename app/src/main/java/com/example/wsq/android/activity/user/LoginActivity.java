@@ -257,7 +257,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             @Override
             public void onClickItemListener(int position, String result) {
 
-                MApplication.DEBUG = position ==0 ? false : true;
+                MApplication.DEBUG = position == 0 ? false : true;
 
                 Logger.d(MApplication.DEBUG);
                 popup.dismiss();

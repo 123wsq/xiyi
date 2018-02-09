@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.user.LoginActivity;
 import com.example.wsq.android.adapter.WellcomeAdapter;
@@ -67,7 +68,7 @@ public class WellcomeActivity  extends Activity {
     private SharedPreferences shared;
     private int curLen = 5;
     private UserService userService;
-
+    private RequestOptions options;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,13 +83,19 @@ public class WellcomeActivity  extends Activity {
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         userService = new UserServiceImpl();
 
+        options = new RequestOptions();
+        options.error(R.drawable.image_new_year);
+        options.fallback(R.drawable.image_new_year);
+        options.placeholder(R.drawable.image_new_year);
         if (shared.getBoolean(Constant.SHARED.ISLOGIN, false)){
 
             rl_layout_new_year.setVisibility(View.VISIBLE);
             handler.postDelayed(runnable, 1000);
             String path = shared.getString(Constant.SHARED.WELCOME_PATH, "");
             if (!TextUtils.isEmpty(path)){
-                Glide.with(WellcomeActivity.this).load(Urls.HOST+Urls.GET_IMAGES+path).into(im_new_year);
+                Glide.with(WellcomeActivity.this).load(Urls.HOST+Urls.GET_IMAGES+path).apply(options).into(im_new_year);
+            }else{
+                im_new_year.setBackgroundResource(R.drawable.image_new_year);
             }
 
             getImage();
@@ -174,8 +181,9 @@ public class WellcomeActivity  extends Activity {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.tv_break:
-//                startActivity(new Intent(WellcomeActivity.this, LoginActivity.class));
-//                finish();
+                handler.removeCallbacks(runnable);
+                startActivity(new Intent(WellcomeActivity.this, LoginActivity.class));
+                finish();
                 break;
         }
     }
@@ -215,7 +223,9 @@ public class WellcomeActivity  extends Activity {
                     JSONObject json = new JSONObject(result.get("data")+"");
                     JSONObject jsona =json.optJSONObject(ResponseKey.LIST);
                     shared.edit().putString(Constant.SHARED.WELCOME_PATH, jsona.optString(ResponseKey.IMG_PATH)).commit();
-                    Glide.with(WellcomeActivity.this).load(Urls.HOST+Urls.GET_IMAGES+jsona.optString(ResponseKey.IMG_PATH)).into(im_new_year);
+                    Glide.with(WellcomeActivity.this)
+                            .load(Urls.HOST+Urls.GET_IMAGES+jsona.optString(ResponseKey.IMG_PATH))
+                            .apply(options).into(im_new_year);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

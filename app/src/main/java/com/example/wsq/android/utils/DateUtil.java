@@ -22,6 +22,7 @@ public final class DateUtil {
     public static final String DATA_FORMAT_4 = "dd";
 
     public static final String DATA_FORMAT_5 = "yyyy-MM-dd";
+    public static final String DATA_FORMAT_6 = "yyyy.MM.dd";
 
 
 

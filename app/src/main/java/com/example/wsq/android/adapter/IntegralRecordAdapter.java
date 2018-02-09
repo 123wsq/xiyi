@@ -56,10 +56,10 @@ public class IntegralRecordAdapter  extends RecyclerView.Adapter<IntegralRecordA
 
 
         holder.tv_integral_time.setText(
-                DateUtil.onMillisForDate(mData.get(position).get(ResponseKey.CREAT_AT)+"000", DateUtil.DATA_FORMAT_5));
+                DateUtil.onMillisForDate(mData.get(position).get(ResponseKey.CREAT_AT)+"000", DateUtil.DATA_FORMAT_6));
 
 
-        int integral = DataFormat.onStringForInteger(mData.get(position).get(ResponseKey.SUM_POINTS)+"");
+        double integral = DataFormat.onStringForFloat(mData.get(position).get(ResponseKey.SUM_POINTS)+"");
         holder.tv_integral_num.setText(integral+" 分");
 
     }

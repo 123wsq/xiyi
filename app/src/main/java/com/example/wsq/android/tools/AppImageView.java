@@ -1,6 +1,7 @@
 package com.example.wsq.android.tools;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -138,7 +139,22 @@ public class AppImageView {
                 BitmapUtils.onAssetsImages(context, checkedImage));
         drawable.setBounds(0, 0, DensityUtil.dp2px(context, 30), DensityUtil.dp2px(context, 30));
 
+        int[][] states =new int[3][];
+        states[0] =new int[] { -android.R.attr.state_checked};
+        states[1] =new int[] { android.R.attr.state_checked};
+        states[2] =new int[] {};
+
+        int colorId = R.color.color_gray;
+        if (AppImageLoad.getPath(context).equals(AppImageLoad.defaultPath)){
+            colorId = R.color.defalut_title_color;
+        }else{
+            colorId = Color.parseColor("#D52E2E");
+        }
+        int[] colors =new int[] { R.color.bar_grey, colorId,R.color.bar_grey};
+        ColorStateList colorStateList = new ColorStateList(states, colors);
+
         if (drawable != null){
+            radioButton.setTextColor(colorStateList);
             radioButton.setCompoundDrawables(null, drawable, null, null);
         }
     }

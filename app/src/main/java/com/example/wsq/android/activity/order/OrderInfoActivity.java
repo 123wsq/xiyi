@@ -28,6 +28,7 @@ import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.CustomStartOrderDialog;
+import com.example.wsq.android.view.LoddingDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -53,6 +54,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
     @BindView(R.id.tv_ordernum) TextView tv_ordernum;
     @BindView(R.id.tv_companyName) TextView tv_companyName;
     @BindView(R.id.tv_companyAddress) TextView tv_companyAddress;
+    @BindView(R.id.tv_time_name) TextView tv_time_name;
     @BindView(R.id.tv_repairs_time)TextView tv_repairs_time;
     @BindView(R.id.tv_device) TextView tv_device;
     @BindView(R.id.tv_outnum) TextView tv_outnum;
@@ -85,6 +87,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
     private String token = "";
     private String role = "";//角色
     private String status = "";
+    private LoddingDialog dialog;
     private SharedPreferences shared;
     private CustomDefaultDialog defaultDialog;
     private CustomStartOrderDialog startOrderDialog;
@@ -102,6 +105,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
         mData = new ArrayList<>();
         mResultInfo = new HashMap<>();
 
+        dialog= new LoddingDialog(this);
         orderTaskService = new OrderTaskServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         id = getIntent().getIntExtra(ResponseKey.ID,0 )+"";
@@ -207,36 +211,41 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mData.clear();
+        getOrderInfo();
+    }
 
     public void onInitState(){
 
         //当角色是2，3的时候显示
         if (!role.equals("1")){
             ll_order.setVisibility(View.VISIBLE);
-
+        }else{
+            ll_order.setVisibility(View.GONE);
         }
+
         if (status.equals("-1") || status.equals("0")){
             tv_server_name.setText("当前状态");
-            tv_serverName.setText(status.equals("0") ?"未审核":"待评估" );
-            ll_audit_time.setVisibility(View.GONE);
-        }
+            tv_serverName.setText(status.equals("-1") ? "待评估": "未审核");
+            tv_time_name.setText( "报修时间");
+        }else if(status.equals("1") || status.equals("1.1")){
+            tv_time_name.setText("审核时间");
+        }else if(status.equals("2")){
 
-        if (status.equals("1") || status.equals("1.1")){
-            tv_server_name.setText("服务人员");
-            tv_serverName.setText(status.equals("1") ?"待分配":"不通过" );
-            ll_audit_time.setVisibility(View.VISIBLE);
-            tv_audit_name.setText("审核时间");
-        }
-        if (status.equals("2")){
-            tv_server_name.setText("服务人员");
-            ll_audit_time.setVisibility(View.VISIBLE);
-            tv_audit_name.setText("审核时间");
-        }
-
-        if (status.equals("8")){
-            tv_server_name.setText("服务人员");
-            ll_audit_time.setVisibility(View.VISIBLE);
-            tv_audit_name.setText("结束时间");
+            if (!role.equals("1")) {
+                ll_audit_time.setVisibility(View.VISIBLE);
+                tv_audit_name.setText("报修时间");
+                tv_time_name.setText("审核时间");
+            }else {
+                tv_time_name.setText("分配时间");
+            }
+        }else if(status.equals("3")){
+            tv_time_name.setText("开始时间");
+        }else if(status.equals("4") || status.equals("5")){
+            tv_time_name.setText("完成时间");
         }
     }
 
@@ -296,6 +305,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
      * @param type  1 表示通过   2表示不通过
      */
     public void onAudit(String result, int type){
+        dialog.show();
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN,""));
         param.put(ResponseKey.ID, id);
@@ -308,12 +318,13 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
             public void onSuccess(Map<String, Object> result) {
                 Toast.makeText(OrderInfoActivity.this, result.get(ResponseKey.MESSAGE).toString(), Toast.LENGTH_SHORT).show();
 
+                if (dialog.isShowing())dialog.dismiss();
                 finish();
             }
 
             @Override
             public void onFailure() {
-
+                if (dialog.isShowing())dialog.dismiss();
             }
         });
 
@@ -335,14 +346,12 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
                 tv_ordernum.setText(result.get(ResponseKey.ORDER_NO)+"");
                 tv_companyName.setText(result.get(ResponseKey.COMPANY)+"");
                 tv_companyAddress.setText(result.get(ResponseKey.COMPANY_ADDRESS)+"");
-                tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
 
                 tv_device.setText(result.get(ResponseKey.XINGHAO)+"");
                 tv_outnum.setText(result.get(ResponseKey.BIANHAO)+"");
                 tv_fault_desc.setText(result.get(ResponseKey.DES)+"");
 
                 if (role.equals("1")){
-
                     tv_upName.setText(result.get(ResponseKey.S_NAME) + "");
                     tv_upTel.setText(result.get(ResponseKey.S_TEL) + "");
                 }else {
@@ -350,19 +359,25 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
                     tv_upTel.setText(result.get(ResponseKey.TEL) + "");
                 }
 
-                //设置结束、审核时间
-                if (!role.equals("1") && !status.equals("8")){
-                    tv_audit_time.setText(result.get(ResponseKey.CHECK_TIME)+"");
+                if (status.equals("-1")){
+                    tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
+                }else if(status.equals("0")){
+                    tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
+                }else if(status.equals("1") || status.equals("1.1")){
+                    tv_repairs_time.setText(result.get(ResponseKey.CHECK_TIME)+"");
+                }else if(status.equals("2")){
+                    tv_audit_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
+                    tv_repairs_time.setText(result.get(ResponseKey.FENPEI_TIME)+"");
+                    tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
+                }else if(status.equals("3")){
+                    tv_repairs_time.setText(result.get(ResponseKey.BEGIN_TIME)+"");
+                }else if(status.equals("4") || status.equals("5")){
+                    tv_repairs_time.setText(result.get(ResponseKey.OVER_TIME)+"");
+                }else if(status.equals("8")){
+                    tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
+                    tv_repairs_time.setText(result.get(ResponseKey.DONE_TIME)+"");
                 }
 
-                if (!role.equals("1")){
-                    if (status.equals("2")){
-                        tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
-                    }else if(status.equals("8")){
-                        tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
-                        tv_audit_time.setText(result.get(ResponseKey.DONE_TIME)+"");
-                    }
-                }
 
 
 
@@ -414,7 +429,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
                 }else if(role.equals("1")
                         && result.get(ResponseKey.STATUS).toString().equals("3")){
                     ll_submit.setVisibility(View.VISIBLE);
-                    tv_affirm.setText("完成任务");
+                    tv_affirm.setText("完成订单");
                     tv_negation.setText("移交订单");
                 }else {
                     ll_submit.setVisibility(View.INVISIBLE);

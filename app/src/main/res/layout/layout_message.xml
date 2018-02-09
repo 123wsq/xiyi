@@ -40,12 +40,12 @@
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/image_gz_press"
+                    android:src="@drawable/image_main_massage"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="您还没有订单~"
+                    android:text="您还没有消息~"
                     android:textSize="@dimen/default_text_title_size"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/defalut_layout_height"

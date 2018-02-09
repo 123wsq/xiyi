@@ -146,6 +146,7 @@ public class MainFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         //设置图片集合
         banner.setImages(mImages);
         //设置标题集合（当banner样式有显示title时）
@@ -154,10 +155,13 @@ public class MainFragment extends Fragment {
         banner.start();
 
         getBannerImages();
-        Message msg = new Message();
-        msg.arg1 =0;
-        handler.sendMessageDelayed(msg, 1000);
 
+        //显示红包
+        if(shared.getString(Constant.SHARED.JUESE, "0").equals("1")) {
+            Message msg = new Message();
+            msg.arg1 = 0;
+            handler.sendMessageDelayed(msg, 1000);
+        }
     }
 
     @OnClick({R.id.ll_device, R.id.ll_engineer, R.id.ll_news, R.id.ll_server, R.id.ll_knowledge})
@@ -342,6 +346,8 @@ public class MainFragment extends Fragment {
                             mImages.add(Urls.HOST+Urls.GET_IMAGES+ jsona.get(i));
                         }
 
+//                        Logger.d("获取到的图片  "+mImages);
+//                        banner.update(mImages, mTitles);
                         banner.setImages(mImages);
                         banner.setBannerTitles(mTitles);
                         banner.releaseBanner();

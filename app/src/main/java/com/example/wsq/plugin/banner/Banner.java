@@ -359,6 +359,7 @@ public class Banner extends FrameLayout implements OnPageChangeListener {
             }
             imageViews.add(imageView);
             if (imageLoader != null)
+
                 imageLoader.displayImage(context, url, imageView);
             else
                 Log.e(tag, "Please set images loader.");
