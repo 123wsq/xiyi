@@ -84,7 +84,6 @@ public class UserInfoActivity extends BaseActivity {
     @BindView(R.id.ll_skill) LinearLayout ll_skill;
     @BindView(R.id.ll_jieshao ) LinearLayout ll_jieshao;
     @BindView(R.id.ll_bumen ) LinearLayout ll_bumen;
-    @BindView(R.id.btn_save) Button btn_save;
     @BindView(R.id.tv_ratio) TextView tv_ratio;
     @BindView(R.id.rv_RecyclerView)
     RecyclerView rv_RecyclerView;
@@ -116,7 +115,6 @@ public class UserInfoActivity extends BaseActivity {
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
         tv_title.setText("个人资料");
-
         dialog = new LoddingDialog(this);
 
         tv_username.setText(UserFragment.mUserData.get(ResponseKey.USERNAME)+"");

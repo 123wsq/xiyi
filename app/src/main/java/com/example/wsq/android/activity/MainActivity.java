@@ -169,11 +169,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                 onSettingTitle(false, true, true, true, false, false);
                 break;
             case 2:
-                et_search.setHint("想找自己和胃口的，来搜下吧~");
+                et_search.setHint("想找自己合胃口的，来搜下吧~");
                 onSettingTitle(false, true, false, false, false, false);
                 break;
             case 3:
-                et_search.setHint("想找自己和胃口的，来搜下吧~");
+                et_search.setHint("想找自己合胃口的，来搜下吧~");
                 onSettingTitle(false, true, false, false, false, false);
                 break;
             case 4:

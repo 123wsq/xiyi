@@ -437,6 +437,7 @@
     <Button
         android:id="@+id/btn_save"
         style="@style/default_button"
+        android:background="@drawable/shape_userinfo_button"
         android:text="保存资料"
 
         />

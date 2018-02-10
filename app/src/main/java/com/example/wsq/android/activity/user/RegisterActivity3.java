@@ -1,7 +1,13 @@
 package com.example.wsq.android.activity.user;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -29,13 +35,19 @@ import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateDataFormat;
 import com.example.wsq.android.utils.ValidateParam;
 import com.example.wsq.android.view.LoddingDialog;
+import com.orhanobut.logger.Logger;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
+import me.weyye.hipermission.PermissionItem;
 
 /**
  * Created by wsq on 2017/12/11.
@@ -58,10 +70,48 @@ public class RegisterActivity3 extends BaseActivity {
     private int curLen = 60;
     private LoddingDialog dialog;
 
+    private int READ_PHONE_STATE = 1;
 
     @Override
     public int getByLayoutId() {
         return R.layout.layout_register3;
+    }
+
+
+    public void onRequestPermission(){//READ_PHONE_STATE
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, READ_PHONE_STATE);
+//            } else {
+//                onValidatePhone();
+//            }
+//        }
+        List<PermissionItem> permissions = new ArrayList<PermissionItem>();
+        permissions.add(new PermissionItem(Manifest.permission.READ_PHONE_STATE, "手机权限", R.drawable.permission_ic_phone));
+        HiPermission.create(this).permissions(permissions).checkMutiPermission(new PermissionCallback() {
+            @Override
+            public void onClose() {
+                Logger.d("用户关闭权限申请");
+                finish();
+            }
+
+            @Override
+            public void onFinish() {
+                Logger.d("所有权限申请完成");
+                onValidatePhone();
+
+            }
+
+            @Override
+            public void onDeny(String permission, int position) {
+
+            }
+
+            @Override
+            public void onGuarantee(String permission, int position) {
+
+            }
+        });
     }
 
     public void init() {
@@ -70,7 +120,7 @@ public class RegisterActivity3 extends BaseActivity {
         tv_title.setText("会员注册");
         dialog = new LoddingDialog(this);
         onTextChange();
-        onValidatePhone();
+        onRequestPermission();
     }
 
     Handler handler = new Handler(){};
@@ -326,4 +376,22 @@ public class RegisterActivity3 extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//
+//
+//        if (requestCode == READ_PHONE_STATE) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                onValidatePhone();
+//            } else {
+//                // Permission Denied
+//                ToastUtis.onToast("请在设置中打开权限");
+//                finish();
+//            }
+//            return;
+//        }
+//
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//    }
 }

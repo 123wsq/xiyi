@@ -9,7 +9,7 @@
     <RadioGroup
         android:id="@+id/rg_type_group"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/defalut_layout_height"
+        android:layout_height="@dimen/default_height_3"
         android:orientation="horizontal">
 
         <RadioButton

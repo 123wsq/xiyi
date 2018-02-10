@@ -243,8 +243,10 @@ public class WebEditActivity extends BaseActivity {
                 onUpLoadFile(getFileList(list), ContentType.CONTENT_IMG);
                 break;
             case RESULT_ATTACHMENT:
-                List<String> list2 = data.getStringArrayListExtra(com.leon.lfilepickerlibrary.utils.Constant.RESULT_INFO);
-                onUpLoadFile(getFileList(list2), ContentType.ADDACHMENT);
+                if (data.getStringArrayListExtra(com.leon.lfilepickerlibrary.utils.Constant.RESULT_INFO)!=null) {
+                    List<String> list2 = data.getStringArrayListExtra(com.leon.lfilepickerlibrary.utils.Constant.RESULT_INFO);
+                    onUpLoadFile(getFileList(list2), ContentType.ADDACHMENT);
+                }
                 break;
         }
     }

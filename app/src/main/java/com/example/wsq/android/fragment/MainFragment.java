@@ -1,5 +1,6 @@
 package com.example.wsq.android.fragment;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -57,6 +58,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
+import me.weyye.hipermission.PermissionItem;
 
 /**
  * Created by wsq on 2017/12/7.
@@ -205,9 +209,7 @@ public class MainFragment extends Fragment {
                     @Override
                     public void onClickItemListener(int position, String result) {
 
-                        Intent intent=new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+result));
-                        startActivity(intent);
-                        popup.dismiss();
+                        onRequestPermission(result);
                     }
                 });
                 popup.setTextColor("#3F51B5");
@@ -365,4 +367,35 @@ public class MainFragment extends Fragment {
         });
     }
 
+    public void onRequestPermission(final String result){//READ_PHONE_STATE
+
+        List<PermissionItem> permissions = new ArrayList<PermissionItem>();
+        permissions.add(new PermissionItem(Manifest.permission.CALL_PHONE, "手机权限", R.drawable.permission_ic_phone));
+        HiPermission.create(getActivity()).permissions(permissions).checkMutiPermission(new PermissionCallback() {
+            @Override
+            public void onClose() {
+                Logger.d("用户关闭权限申请");
+               ToastUtis.onToast("请在设置中打开通话权限");
+            }
+
+            @Override
+            public void onFinish() {
+                Logger.d("所有权限申请完成");
+                Intent intent=new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+result));
+                startActivity(intent);
+                popup.dismiss();
+
+            }
+
+            @Override
+            public void onDeny(String permission, int position) {
+
+            }
+
+            @Override
+            public void onGuarantee(String permission, int position) {
+
+            }
+        });
+    }
 }

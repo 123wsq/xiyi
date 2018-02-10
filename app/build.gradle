@@ -98,6 +98,8 @@ dependencies {
     //文件选择器
     implementation project(':lfilepickerlibrary')
     implementation project(':medialib')
+    //权限动态申请
+    compile 'me.weyye.hipermission:library:1.0.7'
 }
 //
 configurations.all {
