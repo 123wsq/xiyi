@@ -69,9 +69,9 @@ public class DeviceFragment extends Fragment{
         rightData = new ArrayList<>();
         orderTaskService = new OrderTaskServiceImpl();
 
-        rv_deviceList.addItemDecoration(new RecyclerViewDivider(
-                getActivity(), LinearLayoutManager.HORIZONTAL, 2,
-                ContextCompat.getColor(getActivity(), R.color.color_line)));
+//        rv_deviceList.addItemDecoration(new RecyclerViewDivider(
+//                getActivity(), LinearLayoutManager.HORIZONTAL, 2,
+//                ContextCompat.getColor(getActivity(), R.color.color_line)));
         rv_deviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_deviceList.setHasFixedSize(true);
 

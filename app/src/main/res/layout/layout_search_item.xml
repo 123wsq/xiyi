@@ -3,7 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/defalut_layout_height"
     android:orientation="horizontal"
+    android:gravity="center_vertical"
     >
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/image_search_time"
+        android:layout_marginLeft="@dimen/default_margin"
+        />
     <TextView
         android:id="@+id/tv_search_name"
         android:layout_width="0dp"
@@ -12,7 +20,8 @@
         android:text="搜索记录"
         android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/default_margin"
-        android:textSize="@dimen/default_text_min_size"
+        android:textSize="@dimen/default_content_size"
+        android:textColor="#565656"
         />
     <LinearLayout
         android:id="@+id/ll_search_delete"

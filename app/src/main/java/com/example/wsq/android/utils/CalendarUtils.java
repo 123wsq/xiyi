@@ -124,24 +124,24 @@ public class CalendarUtils {
         calendar.set(Calendar.DAY_OF_MONTH, day);  //指定日
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);  //在日期中 每周日是这周的第一天
 
-        switch (dayOfWeek) {
-            case 1:
-//                weekTextView.setText("星期日");
-                return 7;
-            case 2:
-                return 1;
-            case 3:
-                return 2;
-            case 4:
-                return 3;
-            case 5:
-                return 4;
-            case 6:
-                return 5;
-            case 7:
-                return 6;
-        }
-        return 0;
+//        switch (dayOfWeek) {
+//            case 1:
+////                weekTextView.setText("星期日");
+//                return 2;
+//            case 2:
+//                return 3;
+//            case 3:
+//                return 4;
+//            case 4:
+//                return 5;
+//            case 5:
+//                return 6;
+//            case 6:
+//                return 7;
+//            case 7:
+//                return 1;
+//        }
+        return dayOfWeek;
 
     }
 }

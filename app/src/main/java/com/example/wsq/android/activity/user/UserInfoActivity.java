@@ -3,7 +3,10 @@ package com.example.wsq.android.activity.user;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,9 +39,13 @@ import com.example.wsq.android.inter.PopupItemListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.BitmapUtils;
+import com.example.wsq.android.utils.DateUtil;
 import com.example.wsq.android.utils.DensityUtil;
+import com.example.wsq.android.utils.ImageUtil;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtils;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.android.view.RoundImageView;
@@ -136,7 +143,7 @@ public class UserInfoActivity extends BaseActivity {
 
         String tel = UserFragment.mUserData.get(ResponseKey.TEL)+"";
         if (!TextUtils.isEmpty(tel)){
-            tv_tel.setText(tel.substring(0, 3)+"********"+tel.substring(9)+" 已验证");
+            tv_tel.setText(tel.substring(0, 3)+"****"+tel.substring(7)+" 已验证");
         }
 
 
@@ -262,6 +269,7 @@ public class UserInfoActivity extends BaseActivity {
                         popup.dismiss();
                     }
                 });
+                popup.setTitle("上传头像");
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 
                 break;
@@ -287,6 +295,7 @@ public class UserInfoActivity extends BaseActivity {
                         popup.dismiss();
                     }
                 });
+                popup.setTitle("性别");
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 
                 break;
@@ -294,7 +303,6 @@ public class UserInfoActivity extends BaseActivity {
 
                 View view2 = LayoutInflater.from(UserInfoActivity.this).inflate(R.layout.layout_default_popup,null);
                 List<String> list2 = new ArrayList<>();
-
                 list2.add("高中及以下");
                 list2.add("专科");
                 list2.add("本科");
@@ -313,6 +321,7 @@ public class UserInfoActivity extends BaseActivity {
                         popup.dismiss();
                     }
                 });
+                popup.setTitle("学历");
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.btn_save:
@@ -358,17 +367,21 @@ public class UserInfoActivity extends BaseActivity {
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
         param.put(ResponseKey.SEX, sex+"");
-        param.put(ResponseKey.NAME, UserFragment.mUserData.get(ResponseKey.NAME).toString());
-        param.put(ResponseKey.TEL, UserFragment.mUserData.get(ResponseKey.TEL).toString());
+        param.put(ResponseKey.NAME, UserFragment.mUserData.get(ResponseKey.NAME)+"");
+        param.put(ResponseKey.TEL, UserFragment.mUserData.get(ResponseKey.TEL)+"");
         param.put(ResponseKey.XUELI, xueli+"");
         param.put(ResponseKey.EMAIL, et_email.getText().toString());
-
+        param.put(ResponseKey.SFZ, UserFragment.mUserData.get(ResponseKey.SFZ)+"");
         param.put(ResponseKey.COMPANY, et_company.getText().toString());
         JSONArray jsona = new JSONArray();
         for (int i = 0; i < mData.size(); i++) {
             jsona.put(mData.get(i).getSkillName());
         }
-        param.put(ResponseKey.JINENG, jsona.toString());
+        String jn ="";
+        if (jsona.length() > 0){
+            jn =jsona.toString();
+        }
+        param.put(ResponseKey.JINENG, jn);
         param.put(ResponseKey.DIQU, et_hope.getText().toString());
         param.put(ResponseKey.BUMEN, et_bumen.getText().toString());
         param.put(ResponseKey.JIESHAO, et_jieshao.getText().toString());
@@ -403,17 +416,44 @@ public class UserInfoActivity extends BaseActivity {
         List<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         map.put("fileType", OkhttpUtil.FILE_TYPE_IMAGE);
-        File f = new File(headerImage);
+//        File f = new File(headerImage);
+        File f = new File(Constant.FILE_PATH+"/123456.png");
+        onBitmapCompress(f.getAbsolutePath());
         map.put(ResponseKey.FILE, f);
         list.add(map);
-        userService.uploadHeader(this, param, list, null);
+        userService.uploadHeader(this, param, list, new HttpResponseListener() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                ToastUtis.onToast(result.get(ResponseKey.MESSAGE)+"");
+            }
 
+            @Override
+            public void onFailure() {
+
+            }
+        });
         Glide.with(this)
                 .load(headerImage)
                 .apply(options)
                 .into(image_header);
+    }
 
-
-
+    /**
+     * 图片添加水印和质量压缩
+     * @param path
+     * @return
+     */
+    public  String onBitmapCompress(final String path){
+        //得到该路径下的图片bitmap
+        Bitmap bitmap = BitmapUtils.getLocalImage(path);
+        Bitmap newBitmap = ImageUtil.drawTextToLeftBottom(UserInfoActivity.this, bitmap,
+                new String[]{ shared.getString(Constant.SHARED.LOCATION, ""), DateUtil.onDateFormat(DateUtil.DATA_FORMAT)},
+                20, Color.RED, 20, 10);
+        //只对图片进行质量压缩
+        Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 100);
+        //对图片进行大小 质量压缩
+//        Bitmap commBitmap = ImageUtil.zoomImage(newBitmap, ScreenUtils.getScreenWidth(this),ScreenUtils.getScreenHeight(this), 100);
+        File file = BitmapUtils.saveImage(commBitmap);
+        return file.getAbsolutePath();
     }
 }

@@ -44,6 +44,7 @@ public class StartActivity extends Activity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
                 IntentFormat.startActivity(StartActivity.this, WellcomeActivity.class);
+                overridePendingTransition(R.anim.anim_activity_default_in, R.anim.anim_activity_default_out);
             finish();
         }
     };

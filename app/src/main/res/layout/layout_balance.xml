@@ -43,6 +43,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/default_margin"
             android:textColor="@color/color_white"
+            android:visibility="gone"
             />
     </RelativeLayout>
 
@@ -65,8 +66,8 @@
                 android:layout_marginTop="@dimen/default_height_min"
                 >
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/image_manony"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="@dimen/radius_popup"
@@ -88,7 +89,7 @@
                 android:layout_marginTop="@dimen/default_radius"
                 android:text="(可提现金额0.00元，保证金金额0.00元整)"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/default_text_min_size"
+                android:textSize="@dimen/default_list_item_content_size"
                 android:gravity="center"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginRight="@dimen/default_margin"
@@ -112,10 +113,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:text="暂无交易记录"
+                android:text="暂无最近一笔交易记录"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/radius_popup"
-                android:textSize="@dimen/default_text_min_size"
+                android:textSize="@dimen/default_list_item_content_size"
                 android:textColor="@color/color_white"
                 />
         </LinearLayout>
@@ -127,22 +128,31 @@
         android:layout_height="@dimen/defalut_layout_height"
         android:orientation="horizontal"
         android:background="@color/color_white"
+        android:gravity="center_vertical"
         >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/image_balance"
+            android:layout_marginLeft="@dimen/default_margin"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="提现"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_font_color"
             android:gravity="center"
-            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginLeft="10dp"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/default_margin"
-            android:gravity="right|center_vertical"
-            android:hint="(提现金额必须是100的整数)"
-            android:textColorHint="@color/color_gray"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:gravity="center_vertical"
+            android:hint="(提现金额必须是100的整数倍)"
+            android:textSize="@dimen/default_list_item_content_size"
+            android:textColorHint="@color/default_content_color_2"
             />
     </LinearLayout>
 
@@ -153,14 +163,24 @@
         android:orientation="horizontal"
         android:layout_marginTop="1dp"
         android:background="@color/color_white"
+        android:gravity="center_vertical"
         >
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/image_bank_icon"
+            android:layout_marginLeft="@dimen/default_margin"
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="银行卡管理"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_font_color"
             android:gravity="center"
-            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginLeft="10dp"
             />
 
     </LinearLayout>
@@ -172,14 +192,22 @@
         android:orientation="horizontal"
         android:layout_marginTop="1dp"
         android:background="@color/color_white"
+        android:gravity="center_vertical"
         >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/image_deposit"
+            android:layout_marginLeft="@dimen/default_margin"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="保证金"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_font_color"
             android:gravity="center"
-            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginLeft="10dp"
             />
 
     </LinearLayout>

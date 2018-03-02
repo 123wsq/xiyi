@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.base.BaseActivity;
+import com.example.wsq.android.constant.Urls;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,7 +63,7 @@ public class ProtocolsActivity extends BaseActivity {
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
 
-        register_webView.loadUrl("http://xiyicontrol.com/api/xieyi");
+        register_webView.loadUrl(Urls.HOST+Urls.PROTOCOLS);
 
     }
 

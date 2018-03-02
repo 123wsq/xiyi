@@ -4,6 +4,11 @@ import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by wsq on 2018/1/10.
  */
@@ -37,10 +42,10 @@ public class DataFormat {
             return -1;
         }
 
-        if (!ValidateDataFormat.isNumber(str)){
-
-            return -1;
-        }
+//        if (!ValidateDataFormat.isNumber(str)){
+//
+//            return -1;
+//        }
         long num = Long.parseLong(str);
         return num;
     }
@@ -69,4 +74,7 @@ public class DataFormat {
         }
         return 1.0f;
     }
+
+
+
 }

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.view.LoddingDialog;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -44,6 +46,12 @@ public class FaultActivity extends BaseActivity {
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.ll_nodata) LinearLayout ll_nodata;
     @BindView(R.id.store_house_ptr_frame) SmartRefreshLayout store_house_ptr_frame;
+
+    @BindView(R.id.iv_refresh_icon)
+    ImageView iv_refresh_icon;
+    @BindView(R.id.tv_content) TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
 
     OrderTaskService orderTaskService;
     private ProductAdapter mAdapter;
@@ -77,7 +85,7 @@ public class FaultActivity extends BaseActivity {
 
         setRefresh();
         onStartSearch(null, 0);
-
+        onNotDataLayout();
     }
 
     public void setRefresh(){
@@ -147,13 +155,9 @@ public class FaultActivity extends BaseActivity {
                     mData.addAll(list);
                     mAdapter.notifyDataSetChanged();
                 }
-                if (mData.size() ==0){
-                    ll_nodata.setVisibility(View.VISIBLE);
-                    rv_RecyclerView.setVisibility(View.GONE);
-                }else{
-                    ll_nodata.setVisibility(View.GONE);
-                    rv_RecyclerView.setVisibility(View.VISIBLE);
-                }
+                ll_nodata.setVisibility(mData.size() ==0 ?View.VISIBLE : View.GONE);
+                rv_RecyclerView.setVisibility(mData.size() ==0 ? View.GONE: View.VISIBLE);
+
                 if (type == 1){
                     refreshLayout.finishRefresh();
                 }else if(type ==2 ){
@@ -168,5 +172,19 @@ public class FaultActivity extends BaseActivity {
             }
         });
 
+    }
+
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.VISIBLE);
+        tv_refresh.setVisibility(View.VISIBLE);
+        iv_refresh_icon.setImageResource(R.drawable.image_main_massage);
+        tv_content.setText(getResources().getString(R.string.str_not_datum_search_p));
+        tv_no_data.setText(getResources().getString(R.string.str_not_datum_search_refresh));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_refresh_icon.getLayoutParams();
+        params.width = DensityUtil.dp2px(this, 80);
+        params.height = DensityUtil.dp2px(this, 80);
+        iv_refresh_icon.setLayoutParams(params);
     }
 }

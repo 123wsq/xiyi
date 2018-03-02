@@ -118,7 +118,8 @@ public class EditWebSettingActivity extends BaseActivity{
                         popup.dismiss();
                     }
                 });
-
+                popup.setTitle("上传图标");
+                popup.setTextColor("#0168D2");
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.tv_create_web:
@@ -149,7 +150,8 @@ public class EditWebSettingActivity extends BaseActivity{
                 popup.dismiss();
             }
         });
-
+        popup.setTextColor("#0168D2");
+        popup.setTitle("分类");
         popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 

@@ -1,6 +1,7 @@
 package com.example.wsq.android.activity;
 
 
+import android.Manifest;
 import android.app.Fragment;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -31,6 +32,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.example.wsq.android.BuildConfig;
 import com.example.wsq.android.R;
 import com.example.wsq.android.activity.order.MessageActivity;
 import com.example.wsq.android.activity.user.LoginActivity;
@@ -52,7 +54,9 @@ import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.CustomWebViewDialog;
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -61,6 +65,9 @@ import butterknife.OnClick;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import cn.jpush.im.android.api.model.UserInfo;
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
+import me.weyye.hipermission.PermissionItem;
 
 
 public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener, AMapLocationListener {
@@ -106,19 +113,29 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppStatus.onSetStates(this, 1);
+        AppStatus.onSetStates(this);
         ButterKnife.bind(this);
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         init();
 
         enter(1, fragments[0]);
 
-        AppImageView.onRadioButtonSelect(this, rb_main, "image_sy_default.png","image_sy_press.png");
-        AppImageView.onRadioButtonSelect(this, rb_device, "image_device_default.png","image_device_press.png");
-        AppImageView.onRadioButtonSelect(this, rb_fault, "image_gz_default.png","image_gz_press.png");
-        AppImageView.onRadioButtonSelect(this, rb_user, "image_user_default.png","image_user_press.png");
-        AppImageView.onLayoutBackgroundImage(this, rl_layout, "image_title_background.png");
+        SharedPreferences preferences = getSharedPreferences(Constant.SHARED_FACE, Context.MODE_PRIVATE);
+        if (preferences.getInt(Constant.SHARED.TYPE, 0)==0){
 
+            AppImageView.onRadioButtonSelect(this, rb_main, R.drawable.image_sy_default, R.drawable.image_sy_press);
+            AppImageView.onRadioButtonSelect(this, rb_device,R.drawable.image_device_default, R.drawable.image_device_press);
+            AppImageView.onRadioButtonSelect(this, rb_fault, R.drawable.image_gz_default, R.drawable.image_gz_press);
+            AppImageView.onRadioButtonSelect(this, rb_user, R.drawable.image_user_default, R.drawable.image_user_press);
+            rl_layout.setBackgroundResource(R.drawable.image_title_background);
+        }else {
+            String path = preferences.getString(Constant.SHARED.IMG_PATH,"");
+            AppImageView.onRadioButtonSelect(this, rb_main, path + "image_sy_default.png", path + "image_sy_press.png");
+            AppImageView.onRadioButtonSelect(this, rb_device, path + "image_device_default.png", path + "image_device_press.png");
+            AppImageView.onRadioButtonSelect(this, rb_fault, path + "image_gz_default.png", path + "image_gz_press.png");
+            AppImageView.onRadioButtonSelect(this, rb_user, path + "image_user_default.png", path + "image_user_press.png");
+            AppImageView.onLayoutBackgroundImage(this, rl_layout, path + "image_title_background.png");
+        }
     }
 
     public void init(){
@@ -139,9 +156,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         locationClient.setLocationListener(this);
         locationClient.setLocationOption(locationOption);
 
+        onRequestPermission();
 
-        // 启动定位
-        locationClient.startLocation();
 
         JMessageClient.registerEventReceiver(this);
 
@@ -366,7 +382,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            onCreateDialog();
+            if (!BuildConfig.DEBUG) {
+                onCreateDialog();
+            }
         }
     };
 
@@ -410,7 +428,44 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         iv_setting.setVisibility(isShowSettingBtn ? View.VISIBLE : View.GONE);
     }
 
+    public void onRequestPermission(){
+        //READ_PHONE_STATE
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, READ_PHONE_STATE);
+//            } else {
+//                onValidatePhone();
+//            }
+//        }
+        List<PermissionItem> permissions = new ArrayList<PermissionItem>();
+        permissions.add(new PermissionItem(Manifest.permission.ACCESS_COARSE_LOCATION, "手机权限", R.drawable.permission_ic_phone));
+        permissions.add(new PermissionItem(Manifest.permission.ACCESS_FINE_LOCATION, "手机权限", R.drawable.permission_ic_phone));
+        permissions.add(new PermissionItem(Manifest.permission.READ_PHONE_STATE, "手机权限", R.drawable.permission_ic_phone));
+        HiPermission.create(this).permissions(permissions).checkMutiPermission(new PermissionCallback() {
+            @Override
+            public void onClose() {
+                Logger.d("用户关闭权限申请");
+                finish();
+            }
 
+            @Override
+            public void onFinish() {
+                Logger.d("所有权限申请完成");
+                // 启动定位
+                locationClient.startLocation();
+            }
+
+            @Override
+            public void onDeny(String permission, int position) {
+
+            }
+
+            @Override
+            public void onGuarantee(String permission, int position) {
+
+            }
+        });
+    }
 
 
 }

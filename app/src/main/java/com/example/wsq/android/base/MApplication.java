@@ -29,14 +29,14 @@ public class MApplication extends Application {
 
     public static boolean DEBUG = true;
     private String TAG = "XIYI";
-    private List<String> mImages;
+//    private List<String> mImages;
     //public static String defaultPath = "image/default_image/";
     @Override
     public void onCreate() {
         super.onCreate();
 
 
-        mImages = new ArrayList<>();
+//        mImages = new ArrayList<>();
         //极光推送
         JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
@@ -45,15 +45,15 @@ public class MApplication extends Application {
         JMessageClient.init(this, true);
 
         ToastUtis.getInstance(this);
-        mImages.addAll(AppImageLoad.getLoadImages(this));
+//        mImages.addAll(AppImageLoad.getLoadImages(this));
 
         SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 //        if (System.currentTimeMillis() / 1000< endTime && System.currentTimeMillis() /1000 > startTime) {
-        if (System.currentTimeMillis() / 1000 < Constant.endTime) {
-            sharedPreferences.edit().putString(Constant.SHARED.IMAGE_PATH, "image/20180215/").commit();
-        }else{
-            sharedPreferences.edit().putString(Constant.SHARED.IMAGE_PATH, "").commit();
-        }
+//        if (System.currentTimeMillis() / 1000 < Constant.endTime) {
+//            sharedPreferences.edit().putString(Constant.SHARED.IMAGE_PATH, "image/20180215/").commit();
+//        }else{
+//            sharedPreferences.edit().putString(Constant.SHARED.IMAGE_PATH, "").commit();
+//        }
 
 
 

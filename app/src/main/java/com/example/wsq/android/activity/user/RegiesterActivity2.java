@@ -104,6 +104,7 @@ public class RegiesterActivity2 extends BaseActivity {
                          popup.dismiss();
                      }
                  });
+                 popup.setTitle("学历");
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.tv_juese:
@@ -130,6 +131,7 @@ public class RegiesterActivity2 extends BaseActivity {
                         popup.dismiss();
                     }
                 });
+                popup.setTitle("角色");
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
         }

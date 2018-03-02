@@ -1,6 +1,7 @@
 package com.example.wsq.android.tools;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -33,7 +34,7 @@ public class AppImageView {
      * @param fileName
      */
     public static void onRadioButton(Context context, RadioButton radioButton, String fileName){
-        Drawable drawable = new BitmapDrawable(BitmapUtils.onAssetsImages(context, fileName));
+        Drawable drawable = new BitmapDrawable(BitmapUtils.getLocalImage(fileName));
         drawable.setBounds(0, 0, DensityUtil.dp2px(context, 30), DensityUtil.dp2px(context, 30));
         if (drawable != null){
             radioButton.setCompoundDrawables(null, drawable, null, null);
@@ -42,7 +43,7 @@ public class AppImageView {
     }
 
     public static void onRadioButton(Context context, RadioButton radioButton, String fileName, int width, int height){
-        Drawable drawable = new BitmapDrawable(BitmapUtils.onAssetsImages(context, fileName));
+        Drawable drawable = new BitmapDrawable(BitmapUtils.getLocalImage(fileName));
         drawable.setBounds(0, 0, DensityUtil.dp2px(context, width), DensityUtil.dp2px(context, height));
         if (drawable != null){
             radioButton.setCompoundDrawables(null, drawable, null, null);
@@ -67,7 +68,7 @@ public class AppImageView {
      */
     public static void onImageView (Context context, ImageView imageView, String fileName){
 
-        imageView.setImageBitmap(BitmapUtils.onAssetsImages(context, fileName));
+        imageView.setImageBitmap(BitmapUtils.getLocalImage(fileName));
     }
 
     /**
@@ -78,7 +79,7 @@ public class AppImageView {
      */
     public static void onLayoutBackgroundImage (Context context, LinearLayout layout, String fileName){
 
-        layout.setBackground(new BitmapDrawable(BitmapUtils.onAssetsImages(context, fileName)));
+        layout.setBackground(new BitmapDrawable(BitmapUtils.getLocalImage(fileName)));
     }
     /**
      * 动态设置layout的背景色
@@ -88,7 +89,7 @@ public class AppImageView {
      */
     public static void onLayoutBackgroundImage (Context context, RelativeLayout layout, String fileName){
 
-        layout.setBackground(new BitmapDrawable(BitmapUtils.onAssetsImages(context, fileName)));
+        layout.setBackground(new BitmapDrawable(BitmapUtils.getLocalImage(fileName)));
     }
 
     /**
@@ -113,16 +114,14 @@ public class AppImageView {
      */
     public static void onImageSelect(Context context, ImageView imageView, String normalImage, String selectImage){
         StateListDrawable drawable = SelectorUtils.newSelector(context,
-                BitmapUtils.onAssetsImages(context, normalImage),
-                BitmapUtils.onAssetsImages(context, selectImage));
+                BitmapUtils.getLocalImage(normalImage),
+                BitmapUtils.getLocalImage(selectImage));
 
         LayoutParams params = imageView.getLayoutParams();
         params.width = LayoutParams.WRAP_CONTENT;
         params.height =LayoutParams.WRAP_CONTENT;
         imageView.setLayoutParams(params);
         imageView.setBackground(drawable);
-//       imageView.setImageDrawable(drawable);
-
     }
 
     /**
@@ -135,21 +134,45 @@ public class AppImageView {
     public static void onRadioButtonSelect(Context context, RadioButton radioButton, String mormalImage, String checkedImage){
 
         StateListDrawable drawable = SelectorUtils.newSelector(context,
-                BitmapUtils.onAssetsImages(context, mormalImage),
-                BitmapUtils.onAssetsImages(context, checkedImage));
-        drawable.setBounds(0, 0, DensityUtil.dp2px(context, 30), DensityUtil.dp2px(context, 30));
+                BitmapUtils.getLocalImage(mormalImage),
+                BitmapUtils.getLocalImage(checkedImage));
+        drawable.setBounds(0, 0, DensityUtil.dp2px(context, 19), DensityUtil.dp2px(context, 20));
 
         int[][] states =new int[3][];
         states[0] =new int[] { -android.R.attr.state_checked};
         states[1] =new int[] { android.R.attr.state_checked};
         states[2] =new int[] {};
 
-        int colorId = R.color.color_gray;
-        if (AppImageLoad.getPath(context).equals(AppImageLoad.defaultPath)){
-            colorId = R.color.defalut_title_color;
-        }else{
-            colorId = Color.parseColor("#D52E2E");
+        int colorId =  Color.parseColor("#D52E2E");
+        int[] colors =new int[] { R.color.bar_grey, colorId,R.color.bar_grey};
+        ColorStateList colorStateList = new ColorStateList(states, colors);
+
+        if (drawable != null){
+            radioButton.setTextColor(colorStateList);
+            radioButton.setCompoundDrawables(null, drawable, null, null);
         }
+    }
+
+    /**
+     * RadioButton动态选择器
+     * @param context
+     * @param radioButton
+     * @param mormalImage
+     * @param checkedImage
+     */
+    public static void onRadioButtonSelect(Context context, RadioButton radioButton, int mormalImageId, int checkedImageId){
+
+        StateListDrawable drawable = SelectorUtils.setSelector(context,
+                mormalImageId,checkedImageId);
+        drawable.setBounds(0, 0, DensityUtil.dp2px(context, 19), DensityUtil.dp2px(context, 20));
+
+        int[][] states =new int[3][];
+        states[0] =new int[] { -android.R.attr.state_checked};
+        states[1] =new int[] { android.R.attr.state_checked};
+        states[2] =new int[] {};
+
+        int colorId = R.color.defalut_title_color;
+
         int[] colors =new int[] { R.color.bar_grey, colorId,R.color.bar_grey};
         ColorStateList colorStateList = new ColorStateList(states, colors);
 

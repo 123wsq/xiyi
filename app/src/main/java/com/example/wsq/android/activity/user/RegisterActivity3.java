@@ -131,13 +131,12 @@ public class RegisterActivity3 extends BaseActivity {
             if (curLen == 0){
                 curLen = 60;
                 tv_getCode.setText("获取验证码");
-                    tv_getCode.setBackgroundColor(R.drawable.shape_button);
+                    tv_getCode.setBackgroundResource(R.drawable.shape_button);
                 tv_getCode.setClickable(true);
             }else{
-                tv_getCode.setText("请耐心等待 "+curLen+"s");
+                tv_getCode.setText(curLen+"秒后重发");
                 tv_getCode.setClickable(false);
-                
-                tv_getCode.setBackgroundColor(R.drawable.shape_disable_button);
+                tv_getCode.setBackgroundResource(R.drawable.shape_disable_button);
 
                 handler.postDelayed(this, 1000);
             }
@@ -352,6 +351,7 @@ public class RegisterActivity3 extends BaseActivity {
             userService.getValidateCode(this, map, new HttpResponseListener() {
                 @Override
                 public void onSuccess(Map<String, Object> result) {
+                    ToastUtis.onToast(result.get(ResponseKey.MESSAGE)+"");
                     handler.postDelayed(runnable, 1000);
                 }
 

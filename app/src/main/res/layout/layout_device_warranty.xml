@@ -43,10 +43,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="设备保修"
+            android:text="设备报修"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_list_item_content_size"
+            android:textColor="@color/default_content_color_1"
 
             />
     </LinearLayout>
@@ -67,7 +68,8 @@
             android:text="(可参加活动的会员:企业工程师 企业管理工程师)"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_list_item_content_size"
+            android:textColor="@color/default_content_color_1"
             />
     </LinearLayout>
 
@@ -88,7 +90,8 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
             android:drawableRight="@drawable/image_important"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
 
         <TextView
@@ -97,8 +100,9 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text=""
-            android:gravity="center_vertical|left"
-            android:textSize="@dimen/default_text_size_3"
+            android:gravity="center_vertical|right"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             android:layout_marginLeft="@dimen/default_radius"
             />
     </LinearLayout>
@@ -121,7 +125,8 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
             android:drawableRight="@drawable/image_important"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
 
         <EditText
@@ -131,10 +136,13 @@
             android:layout_height="match_parent"
             android:text=""
             android:background="@drawable/shape_edit"
-            android:gravity="center_vertical|left"
-            android:layout_marginLeft="@dimen/default_radius"
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_margin"
             android:singleLine="true"
-            android:textSize="@dimen/default_text_size_3"
+            android:hint="品牌/型号/系列"
+            android:textColorHint="@color/color_gray"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
     </LinearLayout>
 
@@ -156,7 +164,8 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
             android:drawableRight="@drawable/image_important"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
 
         <EditText
@@ -167,9 +176,12 @@
             android:text=""
             android:singleLine="true"
             android:background="@drawable/shape_edit"
-            android:gravity="center_vertical|left"
-            android:layout_marginLeft="@dimen/default_radius"
-            android:textSize="@dimen/default_text_size_3"
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:hint="出厂编号"
+            android:textColorHint="@color/color_gray"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
     </LinearLayout>
 
@@ -190,7 +202,8 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
             android:drawableRight="@drawable/image_important"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
 
         <TextView
@@ -199,9 +212,10 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text=""
-            android:gravity="center_vertical|left"
-            android:layout_marginLeft="@dimen/default_radius"
-            android:textSize="@dimen/default_text_size_3"
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
     </LinearLayout>
 
@@ -222,7 +236,8 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_radius"
             android:drawableRight="@drawable/image_important"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
 
         <TextView
@@ -231,9 +246,10 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text=""
-            android:gravity="center_vertical|left"
-            android:layout_marginLeft="@dimen/default_radius"
-            android:textSize="@dimen/default_text_size_3"
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
     </LinearLayout>
             <LinearLayout
@@ -256,7 +272,8 @@
                     android:gravity="center_vertical"
                     android:layout_marginLeft="@dimen/default_radius"
                     android:drawableRight="@drawable/image_important"
-                    android:textSize="@dimen/default_text_size_3"
+                    android:textSize="@dimen/default_content_size"
+                    android:textColor="@color/default_content_color_1"
                     />
 
                 <EditText
@@ -265,10 +282,11 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:gravity="center_vertical|left"
+                    android:gravity="center_vertical|right"
                     android:background="@drawable/shape_edit"
-                    android:layout_marginLeft="@dimen/default_radius"
-                    android:textSize="@dimen/default_text_size_3"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:textSize="@dimen/default_content_size"
+                    android:textColor="@color/default_content_color_1"
                     />
             </LinearLayout>
 
@@ -291,7 +309,8 @@
             android:layout_marginTop="@dimen/default_radius"
             android:layout_marginBottom="@dimen/default_radius"
             android:drawableRight="@drawable/image_important"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
 
         <GridView
@@ -322,7 +341,8 @@
             android:layout_marginTop="@dimen/default_radius"
             android:layout_marginLeft="@dimen/default_radius"
             android:drawableRight="@drawable/image_important"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
 
         <EditText
@@ -332,7 +352,8 @@
             android:minHeight="70dp"
             android:hint="请再次输入故障简要以及处理说明"
             android:textColorHint="@color/color_gray"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_edit_stoken"
             android:layout_marginLeft="@dimen/default_radius"
             android:padding="@dimen/default_radius"

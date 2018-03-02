@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ import com.example.wsq.android.inter.OnWheelViewCalendarListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.AmountUtils;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.view.CustomCalendarPopup;
 import com.example.wsq.android.view.LoddingDialog;
 
@@ -40,9 +43,15 @@ public class ReceiptsActivity extends BaseActivity {
 
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.rv_RecyclerView) RecyclerView rv_RecyclerView;
-    @BindView(R.id.ll_no_Record) LinearLayout ll_no_Record;
+    @BindView(R.id.ll_nodata) LinearLayout ll_no_Record;
     @BindView(R.id.tv_receipts_amount) TextView tv_receipts_amount;
     @BindView(R.id.tv_receipts_name) TextView tv_receipts_name;
+
+    @BindView(R.id.iv_refresh_icon)
+    ImageView iv_refresh_icon;
+    @BindView(R.id.tv_content) TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
 
     private CustomCalendarPopup calendarPopup;
     private SharedPreferences shared;
@@ -78,6 +87,7 @@ public class ReceiptsActivity extends BaseActivity {
 
 
         getAllReceiptsLit();
+        onNotDataLayout();
     }
 
 
@@ -133,11 +143,13 @@ public class ReceiptsActivity extends BaseActivity {
             public void onSuccess(Map<String, Object> result) {
 
                 List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.BROKERAGE_LIST);
-                tv_receipts_amount.setText(result.get(ResponseKey.BROKERAGE_MOENY)+"");
+                tv_receipts_amount.setText(AmountUtils.changeY2Y(result.get(ResponseKey.BROKERAGE_MOENY)+"")+"元");
                 tv_receipts_name.setText("总收入");
                 if (list.size() != 0 ){
                     mData.addAll(list);
                 }
+                rv_RecyclerView.setVisibility(mData.size() ==0 ? View.GONE : View.VISIBLE);
+                ll_no_Record.setVisibility(mData.size() ==0 ? View.VISIBLE : View.GONE);
                 mAdapter.notifyDataSetChanged();
                 if (dialog.isShowing()){
                     dialog.dismiss();
@@ -171,11 +183,13 @@ public class ReceiptsActivity extends BaseActivity {
             public void onSuccess(Map<String, Object> result) {
 
                 List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.BROKERAGE_LIST);
-                tv_receipts_amount.setText(result.get(ResponseKey.BROKERAGE_MOENY)+"");
-                tv_receipts_name.setText("月收入");
+                tv_receipts_amount.setText(AmountUtils.changeY2Y(result.get(ResponseKey.BROKERAGE_MOENY)+"")+"元");
+                tv_receipts_name.setText("当前月收入");
                 if (list.size() != 0 ){
                     mData.addAll(list);
                 }
+                rv_RecyclerView.setVisibility(mData.size() ==0 ? View.GONE : View.VISIBLE);
+                ll_no_Record.setVisibility(mData.size() ==0 ? View.VISIBLE : View.GONE);
                 mAdapter.notifyDataSetChanged();
                 if (dialog.isShowing()){
                     dialog.dismiss();
@@ -189,5 +203,19 @@ public class ReceiptsActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.GONE);
+        tv_refresh.setVisibility(View.GONE);
+        iv_refresh_icon.setImageResource(R.drawable.image_main_massage);
+        tv_content.setText(getResources().getString(R.string.str_not_receipts));
+//        tv_no_data.setText(getResources().getString(R.string.str_not_share_refresh));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_refresh_icon.getLayoutParams();
+        params.width = DensityUtil.dp2px(this, 80);
+        params.height = DensityUtil.dp2px(this, 80);
+        iv_refresh_icon.setLayoutParams(params);
     }
 }

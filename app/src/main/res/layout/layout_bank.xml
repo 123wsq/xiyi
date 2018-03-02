@@ -54,11 +54,11 @@
                             android:id="@+id/tv_bank"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="中国工商银行"
                             android:gravity="center_vertical"
                             android:layout_marginLeft="@dimen/default_margin"
                             android:textColor="@color/color_white"
-                            android:textSize="@dimen/default_text_max_size"
+                            android:textSize="@dimen/default_title_size"
                             />
                         <TextView
                             android:id="@+id/tv_card_type"
@@ -68,7 +68,7 @@
                             android:gravity="center_vertical"
                             android:layout_marginLeft="@dimen/default_margin"
                             android:textColor="@color/color_white"
-                            android:textSize="@dimen/default_text_size"
+                            android:textSize="@dimen/default_list_item_content_size"
                             android:layout_marginTop="@dimen/default_radius"
                             />
 
@@ -77,12 +77,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:textColor="@color/color_white"
-                            android:textSize="@dimen/default_text_title_size"
-                            android:text="1111"
+                            android:textSize="23sp"
+                            android:text=""
                             android:layout_marginTop="@dimen/radius_popup"
                             android:layout_marginLeft="@dimen/default_margin"
                             android:layout_marginRight="@dimen/default_margin"
-
                             />
                     </LinearLayout>
 
@@ -97,57 +96,8 @@
             style="@style/default_button"
             android:text="更换银行卡"
 
-            android:layout_marginTop="@dimen/defalut_layout_height"
-
             />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_no_bank"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:visibility="gone"
-        >
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/image_main_massage"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="您还没有添加银行卡哟~"
-            android:textSize="@dimen/default_text_size"
-            android:layout_marginTop="@dimen/default_radius"
-            android:textColor="@color/color_gray"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="点击刷新看有没有新的数据"
-            android:textSize="@dimen/default_text_min_size"
-            android:layout_marginTop="@dimen/radius_popup"
-            android:textColor="@color/color_gray"
-            />
-
-        <TextView
-            android:id="@+id/tv_redresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="点击刷新"
-            android:textSize="@dimen/default_text_size"
-            android:textColor="@color/color_gray"
-            android:background="@drawable/shape_refresh"
-            android:paddingLeft="@dimen/default_margin"
-            android:paddingRight="@dimen/default_margin"
-            android:paddingTop="@dimen/default_radius"
-            android:paddingBottom="@dimen/default_radius"
-            android:layout_marginTop="@dimen/default_margin"
-            android:gravity="center"
-
-            />
-    </LinearLayout>
+    <include layout="@layout/layout_no_data"></include>
 </LinearLayout>

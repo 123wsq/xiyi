@@ -71,53 +71,7 @@
                 android:layout_height="match_parent"
                 android:visibility="visible" />
 
-            <LinearLayout
-                android:id="@+id/ll_nodata"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/image_gz_press" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/defalut_layout_height"
-                    android:gravity="center"
-                    android:text="您还没有资料~"
-                    android:textColor="@color/color_gray"
-                    android:textSize="@dimen/default_text_title_size"
-
-                    />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="点击查看有没有新数据."
-                    android:textColor="@color/color_gray"
-                    android:textSize="@dimen/default_text_title_size" />
-
-                <TextView
-                    android:id="@+id/tv_refresh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:background="@drawable/shape_refresh"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/default_radius"
-                    android:paddingLeft="@dimen/default_margin"
-                    android:paddingRight="@dimen/default_margin"
-                    android:paddingTop="@dimen/default_radius"
-                    android:text="点击刷新"
-                    android:textColor="@color/color_gray"
-                    android:textSize="@dimen/default_text_title_size" />
-            </LinearLayout>
+            <include layout="@layout/layout_no_data"></include>
         </LinearLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

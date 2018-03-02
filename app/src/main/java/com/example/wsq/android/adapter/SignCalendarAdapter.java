@@ -46,24 +46,30 @@ public class SignCalendarAdapter extends RecyclerView.Adapter<SignCalendarAdapte
 //        Logger.d(mData.size());
         //
 
+        int curDay = CalendarUtils.getDay();
+        if ((curDay+"").equals(mCander.get(position))){
+            holder.tv_day.setBackgroundResource(R.drawable.shape_cur_sign);
+        }
+
         for (int i = 0 ; i <mData.size(); i ++){
             String create_time = mData.get(i).get(ResponseKey.CREATE_TIME)+"000";
 
             String sDay = DateUtil.onMillisForDay(create_time);
             int startDay = CalendarUtils.getMonthFirstWeek();
-
-//            Logger.d(sDay);
             int day = Integer.parseInt(sDay);
-
-            Logger.d(day+"============"+mCander.get(position)+"============="+DataFormat.onStringForInteger(mCander.get(position)));
             if (day == (DataFormat.onStringForInteger(mCander.get(position)))){
                 holder.tv_day.setBackgroundResource(R.drawable.shape_sign);
                 holder.tv_day.setTextColor(Color.WHITE);
             }
-
         }
 
         holder.tv_day.setText(mCander.get(position));
+
+        if (mCander.get(position).startsWith("_")|| mCander.get(position).endsWith("_")){
+            holder.tv_day.setTextColor(Color.parseColor("#E5E5E5"));
+            holder.tv_day.setText(mCander.get(position).replace("_", ""));
+        }
+
     }
 
 

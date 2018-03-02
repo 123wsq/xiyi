@@ -12,10 +12,12 @@
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:text="高压"
-        android:textSize="@dimen/default_text_min_size"
+        android:textSize="@dimen/default_content_size"
+        android:textColor="@color/default_font_color"
         android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_radius"
+        android:maxLines="2"
         />
     <ImageView
         android:id="@+id/iv_next"

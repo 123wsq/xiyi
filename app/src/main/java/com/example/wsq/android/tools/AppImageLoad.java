@@ -19,7 +19,7 @@ public class AppImageLoad {
     public static String defaultPath = "image/default_image/";
 
     public static String getPath(Context context){
-        SharedPreferences shared = context.getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
+        SharedPreferences shared = context.getSharedPreferences(Constant.SHARED_FACE, Context.MODE_PRIVATE);
         String path = shared.getString(Constant.SHARED.IMAGE_PATH,"");
 
         if (TextUtils.isEmpty(path)){

@@ -156,6 +156,7 @@ public class UpdatePsdActivity extends BaseActivity {
                     tv_submit_password.setClickable(false);
                 }else{
                     tv_submit_password.setBackgroundResource(R.drawable.shape_button);
+                    tv_submit_password.setClickable(true);
                 }
             }
         });

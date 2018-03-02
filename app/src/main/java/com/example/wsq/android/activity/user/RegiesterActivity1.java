@@ -90,6 +90,7 @@ public class RegiesterActivity1 extends BaseActivity {
                         popup.dismiss();
                     }
                 });
+                popup.setTitle("选择性别");
                 popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
         }
@@ -135,11 +136,15 @@ public class RegiesterActivity1 extends BaseActivity {
         if(password1.length()<=16 && password1.length() >= 6){
             RegisterParam.PASSWORD = password1;
         }else{
-            Toast.makeText(RegiesterActivity1.this, "密码长度不能为"+password1.length(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegiesterActivity1.this, "请输入6-16位的密码", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         String name = et_name.getText().toString();
+        if (TextUtils.isEmpty(name)){
+            Toast.makeText(RegiesterActivity1.this, "姓名不能为空", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         RegisterParam.NAME = name;
 
         if (!TextUtils.isEmpty(et_email.getText().toString())) {

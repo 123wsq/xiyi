@@ -42,17 +42,18 @@ public class CashProgressAdapter extends RecyclerView.Adapter<CashProgressAdapte
         if (position==0){
             holder.view_top.setVisibility(View.INVISIBLE);
             holder.view_down.setVisibility(View.VISIBLE);
-            holder.view_down.setBackgroundResource(R.color.defalut_title_color);
+            holder.view_down.setBackgroundResource(R.color.default_green);
         }else if(position == mData.size() -1){
             holder.view_top.setVisibility(View.VISIBLE);
             holder.view_down.setVisibility(View.INVISIBLE);
-            holder.view_top.setBackgroundResource((Boolean)mData.get(position).get("up") == true ? R.color.defalut_title_color : R.color.color_gray);
+            holder.view_top.setBackgroundResource((Boolean)mData.get(position).get("up") == true ? R.color.default_green : R.color.color_gray);
         }else{
             holder.view_top.setVisibility(View.VISIBLE);
             holder.view_down.setVisibility(View.VISIBLE);
-            holder.view_top.setBackgroundResource((Boolean)mData.get(position).get("up") == true ? R.color.defalut_title_color : R.color.color_gray);
-            holder.view_down.setBackgroundResource((Boolean)mData.get(position).get("down") == true ? R.color.defalut_title_color : R.color.color_gray);
+            holder.view_top.setBackgroundResource((Boolean)mData.get(position).get("up") == true ? R.color.default_green : R.color.color_gray);
+            holder.view_down.setBackgroundResource((Boolean)mData.get(position).get("down") == true ? R.color.default_green : R.color.color_gray);
         }
+        holder.tv_progress.setTextColor(position<2 ? mContext.getResources().getColor(R.color.default_green) : mContext.getResources().getColor(R.color.default_content_color_1));
         if (position == mData.size() -1){
             holder.iv_progress.setImageResource((Boolean)mData.get(position).get("up") == true ? R.drawable.image_cash_progress : R.drawable.image_chsh_unchecked);
 
@@ -60,6 +61,9 @@ public class CashProgressAdapter extends RecyclerView.Adapter<CashProgressAdapte
             holder.iv_progress.setImageResource((Boolean)mData.get(position).get("up") == true ? R.drawable.image_cash_progress : R.drawable.image_celector_uncheck);
 
         }
+
+
+
         holder.tv_progress.setText(mData.get(position).get("msg")+"");
         holder.tv_apply_time.setText(mData.get(position).get("time")+"");
 

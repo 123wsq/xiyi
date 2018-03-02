@@ -34,7 +34,7 @@
         android:id="@+id/rl_layout_new_year"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <ImageView
@@ -51,12 +51,40 @@
             android:text="跳过"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/default_margin_4"
-            android:textSize="@dimen/default_text_size_3"
+            android:textSize="@dimen/default_content_size"
             android:background="@drawable/shape_break"
             android:padding="@dimen/default_padding_4"
             android:textColor="@color/color_white"
             />
-    </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/rl_download"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            >
+            <ProgressBar
+                android:id="@+id/pb_progress"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:progress="0"
+                android:max="100"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:progressDrawable="@drawable/custom_progress"
+                android:layout_centerInParent="true"
+                />
+            <TextView
+                android:id="@+id/tv_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="0 %"
+                android:textColor="@color/color_white"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

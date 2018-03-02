@@ -223,6 +223,8 @@ public class WebEditActivity extends BaseActivity {
                 popup.dismiss();
             }
         });
+        popup.setTextColor("#0168D2");
+        popup.setTitle("选择图片");
     }
 
     @Override

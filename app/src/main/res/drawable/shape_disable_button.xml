@@ -5,4 +5,5 @@
 
 
     <solid android:color="@color/color_disable_btn"></solid>
+    <stroke android:color="@color/default_backgroud_color" android:width="1dp"></stroke>
 </shape>

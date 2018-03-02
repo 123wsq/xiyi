@@ -1,1 +1,1 @@
-include ':app', ':picture', ':tag',  ':ucrop', ':refresh', ':richtextlibrary', ':lfilepickerlibrary', ':medialib'
+include ':app', ':picture', ':tag', ':ucrop', ':refresh', ':richtextlibrary', ':lfilepickerlibrary', ':medialib', ':ffmpeg4android_lib'

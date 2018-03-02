@@ -3,6 +3,11 @@ package com.example.wsq.android.activity.order;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -23,6 +28,7 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.TelPhoneValidate;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -60,6 +66,7 @@ public class ServerOrderInfoActivity extends BaseActivity {
     @BindView(R.id.rv_gridview_scene) GridView rv_gridview_scene; //现场照片视频
     @BindView(R.id.tv_scene_contact) TextView tv_scene_contact;  //现场联系人
     @BindView(R.id.tv_scene_tel)  TextView tv_scene_tel;  //显示联系人电话
+    @BindView(R.id.tv_fee) TextView tv_fee;
     @BindView(R.id.tv_traveling_fee) TextView tv_traveling_fee;//差旅费
     @BindView(R.id.tv_server_fee) TextView tv_server_fee;//服务费
     @BindView(R.id.tv_spare_fee) TextView tv_spare_fee;//备件费
@@ -112,7 +119,7 @@ public class ServerOrderInfoActivity extends BaseActivity {
         //维修信息
         tv_device.setText(intent.getStringExtra(ResponseKey.XINGHAO));
         tv_outnum.setText(intent.getStringExtra(ResponseKey.BIANHAO));
-
+        tv_fee.setText(shared.getString(Constant.SHARED.JUESE,"").equals("1") ? "服务费用":"预估费用");
 
 
         //故障照片、视频
@@ -231,8 +238,10 @@ public class ServerOrderInfoActivity extends BaseActivity {
                 }
                 //其他信息
                 tv_scene_contact.setText(result.get(ResponseKey.LXR)+"");
-                tv_scene_tel.setText(result.get(ResponseKey.TEL)+"");
-                tv_server_leave.setText(result.get(ResponseKey.YILIU)+"");
+                //验证手机号码
+                TelPhoneValidate.onGetTelCode(ServerOrderInfoActivity.this,
+                        result.get(ResponseKey.TEL)+"", tv_scene_tel,
+                        R.color.defalut_title_color);
 
                 //服务费用
                 tv_traveling_fee.setText(result.get(ResponseKey.CHAILV) +"元");

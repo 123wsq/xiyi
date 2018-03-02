@@ -53,7 +53,13 @@ public class ShareRecordActivity extends BaseActivity{
     @BindView(R.id.iv_add) ImageView iv_add;
     @BindView(R.id.rv_RecyclerView) SwipeMenuRecyclerView rv_RecyclerView;
     @BindView(R.id.ll_nodata) LinearLayout ll_nodata;
-    @BindView(R.id.tv_content)TextView tv_content;
+
+    @BindView(R.id.iv_refresh_icon)
+    ImageView iv_refresh_icon;
+    @BindView(R.id.tv_content) TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
+
 
     private DbConInter conInter;
     private ProductAdapter mAdapter;
@@ -71,7 +77,6 @@ public class ShareRecordActivity extends BaseActivity{
     public void init() {
 
         tv_title.setText("我的资料");
-        tv_content.setText("您还没有编辑过资料呢~");
         mData = new ArrayList<>();
         dialog = new LoddingDialog(this);
         userService = new UserServiceImpl();
@@ -94,6 +99,8 @@ public class ShareRecordActivity extends BaseActivity{
         rv_RecyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
 //        rv_RecyclerView.set
         rv_RecyclerView.setAdapter(mAdapter);
+
+        onNotDataLayout();
     }
 
     @Override
@@ -211,13 +218,9 @@ public class ShareRecordActivity extends BaseActivity{
                 mData.clear();
                 mData.addAll(list);
 
-                if (mData.size() > 0){
-                    rv_RecyclerView.setVisibility(View.VISIBLE);
-                    ll_nodata.setVisibility(View.GONE);
-                }else{
-                    rv_RecyclerView.setVisibility(View.GONE);
-                    ll_nodata.setVisibility(View.VISIBLE);
-                }
+                rv_RecyclerView.setVisibility(mData.size() !=0 ? View.VISIBLE : View.GONE);
+                ll_nodata.setVisibility(mData.size() !=0 ? View.GONE : View.VISIBLE);
+
                 mAdapter.notifyDataSetChanged();
                 if(dialog.isShowing() ) dialog.dismiss();
             }
@@ -251,5 +254,19 @@ public class ShareRecordActivity extends BaseActivity{
 
             }
         });
+    }
+
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.VISIBLE);
+        tv_refresh.setVisibility(View.VISIBLE);
+        iv_refresh_icon.setImageResource(R.drawable.image_main_massage);
+        tv_content.setText(getResources().getString(R.string.str_not_share_p));
+        tv_no_data.setText(getResources().getString(R.string.str_not_share_refresh));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_refresh_icon.getLayoutParams();
+        params.width = DensityUtil.dp2px(this, 80);
+        params.height = DensityUtil.dp2px(this, 80);
+        iv_refresh_icon.setLayoutParams(params);
     }
 }

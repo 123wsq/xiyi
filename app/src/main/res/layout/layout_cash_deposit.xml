@@ -18,7 +18,7 @@
             android:text="退还保证金"
             android:textColor="@color/color_white"
             android:gravity="center"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_title_size"
             />
         <LinearLayout
             android:id="@+id/iv_back"
@@ -40,6 +40,7 @@
             android:text="提交"
             android:gravity="center"
             android:textColor="@color/color_white"
+            android:textSize="@dimen/default_content_size"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/default_margin"
@@ -52,7 +53,8 @@
         android:layout_height="wrap_content"
         android:text="退保证金"
         android:drawableRight="@drawable/image_important"
-        android:textSize="@dimen/default_text_size"
+        android:textSize="@dimen/default_title_size"
+        android:textColor="@color/default_font_color"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginLeft="@dimen/radius_popup"
 
@@ -64,11 +66,12 @@
         android:minLines="5"
         android:background="#F2F2F2"
         android:hint="请告诉我们退保证金的原因"
-        android:textSize="@dimen/default_text_size"
+        android:textSize="@dimen/default_content_size"
         android:gravity="top"
         android:padding="@dimen/default_radius"
         android:layout_margin="@dimen/default_radius"
-        android:textColorHint="@color/color_gray"
+        android:textColorHint="@color/default_content_color_2"
+        android:textColor="@color/default_content_color_2"
         />
         <TextView
             android:id="@+id/tv_num"
@@ -86,8 +89,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="友情提示：友情提示：退还可提现金额+保证金。受理成功之后账户注销，再次开通需要客服审核信用程度之后确认是否开通账户。"
-        android:textSize="@dimen/default_text_min_size"
+        android:textSize="@dimen/default_list_item_content_size"
         android:layout_margin="@dimen/radius_popup"
-        android:textColor="@color/RED"
+        android:textColor="@color/default_red"
         />
 </LinearLayout>

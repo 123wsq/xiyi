@@ -15,6 +15,7 @@ public class Constant {
     public static final String SHARED_NAME = "XIYI";
     public static final String SHARED_RECORD = "search_Record";
     public static final String SHARED_MSG = "MESSAGE_STATE";
+    public static final String SHARED_FACE = "FACE";
 
     public static final String[] SEX = {"男", "女"};
     public static final String[] ROLE = {"服务工程师", "企业工程师", "企业管理工程师"};
@@ -30,7 +31,9 @@ public class Constant {
     public static final int INFO_5 = 5;  //本地资料列表进入
 
 
-    public static final String BITMAP_PATH = Environment.getExternalStorageDirectory()+"/image/xiyi/";
+    public static final String BITMAP_PATH = Environment.getExternalStorageDirectory()+"/xiyi/image/";
+    public static final String FILE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+"/xiyi/update/";
+    public static final String PDF_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+"/xiyi/pdf/";
 
     //验证码长度
     public static final int CODE_LENGTH = 6;
@@ -83,6 +86,24 @@ public class Constant {
         public static final String BANNER_PATH = "banner_path";
 
         public static final String WELCOME_PATH = "WELCOME";
+
+
+        public static final String IMG_ID = "img_id";
+
+        public static final String START_TIME ="img_start_time";
+
+        public static final String END_TIME = "img_end_time";
+
+        public static final String IMG_PATH = "img_path";
+
+        public static final String STATE = "img_status";
+
+        public static final String NATIVE_PATH = "native_path";
+
+        public static final String TYPE= "type";  //0 表示显示默认   1表示显示的是网络下载的
+
+        public static final String BACKGROUND = "background";
+
     }
 
 

@@ -205,6 +205,8 @@ public class FeedbackActivity extends BaseActivity {
                 popup.dismiss();
             }
         });
+        popup.setTextColor("#0168D2");
+        popup.setTitle("请选择");
     }
 
 
@@ -406,8 +408,8 @@ public class FeedbackActivity extends BaseActivity {
         //只对图片进行质量压缩
 //        Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 200);
         //对图片进行大小 质量压缩
-        Bitmap commBitmap = ImageUtil.zoomImage(newBitmap, ScreenUtils.getScreenWidth(this),ScreenUtils.getScreenHeight(this), 200);
-        File file = BitmapUtils.saveImage(commBitmap);
+//        Bitmap commBitmap = ImageUtil.zoomImage(newBitmap, ScreenUtils.getScreenWidth(this),ScreenUtils.getScreenHeight(this), 200);
+        File file = BitmapUtils.saveImage(newBitmap);
 //                        String savePath = BitmapUtils.addBitmapWatermark(DeviceWarrantyActivity.this, path);
         return file.getAbsolutePath();
     }

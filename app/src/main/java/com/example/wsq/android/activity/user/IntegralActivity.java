@@ -56,11 +56,11 @@ public class IntegralActivity extends BaseActivity{
 
         tv_title.setText("积分");
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-        wv_WebView.loadUrl("file:///android_asset/html/integral.html");
+//        wv_WebView.loadUrl("file:///android_asset/html/integral.html");
 
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 2,
-                ContextCompat.getColor(this, R.color.color_line)));
+                ContextCompat.getColor(this, R.color.color_gray)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 

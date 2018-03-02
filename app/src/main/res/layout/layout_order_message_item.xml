@@ -75,8 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="2017-12-21 07:55:22"
-        android:textSize="@dimen/default_text_min_size"
-        android:textColor="@color/color_default"
+        android:textSize="@dimen/default_list_item_content_size"
+        android:textColor="@color/default_content_color_2"
         />
     </LinearLayout>
 

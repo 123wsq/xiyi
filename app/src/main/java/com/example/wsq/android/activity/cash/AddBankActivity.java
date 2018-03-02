@@ -48,9 +48,9 @@ public class AddBankActivity extends BaseActivity implements TextWatcher {
 
        String name =  UserFragment.mUserData.get(ResponseKey.NAME).toString();
        String tel = UserFragment.mUserData.get(ResponseKey.TEL).toString();
-       tv_name.setText("*** "+name.substring(name.length()-1));
+       tv_name.setText("** "+name.substring(name.length()-1));
        tv_tel.setText(tel.substring(0, 3)+"****"+tel.substring(tel.length()-4));
-        tv_title.setText("添加银行卡");
+        tv_title.setText("银行卡管理");
         et_backcode.addTextChangedListener(this);
     }
 
@@ -71,7 +71,7 @@ public class AddBankActivity extends BaseActivity implements TextWatcher {
                 Map<String, Object> map = new HashMap<>();
                 map.put(ResponseKey.BANK_CARD, et_backcode.getText().toString());
                 IntentFormat.startActivity(AddBankActivity.this, ValidateCodeActivity.class, map);
-
+                finish();
                 break;
             case R.id.iv_back:
                 finish();

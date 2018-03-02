@@ -10,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.OrderAdapter;
@@ -21,6 +23,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.view.LoddingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -54,6 +57,13 @@ public class ServerFinshFragment extends Fragment implements RadioGroup.OnChecke
     @BindView(R.id.tv_unfinish) RadioButton tv_unfinish;
     @BindView(R.id.rg_group) RadioGroup rg_group;
 
+    @BindView(R.id.iv_refresh_icon)
+    ImageView iv_refresh_icon;
+    @BindView(R.id.tv_content)
+    TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
+
     private LoddingDialog dialog;
 
 
@@ -86,6 +96,8 @@ public class ServerFinshFragment extends Fragment implements RadioGroup.OnChecke
 
         init();
         initView();
+
+        onNotDataLayout();
     }
 
     public void init() {
@@ -233,5 +245,19 @@ public class ServerFinshFragment extends Fragment implements RadioGroup.OnChecke
 
                 break;
         }
+    }
+
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.VISIBLE);
+        tv_refresh.setVisibility(View.VISIBLE);
+        iv_refresh_icon.setImageResource(R.drawable.image_gz_press);
+        tv_content.setText(getResources().getString(R.string.str_not_order_p));
+        tv_no_data.setText(getResources().getString(R.string.str_not_order_refresh));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_refresh_icon.getLayoutParams();
+        params.width = DensityUtil.dp2px(getActivity(), 74);
+        params.height = DensityUtil.dp2px(getActivity(), 80);
+        iv_refresh_icon.setLayoutParams(params);
     }
 }

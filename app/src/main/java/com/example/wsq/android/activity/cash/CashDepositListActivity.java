@@ -60,7 +60,8 @@ public class CashDepositListActivity extends BaseActivity {
 
         userService = new UserServiceImpl();
         tv_title.setText("退保证金");
-        tv_Details.setText("重新申请");
+        tv_Details.setText("" +
+                "");
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, DensityUtil.dp2px(this, 2),

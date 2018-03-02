@@ -17,6 +17,7 @@ public class DbHelper extends SQLiteOpenHelper{
     public static final String TABLE_NAME = "FAULTS";
     public static final String TABLE_SEARCH = "SEARCH_RECORD";
     public static final String TABLE_ATTA = "ATTACHMENT";
+    public static final String TABLE_STYLE = "STYLE";
     public DbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -63,6 +64,7 @@ public class DbHelper extends SQLiteOpenHelper{
         String sql = "DROP TABLE IF EXISTS " + TABLE_NAME;
         String sql2 = "DROP TABLE IF EXISTS " + TABLE_SEARCH;
         String sql3 = "DROP TABLE IF EXISTS " + TABLE_ATTA;
+        String sql4 = "DROP TABLE IF EXISTS " + TABLE_STYLE;
         sqLiteDatabase.execSQL(sql);
         sqLiteDatabase.execSQL(sql2);
         sqLiteDatabase.execSQL(sql3);

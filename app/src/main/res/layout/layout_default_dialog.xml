@@ -63,8 +63,8 @@
             android:gravity="center"
             android:minHeight="70dp"
             android:text="nnnnn"
-            android:textSize="@dimen/default_text_size"
-            android:textColor="@color/black"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_font_color"
             android:visibility="visible" />
 
         <LinearLayout

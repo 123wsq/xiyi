@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,6 +24,7 @@ import com.example.wsq.android.inter.OnWheelViewCalendarListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomCalendarPopup;
 import com.example.wsq.android.view.LoddingDialog;
@@ -47,12 +49,17 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.rv_RecyclerView)
     RecyclerView rv_RecyclerView;
-    @BindView(R.id.ll_no_Record)
+    @BindView(R.id.ll_nodata)
     LinearLayout ll_no_Record;
     @BindView(R.id.rg_group)
     RadioGroup rg_group;
     @BindView(R.id.rb_all)
     RadioButton rb_all;
+    @BindView(R.id.iv_refresh_icon)
+    ImageView iv_refresh_icon;
+    @BindView(R.id.tv_content) TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
 
 
     private CustomCalendarPopup calendarPopup;
@@ -71,7 +78,7 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
 
     public void init(){
 
-        tv_title.setText("账单明细");
+        tv_title.setText("提现明细");
         dialog = new LoddingDialog(this);
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         userService = new UserServiceImpl();
@@ -89,6 +96,7 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
         rv_RecyclerView.setAdapter(mAdapter);
 
         rb_all.setChecked(true);
+        onNotDataLayout();
 //        onGetBillInfo();
     }
 
@@ -117,6 +125,7 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
 
             mData.clear();
             onGetCurBillInfo(year, month);
+            rb_all.setChecked(true);
         }
     };
 
@@ -146,14 +155,9 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
 
                 List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.CASH_LIST);
                 mData.addAll(list);
-                if (mData.size() != 0){
-                    rv_RecyclerView.setVisibility(View.VISIBLE);
-                    ll_no_Record.setVisibility(View.GONE);
-                    mAdapter.notifyDataSetChanged();
-                }else{
-                    rv_RecyclerView.setVisibility(View.GONE);
-                    ll_no_Record.setVisibility(View.VISIBLE);
-                }
+                rv_RecyclerView.setVisibility(mData.size() == 0 ? View.GONE : View.VISIBLE);
+                ll_no_Record.setVisibility(mData.size() == 0 ? View.VISIBLE : View.GONE);
+                if (mData.size()!=0) mAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
 
@@ -185,14 +189,10 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
 
                 List<Map<String, Object>> list = (List<Map<String, Object>>) result.get(ResponseKey.CASH_LIST);
                 mData.addAll(list);
-                if (mData.size() != 0){
-                    rv_RecyclerView.setVisibility(View.VISIBLE);
-                    ll_no_Record.setVisibility(View.GONE);
-                    mAdapter.notifyDataSetChanged();
-                }else{
-                    rv_RecyclerView.setVisibility(View.GONE);
-                    ll_no_Record.setVisibility(View.VISIBLE);
-                }
+
+                rv_RecyclerView.setVisibility(mData.size() == 0 ? View.GONE : View.VISIBLE);
+                ll_no_Record.setVisibility(mData.size() == 0 ? View.VISIBLE : View.GONE);
+                if (mData.size()!=0) mAdapter.notifyDataSetChanged();
                 if (dialog.isShowing()){
                     dialog.dismiss();
                 }
@@ -223,5 +223,19 @@ public class BillDetailsActivity extends BaseActivity implements RadioGroup.OnCh
                 onGetCurBillInfo(year, month);
                 break;
         }
+    }
+
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.GONE);
+        tv_refresh.setVisibility(View.GONE);
+        iv_refresh_icon.setImageResource(R.drawable.image_main_massage);
+        tv_content.setText(getResources().getString(R.string.str_not_cash_p));
+//        tv_no_data.setText(getResources().getString(R.string.str_not_share_refresh));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_refresh_icon.getLayoutParams();
+        params.width = DensityUtil.dp2px(this, 80);
+        params.height = DensityUtil.dp2px(this, 80);
+        iv_refresh_icon.setLayoutParams(params);
     }
 }

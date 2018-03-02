@@ -39,4 +39,12 @@ public class ToastUtis {
         }
 
     }
+
+    public static void onToast( String msg, int time){
+
+        if (mContext!=null){
+            Toast.makeText(mContext, msg , time).show();
+        }
+
+    }
 }

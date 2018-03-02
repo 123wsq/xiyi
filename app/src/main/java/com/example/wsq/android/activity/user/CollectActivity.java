@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
+import com.example.wsq.android.inter.OnDefaultClickListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
@@ -55,7 +57,12 @@ public class CollectActivity extends BaseActivity{
     @BindView(R.id.ll_collect_buttom) LinearLayout ll_collect_buttom;
     @BindView(R.id.cb_all_select) CheckBox cb_all_select;
     @BindView(R.id.store_house_ptr_frame) SmartRefreshLayout store_house_ptr_frame;
+    @BindView(R.id.tv_finish) TextView tv_finish;
+    @BindView(R.id.iv_refresh_icon)
+    ImageView iv_refresh_icon;
     @BindView(R.id.tv_content) TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
 
     private LoddingDialog dialog;
     private CollectAdapter mAdapter;
@@ -85,25 +92,20 @@ public class CollectActivity extends BaseActivity{
                 ContextCompat.getColor(this, R.color.default_backgroud_color)));
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         tv_title.setText("我的收藏");
-        tv_content.setText("您还没有收藏呢~");
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
-        mAdapter = new CollectAdapter(this, mData);
+        mAdapter = new CollectAdapter(this, mData, listener);
         rv_RecyclerView.setAdapter(mAdapter);
 
         setRefresh();
         getCollectData(null, 0);
+        onNotDataLayout();
     }
 
     public void setRefresh(){
 
-//        store_house_ptr_frame.setRefreshHeader(new ClassicsHeader(this)
-//                .setProgressResource(R.drawable.refresh_loadding).setDrawableProgressSize(40));
         store_house_ptr_frame.setRefreshHeader(new ClassicsCustomHeader(this));
-//        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(this)
-//                .setArrowResource(R.drawable.refresh_loadding).setDrawableArrowSize(50));
-//        store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(this));
         store_house_ptr_frame.setRefreshFooter(new ClassicsCustomFooter(this));
 
         store_house_ptr_frame.setOnRefreshListener(new OnRefreshListener() {
@@ -130,6 +132,16 @@ public class CollectActivity extends BaseActivity{
             }
         });
     }
+
+    OnDefaultClickListener listener = new OnDefaultClickListener() {
+        @Override
+        public void onClickListener(int position) {
+
+            tv_finish.setText( position > 0 ? "删除 ("+position+")" : "删除");
+        }
+    };
+
+
     @OnCheckedChanged({R.id.cb_all_select})
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
 
@@ -196,13 +208,9 @@ public class CollectActivity extends BaseActivity{
                     mData.addAll(list);
                     mAdapter.notifyDataSetChanged();
                 }
-                if (mData.size()==0){
-                    ll_nodata.setVisibility(View.VISIBLE);
-                    rv_RecyclerView.setVisibility(View.GONE);
-                }else{
-                    ll_nodata.setVisibility(View.GONE);
-                    rv_RecyclerView.setVisibility(View.VISIBLE);
-                }
+                ll_nodata.setVisibility(mData.size()== 0 ? View.VISIBLE : View.GONE);
+                store_house_ptr_frame.setVisibility(mData.size()== 0 ? View.GONE : View.VISIBLE);
+                tv_Details.setVisibility(mData.size() ==0 ? View.GONE : View.VISIBLE);
                 if (type == 1){
                     refreshLayout.finishRefresh();
                 }else if(type ==2 ){
@@ -273,5 +281,17 @@ public class CollectActivity extends BaseActivity{
 
     }
 
-
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.VISIBLE);
+        tv_refresh.setVisibility(View.VISIBLE);
+        iv_refresh_icon.setImageResource(R.drawable.image_main_massage);
+        tv_content.setText(getResources().getString(R.string.str_not_collect_p));
+        tv_no_data.setText(getResources().getString(R.string.str_not_collect_refresh));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_refresh_icon.getLayoutParams();
+        params.width = DensityUtil.dp2px(this, 80);
+        params.height = DensityUtil.dp2px(this, 80);
+        iv_refresh_icon.setLayoutParams(params);
+    }
 }

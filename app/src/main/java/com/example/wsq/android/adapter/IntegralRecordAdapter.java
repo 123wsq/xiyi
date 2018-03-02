@@ -51,7 +51,9 @@ public class IntegralRecordAdapter  extends RecyclerView.Adapter<IntegralRecordA
         }else if(state ==4 ){
             holder.tv_integral_type.setText("兑换 -" +num);
         }else if(state ==5 ){
-            holder.tv_integral_type.setText("红包 +" +num);
+            holder.tv_integral_type.setText("新年活动奖励 +" +num);
+        }else if(state ==6 ){
+            holder.tv_integral_type.setText("连续签到 +" +num);
         }
 
 

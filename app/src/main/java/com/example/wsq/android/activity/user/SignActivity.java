@@ -74,7 +74,7 @@ public class SignActivity extends BaseActivity{
         userService = new UserServiceImpl();
         mData = new ArrayList<>();
 
-        getCurMonthDay();
+        getCurMonthDay(); 
 
         for (int i= 1; i<= calendar.size(); i++){
             isSign.put(i, false);
@@ -235,15 +235,27 @@ public class SignActivity extends BaseActivity{
         calendar = new ArrayList<>();
 
         int count = CalendarUtils.getMonthDays();
+
+        //获取上个月
+        int month = CalendarUtils.getMonth();
+        //获取上个月的天数
+        int upMonth = CalendarUtils.getMonthdays(month == 1 ? CalendarUtils.getYear()-1 : CalendarUtils.getYear(),
+                month == 1 ? 12 : month-1);
         //判断这个月是从星期几开始的
         int startDay = CalendarUtils.getMonthFirstWeek();
 
-        for (int i = 0 ;i< startDay-1; i++){
-            calendar.add("");
+        //+2  星期天在前+1， 取后一天+1
+        for (int i = upMonth - startDay+2 ;i < upMonth+1; i++){
+            calendar.add("_"+i);
         }
 
         for (int i =0 ;i< count; i++){
             calendar.add((i+1)+"");
+        }
+
+        int addNum = calendar.size() % 7== 0 ? 0 : 7-calendar.size() % 7;
+        for (int i = 0 ; i < addNum;i++){
+            calendar.add(i+"_");
         }
 
     }

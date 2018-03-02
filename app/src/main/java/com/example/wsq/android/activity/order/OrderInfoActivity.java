@@ -4,7 +4,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -25,7 +30,10 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.tools.ShowDialog;
+import com.example.wsq.android.utils.DataFormat;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.TelPhoneValidate;
 import com.example.wsq.android.view.CustomDefaultDialog;
 import com.example.wsq.android.view.CustomStartOrderDialog;
 import com.example.wsq.android.view.LoddingDialog;
@@ -62,6 +70,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
     @BindView(R.id.tv_upName) TextView tv_upName;
     @BindView(R.id.tv_upTel) TextView tv_upTel;
     @BindView(R.id.tv_serverName) TextView tv_serverName;
+    @BindView(R.id.tv_fee) TextView tv_fee;
     @BindView(R.id.tv_traveling_fee) TextView tv_traveling_fee;
     @BindView(R.id.tv_server_fee) TextView tv_server_fee;
     @BindView(R.id.tv_spare_fee) TextView tv_spare_fee;
@@ -78,6 +87,8 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
     @BindView(R.id.ll_audit_time) LinearLayout ll_audit_time;
     @BindView(R.id.tv_audit_name) TextView tv_audit_name;
     @BindView(R.id.tv_audit_time) TextView tv_audit_time;
+    @BindView(R.id.ll_end_time) LinearLayout ll_end_time;
+    @BindView(R.id.tv_end_time) TextView tv_end_time;
 
     private UploadAdapter mAdapter;
     private List<CameraBean> mData;
@@ -111,6 +122,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
         id = getIntent().getIntExtra(ResponseKey.ID,0 )+"";
         token = shared.getString(Constant.SHARED.TOKEN, "");
         role = shared.getString(Constant.SHARED.JUESE,"");
+        tv_fee.setText(role.equals("1") ? "服务费用":"预估费用");
         status = getIntent().getStringExtra(ResponseKey.STATUS);
         tv_edit.setVisibility(status.equals("-1") ? View.VISIBLE : View.GONE);
 
@@ -118,7 +130,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
 
         if(role.equals("1") && getIntent().getStringExtra(ResponseKey.STATUS).equals("4")){
             tv_transfer.setVisibility(View.VISIBLE);
-            tv_transfer.setText("填写反馈报告");
+            tv_transfer.setText("填写完成反馈报告");
         }else if(role.equals("1") && getIntent().getStringExtra(ResponseKey.STATUS).equals("5")){
             tv_transfer.setVisibility(View.VISIBLE);
             tv_transfer.setText("填写移交反馈报告");
@@ -170,7 +182,21 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
                     onCreateDialog("确定完成订单？", "wancheng");
 
                 }else{  //企业管理工程师
-                    onAudit("", 1);
+
+                    ShowDialog.onShowDialog(OrderInfoActivity.this, "取消", "确定", "提示", "您确定通过审核？", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            dialogInterface.dismiss();
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            onAudit("", 1);
+                            dialogInterface.dismiss();
+                        }
+                    });
+
                 }
 
                 break;
@@ -225,27 +251,36 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
             ll_order.setVisibility(View.VISIBLE);
         }else{
             ll_order.setVisibility(View.GONE);
+
+            if (status.equals("8")){
+                ll_end_time.setVisibility(View.VISIBLE);
+            }
         }
 
         if (status.equals("-1") || status.equals("0")){
-            tv_server_name.setText("当前状态");
-            tv_serverName.setText(status.equals("-1") ? "待评估": "未审核");
-            tv_time_name.setText( "报修时间");
+            tv_server_name.setText("当前状态:");
+            tv_serverName.setText(status.equals("-1") ? "待评估": "待审核");
+            tv_time_name.setText( "报修时间:");
         }else if(status.equals("1") || status.equals("1.1")){
-            tv_time_name.setText("审核时间");
+            tv_time_name.setText("审核时间:");
+            if (role.equals("2") || role.equals("3")){
+                tv_server_name.setText("服务人员:");
+                ll_audit_time.setVisibility(View.VISIBLE);
+                tv_audit_name.setText("报修时间:");
+            }
         }else if(status.equals("2")){
 
             if (!role.equals("1")) {
                 ll_audit_time.setVisibility(View.VISIBLE);
-                tv_audit_name.setText("报修时间");
-                tv_time_name.setText("审核时间");
+                tv_audit_name.setText("报修时间:");
+                tv_time_name.setText("审核时间:");
             }else {
-                tv_time_name.setText("分配时间");
+                tv_time_name.setText("分配时间:");
             }
         }else if(status.equals("3")){
-            tv_time_name.setText("开始时间");
+            tv_time_name.setText("开始时间:");
         }else if(status.equals("4") || status.equals("5")){
-            tv_time_name.setText("完成时间");
+            tv_time_name.setText("完成时间:");
         }
     }
 
@@ -255,7 +290,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
         builder.setIsShowInput(false);
         builder.setTitle("提示");
         builder.setMessage(msg);
-        builder.setOkBtn("确认", new OnDialogClickListener() {
+        builder.setOkBtn("确定", new OnDialogClickListener() {
             @Override
             public void onClick(CustomDefaultDialog dialog, String result) {
 
@@ -276,7 +311,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
     /**
      * 服务工程师开始任务
      */
-    public void onStartTask(String action){
+    public void onStartTask(final String action){
 
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, token);
@@ -286,6 +321,10 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
         orderTaskService.onOrderStatus(this, param, new HttpResponseListener() {
             @Override
             public void onSuccess(Map<String, Object> result) {
+
+                if (action.equals("wancheng") || action.equals("yijiao")) {
+                    IntentFormat.startActivity(OrderInfoActivity.this, FeedbackActivity.class, mResultInfo);
+                }
                 Toast.makeText(OrderInfoActivity.this, result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -353,21 +392,25 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
 
                 if (role.equals("1")){
                     tv_upName.setText(result.get(ResponseKey.S_NAME) + "");
-                    tv_upTel.setText(result.get(ResponseKey.S_TEL) + "");
+//                    tv_upTel.setText(result.get(ResponseKey.S_TEL) + "");
                 }else {
                     tv_upName.setText(result.get(ResponseKey.NAME) + "");
-                    tv_upTel.setText(result.get(ResponseKey.TEL) + "");
+//                    tv_upTel.setText(result.get(ResponseKey.TEL) + "");
                 }
+
 
                 if (status.equals("-1")){
                     tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
                 }else if(status.equals("0")){
                     tv_repairs_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
                 }else if(status.equals("1") || status.equals("1.1")){
+                    tv_audit_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
                     tv_repairs_time.setText(result.get(ResponseKey.CHECK_TIME)+"");
+
                 }else if(status.equals("2")){
                     tv_audit_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
-                    tv_repairs_time.setText(result.get(ResponseKey.FENPEI_TIME)+"");
+                    tv_repairs_time.setText(result.get(ResponseKey.CHECK_TIME)+"");
+
                     tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
                 }else if(status.equals("3")){
                     tv_repairs_time.setText(result.get(ResponseKey.BEGIN_TIME)+"");
@@ -376,11 +419,27 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
                 }else if(status.equals("8")){
                     tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
                     tv_repairs_time.setText(result.get(ResponseKey.DONE_TIME)+"");
+                    tv_end_time.setText(result.get(ResponseKey.ETIME)+"");
                 }
 
 
+                if (role.equals("2") || role.equals("3")) {
 
+                    if(status.equals("1")){
+                        tv_serverName.setText((result.get(ResponseKey.WNAME)+"").length()> 0 ? result.get(ResponseKey.WNAME)+"" : "待分配");
+                    }else if (status.equals("1.1")){
+                        tv_serverName.setText(result.get(ResponseKey.NO_PASS_REASON)+"");
+                    }else if(status.equals("3")){
+                        tv_serverName.setText( result.get(ResponseKey.WNAME)+"");
+                    }
+                }
 
+                //取手机号码
+                TelPhoneValidate.onGetTelCode(OrderInfoActivity.this,
+                        result.get(role.equals("1") ? ResponseKey.S_TEL : ResponseKey.TEL )+"",
+                        tv_upTel, R.color.defalut_title_color);
+                TelPhoneValidate.onGetTelCode(OrderInfoActivity.this,
+                        tv_serverName.getText().toString(), tv_serverName, R.color.defalut_title_color);
                 //设置图片
                 String imags = result.get(ResponseKey.IMGS)+"";
                 if (TextUtils.isEmpty(imags) || imags.equals("null")) {
@@ -518,4 +577,6 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
         startOrderDialog = builder.create();
         startOrderDialog.show();
     }
+
+
 }

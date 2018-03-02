@@ -31,6 +31,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:text="资料完整度"
+                android:textSize="@dimen/default_content_size"
                 android:textColor="@color/defalut_title_color"
                 android:background="@drawable/shape_ratio"
                 android:paddingTop="@dimen/default_radius"
@@ -54,20 +55,35 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
+            style="@style/default_text"
             android:text="头像"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
             />
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/defalut_layout_height"
+            >
         <com.example.wsq.android.view.RoundImageView
             android:id="@+id/image_header"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="@dimen/defalut_layout_height"
+
             android:layout_marginRight="10dp"
             imagecontrol:border_outside_color="#E4E4E4"
             imagecontrol:border_inside_color="#FFFFFF"
             imagecontrol:border_thickness="2dp"
             android:src="@drawable/image_header_bg" />
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image_camera_icon"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                />
+        </RelativeLayout>
     </LinearLayout>
 
 
@@ -86,7 +102,7 @@
             android:layout_height="match_parent"
             android:text="用户名"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            style="@style/default_text"
             />
         <TextView
             android:id="@+id/tv_username"
@@ -94,7 +110,8 @@
             android:layout_height="match_parent"
             android:text=""
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
     </LinearLayout>
 
@@ -114,15 +131,15 @@
             android:layout_height="match_parent"
             android:text="真实姓名"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            style="@style/default_text"
             />
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
-            android:textColor="@color/defalut_title_color"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_edit"
             />
     </LinearLayout>
@@ -142,15 +159,17 @@
             android:layout_height="match_parent"
             android:text="性别"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            style="@style/default_text"
             />
         <TextView
             android:id="@+id/tv_sex"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="男"
             android:gravity="center_vertical|right"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
 
             />
 
@@ -177,15 +196,15 @@
             android:layout_height="match_parent"
             android:text="手机号码"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            style="@style/default_text"
             />
         <TextView
             android:id="@+id/tv_tel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="@color/color_gray"
+            android:textColor="#666666"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
             />
 
 
@@ -207,7 +226,7 @@
             android:layout_height="match_parent"
             android:text="学历"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            style="@style/default_text"
             />
         <TextView
             android:id="@+id/tv_xueli"
@@ -216,7 +235,8 @@
             android:layout_height="match_parent"
             android:text="高中及以下"
             android:gravity="center_vertical|right"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             />
         <ImageView
             android:layout_width="15dp"
@@ -242,7 +262,7 @@
                 android:layout_height="match_parent"
                 android:text="期望服务地区"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/default_text_size"
+                style="@style/default_text"
                 />
             <EditText
                 android:id="@+id/et_hope"
@@ -252,7 +272,8 @@
                 android:hint="期望服务地点"
                 android:textColorHint="@color/color_gray"
                 android:gravity="center_vertical|right"
-                android:textSize="@dimen/default_text_size"
+                android:textSize="@dimen/default_content_size"
+                android:textColor="@color/default_content_color_1"
                 android:background="@drawable/shape_edit"
                 android:singleLine="true"
 
@@ -276,17 +297,18 @@
             android:layout_height="match_parent"
             android:text="公司"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            style="@style/default_text"
             />
         <EditText
             android:id="@+id/et_company"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:hint="您所在公司"
+            android:hint="您所服务公司"
             android:textColorHint="@color/color_gray"
             android:gravity="center_vertical|right"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_edit"
             android:singleLine="true"
 
@@ -312,13 +334,14 @@
             android:layout_height="match_parent"
             android:text="部门"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            style="@style/default_text"
             />
         <EditText
             android:id="@+id/et_bumen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_edit"
             android:gravity="center_vertical|right"
             android:singleLine="true"
@@ -342,7 +365,7 @@
                 android:layout_height="match_parent"
                 android:text="企业介绍:"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/default_text_size"
+                style="@style/default_text"
                 />
             <EditText
                 android:id="@+id/et_jieshao"
@@ -350,7 +373,8 @@
                 android:layout_height="80dp"
                 android:hint="企业概况描述"
                 android:textColorHint="@color/color_gray"
-                android:textSize="@dimen/default_text_min_size"
+                android:textSize="@dimen/default_content_size"
+                android:textColor="@color/default_content_color_1"
                 android:background="@drawable/shape_edit_stoken"
                 android:padding="@dimen/default_radius"
                 android:gravity="top"
@@ -382,7 +406,7 @@
                     android:layout_height="match_parent"
                     android:text="技能:"
                     android:gravity="center_vertical"
-                    android:textSize="@dimen/default_text_size"
+                    style="@style/default_text"
                     />
                 <ImageView
                     android:id="@+id/iv_skill_add"
@@ -414,7 +438,7 @@
             android:layout_height="match_parent"
             android:text="邮箱"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            style="@style/default_text"
             />
         <EditText
             android:id="@+id/et_email"
@@ -424,7 +448,8 @@
             android:hint="邮箱 如：12345@qq.com"
             android:textColorHint="@color/color_gray"
             android:gravity="center_vertical|right"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_1"
             android:singleLine="true"
             android:background="@drawable/shape_edit"
 
@@ -439,7 +464,7 @@
         style="@style/default_button"
         android:background="@drawable/shape_userinfo_button"
         android:text="保存资料"
-
+        android:textSize="@dimen/default_button_size"
         />
 
     </LinearLayout>

@@ -28,7 +28,7 @@
                 android:id="@+id/rb_all"
                 android:layout_width="@dimen/defalut_layout_height"
                 android:layout_height="match_parent"
-                android:text="全部"
+                android:text="本月"
                 android:button="@null"
                 android:gravity="center"
                 android:textColor="@drawable/selector_menu_color"
@@ -44,7 +44,7 @@
                 android:id="@+id/rb_cur_month"
                 android:layout_width="@dimen/defalut_layout_height"
                 android:layout_height="match_parent"
-                android:text="本月"
+                android:text="半年"
                 android:button="@null"
                 android:gravity="center"
                 android:textColor="@drawable/selector_menu_color"
@@ -74,30 +74,6 @@
         android:visibility="visible"
         />
 
-    <LinearLayout
-        android:id="@+id/ll_no_Record"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/default_margin"
-        android:orientation="vertical"
-        >
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/image_main_massage"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="您当前没有提现记录"
-            android:textColor="@color/color_gray"
-            android:gravity="center"
-            android:textSize="@dimen/default_text_size"
-            />
-    </LinearLayout>
+    <include layout="@layout/layout_no_data"></include>
 
 </LinearLayout>

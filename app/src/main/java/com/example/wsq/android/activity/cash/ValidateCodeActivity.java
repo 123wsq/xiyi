@@ -3,7 +3,9 @@ package com.example.wsq.android.activity.cash;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -31,12 +33,13 @@ import butterknife.OnClick;
  * Created by wsq on 2017/12/26.
  */
 
-public class ValidateCodeActivity extends BaseActivity {
+public class ValidateCodeActivity extends BaseActivity implements TextWatcher {
 
     @BindView(R.id.tv_getCode)TextView tv_getCode;
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.et_validateCode)
     EditText et_validateCode;
+    @BindView(R.id.tv_submit) TextView tv_submit;
 
     @BindView(R.id.tv_tel) TextView tv_tel;
 
@@ -54,10 +57,15 @@ public class ValidateCodeActivity extends BaseActivity {
     public void init(){
 
         userService = new UserServiceImpl();
-        tv_tel.setText(UserFragment.mUserData.get(ResponseKey.TEL).toString());
-        tv_title.setText("获取验证码");
+        String tel = UserFragment.mUserData.get(ResponseKey.TEL).toString();
+        if (tel.length() > 5) {
+            tv_tel.setText(tel.substring(0, 3)+"****"+tel.substring(tel.length()-4, tel.length()));
+        }
+        tv_title.setText("验证手机号");
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
         dialog = new LoddingDialog(this);
+
+        et_validateCode.addTextChangedListener(this);
     }
 
     @OnClick({R.id.iv_back, R.id.tv_getCode,  R.id.tv_submit})
@@ -93,7 +101,7 @@ public class ValidateCodeActivity extends BaseActivity {
                 tv_getCode.setTextColor(getResources().getColor(R.color.blue));
                 tv_getCode.setClickable(true);
             }else{
-                tv_getCode.setText("请耐心等待 "+curLen+"s");
+                tv_getCode.setText(""+curLen+"秒后重发");
                 tv_getCode.setClickable(false);
 //                tv_getCode.setBackgroundColor(Color.parseColor("#A8A8A8"));
                 tv_getCode.setTextColor(getResources().getColor(R.color.color_gray));
@@ -171,5 +179,23 @@ public class ValidateCodeActivity extends BaseActivity {
         });
 
 
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+        String str = editable.toString();
+        tv_submit.setBackgroundResource(str.length() ==6 ? R.drawable.shape_button : R.drawable.shape_disable_button);
+        tv_submit.setClickable(str.length() ==6 ? true : false);
     }
 }

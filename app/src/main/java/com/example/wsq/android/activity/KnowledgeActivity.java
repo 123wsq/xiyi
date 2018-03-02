@@ -3,6 +3,7 @@ package com.example.wsq.android.activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.view.LoddingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -46,6 +48,14 @@ public class KnowledgeActivity extends BaseActivity {
     LinearLayout ll_nodata;
     @BindView(R.id.store_house_ptr_frame)
     SmartRefreshLayout store_house_ptr_frame;
+
+    @BindView(R.id.iv_refresh_icon)
+    ImageView iv_refresh_icon;
+    @BindView(R.id.tv_content) TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
+
+
     private LoddingDialog dialog;
     private ProductAdapter mAdapter;
     private OrderTaskService orderTaskService;
@@ -73,7 +83,7 @@ public class KnowledgeActivity extends BaseActivity {
         mAdapter = new ProductAdapter(this, mData, Constant.INFO_4);
         rv_RecyclerView.setAdapter(mAdapter);
         getKnowdgeList(null, 0);
-
+        onNotDataLayout();
     }
 
     public void setRefresh(){
@@ -122,13 +132,9 @@ public class KnowledgeActivity extends BaseActivity {
 
                 mData.addAll(list);
 
-                if (mData.size()==0){
-                    rv_RecyclerView.setVisibility(View.GONE);
-                    ll_nodata.setVisibility(View.VISIBLE);
-                }else {
-                    rv_RecyclerView.setVisibility(View.VISIBLE);
-                    ll_nodata.setVisibility(View.GONE);
-                }
+                rv_RecyclerView.setVisibility(mData.size() ==0 ? View.GONE : View.VISIBLE);
+                ll_nodata.setVisibility(mData.size() ==0 ? View.VISIBLE : View.GONE);
+
                 if (type == 1){
                     refreshLayout.finishRefresh();
                 }else if(type ==2 ){
@@ -165,5 +171,19 @@ public class KnowledgeActivity extends BaseActivity {
 
         }
 
+    }
+
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.VISIBLE);
+        tv_refresh.setVisibility(View.VISIBLE);
+        iv_refresh_icon.setImageResource(R.drawable.image_main_massage);
+        tv_content.setText(getResources().getString(R.string.str_not_knowledge_p));
+        tv_no_data.setText(getResources().getString(R.string.str_not_knowledge_refresh));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_refresh_icon.getLayoutParams();
+        params.width = DensityUtil.dp2px(this, 80);
+        params.height = DensityUtil.dp2px(this, 80);
+        iv_refresh_icon.setLayoutParams(params);
     }
 }

@@ -73,12 +73,13 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/defalut_layout_height"
             android:text="积分规则"
-            android:textColor="#262626"
+            android:textColor="@color/default_font_color"
+            android:textSize="@dimen/default_content_size"
             android:background="@drawable/image_radiobutton_selector"
             android:gravity="center"
             android:layout_marginLeft="@dimen/default_margin"
-            android:paddingLeft="@dimen/radius_popup"
-            android:paddingRight="@dimen/radius_popup"
+            android:paddingLeft="@dimen/default_margin"
+            android:paddingRight="@dimen/default_margin"
             />
            <WebView
                android:id="@+id/wv_WebView"
@@ -92,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible"
+                android:background="@color/color_white"
                 />
 
 </LinearLayout>

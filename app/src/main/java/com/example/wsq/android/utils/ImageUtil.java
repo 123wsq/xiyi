@@ -199,7 +199,11 @@ public class ImageUtil {
                                               int size, int color, int paddingLeft, int paddingBottom) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(color);
-        paint.setTextSize(dp2px(context, size));
+        float width = ScreenUtils.getScreenWidth(context)/480;
+        float height = ScreenUtils.getScreenHeight(context)/800;
+        float ratio = Math.min(width, height);
+
+        paint.setTextSize(Math.round(size * ratio));
         Rect bounds = new Rect();
 //        paint.getTextBounds(text, 0, text.length(), bounds);
         return drawTextToBitmap(context, bitmap, text, paint, bounds,

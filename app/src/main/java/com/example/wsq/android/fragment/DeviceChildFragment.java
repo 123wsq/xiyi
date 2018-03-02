@@ -9,9 +9,13 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
@@ -27,6 +31,7 @@ import com.example.wsq.plugin.banner.Transformer;
 import com.example.wsq.plugin.banner.listener.OnBannerListener;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +54,8 @@ public class DeviceChildFragment extends Fragment{
     @BindView(R.id.tv_name) TextView tv_name;
     @BindView(R.id.tv_device) TextView tv_device;
     @BindView(R.id.tv_train) TextView tv_train;
+    @BindView(R.id.webView)
+    WebView webView;
     @BindView(R.id.tv_content) TextView tv_content;
 
     private OrderTaskService orderTaskService;
@@ -122,6 +129,31 @@ public class DeviceChildFragment extends Fragment{
             }
         });
 
+
+        //声明WebSettings子类
+        WebSettings webSettings = webView.getSettings();
+
+        //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
+        webSettings.setJavaScriptEnabled(true);
+
+        //支持插件
+//        webSettings.setPluginsEnabled(true);
+
+        //设置自适应屏幕，两者合用
+        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
+//        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+
+        //缩放操作
+        webSettings.setSupportZoom(false); //支持缩放，默认为true。是下面那个的前提。
+        webSettings.setBuiltInZoomControls(false); //设置内置的缩放控件。若为false，则该WebView不可缩放
+        webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
+
+        //其他细节操作
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
+        webSettings.setAllowFileAccess(true); //设置可以访问文件
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
+        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
+        webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
         getDeviceInfo();
     }
 
@@ -139,11 +171,18 @@ public class DeviceChildFragment extends Fragment{
                 tv_name.setText(result.get(ResponseKey.TITLE).toString());
                 tv_device.setText(result.get(ResponseKey.PINPAI).toString());
                 tv_train.setText(result.get(ResponseKey.XILIE).toString());
-                tv_content.setText(Html.fromHtml(result.get(ResponseKey.CONTENT).toString()));
+                String str = result.get(ResponseKey.CONTENT).toString();
+                Logger.d(str.replace("\\",""));
+                tv_content.setText(Html.fromHtml(str.replace("\\","")));
+
+
+//                iv_device_icon
+//                webView.loadData(result.get(ResponseKey.CONTENT).toString(),"text/html; charset=UTF-8", null);
 //                    tv_content.loadData(result.get(ResponseKey.CONTENT).toString(),"text/html; charset=UTF-8", null);
                 try {
                     JSONArray jsona = new JSONArray(result.get(ResponseKey.IMGS).toString());
                     for (int i=0; i < jsona.length(); i++){
+//                        Glide.with(getActivity()).load(Urls.HOST + Urls.GET_IMAGES + jsona.get(i).toString()).into(iv_device_icon);
                         mImages.add(Urls.HOST+Urls.GET_IMAGES+jsona.get(i).toString());
                         mTitles.add("");
                     }

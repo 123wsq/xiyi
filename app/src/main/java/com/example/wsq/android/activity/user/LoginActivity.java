@@ -100,13 +100,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
         et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-        cb_checkBox.setChecked(true);
+//        cb_checkBox.setChecked(true);
         et_username.setText(shared.getString(Constant.SHARED.USERNAME, ""));
         et_password.setText(shared.getString(Constant.SHARED.PASSWORD, ""));
+
+        boolean isSelect =shared.getString(Constant.SHARED.USERNAME,"").length() > 0 ? true : false;
+        cb_checkBox.setChecked(isSelect);
 
         animationDrawable = (AnimationDrawable) iv_login_anim.getDrawable();
 
 
+        SharedPreferences preferences = getSharedPreferences(Constant.SHARED_FACE, Context.MODE_PRIVATE);
+        Logger.d(preferences.getString(Constant.SHARED.IMG_PATH, "")+"========="+preferences.getInt(Constant.SHARED.TYPE, 0));
     }
 
 
@@ -152,10 +157,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
      */
     public void onLogin() {
 //        dialog.show();
-        btn_login.setVisibility(View.GONE);
-        iv_login_anim.setVisibility(View.VISIBLE);
 
-        btn_login.setVisibility(View.GONE);
         final String username = et_username.getText().toString();
         String password = et_password.getText().toString();
         if (TextUtils.isEmpty(username)){
@@ -167,7 +169,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             return;
         }
 
-
+        btn_login.setVisibility(View.GONE);
+        iv_login_anim.setVisibility(View.VISIBLE);
 
         //检测复选框的状态
         if (cb_checkBox.isChecked()) {

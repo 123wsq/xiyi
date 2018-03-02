@@ -21,14 +21,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="@dimen/radius_popup"
+        android:layout_marginTop="15dp"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/company_name"
         android:gravity="center"
-        android:layout_marginTop="@dimen/default_radius"
+        android:layout_marginTop="15dp"
         />
 
     <LinearLayout
@@ -40,7 +40,7 @@
         android:background="@color/color_white"
         android:gravity="center_vertical"
         android:paddingRight="@dimen/radius_popup"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginTop="34dp"
         >
         <TextView
             android:layout_width="0dp"
@@ -48,11 +48,13 @@
             android:layout_height="match_parent"
             android:text="关于蜥蜴"
             android:gravity="center_vertical"
+            android:textColor="@color/default_font_color"
+            android:textSize="@dimen/default_content_size"
             />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/image_right"/>
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/image_right_next"/>
     </LinearLayout>
 
     <LinearLayout
@@ -72,11 +74,13 @@
             android:layout_height="match_parent"
             android:text="使用条款和隐私政策"
             android:gravity="center_vertical"
+            android:textColor="@color/default_font_color"
+            android:textSize="@dimen/default_content_size"
             />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/image_right"/>
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/image_right_next"/>
     </LinearLayout>
 
 </LinearLayout>

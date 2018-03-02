@@ -34,8 +34,8 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
                     android:text="基本信息"
-                    android:textColor="@color/defalut_title_color"
-                    android:textSize="@dimen/default_text_size" />
+                    android:textColor="@color/default_font_color"
+                    android:textSize="@dimen/default_content_size" />
 
                 <View
                     android:layout_width="match_parent"
@@ -52,11 +52,42 @@
                     android:paddingTop="2dp">
 
                     <TextView
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        android:text="公司名称:" />
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
+                        android:text="订单编号:" />
+
+                    <TextView
+                        android:id="@+id/tv_ordernum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/default_margin"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
+                        android:text="" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/default_margin"
+                        android:text="公司名称:"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
+                        />
 
                     <TextView
                         android:id="@+id/tv_companyName"
@@ -65,6 +96,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
                 <LinearLayout
@@ -78,6 +111,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="服务地址:" />
 
                     <TextView
@@ -87,33 +122,12 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/color_white"
-                    android:orientation="horizontal"
-                    android:paddingTop="2dp">
 
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/default_margin"
-                        android:text="订单编号:" />
-
-                    <TextView
-                        android:id="@+id/tv_ordernum"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/default_margin"
-                        android:gravity="center_vertical|left"
-                        android:paddingLeft="@dimen/default_margin"
-                        android:text="" />
-                </LinearLayout>
 
 
                 <LinearLayout
@@ -128,7 +142,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        android:paddingTop="2dp"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="开始时间:" />
 
                     <TextView
@@ -138,7 +153,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
-                        android:paddingTop="2dp"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -156,7 +172,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        android:text="结束时间:" />
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
+                        android:text="完成时间:" />
 
                     <TextView
                         android:id="@+id/tv_order_end"
@@ -165,6 +183,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -178,8 +198,8 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
                     android:text="维修信息"
-                    android:textColor="@color/defalut_title_color"
-                    android:textSize="@dimen/default_text_size" />
+                    android:textColor="@color/default_font_color"
+                    android:textSize="@dimen/default_content_size" />
 
                 <View
                     android:layout_width="match_parent"
@@ -200,6 +220,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="报修设备:" />
 
                     <TextView
@@ -209,6 +231,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -225,6 +249,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="出厂编号:" />
 
                     <TextView
@@ -234,6 +260,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -251,6 +279,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="故障描述:" />
 
                     <TextView
@@ -260,6 +290,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -272,8 +304,8 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
                     android:text="故障照片/视频"
-                    android:textColor="@color/defalut_title_color"
-                    android:textSize="@dimen/default_text_size" />
+                    android:textColor="@color/default_font_color"
+                    android:textSize="@dimen/default_content_size" />
 
                 <View
                     android:layout_width="match_parent"
@@ -298,8 +330,8 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
                     android:text="服务信息"
-                    android:textColor="@color/defalut_title_color"
-                    android:textSize="@dimen/default_text_size" />
+                    android:textColor="@color/default_font_color"
+                    android:textSize="@dimen/default_content_size" />
 
                 <View
                     android:layout_width="match_parent"
@@ -319,7 +351,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        android:paddingTop="@dimen/radius_popup"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="服务地点:" />
 
                     <TextView
@@ -329,7 +362,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
-                        android:paddingTop="@dimen/radius_popup"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -347,7 +381,10 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        android:text="服务内容及结果:" />
+                        android:text="服务内容及结果:"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
+                        />
 
                     <TextView
                         android:id="@+id/tv_server_content"
@@ -356,6 +393,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -373,6 +412,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="遗留问题:" />
 
                     <TextView
@@ -382,6 +423,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -395,8 +438,8 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
                     android:text="现场服务照片/视频"
-                    android:textColor="@color/defalut_title_color"
-                    android:textSize="@dimen/default_text_size" />
+                    android:textColor="@color/default_font_color"
+                    android:textSize="@dimen/default_content_size" />
 
                 <View
                     android:layout_width="match_parent"
@@ -421,9 +464,9 @@
                     android:background="@color/color_white"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/default_margin"
-                    android:text="其他信息"
-                    android:textColor="@color/defalut_title_color"
-                    android:textSize="@dimen/default_text_size" />
+                    android:text="其它信息"
+                    android:textColor="@color/default_font_color"
+                    android:textSize="@dimen/default_content_size" />
 
                 <View
                     android:layout_width="match_parent"
@@ -443,7 +486,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        android:paddingTop="@dimen/radius_popup"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="现场联系人:" />
 
                     <TextView
@@ -453,7 +497,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
-                        android:paddingTop="@dimen/radius_popup"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -471,6 +516,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="手机:" />
 
                     <TextView
@@ -480,7 +527,8 @@
                         android:layout_marginRight="@dimen/default_margin"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="@dimen/default_margin"
-                        android:autoLink="phone"
+                        android:textSize="@dimen/default_list_item_content_size"
+                        android:textColor="@color/default_content_color_1"
                         android:text="" />
                 </LinearLayout>
 
@@ -493,15 +541,16 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_fee"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/default_height_min"
                         android:layout_marginTop="@dimen/default_margin"
                         android:background="@color/color_white"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/default_margin"
-                        android:text="服务费用"
-                        android:textColor="@color/defalut_title_color"
-                        android:textSize="@dimen/default_text_size" />
+                        android:text="预估费用"
+                        android:textColor="@color/default_font_color"
+                        android:textSize="@dimen/default_content_size" />
 
                     <View
                         android:layout_width="match_parent"
@@ -522,6 +571,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="差旅费:" />
 
                         <TextView
@@ -531,6 +582,8 @@
                             android:layout_marginRight="@dimen/default_margin"
                             android:gravity="center_vertical|left"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="" />
                     </LinearLayout>
 
@@ -547,6 +600,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="服务费:" />
 
                         <TextView
@@ -556,6 +611,8 @@
                             android:layout_marginRight="@dimen/default_margin"
                             android:gravity="center_vertical|left"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="" />
                     </LinearLayout>
 
@@ -571,6 +628,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="备件费:" />
 
                         <TextView
@@ -580,6 +639,8 @@
                             android:layout_marginRight="@dimen/default_margin"
                             android:gravity="center_vertical|left"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="" />
                     </LinearLayout>
 
@@ -595,6 +656,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="其它费:" />
 
                         <TextView
@@ -604,6 +667,8 @@
                             android:layout_marginRight="@dimen/default_margin"
                             android:gravity="center_vertical|left"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="" />
                     </LinearLayout>
 
@@ -622,6 +687,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="总费用:" />
 
                         <TextView
@@ -631,6 +698,8 @@
                             android:layout_marginRight="@dimen/default_margin"
                             android:gravity="center_vertical|left"
                             android:paddingLeft="@dimen/default_margin"
+                            android:textSize="@dimen/default_list_item_content_size"
+                            android:textColor="@color/default_content_color_1"
                             android:text="" />
                     </LinearLayout>
 

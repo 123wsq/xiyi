@@ -77,16 +77,17 @@ dependencies {
     implementation project(':picture')
     compile 'com.orhanobut:logger:1.15'
     implementation project(':tag')
-//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-5'
-//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-5'
+    //    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-5'
+    //    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-5'
     //没有使用特殊Header，可以不加这行
     //    compile 'com.github.xiaoyanger0825:NiceVieoPlayer:v2.2'
     //    implementation project(':vitamio')
     //Android视频录制与压缩
-//    compile 'com.mabeijianxi:small-video-record:1.2.2'
+    //    compile 'com.mabeijianxi:small-video-record:1.2.2'
     compile 'com.android.support:multidex:1.0.1'
     implementation files('libs/jmessage-android_v2.4.1.jar')
-    compile 'com.lidong.pdf:android_pdf:1.0.1'
+    //    compile 'com.lidong.pdf:android_pdf:1.0.1'
+    compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
     compile 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
     //富文本
     //刷新等

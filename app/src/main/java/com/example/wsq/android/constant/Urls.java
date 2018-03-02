@@ -12,7 +12,9 @@ public class Urls {
     //协议
     public static final String HOST = BuildConfig.DEBUG ? "http://www.lizardcontrol.com/": "http://xiyicontrol.com";
 //    public static final String HOST = MApplication.DEBUG ? "http://www.lizardcontrol.com/": "http://xiyicontrol.com";
+//    public static final String HOST= "http://xiyicontrol.com";
 
+    public static final String  PROTOCOLS = "/api/xieyi";
     //登录
     public static final String LOGIN = "/api/doLogin";
 
@@ -65,6 +67,11 @@ public class Urls {
 
     //图片上传之后的下载路径
     public static final String GET_IMAGES = "/uploads/images/";
+
+    /**
+     * 下载appstyle
+     */
+    public static final String GET_FILE = "/uploads/packimg/";
 
     //获取资料列表
     public static final String GET_PRODUCT = "/api/share";
@@ -257,5 +264,10 @@ public class Urls {
      * 轮播图
      */
     public static final String  BANNER_PLAY= "/api/imgConfig";
+
+    /**
+     * 换肤路径
+     */
+    public static final String PACKAGE_CONFIG= "/api/packConfig";
 
 }

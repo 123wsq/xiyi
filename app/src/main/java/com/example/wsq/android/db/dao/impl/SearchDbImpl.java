@@ -70,4 +70,11 @@ public class SearchDbImpl implements SearchDbInter{
 
         db.delete(DbHelper.TABLE_SEARCH, DbKeys.CONTENT+"=?", new String[]{content});
     }
+
+    @Override
+    public void onClearAll(Context context) {
+        helper = new DbHelper(context);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(DbHelper.TABLE_SEARCH, null, null);
+    }
 }

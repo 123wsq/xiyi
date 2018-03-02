@@ -58,15 +58,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         if (shared.getString(Constant.SHARED.JUESE,"").equals("1")){
             if (status.equals("2")){
                 holder.tv_status.setText("已分配");
-                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.defalut_title_color));
-                holder.view.setBackgroundColor(mContext.getResources().getColor(R.color.defalut_title_color));
+                holder.tv_status.setTextColor(Color.parseColor("#1fa301"));
+                holder.view.setBackgroundColor(Color.parseColor("#1fa301"));
                 holder.tv_time_name.setText("分配时间");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.FENPEI_TIME)+"");
 
             }else if (status.equals("3")){
                 holder.tv_status.setText("处理中");
-                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.default_font_color));
-                holder.view.setBackgroundColor(mContext.getResources().getColor(R.color.default_font_color));
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.defalut_title_color));
+                holder.view.setBackgroundColor(mContext.getResources().getColor(R.color.defalut_title_color));
                 holder.tv_time_name.setText("开始时间");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.BEGIN_TIME)+"");
             }else if (status.equals("4")){
@@ -85,38 +85,38 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 holder.tv_status.setText("已提交完成反馈(待审核)");
                 holder.tv_time_name.setText("完成时间");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.OVER_TIME)+"");
-                holder.tv_status.setTextColor(Color.RED);
-                holder.view.setBackgroundColor(Color.RED);
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.default_red));
+                holder.view.setBackgroundColor(mContext.getResources().getColor(R.color.default_red));
             }else if (status.equals("6.1")){
                 holder.tv_status.setText("重写完成反馈(需重写)");
                 holder.tv_time_name.setText("完成时间");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.OVER_TIME)+"");
-                holder.tv_status.setTextColor(Color.RED);
-                holder.view.setBackgroundColor(Color.RED);
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.default_red));
+                holder.view.setBackgroundColor(mContext.getResources().getColor(R.color.default_red));
             }else if (status.equals("7")){
-                holder.tv_status.setText("已提交移交反馈");
+                holder.tv_status.setText("已提交移交反馈(待审核)");
                 holder.tv_time_name.setText("完成时间");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.OVER_TIME)+"");
-                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.default_font_color));
-                holder.view.setBackgroundColor(mContext.getResources().getColor(R.color.default_font_color));
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.default_red));
+                holder.view.setBackgroundColor(mContext.getResources().getColor(R.color.default_red));
             }else if (status.equals("7.1")){
                 holder.tv_status.setText("重写移交反馈报告(待审核)");
                 holder.tv_time_name.setText("完成时间");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.OVER_TIME)+"");
-                holder.tv_status.setTextColor(Color.parseColor("#2DC229"));
-                holder.view.setBackgroundColor(Color.parseColor("#2DC229"));
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.default_red));
+                holder.view.setBackgroundColor(mContext.getResources().getColor(R.color.default_red));
             }else if (status.equals("8")){
                 holder.tv_status.setText("已结束");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.ETIME)+"");
                 holder.tv_time_name.setText("结束时间");
-                holder.tv_status.setTextColor(Color.parseColor("#2DC229"));
-                holder.view.setBackgroundColor(Color.parseColor("#2DC229"));
+                holder.tv_status.setTextColor(Color.parseColor("#1fa301"));
+                holder.view.setBackgroundColor(Color.parseColor("#1fa301"));
             }else if (status.equals("8.1") || status.equals("8.2")){
                 holder.tv_status.setText("已完成");
                 holder.tv_time_name.setText("结束时间");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.ETIME)+"");
-                holder.tv_status.setTextColor(Color.parseColor("#2DC229"));
-                holder.view.setBackgroundColor(Color.parseColor("#2DC229"));
+                holder.tv_status.setTextColor(Color.parseColor("#1fa301"));
+                holder.view.setBackgroundColor(Color.parseColor("#1fa301"));
             }
         }else if(shared.getString(Constant.SHARED.JUESE,"").equals("2")
                 || shared.getString(Constant.SHARED.JUESE,"").equals("3")){
@@ -137,8 +137,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 holder.tv_status.setText("已通过");
                 holder.tv_time_name.setText("审核时间");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.CHECK_TIME)+"");
-                holder.tv_status.setTextColor(Color.parseColor("#2DC229"));
-                holder.view.setBackgroundColor(Color.parseColor("#2DC229"));
+                holder.tv_status.setTextColor(Color.parseColor("#1fa301"));
+                holder.view.setBackgroundColor(Color.parseColor("#1fa301"));
             }else if (status.equals("1.1")){
                 holder.tv_status.setText("未通过");
                 holder.tv_time_name.setText("审核时间");
@@ -152,11 +152,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.defalut_title_color));
                 holder.view.setBackgroundColor(mContext.getResources().getColor(R.color.defalut_title_color));
             }else if (status.equals("8")){
-                holder.tv_status.setText("完成");
+                holder.tv_status.setText("已完成");
                 holder.tv_time_name.setText("结束时间");
                 holder.tv_time.setText(mData.get(position).get(ResponseKey.DONETIME)+"");
-                holder.tv_status.setTextColor(Color.parseColor("#2DC229"));
-                holder.view.setBackgroundColor(Color.parseColor("#2DC229"));
+                holder.tv_status.setTextColor(Color.parseColor("#1fa301"));
+                holder.view.setBackgroundColor(Color.parseColor("#1fa301"));
             }
         }
 

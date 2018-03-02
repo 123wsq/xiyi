@@ -1,14 +1,18 @@
 package com.example.wsq.android.service.impl;
 
 import android.content.Context;
+import android.os.Environment;
 import android.widget.Toast;
 
 import com.example.wsq.android.activity.user.LoginActivity;
+import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.HttpResponseListener;
+import com.example.wsq.android.inter.OnDownloadListener;
 import com.example.wsq.android.service.UserService;
+import com.example.wsq.android.tools.AppImageLoad;
 import com.example.wsq.android.tools.OkHttpRequest;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.IntentFormat;
@@ -17,6 +21,7 @@ import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateParam;
 import com.orhanobut.logger.Logger;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -1430,6 +1435,69 @@ public class UserServiceImpl implements UserService{
                 listener.onFailure();
             }
 
+        }
+    }
+
+    /**
+     * 检查更新app的显示样式
+     * @param context
+     * @param param
+     * @param listener
+     */
+    @Override
+    public void onCheckAppStyle(final Context context, Map<String, String> param, final HttpResponseListener listener) {
+        try {
+            //必填参数验证
+            ValidateParam.validateParam(param, ResponseKey.DEVICE_TYPE);
+
+            OkHttpRequest.sendHttpPost(Urls.PACKAGE_CONFIG, param,  new HttpResponseCallBack(){
+                @Override
+                public void callBack(Map<String, Object> result) {
+
+                    if (listener != null) {
+                        listener.onSuccess(result);
+                    }
+                }
+
+                @Override
+                public void onCallFail(String msg) {
+                    onExitApp(context, msg);
+                    if (listener != null) {
+                        listener.onFailure();
+                    }
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
+            if (listener != null) {
+                listener.onFailure();
+            }
+
+        }
+    }
+
+    @Override
+    public void onDownloadFile(Context context, String path, Map<String, String> param, OnDownloadListener listener) {
+
+        String url = Urls.HOST + Urls.GET_FILE + path;
+        String dir = Constant.FILE_PATH;
+        int num = url.lastIndexOf("/");
+        OkHttpRequest.onDownloadFile(url, null, dir, url.substring(num+1), listener);
+    }
+
+    @Override
+    public void onDownloadPDF(Context context, String path, Map<String, String> param, OnDownloadListener listener) {
+
+        String url = path;
+        String dir = Constant.PDF_PATH;
+        int num = url.lastIndexOf("/");
+        String fileName = url.substring(num + 1);
+        File file = new File(dir + fileName);
+        if (file.exists()) {
+            listener.onSuccess(file);
+        } else{
+            OkHttpRequest.onDownloadFile(url, null, dir, fileName, listener);
         }
     }
 

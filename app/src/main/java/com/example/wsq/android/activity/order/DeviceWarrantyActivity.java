@@ -1,5 +1,6 @@
 package com.example.wsq.android.activity.order;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.medialib.video.VideoPlayActivity;
 import com.example.wsq.android.R;
+import com.example.wsq.android.activity.user.UserInfoActivity;
 import com.example.wsq.android.adapter.UploadAdapter;
 import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.bean.CameraBean;
@@ -59,6 +61,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
+import me.weyye.hipermission.PermissionItem;
 
 
 /**
@@ -103,7 +108,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
         deviceTaskService = new OrderTaskServiceImpl();
 
 
-        tv_title.setText("设备维修");
+        tv_title.setText("设备报修");
 
         dialog = new LoddingDialog(this);
         mData = new ArrayList<>();
@@ -189,8 +194,6 @@ public class DeviceWarrantyActivity extends BaseActivity {
             @Override
             public void onClickItemListener(int position, String result) {
                 //包括裁剪和压缩后的缓存，要在上传成功后调用，注意：需要系统sd卡权限
-                PictureFileUtils.deleteCacheDirFile(DeviceWarrantyActivity.this);
-//                FunctionOptions.Builder builder = new FunctionOptions.Builder();
                 switch (position){
                     case 0: //相册
 
@@ -203,7 +206,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
                                 .previewImage(true)
 
                                 .compress(true)// 是否压缩 true or false
-                                .minimumCompressSize(70)// 小于100kb的图片不压缩
+                                .minimumCompressSize(50)// 小于100kb的图片不压缩
                                 .forResult(RESULT_IMAGE);
                         break;
                     case 1: //相机
@@ -212,7 +215,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
                                 .openCamera(PictureMimeType.ofImage())
                                 .imageFormat(PictureMimeType.JPEG)
                                 .compress(true)// 是否压缩 true or false
-                                .minimumCompressSize(100)// 小于100kb的图片不压缩
+                                .minimumCompressSize(50)// 小于100kb的图片不压缩
                                 .forResult(RESULT_IMAGE);
 
                         break;
@@ -224,7 +227,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
                                 .recordVideoSecond(10)//视频秒数录制 默认60s int
                                 .videoQuality(0)
                                 .rotateEnabled(false)
-                                .cropCompressQuality(70)
+                                .cropCompressQuality(50)
                                 .forResult(RESULT_VIDEO);
 
                         break;
@@ -237,7 +240,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
                                 .compress(true)
                                 .isCamera(false)
                                 .videoQuality(0)
-                                .cropCompressQuality(70)
+                                .cropCompressQuality(50)
                                 .compress(true)// 是否压缩 true or false
                                 .forResult(RESULT_VIDEO);
                         break;
@@ -246,6 +249,8 @@ public class DeviceWarrantyActivity extends BaseActivity {
                 popup.dismiss();
             }
         });
+        popup.setTextColor("#0168D2");
+        popup.setTitle("请选择");
     }
 
     @OnClick({R.id.iv_back, R.id.tv_repairs})
@@ -272,7 +277,8 @@ public class DeviceWarrantyActivity extends BaseActivity {
 
         CameraBean bean = mData.get(position);
         if (bean.getType() == 1){
-            popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+            onRequestPermission();
+
 
         }else if(bean.getType() == 2){
 
@@ -382,10 +388,11 @@ public class DeviceWarrantyActivity extends BaseActivity {
             for (int i =0 ; i< list.size(); i ++) {
                 CameraBean bean = new CameraBean();
                 String path = list.get(i).isCompressed() ? list.get(i).getCompressPath() : list.get(i).getPath();
+
                 File f = new File(path);
                 if (f.exists() && type == 2) {
                     bean.setFile_path(onBitmapCompress(path));
-                } else {
+                } else { //视频
                     bean.setFile_path(path);
                 }
 
@@ -419,11 +426,11 @@ public class DeviceWarrantyActivity extends BaseActivity {
                 new String[]{ shared.getString(Constant.SHARED.LOCATION, ""), DateUtil.onDateFormat(DateUtil.DATA_FORMAT)},
                 20, Color.RED, 20, 10);
         //只对图片进行质量压缩
-//        Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 200);
+        Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 100);
         //对图片进行大小 质量压缩
-        Bitmap commBitmap = ImageUtil.zoomImage(newBitmap, ScreenUtils.getScreenWidth(this),ScreenUtils.getScreenHeight(this), 200);
+//        Bitmap commBitmap = ImageUtil.zoomImage(newBitmap, ScreenUtils.getScreenWidth(this),ScreenUtils.getScreenHeight(this), 100);
         File file = BitmapUtils.saveImage(commBitmap);
-//                        String savePath = BitmapUtils.addBitmapWatermark(DeviceWarrantyActivity.this, path);
+//       String savePath = BitmapUtils.addBitmapWatermark(DeviceWarrantyActivity.this, path);
         return file.getAbsolutePath();
     }
 
@@ -614,4 +621,43 @@ public class DeviceWarrantyActivity extends BaseActivity {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
     }
+
+    public void onRequestPermission(){//READ_PHONE_STATE
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, READ_PHONE_STATE);
+//            } else {
+//                onValidatePhone();
+//            }
+//        }
+        List<PermissionItem> permissions = new ArrayList<PermissionItem>();
+        permissions.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "手机权限", R.drawable.permission_ic_phone));
+        permissions.add(new PermissionItem(Manifest.permission.READ_EXTERNAL_STORAGE, "手机权限", R.drawable.permission_ic_phone));
+        HiPermission.create(this).permissions(permissions).checkMutiPermission(new PermissionCallback() {
+            @Override
+            public void onClose() {
+                Logger.d("用户关闭权限申请");
+                finish();
+            }
+
+            @Override
+            public void onFinish() {
+                popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+//                Logger.d("所有权限申请完成");
+
+            }
+
+            @Override
+            public void onDeny(String permission, int position) {
+
+            }
+
+            @Override
+            public void onGuarantee(String permission, int position) {
+
+            }
+        });
+    }
+
+
 }

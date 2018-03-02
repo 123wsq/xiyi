@@ -9,7 +9,7 @@
     <RadioGroup
         android:id="@+id/rg_group"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="70dp"
         android:orientation="horizontal"
         android:gravity="center"
         android:background="@color/color_white"
@@ -25,8 +25,8 @@
             android:text="未审核"
             android:button="@null"
             android:gravity="center"
-            android:textSize="@dimen/default_radiobutton_font_size"
-            android:textColor="@drawable/selector_menu_color"
+            android:textSize="@dimen/default_list_item_content_size"
+            android:textColor="@color/default_font_color"
             android:background="@drawable/selector_radiobutton"
 
             />
@@ -41,8 +41,8 @@
             android:text="已审核"
             android:button="@null"
             android:gravity="center"
-            android:textSize="@dimen/default_radiobutton_font_size"
-            android:textColor="@drawable/selector_menu_color"
+            android:textSize="@dimen/default_list_item_content_size"
+            android:textColor="@color/default_font_color"
             android:background="@drawable/selector_radiobutton"
             />
         <RadioButton
@@ -55,8 +55,8 @@
             android:text="处理中"
             android:button="@null"
             android:gravity="center"
-            android:textSize="@dimen/default_radiobutton_font_size"
-            android:textColor="@drawable/selector_menu_color"
+            android:textSize="@dimen/default_list_item_content_size"
+            android:textColor="@color/default_font_color"
             android:background="@drawable/selector_radiobutton"
             />
 
@@ -69,8 +69,8 @@
             android:layout_marginTop="@dimen/default_radius"
             android:paddingBottom="@dimen/default_radius"
             android:gravity="center"
-            android:textSize="@dimen/default_radiobutton_font_size"
-            android:textColor="@drawable/selector_menu_color"
+            android:textSize="@dimen/default_list_item_content_size"
+            android:textColor="@color/default_font_color"
             android:background="@drawable/selector_radiobutton"
             android:text="已完成" />
 

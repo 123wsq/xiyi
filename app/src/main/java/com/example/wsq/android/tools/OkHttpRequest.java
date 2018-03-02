@@ -7,8 +7,10 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.OnDownloadListener;
+import com.example.wsq.android.utils.FileUtil;
 import com.example.wsq.android.utils.MD5Util;
 import com.example.wsq.android.utils.ParamFormat;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.UnicodeUtil;
 import com.example.wsq.plugin.okhttp.CallBackUtil;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
@@ -17,6 +19,7 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONArray;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -200,7 +203,6 @@ public class OkHttpRequest {
             public void onResponse(String response) {
 
                 String result = UnicodeUtil.unicodeToString(response);
-
                 Logger.d(response);
 //                Logger.json(result);
                 try {
@@ -249,7 +251,7 @@ public class OkHttpRequest {
             @Override
             public void onResponse(String response) {
                 String result = UnicodeUtil.unicodeToString(response);
-               Logger.json(result);
+               Logger.d(result);
                 try {
                     Map<String, Object> map = ParamFormat.onJsonToMap(result);
                     callBack.callBack(map);
@@ -484,9 +486,9 @@ public class OkHttpRequest {
     }
 
 
-    public void onDownloadFile(String url, Map<String, String> param, String dir, String fileName, final OnDownloadListener listener){
+    public static void onDownloadFile(String url, Map<String, String> param, String dir, String fileName, final OnDownloadListener listener){
 
-
+        Logger.d("下载路径： "+url);
         OkhttpUtil.okHttpDownloadFile(url, param, new CallBackUtil.CallBackFile(dir, fileName) {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -495,6 +497,7 @@ public class OkHttpRequest {
 
             @Override
             public void onResponse(File response) {
+                if (response==null) return;
                 if (response.exists()){
                     Logger.d("文件名称： "+response.getName()+"\n保存路径："+response.getAbsolutePath());
                     listener.onSuccess(response);

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/default_backgroud_color"
+    android:background="@color/color_white"
     android:fitsSystemWindows="true"
     >
     <LinearLayout
@@ -91,13 +91,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/default_margin"
+
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/radius_popup"
+            android:layout_marginLeft="@dimen/default_margin"
             android:text="搜索历史"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="#565656"
             />
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="1dp"/>
+
+        </LinearLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_search_Record"
             android:layout_width="match_parent"
@@ -105,6 +121,26 @@
             android:layout_marginTop="@dimen/radius_popup"
             android:background="@color/color_white"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/default_margin"
+            >
+
+            <TextView
+                android:id="@+id/tv_clear_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="清空搜索历史"
+                android:layout_marginRight="@dimen/default_margin"
+                android:textSize="@dimen/default_content_size"
+                android:textColor="#565656"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

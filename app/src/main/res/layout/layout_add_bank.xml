@@ -20,14 +20,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="仅支持"
-        android:textSize="@dimen/default_text_size"
+        android:textSize="@dimen/default_title_size"
+        android:textColor="@color/default_font_color"
         />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="【中国工商银行】"
-            android:textColor="@color/RED"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_title_size"
+            android:textColor="@color/default_red"
             />
     </LinearLayout>
     <LinearLayout
@@ -37,19 +38,26 @@
         android:layout_marginTop="@dimen/default_radius"
         android:paddingLeft="@dimen/default_margin"
         android:paddingRight="@dimen/default_margin"
+        android:orientation="horizontal"
         >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="持卡人"
-            android:gravity="center"
+            android:gravity="left|center"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_font_color"
             />
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="match_parent"
-            android:gravity="right|center_vertical"
-            android:text=""
+            android:gravity="center_vertical"
+            android:text="111"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_font_color"
             />
 
     </LinearLayout>
@@ -61,23 +69,35 @@
         android:layout_marginTop="1dp"
         android:paddingLeft="@dimen/default_margin"
         android:paddingRight="@dimen/default_margin"
-
+        android:orientation="horizontal"
         >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="卡号："
-            android:gravity="center"
+            android:text="卡号"
+            android:gravity="left|center"
             android:drawableRight="@drawable/image_important"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_font_color"
             />
+
+        </LinearLayout>
         <EditText
             android:id="@+id/et_backcode"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="match_parent"
-            android:gravity="right|center_vertical"
+            android:gravity="center_vertical"
             android:text=""
             android:inputType="number"
             android:background="@drawable/shape_edit"
+            android:hint="无需网银/免手续费"
+            android:textSize="@dimen/default_list_item_content_size"
+            android:textColorHint="@color/default_content_color_2"
             />
 
     </LinearLayout>
@@ -104,16 +124,20 @@
         android:paddingRight="@dimen/default_margin"
         >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="卡类型："
-            android:gravity="center"
+            android:text="卡类型"
+            android:gravity="left|center"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_font_color"
             />
         <TextView
             android:id="@+id/tv_card_type"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="match_parent"
-            android:gravity="right|center_vertical"
+            android:gravity="center_vertical"
             android:text=""
             />
 
@@ -128,17 +152,23 @@
         android:paddingRight="@dimen/default_margin"
         >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="手机号"
-            android:gravity="center"
+            android:gravity="left|center"
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_font_color"
             />
         <TextView
             android:id="@+id/tv_tel"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="match_parent"
-            android:gravity="right|center_vertical"
+            android:gravity="center_vertical"
             android:text=""
+            android:textSize="@dimen/default_content_size"
+            android:textColor="@color/default_content_color_2"
             />
 
     </LinearLayout>

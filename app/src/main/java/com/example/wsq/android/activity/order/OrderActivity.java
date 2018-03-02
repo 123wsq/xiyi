@@ -252,16 +252,16 @@ public class OrderActivity extends FragmentActivity implements ViewPager.OnPageC
     public void setIcon(){
         if (shared.getString(Constant.SHARED.JUESE, "").equals("1")) {
 
-            AppImageView.onRadioButton(this, rb_fllocation, R.drawable.image_my_approved,22, 22);
-            AppImageView.onRadioButton(this, rb_progress, R.drawable.image_clz,18, 22);
-            AppImageView.onRadioButton(this, rb_feedback, R.drawable.image_feedback,22, 22);
-            AppImageView.onRadioButton(this, rb_finish_s, R.drawable.image_tab_finish,22, 22);
+            AppImageView.onRadioButton(this, rb_fllocation, R.drawable.image_my_approved,30, 30);
+            AppImageView.onRadioButton(this, rb_progress, R.drawable.image_clz,30, 30);
+            AppImageView.onRadioButton(this, rb_feedback, R.drawable.image_feedback,30, 30);
+            AppImageView.onRadioButton(this, rb_finish_s, R.drawable.image_tab_finish,30, 30);
         }else {
             //企业-管理工程师
-            AppImageView.onRadioButton(this, rb_unfinsh, R.drawable.image_tab_untreated,22, 22);
-            AppImageView.onRadioButton(this, rb_finish, R.drawable.image_tab_treated,22, 22);
-            AppImageView.onRadioButton(this, rb_dispose, R.drawable.image_clz,18, 22);
-            AppImageView.onRadioButton(this, rb_order, R.drawable.image_tab_finish,22, 22);
+            AppImageView.onRadioButton(this, rb_unfinsh, R.drawable.image_tab_untreated,30, 30);
+            AppImageView.onRadioButton(this, rb_finish, R.drawable.image_tab_treated,30, 30);
+            AppImageView.onRadioButton(this, rb_dispose, R.drawable.image_clz,30, 30);
+            AppImageView.onRadioButton(this, rb_order, R.drawable.image_tab_finish,30, 30);
         }
     }
 

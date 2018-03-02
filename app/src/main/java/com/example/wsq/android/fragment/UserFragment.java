@@ -59,6 +59,8 @@ import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.AppImageLoad;
 import com.example.wsq.android.tools.AppImageView;
 import com.example.wsq.android.tools.JGIM;
+import com.example.wsq.android.tools.ShowDialog;
+import com.example.wsq.android.utils.AmountUtils;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateParam;
@@ -114,6 +116,9 @@ public class UserFragment extends Fragment {
     @BindView(R.id.tv_integral) TextView tv_integral;
     @BindView(R.id.tv_quit) TextView tv_quit;
     @BindView(R.id.view_point) View view_point;
+    @BindView(R.id.ll_integral_shopping) LinearLayout ll_integral_shopping;
+
+
     public static final String FLAG_ORDER_KEY = "flag_order";
     private Map<String, Object> orderMap;
     private UserService userService;
@@ -166,9 +171,8 @@ public class UserFragment extends Fragment {
 
         String sRole = shared.getString(Constant.SHARED.JUESE,"0");
 
-        if (sRole.equals("1")){
-            ll_sign_integral.setVisibility(View.VISIBLE);
-        }
+        ll_sign_integral.setVisibility(sRole.equals("1") ? View.VISIBLE : View.GONE);
+        ll_integral_shopping.setVisibility(sRole.equals("1") ? View.VISIBLE: View.GONE);
         view_point.setVisibility(shared.getBoolean(Constant.SHARED.MESSAGE, false) ? View.VISIBLE : View.GONE);
     }
 
@@ -226,7 +230,7 @@ public class UserFragment extends Fragment {
                     String strSex = result.get(ResponseKey.SEX)+"";
                     if(!ValidateParam.validateParamIsNull(strSex)){
                         int sex = Integer.parseInt(strSex);
-                        tv_sex.setText(Constant.SEX[sex-1]);
+                        tv_sex.setText(Constant.SEX[sex-1]+"!");
                     }
 
 
@@ -237,11 +241,11 @@ public class UserFragment extends Fragment {
                         tv_role.setText(Constant.ROLE[role-1]);
                     }
                     //设置积分
-                    tv_integral.setText("积分 "+result.get(ResponseKey.MEMBER_POINTS)+" 分");
+                    tv_integral.setText("积分： "+result.get(ResponseKey.MEMBER_POINTS)+" 分");
                     //账单
-                    tv_pay_num.setText(result.get(ResponseKey.CACH_COUNT)+"");
-                    tv_money.setText(result.get(ResponseKey.MONEY)+"");
-                    tv_money_amount.setText(result.get(ResponseKey.MONEY_AMOUNT)+"");
+                    tv_pay_num.setText(AmountUtils.changeY2Y(result.get(ResponseKey.CACH_COUNT)+""));
+                    tv_money.setText(AmountUtils.changeY2Y(result.get(ResponseKey.MONEY)+""));
+                    tv_money_amount.setText(AmountUtils.changeY2Y(result.get(ResponseKey.MONEY_AMOUNT)+""));
                     break;
             }
         }
@@ -255,7 +259,7 @@ public class UserFragment extends Fragment {
             R.id.ll_password, R.id.ll_about, R.id.ll_fault, R.id.ll_collect,R.id.ll_manager_shared,
             R.id.ll_manager_upload, R.id.ll_device_knowledge, R.id.ll_balance, R.id.ll_pay_Record,
             R.id.tv_sign, R.id.ll_iv_integral, R.id.roundImage_header, R.id.ll_receipts, R.id.iv_message,
-            R.id.iv_setting})
+            R.id.iv_setting, R.id.ll_integral_shopping})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_setting:
@@ -336,13 +340,13 @@ public class UserFragment extends Fragment {
                 orderMap.put(FLAG_ORDER_KEY, 8);
                 IntentFormat.startActivity(getActivity(), OrderActivity.class, orderMap);
                 break;
-            case R.id.ll_receipts:
+            case R.id.ll_receipts://收入
                 IntentFormat.startActivity(getActivity(), ReceiptsActivity.class);
                 break;
             case R.id.ll_balance:  //余额
                 IntentFormat.startActivity(getActivity(), BalanceActivity.class);
                 break;
-            case R.id.ll_pay_Record: //账单
+            case R.id.ll_pay_Record: //提现
                 IntentFormat.startActivity(getActivity(), BillDetailsActivity.class);
                 break;
             case R.id.ll_device_assert:  //我要报修
@@ -426,6 +430,14 @@ public class UserFragment extends Fragment {
                 break;
             case R.id.ll_iv_integral:  //我的积分
                 IntentFormat.startActivity(getActivity(), IntegralActivity.class);
+                break;
+            case R.id.ll_integral_shopping:
+                ShowDialog.onShowDialog(getActivity(), "好的", "", "提示", "活动尚未开启，敬请期待！", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }, null);
                 break;
 
         }
@@ -547,42 +559,67 @@ public class UserFragment extends Fragment {
     }
 
     public void setIcon(){
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constant.SHARED_FACE, Context.MODE_PRIVATE);
+        String path = preferences.getString(Constant.SHARED.IMG_PATH,"");
         if (shared.getString(Constant.SHARED.JUESE, "").equals("1")) {
             //服务工程师订单
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_fllocation), "image_my_approved.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_progress), "image_clz_s.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_feedback), "image_feedback.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_server_finish), "image_tab_finish.png");
+            ((ImageView) getActivity().findViewById(R.id.iv_device_report)).setImageResource(R.drawable.image_write);
+            ((ImageView) getActivity().findViewById(R.id.iv_device_bank_code)).setImageResource(R.drawable.image_tab_bank);
+            ((ImageView) getActivity().findViewById(R.id.iv_device_server_share)).setImageResource(R.drawable.image_tab_share);
+            ((ImageView) getActivity().findViewById(R.id.iv_device_knowledge)).setImageResource(R.drawable.image_tab_knowledge);
+            if (preferences.getInt(Constant.SHARED.TYPE, 0)==0){
+                ((ImageView) getActivity().findViewById(R.id.iv_order_fllocation)).setImageResource(R.drawable.image_my_approved);
+                ((ImageView) getActivity().findViewById(R.id.iv_order_progress)).setImageResource(R.drawable.image_clz_s);
+                ((ImageView) getActivity().findViewById(R.id.iv_order_feedback)).setImageResource(R.drawable.image_feedback);
+                ((ImageView) getActivity().findViewById(R.id.iv_server_finish)).setImageResource(R.drawable.image_tab_finish);
 
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_report), "image_write.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_bank_code), "image_tab_bank.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_server_share), "image_tab_share.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_knowledge), "image_tab_knowledge.png");
+
+            }else {
+                AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_fllocation), path + "image_my_approved.png");
+                AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_progress), path + "image_clz_s.png");
+                AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_feedback), path + "image_feedback.png");
+                AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_server_finish), path + "image_tab_finish.png");
+
+            }
         }else {
             //企业-管理工程师
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_unfinish), "image_tab_untreated.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_finish), "image_tab_treated.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_handler), "image_clz.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order), "image_tab_finish.png");
+            ((ImageView) getActivity().findViewById(R.id.iv_device_assert)).setImageResource(R.drawable.image_sbwh);
+            ((ImageView) getActivity().findViewById(R.id.iv_fault)).setImageResource(R.drawable.image_material);
+            ((ImageView) getActivity().findViewById(R.id.iv_manager_shared)).setImageResource(R.drawable.image_tab_share);
+            ((ImageView) getActivity().findViewById(R.id.iv_manager_upload)).setImageResource(R.drawable.image_tab_repair);
 
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_device_assert), "image_sbwh.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_fault), "image_material.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_manager_shared), "image_tab_share.png");
-            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_manager_upload), "image_tab_repair.png");
+            if (preferences.getInt(Constant.SHARED.TYPE, 0)==0){
+                ((ImageView) getActivity().findViewById(R.id.iv_order_unfinish)).setImageResource(R.drawable.image_tab_untreated);
+                ((ImageView) getActivity().findViewById(R.id.iv_order_finish)).setImageResource(R.drawable.image_tab_treated);
+                ((ImageView) getActivity().findViewById(R.id.iv_order_handler)).setImageResource(R.drawable.image_clz);
+                ((ImageView) getActivity().findViewById(R.id.iv_order)).setImageResource(R.drawable.image_tab_finish);
+
+            }else {
+                AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_unfinish), path+ "image_tab_untreated.png");
+                AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_finish), path + "image_tab_treated.png");
+                AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order_handler), path + "image_clz.png");
+                AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_order), path + "image_tab_finish.png");
+
+            }
         }
-        AppImageView.onImageView(getActivity(), (ImageView)getActivity().findViewById(R.id.iv_collect), "image_my_sc.png");
-        AppImageView.onImageView(getActivity(), (ImageView)getActivity().findViewById(R.id.iv_server_call), "image_kf.png");
-        AppImageView.onImageView(getActivity(), (ImageView)getActivity().findViewById(R.id.iv_password), "chang_password.png");
-        AppImageView.onImageView(getActivity(), (ImageView)getActivity().findViewById(R.id.iv_about), "tab_about.png");
+        if (preferences.getInt(Constant.SHARED.TYPE, 0)==0){
 
-        //个人信息layout的背景色
-        AppImageView.onLayoutBackgroundImage(getActivity(), ll_user_background, "image_default_user.png");
-
-        if (AppImageLoad.getPath(getActivity()).equals(AppImageLoad.defaultPath)){
-            tv_quit.setBackgroundResource(R.drawable.shape_button);
+            ((ImageView) getActivity().findViewById(R.id.iv_collect)).setImageResource(R.drawable.image_my_sc);
+            ((ImageView) getActivity().findViewById(R.id.iv_server_call)).setImageResource(R.drawable.image_kf);
+            ((ImageView) getActivity().findViewById(R.id.iv_password)).setImageResource(R.drawable.chang_password);
+            ((ImageView) getActivity().findViewById(R.id.iv_about)).setImageResource(R.drawable.tab_about);
+            ll_user_background.setBackgroundResource(R.drawable.image_default_user);
         }else {
-            AppImageView.onLayoutBackgroundImage(getActivity(), tv_quit, "#D52E2E");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_collect), path + "image_my_sc.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_server_call), path + "image_kf.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_password), path + "chang_password.png");
+            AppImageView.onImageView(getActivity(), (ImageView) getActivity().findViewById(R.id.iv_about), path + "tab_about.png");
+            //个人信息layout的背景色
+            AppImageView.onLayoutBackgroundImage(getActivity(), ll_user_background, path + "image_default_user.png");
+            AppImageView.onLayoutBackgroundImage(getActivity(), tv_quit, preferences.getString(Constant.SHARED.BACKGROUND, "#0AC8CF"));
+
         }
+
     }
 
     public void onRequestPermission(final String result){//READ_PHONE_STATE

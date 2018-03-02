@@ -42,6 +42,7 @@ public class SearchActivity extends BaseActivity implements TagView.OnTagClickLi
     @BindView(R.id.rv_search_Record) RecyclerView rv_search_Record;
     @BindView(R.id.tl_Tag_layout) TagContainerLayout tl_Tag_layout;
     @BindView(R.id.ll_hot) LinearLayout ll_hot;
+    @BindView(R.id.tv_clear_all) TextView tv_clear_all;
 
     public static  int curPage = 0;
     private List<String>  tagArrays;
@@ -65,7 +66,8 @@ public class SearchActivity extends BaseActivity implements TagView.OnTagClickLi
                 et_search.setHint("搜索装备");
                 ll_hot.setVisibility(View.VISIBLE);
                 String[] arrays = getResources().getStringArray(R.array.searchTag);
-                int[] col = {Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"), Color.parseColor("#555555")};
+                //int[] color = {TagBackgroundColor, TabBorderColor, TagTextColor}
+                int[] col = {Color.parseColor("#E5E5E5"), Color.parseColor("#F2F2F2"), Color.parseColor("#565656")};
                 List<int[]> list = new ArrayList<>();
                 for (int i =0 ; i< arrays.length; i++){
                     tagArrays.add(arrays[i]);
@@ -80,10 +82,11 @@ public class SearchActivity extends BaseActivity implements TagView.OnTagClickLi
                 ll_hot.setVisibility(View.GONE);
                 break;
             case 3:
-                et_search.setHint("请输入您所关注的资料");
+                et_search.setHint("请输入您要搜索的资料名称");
                 ll_hot.setVisibility(View.GONE);
                 break;
         }
+//        tl_Tag_layout.setTagBackgroundColor(getResources().getColor(R.color.default_content_color_2));
         rv_search_Record.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 2,
                     ContextCompat.getColor(this, R.color.default_backgroud_color)));
@@ -97,16 +100,22 @@ public class SearchActivity extends BaseActivity implements TagView.OnTagClickLi
 
     public void getInputContent(){
 
+        mData.clear();
         List<Map<String, String>>  list = searchDbInter.selectAll(this);
         mData.addAll(list);
 
     }
 
-    @OnClick({R.id.tv_cancel})
+    @OnClick({R.id.tv_cancel, R.id.tv_clear_all})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.tv_cancel:
                 finish();
+                break;
+            case R.id.tv_clear_all:
+                searchDbInter.onClearAll(this);
+                getInputContent();
+                mAdapter.notifyDataSetChanged();
                 break;
         }
     }

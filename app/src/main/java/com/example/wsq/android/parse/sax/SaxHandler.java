@@ -20,19 +20,24 @@ public class SaxHandler extends DefaultHandler{
     private Map<String, Object> mData;
     private Map<String, Object> mNodeContent;
     private List<String> mUrls;
-    private final String NODE_QUIT = "quit";  //安全退出按钮
+    private final String NODE = "node";
+    public  static final String NODE_QUIT = "quit";  //安全退出按钮
     private final String NODE_START = "start";  //启动页
     private final String NODE_WELCOME = "welcome"; //欢迎页
     private final String NODE_ADVERTISING = "advertising";  //广告页节点
     private final String NODE_SLIDESHOW = "slideshow";  //轮播图节点
-    private final String NODE_NAME = "name";
     private final String NODE_CHILD_FONT_COLOR = "font_color";
-    private final String NODE_CHILD_BACKGROUNG = "background";
+    public static  final String NODE_CHILD_BACKGROUNG = "background";
     private final String NODE_CHILD_URL = "url";
     private final String NODE_CHILD_PATH = "path";
+    private String cur_Node = "";
+    private String node_name = "";
+    private String desc = "";
+
     @Override
     public void startDocument() throws SAXException {
         mData = new HashMap<>();
+
         super.startDocument();
     }
 
@@ -44,39 +49,35 @@ public class SaxHandler extends DefaultHandler{
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
-        if (qName.equals(NODE_QUIT)){
-            mNodeContent = new HashMap<>();
-        }else if(qName.equals(NODE_START)){
-        }else if(qName.equals(NODE_WELCOME)){
-        }else if(qName.equals(NODE_ADVERTISING)){
 
-        }else if(qName.equals(NODE_SLIDESHOW)){
+        if (NODE.equals(localName)){
+            node_name= attributes.getValue("name");
+            if (attributes.getValue("name").equals(NODE_QUIT)){
+                mNodeContent = new HashMap<>();
+                desc = attributes.getValue("desc");
+                mNodeContent.put("name", node_name);
+                mNodeContent.put("desc", desc);
 
-        }else if(qName.equals(NODE_CHILD_URL)){
-            mUrls = new ArrayList<>();
-        }else if(qName.equals(NODE_CHILD_PATH)){
-
-        }else if(qName.equals(NODE_CHILD_FONT_COLOR)){
-
-        }else if(qName.equals(NODE_CHILD_FONT_COLOR)){
-
+            }
+        }else if(localName.equals(NODE_CHILD_FONT_COLOR)){
+            cur_Node = NODE_CHILD_FONT_COLOR;
+        }else if(localName.equals(NODE_CHILD_BACKGROUNG)){
+            cur_Node = NODE_CHILD_BACKGROUNG;
+        }else {
+            node_name="";
         }
+
+
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         super.endElement(uri, localName, qName);
 
-        if (qName.equals(NODE_QUIT)){
-
-        }else if(qName.equals(NODE_START)){
-
-        }else if(qName.equals(NODE_WELCOME)){
-
-        }else if(qName.equals(NODE_ADVERTISING)){
-
-        }else if(qName.equals(NODE_SLIDESHOW)){
-
+        if (NODE.equals(localName)){
+            if (node_name.equals(NODE_QUIT)){
+                mData.put(NODE_QUIT, mNodeContent);
+            }
         }
     }
 
@@ -84,7 +85,12 @@ public class SaxHandler extends DefaultHandler{
     public void characters(char[] ch, int start, int length) throws SAXException {
         super.characters(ch, start, length);
         String tempString = new String(ch, start, length);
-        Logger.d(tempString);
+        if (cur_Node.equals(NODE_CHILD_FONT_COLOR)){
+            mNodeContent.put(NODE_CHILD_FONT_COLOR, tempString);
+        }else if(cur_Node.equals(NODE_CHILD_BACKGROUNG)){
+            mNodeContent.put(NODE_CHILD_BACKGROUNG, tempString);
+        }
+        this.cur_Node = "";
     }
 
 

@@ -10,72 +10,27 @@
     <include layout="@layout/layout_default_title"></include>
 
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/store_house_ptr_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srlEnablePreviewInEditMode="true">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/store_house_ptr_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srlEnablePreviewInEditMode="true">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_RecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible" />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
             <!--没有数据是显示-->
-            <LinearLayout
-                android:id="@+id/ll_nodata"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
+            <include layout="@layout/layout_no_data"></include>
 
-                <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:src="@drawable/image_main_massage" />
-
-                <TextView
-                    android:id="@+id/tv_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/defalut_layout_height"
-                    android:gravity="center"
-                    android:text="您还没有发布知识点呢~"
-                    android:textColor="@color/color_gray"
-                    android:textSize="@dimen/default_text_size"
-
-                    />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="点击查看有没有新数据."
-                    android:textColor="@color/color_gray"
-                    android:textSize="@dimen/default_text_size" />
-
-                <TextView
-                    android:id="@+id/tv_refresh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:background="@drawable/shape_refresh"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/default_radius"
-                    android:paddingLeft="@dimen/default_margin"
-                    android:paddingRight="@dimen/default_margin"
-                    android:paddingTop="@dimen/default_radius"
-                    android:text="点击刷新"
-                    android:textColor="@color/color_gray"
-                    android:textSize="@dimen/default_text_size" />
-            </LinearLayout>
             <!--可编辑的-->
             <LinearLayout
                 android:id="@+id/ll_collect_buttom"
@@ -106,7 +61,7 @@
                 <View
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"></View>
+                    android:layout_weight="1"/>
 
                 <TextView
                     android:id="@+id/tv_finish"
@@ -119,7 +74,7 @@
                     android:textColor="@color/color_white" />
             </LinearLayout>
         </RelativeLayout>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
 
 </LinearLayout>

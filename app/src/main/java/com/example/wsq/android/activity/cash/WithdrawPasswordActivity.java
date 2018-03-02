@@ -115,28 +115,28 @@ public class WithdrawPasswordActivity extends BaseActivity implements TextWatche
                 tv_Prompt.setText("请再次输入您的提现密码");
                 break;
             case 3:
-                tv_title.setText("修改提现密码");
+                tv_title.setText("设置提现密码");
                 tv_Prompt.setText("请输入您新的提现密码");
                 break;
             case 4:
-                tv_title.setText("修改提现密码");
-                tv_Prompt.setText("请确认您新的提现密码");
+                tv_title.setText("设置提现密码");
+                tv_Prompt.setText("请再次输入您的提现密码");
                 break;
             case 5:
-                tv_title.setText("忘记提现密码");
+                tv_title.setText("设置提现密码");
                 tv_Prompt.setText("请输入您的提现密码");
                 break;
             case 6:
-                tv_title.setText("忘记提现密码");
-                tv_Prompt.setText("请确认您新的提现密码");
+                tv_title.setText("设置提现密码");
+                tv_Prompt.setText("请再次输入您的提现密码");
                 break;
             case 7:
                 tv_title.setText("修改提现密码");
-                tv_Prompt.setText("请确输入您旧提现密码");
+                tv_Prompt.setText("请输入原提现密码，以验证身份");
                 break;
             case 8:
                 tv_title.setText("忘记提现密码");
-                tv_Prompt.setText("请确输入您旧提现密码");
+                tv_Prompt.setText("请输入原提现密码，以验证身份");
                 break;
         }
     }

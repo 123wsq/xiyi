@@ -53,13 +53,13 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/default_button_height</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/default_btn_text_size</item>
+        <item name="android:textSize">@dimen/default_button_size</item>
         <item name="android:textColor">@color/color_white</item>
         <item name="android:background">@drawable/shape_button</item>
-        <item name="android:layout_marginLeft">@dimen/defalut_layout_height</item>
-        <item name="android:layout_marginRight">@dimen/defalut_layout_height</item>
-        <item name="android:layout_marginTop">@dimen/defalut_layout_height</item>
-        <item name="android:layout_marginBottom">@dimen/defalut_layout_height</item>
+        <item name="android:layout_marginLeft">@dimen/default_button_margin_lr</item>
+        <item name="android:layout_marginRight">@dimen/default_button_margin_lr</item>
+        <item name="android:layout_marginTop">@dimen/default_button_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/default_button_margin_top</item>
         <item name="android:visibility">visible</item>
         <item name="android:clickable">true</item>
     </style>
@@ -68,10 +68,17 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/default_height_min</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/default_text_size</item>
-        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textSize">@dimen/default_content_size</item>
+        <item name="android:textColor">@color/default_font_color</item>
         <item name="android:visibility">visible</item>
-        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="default_edit">
+        <item name="android:textColor">@color/default_content_color_1</item>
+        <item name="android:textSize">@dimen/default_content_size</item>
+        <item name="android:textColorHint">@color/color_gray</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/shape_text_stroken</item>
     </style>
 
 

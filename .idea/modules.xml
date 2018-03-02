@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ffmpeg4android_lib/ffmpeg4android_lib.iml" filepath="$PROJECT_DIR$/ffmpeg4android_lib/ffmpeg4android_lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/lfilepickerlibrary/lfilepickerlibrary.iml" filepath="$PROJECT_DIR$/lfilepickerlibrary/lfilepickerlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/medialib/medialib.iml" filepath="$PROJECT_DIR$/medialib/medialib.iml" />
       <module fileurl="file://$PROJECT_DIR$/picture/picture.iml" filepath="$PROJECT_DIR$/picture/picture.iml" />

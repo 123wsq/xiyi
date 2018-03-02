@@ -3,6 +3,6 @@
 
     <item android:color="@color/defalut_title_color" android:state_checked="true"></item>
 
-    <item android:color="@color/color_gray" android:state_checked="false"></item>
+    <item android:color="#8F8F8F" android:state_checked="false"></item>
 
 </selector>

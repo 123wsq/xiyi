@@ -18,6 +18,7 @@ import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RegisterParam;
 import com.example.wsq.android.utils.IntentFormat;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.utils.ValidateDataFormat;
 import com.example.wsq.android.utils.ValidateParam;
 import com.example.wsq.android.view.LoddingDialog;
@@ -58,7 +59,7 @@ public class ForgetPsdActivity extends BaseActivity {
     public void init(){
         userService = new UserServiceImpl();
         tv_ok = this.findViewById(R.id.tv_ok);
-        tv_title.setText("忘记密码");
+        tv_title.setText("找回密码");
         dialog = new LoddingDialog(this);
 
         onEditTextChange();
@@ -73,12 +74,12 @@ public class ForgetPsdActivity extends BaseActivity {
             if (curLen == 0){
                 curLen = 60;
                 tv_getCode.setText("获取验证码");
-                tv_getCode.setBackgroundColor(R.drawable.shape_button);
+                tv_getCode.setBackgroundResource(R.drawable.shape_button);
                 tv_getCode.setClickable(true);
             }else{
-                tv_getCode.setText("请耐心等待 "+curLen+"s");
+                tv_getCode.setText(curLen+"秒后重发");
                 tv_getCode.setClickable(false);
-                tv_getCode.setBackgroundColor(R.drawable.shape_disable_button);
+                tv_getCode.setBackgroundResource(R.drawable.shape_disable_button);
                 handler.postDelayed(this, 1000);
             }
 
@@ -106,10 +107,12 @@ public class ForgetPsdActivity extends BaseActivity {
                 RegisterParam.TEL = tel;
                 Map<String, String> map = new HashMap<>();
                 map.put(ResponseKey.TEL, tel);
+//                handler.postDelayed(runnable, 1000);
                 dialog.show();
                 userService.getValidateCode(this, map, new HttpResponseListener() {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
+                        ToastUtis.onToast(result.get(ResponseKey.MESSAGE)+"");
                         handler.postDelayed(runnable, 1000);
                         dialog.dismiss();
                     }

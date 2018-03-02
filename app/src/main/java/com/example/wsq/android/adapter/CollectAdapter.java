@@ -20,6 +20,7 @@ import com.example.wsq.android.activity.user.CollectActivity;
 import com.example.wsq.android.activity.ProductInfoActivity;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.constant.Urls;
+import com.example.wsq.android.inter.OnDefaultClickListener;
 import com.example.wsq.android.utils.IntentFormat;
 
 import java.util.ArrayList;
@@ -39,15 +40,17 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.MyViewHo
             R.drawable.images_product_4, R.drawable.images_product_5, R.drawable.images_product_6};
     Context mContext;
     List<Map<String, Object>> mData;
+    private OnDefaultClickListener mListener;
     Random mRandom;
     private Map<Integer, Boolean> isSelect;
     private boolean isEditCollect = false;
     private String curCollect = "1";//0 表示为资料中进入   1表示我的收藏中进入  因为在显示资料的时候传入的id是不一样的
 
-    public CollectAdapter(Context context, List<Map<String, Object>> list){
+    public CollectAdapter(Context context, List<Map<String, Object>> list, OnDefaultClickListener listener){
 
         this.mContext = context;
         this.mData = list;
+        this.mListener = listener;
         mRandom = new Random();
         isSelect = new HashMap<>();
 
@@ -133,6 +136,7 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.MyViewHo
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             isSelect.put((int)mData.get(getPosition()).get(ResponseKey.ID), isChecked);
+            mListener.onClickListener(getSelected().size());
         }
     }
 

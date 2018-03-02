@@ -269,4 +269,14 @@ public class ResponseKey {
 
     public static final String IMG_PATH = "img_path";
 
+    public static final String START_TIME ="img_start_time";
+
+    public static final String END_TIME = "img_end_time";
+
+    public static final String IMG_ID= "img_id";
+
+    public static final String NO_PASS_REASON = "nopass_reason";
+
+
+
 }

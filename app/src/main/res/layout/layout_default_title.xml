@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text=""
-        android:textSize="@dimen/default_text_title_size"
+        android:textSize="@dimen/default_title_size"
         android:gravity="center"
         android:textColor="@color/color_white"
         />
@@ -33,7 +33,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text=""
-        android:textSize="@dimen/default_text_size"
+        android:textSize="@dimen/default_content_size"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/default_margin"
         android:textColor="@color/color_white"
@@ -41,8 +41,8 @@
         />
     <ImageView
         android:id="@+id/iv_add"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:src="@drawable/image_add_bank"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/default_margin"

@@ -29,12 +29,12 @@ import java.util.List;
 public class CustomPopup extends PopupWindow{
 
     private Activity mContext;
+    private TextView tv_title;
+    private TextView tv_cancel;
     private View popupView;
     private List<String> mData;
     private String textColor = "#000000";
     private View.OnClickListener onClickListener;
-
-
     private PopupItemListener listener;
     public CustomPopup(Activity context, View view, List<String> list, View.OnClickListener clickListener, final PopupItemListener listener){
 
@@ -49,7 +49,8 @@ public class CustomPopup extends PopupWindow{
 
         tv_cancel.setOnClickListener(onClickListener);
         ListView listview = popupView.findViewById(R.id.listview);
-        listview.setDividerHeight(0);
+        tv_title = popupView.findViewById(R.id.tv_title);
+        tv_cancel = popupView.findViewById(R.id.tv_cancel);
         MyAdapter adapter = new MyAdapter();
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,6 +129,7 @@ public class CustomPopup extends PopupWindow{
         backgroundAlpha(1f);
     }
 
+
     /**
      * 设置添加屏幕的背景透明度
      * @param bgAlpha
@@ -194,4 +196,13 @@ public class CustomPopup extends PopupWindow{
     }
 
 
+    public void setTitle(String title){
+        tv_title.setText(title);
+    }
+    public void setCancelTitle(String cancelText){
+        tv_cancel.setText(cancelText);
+    }
+    public void setCancelColor(String cancelColor){
+        tv_cancel.setTextColor(Color.parseColor(cancelColor));
+    }
 }

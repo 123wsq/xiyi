@@ -34,6 +34,7 @@
                 android:layout_height="@dimen/default_icon_size_5"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/image_user"
+                android:layout_marginLeft="10dp"
 
                 />
             <TextView
@@ -41,6 +42,7 @@
                 android:layout_height="match_parent"
                 android:text="用户名:"
                 android:gravity="center_vertical"
+                android:textSize="@dimen/default_content_size"
                 android:textColor="@color/color_white"
                 android:layout_marginLeft="5dp"
                 />
@@ -50,6 +52,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_edit"
                 android:lines="1"
+                android:textSize="@dimen/default_content_size"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
                 android:textColor="@color/color_white"
@@ -72,7 +75,7 @@
                 android:layout_height="@dimen/default_icon_size_5"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/image_suo"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="10dp"
 
                 />
             <TextView
@@ -80,6 +83,7 @@
                 android:layout_height="match_parent"
                 android:text="密     码:"
                 android:gravity="center_vertical"
+                android:textSize="@dimen/default_content_size"
                 android:textColor="@color/color_white"
                 android:layout_marginLeft="5dp"
 
@@ -92,6 +96,7 @@
                 android:lines="1"
                 android:singleLine="true"
                 android:background="@drawable/shape_edit"
+                android:textSize="@dimen/default_content_size"
                 android:paddingLeft="10dp"
                 android:textColor="@color/color_white"
                 />
@@ -103,8 +108,8 @@
                 >
                 <ImageView
                     android:id="@+id/im_eye"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/image_eye_close" />
             </LinearLayout>
 
@@ -123,11 +128,12 @@
             >
             <CheckBox
                 android:id="@+id/cb_checkBox"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
                 android:button="@null"
                 android:background="@drawable/selectot_checkbox"
+                android:layout_marginLeft="10dp"
 
                 />
             <TextView
@@ -137,6 +143,7 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/color_white"
                 android:layout_marginLeft="@dimen/default_radius"
+                android:textSize="@dimen/default_btn_min_size"
 
                 />
             <View
@@ -150,7 +157,7 @@
                 android:text="忘记密码？"
                 android:gravity="center_vertical|right"
                 android:textColor="@color/color_white"
-
+                android:textSize="@dimen/default_btn_min_size"
 
                 />
         </LinearLayout>
@@ -180,7 +187,7 @@
             android:gravity="center"
             android:text="登录"
             android:textColor="@color/color_white"
-            android:textSize="20sp"
+            android:textSize="@dimen/default_button_size"
             android:visibility="visible"
         />
 
@@ -197,8 +204,7 @@
         android:textColor="@color/color_white"
         android:text="注册"
         android:gravity="center"
-        android:textSize="20sp"
-
+        android:textSize="@dimen/default_button_size"
         />
 
 </LinearLayout>

@@ -24,9 +24,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        style="@style/default_text"
         android:text="职务信息"
         android:gravity="center_vertical"
-        android:textSize="@dimen/default_text_size"
+
         />
     </LinearLayout>
 
@@ -46,8 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="公司"
+            style="@style/default_text"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
             />
         <ImageView
             android:id="@+id/iv_important_1"
@@ -62,11 +63,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="14sp"
+            android:textSize="@dimen/default_content_size"
             android:hint="请输入您的公司"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
             android:textColorHint="@color/color_gray"
+            android:textColor="@color/default_content_color_1"
             />
     </LinearLayout>
 
@@ -85,8 +87,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="学历"
+            style="@style/default_text"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
             android:drawableRight="@drawable/image_important"
             />
 
@@ -96,9 +98,10 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="14sp"
+            android:textSize="@dimen/default_content_size"
             android:hint="高中及以下"
-            android:textColorHint="@color/color_gray"
+            android:textColorHint="@color/default_content_color_2"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
 
@@ -108,7 +111,7 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:src="@drawable/image_right_next"
-            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin_3"
             />
     </LinearLayout>
 
@@ -129,8 +132,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="角色"
+            style="@style/default_text"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
             android:drawableRight="@drawable/image_important"
             />
 
@@ -140,9 +143,10 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="14sp"
+            android:textSize="@dimen/default_content_size"
             android:hint="服务工程师"
-            android:textColorHint="@color/color_gray"
+            android:textColorHint="@color/default_content_color_2"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
             />
@@ -150,7 +154,7 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:src="@drawable/image_right_next"
-            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin_3"
             />
     </LinearLayout>
 
@@ -202,8 +206,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="部门及职务"
+            style="@style/default_text"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
             />
         <ImageView
             android:id="@+id/iv_important_2"
@@ -218,9 +222,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="14sp"
+            android:textSize="@dimen/default_content_size"
             android:hint="请填写您的部门和职务"
             android:textColorHint="@color/color_gray"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
             />
@@ -231,7 +236,6 @@
         android:id="@+id/btn_next"
         style="@style/default_button"
         android:text="下一步"
-
         />
 
 

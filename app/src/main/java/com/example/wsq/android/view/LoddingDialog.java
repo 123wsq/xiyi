@@ -25,7 +25,7 @@ public class LoddingDialog extends Dialog {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		loadingView  = new SysLoading(context);
 		setContentView(loadingView);
-
+		setCanceledOnTouchOutside(false);
 	}
 
 	@Override
@@ -50,6 +50,9 @@ public class LoddingDialog extends Dialog {
 		}
 	}
 
+	public void setUpdateProgress(int progress){
+			loadingView.onLoadProgress(progress);
+	}
 
 	public void setLoaddingAnim(){
 

@@ -17,16 +17,21 @@
         android:layout_marginTop="1dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:gravity="center_vertical"
         >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="2dp"
+            android:layout_height="20dp"
+            android:background="@color/defalut_title_color"
+            />
         <TextView
+            style="@style/default_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="基本信息"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
+            android:layout_marginLeft="@dimen/default_margin"
 
             />
     </LinearLayout>
@@ -45,8 +50,9 @@
             android:layout_height="match_parent"
             android:text="用户名"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
             android:drawableRight="@drawable/image_important"
+            style="@style/default_text"
             />
 
         <EditText
@@ -54,9 +60,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="14sp"
+            android:textSize="@dimen/default_content_size"
             android:hint="6~18个字符，必须是字母、数字、下划线"
             android:textColorHint="@color/color_gray"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_text_stroken"
             android:inputType="textVisiblePassword"
             android:singleLine="true"
@@ -77,11 +84,12 @@
         >
 
         <TextView
+            style="@style/default_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="密码"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
             android:drawableRight="@drawable/image_important"
             />
 
@@ -93,9 +101,10 @@
             android:gravity="center_vertical|right"
             android:hint="6~16字符，区分大小写"
             android:textColorHint="@color/color_gray"
+            android:textColor="@color/default_content_color_1"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textSize="14sp" />
+            android:textSize="@dimen/default_content_size" />
     </LinearLayout>
 
 
@@ -111,11 +120,12 @@
         >
 
         <TextView
+            style="@style/default_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="确认密码"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
             android:drawableRight="@drawable/image_important"
             />
 
@@ -127,9 +137,10 @@
             android:gravity="center_vertical|right"
             android:hint="6~16字符，区分大小写"
             android:textColorHint="@color/color_gray"
+            android:textColor="@color/default_content_color_1"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:textSize="14sp" />
+            android:textSize="@dimen/default_content_size" />
     </LinearLayout>
 
 
@@ -146,11 +157,12 @@
         >
 
         <TextView
+            style="@style/default_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="姓名"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
             android:drawableRight="@drawable/image_important"
             />
 
@@ -159,9 +171,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="14sp"
+            android:textSize="@dimen/default_content_size"
             android:hint="请告诉我你的名字"
             android:textColorHint="@color/color_gray"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
             />
@@ -179,20 +192,22 @@
         >
 
         <TextView
+            style="@style/default_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="性别"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
             />
 
         <TextView
+
             android:id="@+id/tv_sex"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="14sp"
+            android:textSize="@dimen/default_content_size"
             android:text="男"
             android:background="@drawable/shape_text_stroken"
             android:singleLine="true"
@@ -201,7 +216,7 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:src="@drawable/image_right_next"
-            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin_3"
             />
 
     </LinearLayout>
@@ -221,11 +236,12 @@
         >
 
         <TextView
+            style="@style/default_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="邮箱"
             android:gravity="center_vertical"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
             />
         <ImageView
             android:layout_width="wrap_content"
@@ -235,9 +251,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="@dimen/default_text_size"
+            android:textSize="@dimen/default_content_size"
             android:hint="12345@xx.com"
             android:textColorHint="@color/color_gray"
+            android:textColor="@color/default_content_color_1"
             android:background="@drawable/shape_text_stroken"
             android:inputType="textEmailAddress"
             android:singleLine="true"
@@ -249,7 +266,7 @@
         android:id="@+id/btn_next"
         style="@style/default_button"
         android:text="下一步"
-
+        android:textSize="@dimen/default_button_size"
         />
 
 </LinearLayout>

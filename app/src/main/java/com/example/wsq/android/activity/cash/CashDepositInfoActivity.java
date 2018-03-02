@@ -68,9 +68,6 @@ public class CashDepositInfoActivity extends BaseActivity {
         userService = new UserServiceImpl();
         mData = new ArrayList<>();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-//        rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
-//                this, LinearLayoutManager.HORIZONTAL, 0,
-//                ContextCompat.getColor(this, R.color.color_white)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
@@ -199,13 +196,13 @@ public class CashDepositInfoActivity extends BaseActivity {
             tv_content.setText(data.get(ResponseKey.MESSAGE)+"");
 
             onSetData(true, true, "申请成功",data.get(ResponseKey.CREAT_AT)+"", true);
-            onSetData(true, false, "业务处理中",data.get(ResponseKey.CREAT_AT)+"", true);
+            onSetData(true, state==2 ? true: false, "业务处理中",data.get(ResponseKey.CREAT_AT)+"", true);
         }else if(type == 2){
             ll_Details_info.setVisibility(View.VISIBLE);
 //            tv_create_time.setText(data.get(ResponseKey.CREAT_AT)+"");
             tv_apply_num.setText(data.get(ResponseKey.PAY_SN)+"");
             onSetData(true, true, "提现成功",data.get(ResponseKey.CREAT_AT)+"", true);
-            onSetData(true, false, "银行处理中",data.get(ResponseKey.CREAT_AT)+"", true);
+            onSetData(true, state==2 ? true: false, "银行处理中",data.get(ResponseKey.CREAT_AT)+"", true);
         }
         if (state == 1 || state ==0){
             onSetData(false, false, "审核通过", "预计1-7个工作日内到账", false);
@@ -215,7 +212,7 @@ public class CashDepositInfoActivity extends BaseActivity {
             onSetData(false, false, "已到账", "", false);
         }else if(state == 3){
             onSetData(true, true, "审核通过", "预计1-7个工作日内到账", true);
-            onSetData(true, false, "已到账", data.get(ResponseKey.PLAY_MONEY_TIME)+"", true);
+            onSetData(true, false, "已到账", "", true);
         }
 
         mAdapter.notifyDataSetChanged();

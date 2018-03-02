@@ -9,8 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.adapter.ProductAdapter;
@@ -46,9 +49,18 @@ import butterknife.OnClick;
 public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.rg_type_group) RadioGroup rg_type_group;
+    @BindView(R.id.rb_all) RadioButton rb_all;
     @BindView(R.id.rv_RecyclerView) RecyclerView rv_RecyclerView;
     @BindView(R.id.store_house_ptr_frame) SmartRefreshLayout store_house_ptr_frame;
     @BindView(R.id.ll_nodata) LinearLayout ll_nodata;
+
+    @BindView(R.id.iv_refresh_icon)
+    ImageView iv_refresh_icon;
+    @BindView(R.id.tv_content)
+    TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
+
 
     private OrderTaskService orderTaskService;
     private int curPage = 1;
@@ -77,6 +89,8 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
         super.onViewCreated(view, savedInstanceState);
         init();
         initView();
+
+        onNotDataLayout();
     }
 
     public void init() {
@@ -97,15 +111,24 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_RecyclerView.setHasFixedSize(true);
 
+
         rg_type_group.setOnCheckedChangeListener(this);
 
         mAdapter = new ProductAdapter(getActivity(), mData, Constant.INFO_3);
         rv_RecyclerView.setAdapter(mAdapter);
 
         setRefresh();
-        getData(null , 0);
+
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        rb_all.setChecked(true);
+        cat = "all";
+        getData(null , 0);
+    }
 
     @OnClick({R.id.tv_refresh})
     public void onClick(){
@@ -119,7 +142,6 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
                 .setProgressResource(R.drawable.refresh_loadding).setDrawableProgressSize(40));
         store_house_ptr_frame.setRefreshFooter(new ClassicsFooter(getActivity()));
 
-//        store_house_ptr_frame.setL
         store_house_ptr_frame.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -151,6 +173,7 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
      */
     public void getData(final RefreshLayout refreshLayout, final int type){
 
+
         dialog.show();
         Map<String , String> param = new HashMap<>();
         param.put(ResponseKey.CAT, cat);
@@ -163,17 +186,15 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
                 unitPage = (int) result.get(ResponseKey.PER_PAGE);
                 List<Map<String, Object>> list = (List<Map<String, Object>>)result.get(ResponseKey.DATA);
 
+                if (type==0)mData.clear();
                 if (list.size()!=0){
                     mData.addAll(list);
                     mAdapter.notifyDataSetChanged();
                 }
-                if (mData.size() ==0){
-                    ll_nodata.setVisibility(View.VISIBLE);
-                    rv_RecyclerView.setVisibility(View.GONE);
-                }else{
-                    ll_nodata.setVisibility(View.GONE);
-                    rv_RecyclerView.setVisibility(View.VISIBLE);
-                }
+
+                ll_nodata.setVisibility(mData.size() ==0 ? View.VISIBLE: View.GONE);
+                rv_RecyclerView.setVisibility(mData.size() ==0 ? View.GONE : View.VISIBLE);
+
                 if (type == 1){
                     refreshLayout.finishRefresh();
                 }else if(type ==2 ){
@@ -212,5 +233,19 @@ public class FaultFragment extends Fragment implements RadioGroup.OnCheckedChang
                 getData(null, 0);
                 break;
         }
+    }
+
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.VISIBLE);
+        tv_refresh.setVisibility(View.VISIBLE);
+        iv_refresh_icon.setImageResource(R.drawable.image_gz_press);
+        tv_content.setText(getResources().getString(R.string.str_not_datum_p));
+        tv_no_data.setText(getResources().getString(R.string.str_not_datum_refresh));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_refresh_icon.getLayoutParams();
+        params.width =DensityUtil.dp2px(getActivity(), 74);
+        params.height = DensityUtil.dp2px(getActivity(), 80);
+        iv_refresh_icon.setLayoutParams(params);
     }
 }

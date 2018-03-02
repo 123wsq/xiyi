@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.tools.RecyclerViewDivider;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.view.LoddingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -48,6 +50,13 @@ public class MessageActivity extends BaseActivity {
     SmartRefreshLayout store_house_ptr_frame;
     @BindView(R.id.tv_title)
     TextView tv_title;
+
+    @BindView(R.id.iv_refresh_icon)
+    ImageView iv_refresh_icon;
+    @BindView(R.id.tv_content) TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
+
     private int curPage = 1;
     private int total = 1;
     private int unitPage = 15;
@@ -77,7 +86,7 @@ public class MessageActivity extends BaseActivity {
 
         rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 2,
-                ContextCompat.getColor(this, R.color.color_line)));
+                ContextCompat.getColor(this, R.color.color_gray)));
         rv_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         rv_RecyclerView.setHasFixedSize(true);
 
@@ -86,6 +95,7 @@ public class MessageActivity extends BaseActivity {
 
         setRefresh();
         getMessageList(null, 0);
+        onNotDataLayout();
     }
 
     @OnClick({R.id.iv_back, R.id.tv_refresh})
@@ -150,14 +160,9 @@ public class MessageActivity extends BaseActivity {
 
                 mData.addAll(list);
 
-                if (mData.size() != 0){
-                    mAdapter.notifyDataSetChanged();
-                    rv_RecyclerView.setVisibility(View.VISIBLE);
-                    ll_nodata.setVisibility(View.GONE);
-                }else{
-                    rv_RecyclerView.setVisibility(View.GONE);
-                    ll_nodata.setVisibility(View.VISIBLE);
-                }
+                rv_RecyclerView.setVisibility(mData.size() == 0 ? View.GONE : View.VISIBLE);
+                ll_nodata.setVisibility(mData.size() == 0 ? View.VISIBLE : View.GONE);
+                if (mData.size() != 0 ) mAdapter.notifyDataSetChanged();
 
                 if (type == 1){
                     refreshLayout.finishRefresh();
@@ -173,5 +178,21 @@ public class MessageActivity extends BaseActivity {
             }
         });
 
+    }
+
+
+
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.VISIBLE);
+        tv_refresh.setVisibility(View.VISIBLE);
+        iv_refresh_icon.setImageResource(R.drawable.image_main_massage);
+        tv_content.setText(getResources().getString(R.string.str_not_message_p));
+        tv_no_data.setText(getResources().getString(R.string.str_not_message_refresh));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_refresh_icon.getLayoutParams();
+        params.width = DensityUtil.dp2px(this, 80);
+        params.height = DensityUtil.dp2px(this, 80);
+        iv_refresh_icon.setLayoutParams(params);
     }
 }

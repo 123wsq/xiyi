@@ -6,8 +6,10 @@ import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,7 @@ import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
+import com.example.wsq.android.inter.OnInputKeyBoardListener;
 import com.example.wsq.android.inter.OnPasswordClickListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
@@ -25,7 +28,9 @@ import com.example.wsq.android.utils.BankInfo;
 import com.example.wsq.android.utils.DataFormat;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtils;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomPasswordDialog;
+import com.example.wsq.android.view.CustomPsdKeyboardPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.orhanobut.logger.Logger;
 
@@ -57,6 +62,7 @@ public class WithdrawActivity extends BaseActivity {
     private SharedPreferences shared;
     private double enabledMoney = 0;
     private CustomPasswordDialog passwordDialog;
+    private  CustomPsdKeyboardPopup psdKeyboardPopup;
 
 
     @Override
@@ -71,7 +77,7 @@ public class WithdrawActivity extends BaseActivity {
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
 
         tv_title.setText("提现");
-        tv_withdraw_enabled.setText("可体现金额为 "
+        tv_withdraw_enabled.setText("可提现金额为 "
                 +BalanceActivity.mData.get(ResponseKey.CASH_MONEY)+" 元");
 
 
@@ -97,15 +103,31 @@ public class WithdrawActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_submit:
-                onInputPasswordDialog();
+                if (!onValiateParam()) return;
+                getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+//                onInputPasswordDialog();
+                onShowPasswordPopup();
                 break;
             case R.id.tv_withdraw_all:
-                et_money.setText(enabledMoney+"");
+                et_money.setText(AmountUtils.changeY2Y(enabledMoney+""));
                 break;
         }
 
     }
 
+
+    public boolean onValiateParam(){
+        if (TextUtils.isEmpty(et_money.getText().toString())){
+            Toast.makeText(WithdrawActivity.this, "请输入提现金额", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        double money = Double.parseDouble(et_money.getText().toString());
+        if (money % 100 != 0){
+            Toast.makeText(WithdrawActivity.this, "提现金额必须为100元的整数倍", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 开始提现
@@ -113,16 +135,10 @@ public class WithdrawActivity extends BaseActivity {
     public void startWithdraw(){
 
 
+        if (!onValiateParam()) return;
 
-        if (TextUtils.isEmpty(et_money.getText().toString())){
-            Toast.makeText(WithdrawActivity.this, "请输入提现金额", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        double money = Double.parseDouble(et_money.getText().toString());
-        if (money % 100 != 0){
-            Toast.makeText(WithdrawActivity.this, "提现金额必须为100元的整数倍", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
+
         dialog.show();
         Map<String, String> param = new HashMap<>();
         param.put(ResponseKey.TOKEN, shared.getString(Constant.SHARED.TOKEN, ""));
@@ -131,7 +147,11 @@ public class WithdrawActivity extends BaseActivity {
         userService.onAddCash(this, param, new HttpResponseListener() {
             @Override
             public void onSuccess(Map<String, Object> result) {
-                Toast.makeText(WithdrawActivity.this, result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(WithdrawActivity.this, result.get(ResponseKey.MESSAGE)+"", Toast.LENGTH_SHORT).show();
+                int pay_Id = DataFormat.onStringForInteger(result.get(ResponseKey.PAY_ID)+"");
+                Map<String,Object> map = new HashMap<>();
+                map.put(ResponseKey.PAY_ID, pay_Id);
+                IntentFormat.startActivity(WithdrawActivity.this, CashDepositInfoActivity.class, map);
                 dialog.dismiss();
                 finish();
 
@@ -183,12 +203,11 @@ public class WithdrawActivity extends BaseActivity {
 
                 double amountNew = DataFormat.onStringForFloat(editable.toString());
                 double amountOld = DataFormat.onStringForFloat(BalanceActivity.mData.get(ResponseKey.CASH_MONEY)+"");
-                Logger.d(amountNew+"=============="+ amountOld);
                 if (amountNew > amountOld){
-                    tv_withdraw_enabled.setText("金额已超过可提现余额");
+                    tv_withdraw_enabled.setText("金额已超过可提现金额");
                     tv_withdraw_enabled.setTextColor(Color.RED);
                 }else{
-                    tv_withdraw_enabled.setText("可体现金额为 "
+                    tv_withdraw_enabled.setText("可提现金额为 "
                             +BalanceActivity.mData.get(ResponseKey.CASH_MONEY)+" 元");
                     tv_withdraw_enabled.setTextColor(Color.parseColor("#9A9A9A"));
                 }
@@ -196,26 +215,20 @@ public class WithdrawActivity extends BaseActivity {
         });
     }
 
-    public void onInputPasswordDialog(){
-        CustomPasswordDialog.Builder builder = new CustomPasswordDialog.Builder(this);
-        builder.setOnClickListener(new OnPasswordClickListener() {
+    public void onShowPasswordPopup(){
+        psdKeyboardPopup = new CustomPsdKeyboardPopup(WithdrawActivity.this, new OnInputKeyBoardListener() {
             @Override
-            public void onClick(CustomPasswordDialog dialog, String result) {
-                dialog.dismiss();
-                onValidatePayPassword(result);
+            public void onResultListener(String password) {
+
+                psdKeyboardPopup.dismiss();
+                onValidatePayPassword(password);
+//                ToastUtis.onToast(password);
+
             }
         });
-        passwordDialog = builder.create();
-        passwordDialog.show();
+
+        psdKeyboardPopup.showAtLocation(findViewById(R.id.ll_layout), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            if (passwordDialog != null && passwordDialog.isShowing())
-            passwordDialog.dismiss();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

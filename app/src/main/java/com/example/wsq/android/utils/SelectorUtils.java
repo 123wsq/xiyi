@@ -56,8 +56,7 @@ public class SelectorUtils {
         Drawable normal = new BitmapDrawable(bitmapNormal);
         Drawable select = new BitmapDrawable(bitmapSelect);
         bg.addState(new int[]{android.R.attr.enabled}, normal);
-        bg.addState(new int[]{android.R.attr.state_selected}, select);
-        bg.addState(new int[]{android.R.attr.state_pressed}, select);
+        bg.addState(new int[]{android.R.attr.state_checked}, select);
         bg.addState(new int[]{}, normal);
         return bg;
     }
@@ -74,8 +73,7 @@ public class SelectorUtils {
         StateListDrawable bg=new StateListDrawable();
         Drawable normal = idNormal == -1 ? null : context.getResources().getDrawable(idNormal);
         Drawable pressed = idPressed == -1 ? null : context.getResources().getDrawable(idPressed);
-        bg.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled }, pressed);
-        bg.addState(new int[] { android.R.attr.state_enabled }, normal);
+        bg.addState(new int[] { android.R.attr.state_checked }, pressed);
         bg.addState(new int[] {}, normal);
         return bg;
     }

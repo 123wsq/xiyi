@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.wsq.android.inter.HttpResponseCallBack;
 import com.example.wsq.android.inter.HttpResponseListener;
+import com.example.wsq.android.inter.OnDownloadListener;
 
 import java.util.List;
 import java.util.Map;
@@ -357,4 +358,30 @@ public interface UserService {
      * @param listener
      */
     void onBannerImage(final Context context, Map<String, String> param, final HttpResponseListener listener);
+
+
+    /**
+     * 检查更新app的显示样式
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void onCheckAppStyle(final  Context context, Map<String, String> param, final HttpResponseListener listener);
+    /**
+     * 文件下载
+     * @param context
+     * @param param
+     * @param listener
+     */
+    void onDownloadFile(final Context context, String path,  Map<String, String> param, final OnDownloadListener listener);
+
+
+    /**
+     * 文件下载
+     * @param context
+     * @param path 是全路径，不需要拼接
+     * @param param
+     * @param listener
+     */
+    void onDownloadPDF(final Context context, String path,  Map<String, String> param, final OnDownloadListener listener);
 }

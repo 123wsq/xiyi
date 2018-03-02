@@ -16,8 +16,10 @@ import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.utils.AmountUtils;
+import com.example.wsq.android.utils.DataFormat;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtils;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.LoddingDialog;
 
 import java.util.HashMap;
@@ -56,7 +58,7 @@ public class BalanceActivity extends BaseActivity {
         mData = new HashMap<>();
         userService = new UserServiceImpl();
         shared = getSharedPreferences(Constant.SHARED_NAME, Context.MODE_PRIVATE);
-        String amount = AmountUtils.changeY2Y(UserFragment.mUserData.get(ResponseKey.MONEY_AMOUNT)+"");
+        String amount = AmountUtils.changeY2Y(UserFragment.mUserData.get(ResponseKey.MONEY)+"");
         tv_money_amount.setText(amount);
         dialog = new LoddingDialog(this);
         bankCode = UserFragment.mUserData.get(ResponseKey.BANK_CARD)+"";
@@ -72,7 +74,7 @@ public class BalanceActivity extends BaseActivity {
     public void onClick(View v){
         if (v.getId() == R.id.ll_withdraw || v.getId() == R.id.ll_deposit){
             if (TextUtils.isEmpty(bankCode)){
-                ToastUtils.onToast(this,"请绑定先银行卡");
+                ToastUtils.onToast(this,"请先绑定银行卡");
                 return;
             }
         }
@@ -89,6 +91,11 @@ public class BalanceActivity extends BaseActivity {
                 break;
             case R.id.ll_deposit:// 保证金
 
+                int deposit = DataFormat.onStringForInteger(depositMoeny);
+                if (deposit <=0){
+                    ToastUtis.onToast("您没有可退还的保证金哟~");
+                    return;
+                }
 
                 if (TextUtils.isEmpty(bailState) || bailState.equals("null")) {
                     IntentFormat.startActivity(this, CashDepositActivity.class);

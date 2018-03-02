@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.wsq.android.R;
 import com.example.wsq.android.constant.ResponseKey;
+import com.example.wsq.android.utils.TelPhoneValidate;
 
 import java.util.List;
 import java.util.Map;
@@ -43,8 +44,8 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
     @Override
     public void onBindViewHolder(OrderMessageAdapter.MyViewHolder holder, int position) {
 
+        TelPhoneValidate.onGetTelCode(mContext, mData.get(position).get(ResponseKey.DETAIL).toString()+"", holder.tv_content, R.color.default_bule);
         holder.tv_time.setText(mData.get(position).get(ResponseKey.CREATE_AT).toString()+"");
-        holder.tv_content.setText(mData.get(position).get(ResponseKey.DETAIL).toString()+"");
 
         if (mData.size() != 1) {
             if (position == 0) {
@@ -66,7 +67,7 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
             holder.iv_cur_state.setVisibility(View.VISIBLE);
             holder.iv_state.setVisibility(View.GONE);
         }else{
-            holder.tv_content.setTextColor(Color.parseColor("#b9b9b9"));
+            holder.tv_content.setTextColor(Color.parseColor("#1fa301"));
             holder.iv_cur_state.setVisibility(View.GONE);
             holder.iv_state.setVisibility(View.VISIBLE);
         }

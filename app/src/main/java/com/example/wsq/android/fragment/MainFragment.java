@@ -105,11 +105,22 @@ public class MainFragment extends Fragment {
         init();
         initView();
 
-        AppImageView.onImageView(getActivity(), image_sbwx, "image_sbwh_m.png");
-        AppImageView.onImageView(getActivity(), image_gcs, "image_gcs.png");
-        AppImageView.onImageView(getActivity(), iv_image_news, "image_news.png");
-        AppImageView.onImageView(getActivity(), image_kefu, "image_kefu.png");
-        AppImageView.onImageView(getActivity(), image_main_qnzs, "image_main_qnzs.png");
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constant.SHARED_FACE, Context.MODE_PRIVATE);
+        if (preferences.getInt(Constant.SHARED.TYPE, 0)==0){
+
+            image_sbwx.setImageResource(R.drawable.image_sbwh_m);
+            image_gcs.setImageResource(R.drawable.image_gcs);
+            iv_image_news.setImageResource(R.drawable.image_news);
+            image_kefu.setImageResource(R.drawable.image_kefu);
+            image_main_qnzs.setImageResource(R.drawable.image_main_qnzs);
+        }else {
+            String path = preferences.getString(Constant.SHARED.IMG_PATH,"");
+            AppImageView.onImageView(getActivity(), image_sbwx, path + "image_sbwh_m.png");
+            AppImageView.onImageView(getActivity(), image_gcs, path + "image_gcs.png");
+            AppImageView.onImageView(getActivity(), iv_image_news, path + "image_news.png");
+            AppImageView.onImageView(getActivity(), image_kefu, path + "image_kefu.png");
+            AppImageView.onImageView(getActivity(), image_main_qnzs, path + "image_main_qnzs.png");
+        }
     }
 
 

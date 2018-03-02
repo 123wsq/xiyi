@@ -125,4 +125,10 @@ public class SysLoading  extends LinearLayout {
 
     }
 
+
+    public void onLoadProgress(int progress){
+
+        sys_loading_dialog_tv.setText("加载进度: "+ progress+" %");
+    }
+
 }

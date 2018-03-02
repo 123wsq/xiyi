@@ -22,16 +22,21 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="当前月收入"
-            android:layout_marginLeft="@dimen/default_margin_3"
+            android:layout_marginLeft="@dimen/default_margin"
             android:gravity="center_vertical"
+            android:textColor="@color/default_content_color_2"
+            android:textSize="@dimen/default_content_size"
+
             />
         <TextView
             android:id="@+id/tv_receipts_amount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="0"
+            android:textColor="@color/default_content_color_2"
+            android:textSize="@dimen/default_content_size"
             android:gravity="center_vertical"
-            android:layout_marginLeft="@dimen/default_margin_3"
+            android:layout_marginLeft="@dimen/default_margin"
             />
         <View
             android:layout_width="0dp"
@@ -54,33 +59,9 @@
         android:layout_height="match_parent"
         android:background="@color/color_white"
         android:layout_marginTop="@dimen/default_margin"
-        android:visibility="visible"
+        android:visibility="gone"
         />
 
-    <LinearLayout
-        android:id="@+id/ll_no_Record"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="gone"
-        android:layout_marginTop="@dimen/default_margin"
-        android:orientation="vertical"
-        >
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/image_main_massage"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="您当前没有提现记录"
-            android:textColor="@color/color_gray"
-            android:gravity="center"
-            android:textSize="@dimen/default_text_size"
-            />
-    </LinearLayout>
+    <include layout="@layout/layout_no_data"></include>
 
 </LinearLayout>

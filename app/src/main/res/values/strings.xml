@@ -10,6 +10,27 @@
     <string name="str_clear_canche">清理缓存</string>
     <string name="str_order_p">1、穿好防护服。\n2、戴好防护手套。\n3、注意周边环境\n4、根据人体大小，摄片部位，合理选择参数。\n5、随时观察照片质量，出现异常应检查摄片机是否正常，如果异常应立即报告维修人员</string>
 
+    
+    <string name="str_not_bank_p">你还没有添加银行卡哦~</string>
+    <string name="str_not_bank_refresh">点击刷新看有没有新数据</string>
+    <string name="str_not_datum_p">您还没有资料~</string>
+    <string name="str_not_datum_refresh">点击查看有没有新数据.</string>
+    <string name="str_not_order_p">您还没有订单哟~</string>
+    <string name="str_not_order_refresh">点击刷新看有没有新数据</string>
+    <string name="str_not_collect_p">您还没有收藏的文章呐~</string>
+    <string name="str_not_collect_refresh">点击刷新看有没有新数据</string>
+    <string name="str_not_share_p">您还没有发布资料呢，去发布一个吧~</string>
+    <string name="str_not_share_refresh">点击刷新看有没有新数据</string>
+    <string name="str_not_knowledge_p">还没有发布知识点呢~</string>
+    <string name="str_not_knowledge_refresh">点击刷新看有没有新数据</string>
+    <string name="str_not_receipts">您当前没有收入记录</string>
+    <string name="str_not_cash_p">您当前没有提现记录</string>
+    <string name="str_not_message_p">您还没有消息哟~</string>
+    <string name="str_not_message_refresh">点击刷新看有没有新数据</string>
+    <string name="str_not_search_device_p">没有搜索到设备哦~</string>
+    <string name="str_not_search_device_refresh">点击刷新看有没有新数据</string>
+    <string name="str_not_datum_search_p">没有搜索到资料哦~</string>
+    <string name="str_not_datum_search_refresh">点击查看有没有新数据.</string>
 
     <string name="image">图片</string>
     <string name="confirm">确定</string>

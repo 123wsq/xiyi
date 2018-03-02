@@ -16,4 +16,6 @@ public interface SearchDbInter {
     void insertData(Context context, String content);
 
     void removeData(Context context, String content);
+
+    void onClearAll(Context context);
 }

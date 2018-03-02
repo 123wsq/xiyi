@@ -29,56 +29,7 @@
         android:visibility="visible"
         />
 
-            <LinearLayout
-                android:id="@+id/ll_nodata"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:visibility="gone"
-                >
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/image_main_massage"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="您还没有消息~"
-                    android:textSize="@dimen/default_text_title_size"
-                    android:gravity="center"
-                    android:layout_marginTop="@dimen/defalut_layout_height"
-                    android:textColor="@color/color_gray"
-
-                    />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="点击查看有没有新数据."
-                    android:textSize="@dimen/default_text_title_size"
-                    android:gravity="center"
-                    android:textColor="@color/color_gray"
-                    />
-
-                <TextView
-
-                    android:id="@+id/tv_refresh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="点击刷新"
-                    android:textSize="@dimen/default_text_title_size"
-                    android:gravity="center"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:textColor="@color/color_gray"
-                    android:background="@drawable/shape_refresh"
-                    android:paddingLeft="@dimen/default_margin"
-                    android:paddingRight="@dimen/default_margin"
-                    android:paddingTop="@dimen/default_radius"
-                    android:paddingBottom="@dimen/default_radius"
-                    />
-            </LinearLayout>
+            <include layout="@layout/layout_no_data"></include>
         </LinearLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

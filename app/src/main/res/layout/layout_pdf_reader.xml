@@ -12,11 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--
         <com.lidong.pdf.PDFView
             android:id="@+id/pdvView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
+-->
+        <com.joanzapata.pdfview.PDFView
+            android:id="@+id/pdfview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:id="@+id/tv_page"
@@ -27,8 +32,9 @@
             android:layout_marginBottom="@dimen/default_radius"
             android:layout_marginRight="@dimen/default_margin"
             android:background="@color/transparent"
-            android:text=""
+            android:text="0 / 0"
             android:textColor="@color/black" />
+
 
     </RelativeLayout>
 

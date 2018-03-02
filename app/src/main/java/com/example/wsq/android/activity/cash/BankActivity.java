@@ -13,6 +13,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.OnDialogClickListener;
 import com.example.wsq.android.utils.BankInfo;
+import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.CustomDefaultDialog;
 
@@ -25,7 +26,7 @@ import butterknife.OnClick;
 
 public class BankActivity extends BaseActivity {
 
-    @BindView(R.id.ll_no_bank) LinearLayout ll_no_bank;
+    @BindView(R.id.ll_nodata) LinearLayout ll_no_bank;
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.iv_add) ImageView iv_add;
     @BindView(R.id.tv_cardCode) TextView tv_cardCode;
@@ -33,6 +34,11 @@ public class BankActivity extends BaseActivity {
     @BindView(R.id.tv_bank) TextView tv_bank;
     @BindView(R.id.tv_card_type) TextView tv_card_type;
     @BindView(R.id.tv_reseat_bank) TextView tv_reseat_bank;
+
+    @BindView(R.id.iv_refresh_icon) ImageView iv_refresh_icon;
+    @BindView(R.id.tv_content) TextView tv_content;
+    @BindView(R.id.tv_no_data) TextView tv_no_data;
+    @BindView(R.id.tv_refresh) TextView tv_refresh;
 
 
     private String bankCode;
@@ -52,7 +58,6 @@ public class BankActivity extends BaseActivity {
             bankCode = UserFragment.mUserData.get(ResponseKey.BANK_CARD)+"";
         }
 
-
         if (TextUtils.isEmpty(bankCode)){
             iv_add.setVisibility(View.VISIBLE);
             ll_no_bank.setVisibility(View.VISIBLE);
@@ -66,13 +71,11 @@ public class BankActivity extends BaseActivity {
             String strc = "";
 
             for (int i = 0 ;i< bankCode.length(); i ++){
-
                 if (i > bankCode.length() - 5){
                     strc += bankCode.substring(i, i+1);
                 }else {
                     strc += "*";
                 }
-
             }
             String str = "";
             for (int i=0; i < strc.length(); i++){
@@ -96,6 +99,7 @@ public class BankActivity extends BaseActivity {
             tv_reseat_bank.setBackgroundResource(R.drawable.shape_disable_button);
         }
 
+        onNotDataLayout();
 
         initDialog();
     }
@@ -121,10 +125,10 @@ public class BankActivity extends BaseActivity {
         dialog = builder.create();
     }
 
-    @OnClick({R.id.tv_redresh, R.id.iv_back, R.id.iv_add, R.id.tv_reseat_bank})
+    @OnClick({R.id.tv_refresh, R.id.iv_back, R.id.iv_add, R.id.tv_reseat_bank})
     public void onClick(View v){
         switch (v.getId()){
-            case R.id.tv_redresh:
+            case R.id.tv_refresh:
 
                 break;
             case R.id.iv_back:
@@ -139,5 +143,16 @@ public class BankActivity extends BaseActivity {
                 dialog.show();
                 break;
         }
+    }
+
+
+    public void onNotDataLayout(){
+        iv_refresh_icon.setVisibility(View.VISIBLE);
+        tv_content.setVisibility(View.VISIBLE);
+        tv_no_data.setVisibility(View.VISIBLE);
+        tv_refresh.setVisibility(View.VISIBLE);
+        iv_refresh_icon.setImageResource(R.drawable.image_bank_background);
+        tv_content.setText(getResources().getString(R.string.str_not_bank_p));
+        tv_no_data.setText(getResources().getString(R.string.str_not_bank_refresh));
     }
 }
