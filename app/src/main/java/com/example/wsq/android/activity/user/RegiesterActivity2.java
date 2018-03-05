@@ -90,7 +90,7 @@ public class RegiesterActivity2 extends BaseActivity {
                 list.add("专科");
                 list.add("本科");
                 list.add("研究生");
-                list.add("博士以上");
+                list.add("博士及以上");
                  popup = new CustomPopup(RegiesterActivity2.this, view, list, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

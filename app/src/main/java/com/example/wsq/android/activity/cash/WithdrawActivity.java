@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -91,6 +93,9 @@ public class WithdrawActivity extends BaseActivity {
             }
 
         }
+
+//        et_money.setEnabled(false);
+//        et_money.setInputType(InputType.TYPE_NULL);
         onTextChangeListener();
 
     }
@@ -104,7 +109,9 @@ public class WithdrawActivity extends BaseActivity {
                 break;
             case R.id.tv_submit:
                 if (!onValiateParam()) return;
-                getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+                InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                im.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//                getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 //                onInputPasswordDialog();
                 onShowPasswordPopup();
                 break;
@@ -181,7 +188,7 @@ public class WithdrawActivity extends BaseActivity {
             @Override
             public void onFailure() {
 
-                ToastUtils.onToast(WithdrawActivity.this, "支付密码错误");
+//                ToastUtils.onToast(WithdrawActivity.this, "支付密码错误");
             }
         });
     }

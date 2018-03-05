@@ -55,9 +55,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -99,8 +100,9 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
-                    onExitApp(context, msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                    onExitApp(context, msg);
+
                 }
             });
         } catch (Exception e) {
@@ -149,9 +151,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -183,9 +186,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -220,9 +224,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
 //                    callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -257,9 +262,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
-                    onExitApp(context, msg);
-                    callBack.onCallFail("请求失败");
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                    onExitApp(context, msg);
+//                    callBack.onCallFail("请求失败");
+
                 }
             });
         } catch (Exception e) {
@@ -288,9 +294,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -324,9 +331,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -572,13 +580,13 @@ public class UserServiceImpl implements UserService{
                 public void onCallFail(String msg) {
                     onExitApp(context, msg);
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-                    callBack.onFailure();
+//                    callBack.onFailure();
                 }
             });
         } catch (Exception e) {
 
             Toast.makeText(context, "必要参数未填写", Toast.LENGTH_SHORT).show();
-            callBack.onFailure();
+//            callBack.onFailure();
         }
 
     }
@@ -819,14 +827,15 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
             callBack.onFailure();
-            Toast.makeText(context, "请填写退保证金的原因", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "0", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -853,9 +862,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -888,9 +898,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -921,9 +932,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -954,9 +966,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -987,9 +1000,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     callBack.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1021,9 +1035,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     listener.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1054,9 +1069,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     listener.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1087,9 +1103,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     listener.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1120,9 +1137,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     listener.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1153,9 +1171,10 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     listener.onFailure();
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1302,11 +1321,12 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     if (listener != null) {
                         listener.onFailure();
                     }
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1342,11 +1362,12 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     if (listener != null) {
                         listener.onFailure();
                     }
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1382,11 +1403,12 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     if (listener != null) {
                         listener.onFailure();
                     }
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1422,11 +1444,12 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     if (listener != null) {
                         listener.onFailure();
                     }
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {
@@ -1461,11 +1484,12 @@ public class UserServiceImpl implements UserService{
 
                 @Override
                 public void onCallFail(String msg) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     onExitApp(context, msg);
                     if (listener != null) {
                         listener.onFailure();
                     }
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
                 }
             });
         } catch (Exception e) {

@@ -9,6 +9,17 @@
     >
     <include layout="@layout/layout_default_title"></include>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,7 +125,6 @@
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/shape_edit"
                 android:layout_marginRight="@dimen/default_margin"
-
                 />
         </LinearLayout>
 
@@ -157,5 +167,6 @@
         android:textSize="@dimen/default_title_size"
         />
 
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

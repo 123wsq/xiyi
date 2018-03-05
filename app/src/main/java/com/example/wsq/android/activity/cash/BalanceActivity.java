@@ -1,6 +1,7 @@
 package com.example.wsq.android.activity.cash;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wsq.android.R;
+import com.example.wsq.android.activity.user.SettingActivity;
 import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
@@ -15,6 +17,7 @@ import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.ShowDialog;
 import com.example.wsq.android.utils.AmountUtils;
 import com.example.wsq.android.utils.DataFormat;
 import com.example.wsq.android.utils.IntentFormat;
@@ -105,12 +108,30 @@ public class BalanceActivity extends BaseActivity {
                 break;
             case R.id.ll_withdraw:   //提现
 
+                String bankCard = UserFragment.mUserData.get(ResponseKey.BANK_CARD)+"";
+
+                if (TextUtils.isEmpty(bankCard)){
+
+                    ShowDialog.onShowDialog(this, "好的", "", "提示", "请先去【银行卡】管理中心绑定一张新的银行卡", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            dialogInterface.dismiss();
+                        }
+                    }, null);
+                    return;
+                }
+
+
                 //有没有设置提现密码
                 String payPassword = UserFragment.mUserData.get(ResponseKey.PAY_PASSWORD)+"";
                 if (TextUtils.isEmpty(payPassword)){
-                    ToastUtils.onToast(this, "请先设置提现密码");
+                    Map<String, Object> param = new HashMap<>();
+                    param.put("type", 1);
+                    IntentFormat.startActivity(BalanceActivity.this, WithdrawPasswordActivity.class, param);
                     return;
                 }
+
                 String moneys = mData.get(ResponseKey.MY_MONEY)+"";
                 //有没有提现金额
                 if (!TextUtils.isEmpty(cashMoney)){

@@ -1,6 +1,7 @@
 package com.example.wsq.android.activity.cash;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.Selection;
@@ -17,6 +18,7 @@ import com.example.wsq.android.constant.ResponseKey;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
+import com.example.wsq.android.tools.ShowDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +63,7 @@ public class CashDepositActivity extends BaseActivity implements TextWatcher {
                 finish();
                 break;
             case R.id.tv_submit:
-                    onSubmit();
+                    onShowDialog();
                 break;
         }
     }
@@ -127,5 +129,21 @@ public class CashDepositActivity extends BaseActivity implements TextWatcher {
 
 
 
+    }
+
+
+    public void onShowDialog(){
+        ShowDialog.onShowDialog(this, "好的", "取消", "温馨提示", "退还保证金之后账户注销，再次开通需要客服审核信用程度之后确认是否开通账户", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                onSubmit();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
     }
 }

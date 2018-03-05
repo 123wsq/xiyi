@@ -1,5 +1,6 @@
 package com.example.wsq.android.activity.order;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -53,6 +54,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
+import me.weyye.hipermission.PermissionItem;
 
 
 /**
@@ -230,7 +234,9 @@ public class FeedbackActivity extends BaseActivity {
 
         CameraBean bean = mData.get(position);
         if (bean.getType() == 1) {
-            popup.showAtLocation(ll_layout, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+            onRequestPermission();
+//            popup.showAtLocation(ll_layout, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 //            ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
 //                    .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
 //                            InputMethodManager.HIDE_NOT_ALWAYS);
@@ -564,5 +570,42 @@ public class FeedbackActivity extends BaseActivity {
         }
 
         return true;
+    }
+
+    public void onRequestPermission(){//READ_PHONE_STATE
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, READ_PHONE_STATE);
+//            } else {
+//                onValidatePhone();
+//            }
+//        }
+        List<PermissionItem> permissions = new ArrayList<PermissionItem>();
+        permissions.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "手机权限", R.drawable.permission_ic_phone));
+        permissions.add(new PermissionItem(Manifest.permission.READ_EXTERNAL_STORAGE, "手机权限", R.drawable.permission_ic_phone));
+        HiPermission.create(this).permissions(permissions).checkMutiPermission(new PermissionCallback() {
+            @Override
+            public void onClose() {
+                Logger.d("用户关闭权限申请");
+                finish();
+            }
+
+            @Override
+            public void onFinish() {
+                popup.showAtLocation(ll_layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+//                Logger.d("所有权限申请完成");
+
+            }
+
+            @Override
+            public void onDeny(String permission, int position) {
+
+            }
+
+            @Override
+            public void onGuarantee(String permission, int position) {
+
+            }
+        });
     }
 }

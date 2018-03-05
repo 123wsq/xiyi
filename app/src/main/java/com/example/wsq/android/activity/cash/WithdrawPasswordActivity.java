@@ -18,11 +18,13 @@ import com.example.wsq.android.activity.user.SettingActivity;
 import com.example.wsq.android.base.BaseActivity;
 import com.example.wsq.android.constant.Constant;
 import com.example.wsq.android.constant.ResponseKey;
+import com.example.wsq.android.fragment.UserFragment;
 import com.example.wsq.android.inter.HttpResponseListener;
 import com.example.wsq.android.service.UserService;
 import com.example.wsq.android.service.impl.UserServiceImpl;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.view.PasswordInputView;
+import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +66,7 @@ public class WithdrawPasswordActivity extends BaseActivity implements TextWatche
      * 8 忘记-原密码
      */
     public static  int flagNum = 1;
+    public static boolean isSetting = false;
 
     private UserService userService;
     private SharedPreferences shared;
@@ -77,6 +80,7 @@ public class WithdrawPasswordActivity extends BaseActivity implements TextWatche
     public void init(){
 
         flagNum =  getIntent().getIntExtra("type", 0);
+        isSetting = getIntent().getBooleanExtra("isSetting", false);
         setTitle();
         et_psdInput.setPasswordLength(Constant.PASSWORD_COUNT);
         et_psdInput.addTextChangedListener(this);
@@ -177,9 +181,11 @@ public class WithdrawPasswordActivity extends BaseActivity implements TextWatche
         Map<String, Object> param = new HashMap<>();
         switch (flagNum){
             case 1:
-                param.put("type", 2);
-                param.put("password", result);
-                IntentFormat.startActivity(this, WithdrawPasswordActivity.class, param);
+                    param.put("type", 2);
+                    param.put("password", result);
+                    param.put("isSetting", isSetting);
+                    IntentFormat.startActivity(this, WithdrawPasswordActivity.class, param);
+
                 break;
             case 2:
                 onSettingPassword(result);
@@ -232,10 +238,17 @@ public class WithdrawPasswordActivity extends BaseActivity implements TextWatche
                 Map<String, Object> param = new HashMap<>();
                 IntentFormat.startActivity(WithdrawPasswordActivity.this, SettingActivity.class);
 
+                Logger.d("是否设置页面进入： "+isSetting);
                 if (flagNum ==2){
-                    Intent intent = new Intent();
-                    intent.setAction(ACTION);
-                    sendBroadcast(intent);
+                    if (isSetting) {
+                        Intent intent = new Intent();
+                        intent.setAction(ACTION);
+                        sendBroadcast(intent);
+                    }else {
+                        UserFragment.mUserData.put(ResponseKey.PAY_PASSWORD, password);
+                        IntentFormat.startActivity(WithdrawPasswordActivity.this, BalanceActivity.class);
+                        finish();
+                    }
                 }
             }
 

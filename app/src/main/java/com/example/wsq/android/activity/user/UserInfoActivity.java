@@ -307,7 +307,7 @@ public class UserInfoActivity extends BaseActivity {
                 list2.add("专科");
                 list2.add("本科");
                 list2.add("研究生");
-                list2.add("博士以上");
+                list2.add("博士及以上");
                 popup = new CustomPopup(UserInfoActivity.this, view2, list2, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

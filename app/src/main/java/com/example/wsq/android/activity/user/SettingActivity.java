@@ -125,6 +125,7 @@ public class SettingActivity extends BaseActivity implements SwitchView.OnStateC
                     }, null);
                 }else {
                     param.put("type", 1);
+                    param.put("isSetting", true);
                     IntentFormat.startActivity(SettingActivity.this, WithdrawPasswordActivity.class, param);
                 }
                 break;

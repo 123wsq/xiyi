@@ -382,9 +382,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            if (!BuildConfig.DEBUG) {
+//            if (!BuildConfig.DEBUG) {
                 onCreateDialog();
-            }
+//            }
         }
     };
 
