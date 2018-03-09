@@ -202,7 +202,7 @@ public class CashDepositInfoActivity extends BaseActivity {
 //            tv_create_time.setText(data.get(ResponseKey.CREAT_AT)+"");
             tv_apply_num.setText(data.get(ResponseKey.PAY_SN)+"");
             onSetData(true, true, "提现成功",data.get(ResponseKey.CREAT_AT)+"", true);
-            onSetData(true, state==2 ? true: false, "银行处理中",data.get(ResponseKey.CREAT_AT)+"", true);
+            onSetData(true, state==3 ? true: false, "银行处理中",data.get(ResponseKey.CREAT_AT)+"", true);
         }
         if (state == 1 || state ==0){
             onSetData(false, false, "审核通过", "预计1-7个工作日内到账", false);

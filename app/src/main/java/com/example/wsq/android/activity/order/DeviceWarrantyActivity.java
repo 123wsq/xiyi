@@ -36,10 +36,12 @@ import com.example.wsq.android.utils.BitmapUtils;
 import com.example.wsq.android.utils.DateUtil;
 import com.example.wsq.android.utils.DensityUtil;
 import com.example.wsq.android.utils.FileSizeUtil;
+import com.example.wsq.android.utils.FileUtil;
 import com.example.wsq.android.utils.ImageUtil;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ScreenUtils;
 import com.example.wsq.android.utils.ToastUtils;
+import com.example.wsq.android.utils.ToastUtis;
 import com.example.wsq.android.view.CustomPopup;
 import com.example.wsq.android.view.LoddingDialog;
 import com.example.wsq.plugin.okhttp.OkhttpUtil;
@@ -48,6 +50,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.tools.PictureFileUtils;
 import com.orhanobut.logger.Logger;
+import com.yalantis.ucrop.util.FileUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -227,7 +230,7 @@ public class DeviceWarrantyActivity extends BaseActivity {
                                 .recordVideoSecond(10)//视频秒数录制 默认60s int
                                 .videoQuality(0)
                                 .rotateEnabled(false)
-                                .cropCompressQuality(50)
+                                .cropCompressQuality(70)
                                 .forResult(RESULT_VIDEO);
 
                         break;
@@ -237,10 +240,9 @@ public class DeviceWarrantyActivity extends BaseActivity {
                                 .openGallery(PictureMimeType.ofVideo())
                                 .maxSelectNum(Constant.IMAGE_COUNT-(mData.size()-1))
                                 .imageSpanCount(3)
-                                .compress(true)
                                 .isCamera(false)
                                 .videoQuality(0)
-                                .cropCompressQuality(50)
+                                .cropCompressQuality(70)
                                 .compress(true)// 是否压缩 true or false
                                 .forResult(RESULT_VIDEO);
                         break;
@@ -303,8 +305,9 @@ public class DeviceWarrantyActivity extends BaseActivity {
 
             Map<String, Object> param = new HashMap<>();
             param.put("URL", bean.getFile_path());
-            IntentFormat.startActivity(DeviceWarrantyActivity.this, VideoPlayActivity.class, param);
-
+//            IntentFormat.startActivity(DeviceWarrantyActivity.this, VideoPlayActivity.class, param);
+            //2018-03-07 修改
+            PictureSelector.create(DeviceWarrantyActivity.this).externalPictureVideo(bean.getFile_path());
         }
 
     }
@@ -395,7 +398,6 @@ public class DeviceWarrantyActivity extends BaseActivity {
                 } else { //视频
                     bean.setFile_path(path);
                 }
-
                 Logger.d("文件路径：  " + path);
                 bean.setChange(false);
                 bean.setType(type);
@@ -422,9 +424,11 @@ public class DeviceWarrantyActivity extends BaseActivity {
     public  String onBitmapCompress(String path){
         //得到该路径下的图片bitmap
         Bitmap bitmap = BitmapUtils.getLocalImage(path);
+        int textSize = DensityUtil.sp2px(this, 12);
         Bitmap newBitmap = ImageUtil.drawTextToLeftBottom(DeviceWarrantyActivity.this, bitmap,
                 new String[]{ shared.getString(Constant.SHARED.LOCATION, ""), DateUtil.onDateFormat(DateUtil.DATA_FORMAT)},
-                20, Color.RED, 20, 10);
+                textSize, Color.RED, textSize, textSize);
+
         //只对图片进行质量压缩
         Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 100);
         //对图片进行大小 质量压缩
@@ -453,6 +457,12 @@ public class DeviceWarrantyActivity extends BaseActivity {
                 if (mData.get(i).getType()!=1) {
                     try {
                         File f = new File(mData.get(i).getFile_path());
+
+                        if (f.length()> 8 * 1024* 1024){
+                            ToastUtis.onToast("单个文件不能超过8M，"+f.getName()+"为 "+ FileSizeUtil.FormetFileSize(f.length()));
+                            if (dialog.isShowing())dialog.dismiss();
+                            return;
+                        }
                         Map<String, Object> map = new HashMap<>();
                         map.put(ResponseKey.IMGS+(i+1),f);
                         map.put("fileType", mData.get(i).getType() == 2 ?

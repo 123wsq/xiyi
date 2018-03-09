@@ -355,7 +355,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_white"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical"
             android:paddingLeft="@dimen/default_margin"
             android:paddingRight="@dimen/default_margin"
@@ -376,6 +376,7 @@
                 android:textSize="@dimen/default_content_size"
                 android:textColor="@color/default_content_color_1"
                 android:background="@drawable/shape_edit_stoken"
+                android:layout_marginTop="5dp"
                 android:padding="@dimen/default_radius"
                 android:gravity="top"
                 />

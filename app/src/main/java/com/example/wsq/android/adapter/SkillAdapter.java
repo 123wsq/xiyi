@@ -112,7 +112,6 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolder>{
                         selectCount++;
                     }
                 }
-                Logger.d("当前选中个数: "+ selectCount);
                 if (selectCount > Constant.SKILL_COUNT){
                     ToastUtils.onToast(mContext,"您最多只能选"+Constant.SKILL_COUNT+"个哟~");
                     compoundButton.setChecked(false);

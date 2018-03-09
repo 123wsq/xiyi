@@ -175,9 +175,9 @@ public class ServerOrderInfoActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mData1.clear();
-        mData2.clear();
-        getServerOrderInfo();
+//        mData1.clear();
+//        mData2.clear();
+//        getServerOrderInfo();
     }
 
     public void getServerOrderInfo(){
@@ -366,8 +366,9 @@ public class ServerOrderInfoActivity extends BaseActivity {
 
             Map<String, Object> param = new HashMap<>();
             param.put("URL", bean.getFile_path());
-            IntentFormat.startActivity(ServerOrderInfoActivity.this, VideoPlayActivity.class, param);
-
+//            IntentFormat.startActivity(ServerOrderInfoActivity.this, VideoPlayActivity.class, param);
+            //2018-03-07 修改
+        PictureSelector.create(ServerOrderInfoActivity.this).externalPictureVideo(bean.getFile_path());
         }
     }
 }

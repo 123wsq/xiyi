@@ -1,5 +1,6 @@
 package com.luck.picture.lib;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Color;
@@ -20,6 +21,7 @@ public class PictureVideoPlayActivity extends PictureBaseActivity implements Med
     private VideoView mVideoView;
     private ImageView iv_play;
     private int mPositionWhenPaused = -1;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,10 @@ public class PictureVideoPlayActivity extends PictureBaseActivity implements Med
         setContentView(R.layout.picture_activity_video_play);
         video_path = getIntent().getStringExtra("video_path");
         picture_left_back = (ImageView) findViewById(R.id.picture_left_back);
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("视频加载中，请稍后...");
+        dialog.show();
         mVideoView = (VideoView) findViewById(R.id.video_view);
         mVideoView.setBackgroundColor(Color.BLACK);
         iv_play = (ImageView) findViewById(R.id.iv_play);
@@ -114,6 +120,7 @@ public class PictureVideoPlayActivity extends PictureBaseActivity implements Med
         mp.setOnInfoListener(new MediaPlayer.OnInfoListener() {
             @Override
             public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                if (dialog !=null && dialog.isShowing())dialog.dismiss();
                 if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                     // video started
                     mVideoView.setBackgroundColor(Color.TRANSPARENT);

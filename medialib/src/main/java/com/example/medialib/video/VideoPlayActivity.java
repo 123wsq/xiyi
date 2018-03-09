@@ -1,5 +1,6 @@
 package com.example.medialib.video;
 
+import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

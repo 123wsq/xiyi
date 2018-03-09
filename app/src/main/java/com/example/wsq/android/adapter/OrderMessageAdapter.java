@@ -67,7 +67,7 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
             holder.iv_cur_state.setVisibility(View.VISIBLE);
             holder.iv_state.setVisibility(View.GONE);
         }else{
-            holder.tv_content.setTextColor(Color.parseColor("#1fa301"));
+            holder.tv_content.setTextColor(mContext.getResources().getColor(R.color.default_content_color_2));
             holder.iv_cur_state.setVisibility(View.GONE);
             holder.iv_state.setVisibility(View.VISIBLE);
         }

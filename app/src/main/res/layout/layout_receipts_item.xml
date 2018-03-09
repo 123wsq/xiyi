@@ -60,6 +60,7 @@
             android:text=""
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_margin"
+            android:singleLine="true"
             android:textSize="@dimen/default_content_size"
             android:textColor="@color/default_font_color"
             />

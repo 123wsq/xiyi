@@ -32,6 +32,8 @@ import com.example.wsq.android.service.OrderTaskService;
 import com.example.wsq.android.service.impl.OrderTaskServiceImpl;
 import com.example.wsq.android.utils.BitmapUtils;
 import com.example.wsq.android.utils.DateUtil;
+import com.example.wsq.android.utils.DensityUtil;
+import com.example.wsq.android.utils.FileSizeUtil;
 import com.example.wsq.android.utils.ImageUtil;
 import com.example.wsq.android.utils.ScreenUtils;
 import com.example.wsq.android.utils.ToastUtis;
@@ -191,6 +193,9 @@ public class FeedbackActivity extends BaseActivity {
                                 .openCamera(PictureMimeType.ofVideo())
                                 .compress(true)// 是否压缩 true or false
                                 .recordVideoSecond(10)//视频秒数录制 默认60s int
+                                .videoQuality(0)
+                                .rotateEnabled(false)
+                                .cropCompressQuality(70)
                                 .forResult(RESULT_VIDEO);
 
                         break;
@@ -201,6 +206,8 @@ public class FeedbackActivity extends BaseActivity {
                                 .maxSelectNum(Constant.IMAGE_COUNT - (mData.size() - 1))
                                 .imageSpanCount(3)
                                 .isCamera(false)
+                                .videoQuality(0)
+                                .cropCompressQuality(70)
                                 .compress(true)// 是否压缩 true or false
                                 .forResult(RESULT_VIDEO);
                         break;
@@ -286,6 +293,11 @@ public class FeedbackActivity extends BaseActivity {
         for (int i = 0; i < mData.size(); i++) {
             if (mData.get(i).getType() != 1) {
                 File f = new File(mData.get(i).getFile_path());
+                if (f.length()> 8 * 1024* 1024){
+                    ToastUtis.onToast("单个文件不能超过8M，"+f.getName()+"为 "+ FileSizeUtil.FormetFileSize(f.length()));
+                    if (dialog.isShowing())dialog.dismiss();
+                    return;
+                }
                 Map<String, Object> map = new HashMap<>();
                 map.put(ResponseKey.IMGS + (i + 1), f);
                 map.put("fileType", mData.get(i).getType() == 2 ?
@@ -342,7 +354,6 @@ public class FeedbackActivity extends BaseActivity {
      */
     public void onSetData(int type, List<LocalMedia> list) {
 
-        Logger.d("选择的图片" + list.size());
 
         if (list.size() == 0) {
             CameraBean bean = new CameraBean();
@@ -408,9 +419,10 @@ public class FeedbackActivity extends BaseActivity {
     public  String onBitmapCompress(String path){
         //得到该路径下的图片bitmap
         Bitmap bitmap = BitmapUtils.getLocalImage(path);
+        int textSize = DensityUtil.sp2px(this, 12);
         Bitmap newBitmap = ImageUtil.drawTextToLeftBottom(FeedbackActivity.this, bitmap,
                 new String[]{ shared.getString(Constant.SHARED.LOCATION, ""), DateUtil.onDateFormat(DateUtil.DATA_FORMAT)},
-                20, Color.RED, 20, 10);
+                textSize, Color.RED, textSize, textSize);
         //只对图片进行质量压缩
 //        Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 200);
         //对图片进行大小 质量压缩

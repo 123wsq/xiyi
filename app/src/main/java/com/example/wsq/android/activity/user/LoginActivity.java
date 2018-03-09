@@ -111,7 +111,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 
         SharedPreferences preferences = getSharedPreferences(Constant.SHARED_FACE, Context.MODE_PRIVATE);
-        Logger.d(preferences.getString(Constant.SHARED.IMG_PATH, "")+"========="+preferences.getInt(Constant.SHARED.TYPE, 0));
     }
 
 

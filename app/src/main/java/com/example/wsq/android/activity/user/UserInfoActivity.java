@@ -42,6 +42,7 @@ import com.example.wsq.android.tools.RecyclerViewDivider;
 import com.example.wsq.android.utils.BitmapUtils;
 import com.example.wsq.android.utils.DateUtil;
 import com.example.wsq.android.utils.DensityUtil;
+import com.example.wsq.android.utils.FileSizeUtil;
 import com.example.wsq.android.utils.ImageUtil;
 import com.example.wsq.android.utils.IntentFormat;
 import com.example.wsq.android.utils.ToastUtils;
@@ -190,6 +191,9 @@ public class UserInfoActivity extends BaseActivity {
 //            rv_RecyclerView.addItemDecoration(new RecyclerViewDivider(
 //                    this, LinearLayoutManager.HORIZONTAL, DensityUtil.dp2px(this, 10),
 //                    ContextCompat.getColor(this, R.color.default_backgroud_color)));
+            LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) rv_RecyclerView.getLayoutParams();
+            param.height = DensityUtil.dp2px(this, mData.size() > 4 ? 50 * 2 : 50);
+            rv_RecyclerView.setLayoutParams(param);
             rv_RecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
             rv_RecyclerView.setHasFixedSize(true);
             mAdapter = new SkillAdapter(this, mData, null, listener, 1);
@@ -352,8 +356,13 @@ public class UserInfoActivity extends BaseActivity {
             }
         }else if(resultCode == DEFAULT_SKILL_RESULT){
             List<SkillBean> arrays = (List<SkillBean>) data.getSerializableExtra("skill");
+
+
             mData.clear();
             mData.addAll(arrays);
+            LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) rv_RecyclerView.getLayoutParams();
+            param.height = DensityUtil.dp2px(this, mData.size() > 4 ? 50 *2 : 50 );
+            rv_RecyclerView.setLayoutParams(param);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -416,9 +425,13 @@ public class UserInfoActivity extends BaseActivity {
         List<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         map.put("fileType", OkhttpUtil.FILE_TYPE_IMAGE);
-//        File f = new File(headerImage);
-        File f = new File(Constant.FILE_PATH+"/123456.png");
-        onBitmapCompress(f.getAbsolutePath());
+        File f = new File(headerImage);
+        if (f.length()> 8 * 1024* 1024){
+            ToastUtis.onToast("单个文件不能超过8M，"+f.getName()+"为 "+ FileSizeUtil.FormetFileSize(f.length()));
+            return;
+        }
+//        File f = new File(Constant.FILE_PATH+"/123456.png");
+//        onBitmapCompress(f.getAbsolutePath());
         map.put(ResponseKey.FILE, f);
         list.add(map);
         userService.uploadHeader(this, param, list, new HttpResponseListener() {
@@ -450,10 +463,10 @@ public class UserInfoActivity extends BaseActivity {
                 new String[]{ shared.getString(Constant.SHARED.LOCATION, ""), DateUtil.onDateFormat(DateUtil.DATA_FORMAT)},
                 20, Color.RED, 20, 10);
         //只对图片进行质量压缩
-        Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 100);
+//        Bitmap commBitmap = ImageUtil.compressImage(newBitmap, 100);
         //对图片进行大小 质量压缩
 //        Bitmap commBitmap = ImageUtil.zoomImage(newBitmap, ScreenUtils.getScreenWidth(this),ScreenUtils.getScreenHeight(this), 100);
-        File file = BitmapUtils.saveImage(commBitmap);
+        File file = BitmapUtils.saveImage(newBitmap);
         return file.getAbsolutePath();
     }
 }

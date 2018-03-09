@@ -240,8 +240,7 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
     @Override
     protected void onResume() {
         super.onResume();
-        mData.clear();
-        getOrderInfo();
+
     }
 
     public void onInitState(){
@@ -384,7 +383,9 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
                 mResultInfo.putAll(result);
                 tv_ordernum.setText(result.get(ResponseKey.ORDER_NO)+"");
                 tv_companyName.setText(result.get(ResponseKey.COMPANY)+"");
-                tv_companyAddress.setText(result.get(ResponseKey.COMPANY_ADDRESS)+"");
+
+                String loc = result.get(ResponseKey.COMPANY_ADDRESS)+"";
+                tv_companyAddress.setText(loc.length() > 0 ? loc :"无" );
 
                 tv_device.setText(result.get(ResponseKey.XINGHAO)+"");
                 tv_outnum.setText(result.get(ResponseKey.BIANHAO)+"");
@@ -409,7 +410,8 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
 
                 }else if(status.equals("2")){
                     tv_audit_time.setText(result.get(ResponseKey.BAOXIUTIME)+"");
-                    tv_repairs_time.setText(result.get(ResponseKey.CHECK_TIME)+"");
+
+                    tv_repairs_time.setText(role.equals("1") ? result.get(ResponseKey.FENPEI_TIME)+"" : result.get(ResponseKey.CHECK_TIME)+"");
 
                     tv_serverName.setText(result.get(ResponseKey.WNAME)+"");
                 }else if(status.equals("3")){
@@ -559,8 +561,9 @@ public class OrderInfoActivity extends BaseActivity implements AdapterView.OnIte
 //                .externalPictureVideo(bean.getFile_path());
             Map<String, Object> param = new HashMap<>();
             param.put("URL", bean.getFile_path());
-            IntentFormat.startActivity(OrderInfoActivity.this, VideoPlayActivity.class, param);
-
+//            IntentFormat.startActivity(OrderInfoActivity.this, VideoPlayActivity.class, param);
+            //2018-03-07 修改
+            PictureSelector.create(OrderInfoActivity.this).externalPictureVideo(bean.getFile_path());
         }
     }
 

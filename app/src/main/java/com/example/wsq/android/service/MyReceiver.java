@@ -32,7 +32,6 @@ public class MyReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		try {
 			Bundle bundle = intent.getExtras();
-			Logger.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
 			if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
 				String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
@@ -42,6 +41,7 @@ public class MyReceiver extends BroadcastReceiver {
 			} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
 				Logger.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 				processCustomMessage(context, bundle);
+
 
 				Intent intent2 = new Intent();
 				intent2.setAction(MainActivity.MESSAGE_RECEIVED_ACTION);
@@ -69,7 +69,6 @@ public class MyReceiver extends BroadcastReceiver {
 
 			} else if(JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
 				boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
-				Logger.w(TAG, "[MyReceiver]" + intent.getAction() +" connected state change to "+connected);
 			} else {
 				Logger.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
 			}
